@@ -1,0 +1,23 @@
+version: '3.5'
+services:
+  hc-admin-dashboard:
+    image: hc-admin-dashboard:0.0.1
+    container_name: hc-admin-dashboard
+    hostname: hc-admin-dashboard
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+      tags:
+        - 'docker-registry.jojoaddison.net/hc-admin-dashboard:0.0.1'
+        - 'docker-registry.jojoaddison.net/hc-admin-dashboard:latest'
+    volumes:
+      - './hc-admin-dashboard:/usr/src/app'
+    ports:
+      - 127.0.0.1:5501:80
+    networks:
+      - devnet
+
+networks:
+  devnet:
+    external: true
+    name: devnet
