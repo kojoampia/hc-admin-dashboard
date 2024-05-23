@@ -5,7 +5,14 @@
 /* ==============================================================
 Bootstrap tweaks
 ===============================================================*/
-
+body {
+  background-image: url('/content/images/background.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position-y: center;
+  background-position-x: center;
+  background-size: cover;
+}
 body,
 h1,
 h2,
@@ -16,12 +23,12 @@ h4 {
 
 /* Increase contrast of links to get 100% on Lighthouse Accessibility Audit. Override this color if you want to change the link color, or use a Bootswatch theme */
 a {
-  color: teal;
+  color: #29cece;
   font-weight: bold;
 }
 
 a:hover {
-  color: teal;
+  color: #29cece;
 }
 
 /* override hover color for dropdown-item forced by bootstrap to all a:not([href]):not([tabindex]) elements in _reboot.scss */
@@ -43,7 +50,7 @@ a:hover {
   color: $dropdown-link-hover-color;
 }
 .text-info {
-  color: teal !important;
+  color: #29cece !important;
 }
 /* ==========================================================================
 Browser Upgrade Prompt
@@ -153,7 +160,7 @@ Custom alerts for notification
     }
   }
   .alert-link{
-    color: teal;
+    color: #29cece;
   }
 }
 

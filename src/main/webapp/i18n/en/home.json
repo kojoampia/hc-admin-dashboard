@@ -1,13 +1,13 @@
 {
   "home": {
     "title": "Welcome!",
-    "subtitle": "Here is Health Connect Patient Dashboard. Your health is our duty.",
+    "subtitle": "Here is Health Connect Administration Dashboard. Your health is our duty.",
     "logged": {
       "message": "You are logged in as user \"{{username}}\"."
     },
-    "question": "If you have any question on Health Connect Patient Dashboard:",
+    "question": "If you have any question on Health Connect Administration Dashboard:",
     "link": {
-      "homepage": "Health Connect Patient Dashboard",
+      "homepage": "Health Connect Administration Dashboard",
       "stackoverflow": "Health Connect on Stack Overflow",
       "bugtracker": "Health Connect bug tracker",
       "chat": "Health Connet public chat room",

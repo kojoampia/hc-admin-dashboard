@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
-import { IStat } from 'app/entities/patientMS/stat/stat.model';
-import { StatComponent } from 'app/entities/patientMS/stat/list/stat.component';
+import { IStat } from 'app/entities/adminMS/stat/stat.model';
+import { StatComponent } from 'app/entities/adminMS/stat/list/stat.component';
 
 @Component({
   selector: 'jhi-temperature',

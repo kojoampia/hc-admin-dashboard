@@ -8,9 +8,9 @@
 // Colors:
 // Grayscale and brand colors for use across Bootstrap.
 
-$primary: teal;
-$success: #28a745;
-$info: #17a2b8;
+$primary: #29cece;
+$success: #043b3b;
+$info: #5ab2c0;
 $warning: #ffc107;
 $danger: #dc3545;
 
@@ -34,14 +34,17 @@ $border-radius-sm: 0.1rem;
 // Body:
 // Settings for the `<body>` element.
 
-$body-bg: #ffffff;
+$body-bg: #043b3b;
 
 // Typography:
 // Font, line-height, and color for body text, headings, and more.
 
 $font-size-base: 1rem;
 
-$dropdown-link-hover-color: #CBFF70;
-$dropdown-link-hover-bg: teal;
+$dropdown-link-color: #29cece;
+$dropdown-link-hover-color: #043b3b;
+$dropdown-link-hover-bg: #29cece;
+$dropdown-link-active-color: #043b3b;
+$dropdown-link-active-bg: #29cece;
 
-$navbar-brand-color: teal;
+$navbar-brand-color: #29cece;

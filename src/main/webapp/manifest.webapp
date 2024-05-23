@@ -1,6 +1,6 @@
 {
-  "name": "PatientGateway",
-  "short_name": "PatientGateway",
+  "name": "adminGateway",
+  "short_name": "adminGateway",
   "icons": [
     {
       "src": "./content/images/health-connect_3_head-192.png",

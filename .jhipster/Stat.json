@@ -3,7 +3,7 @@
     "changelogDate": "20240206215832"
   },
   "changelogDate": "20240206215832",
-  "clientRootFolder": "patientMS",
+  "clientRootFolder": "adminMS",
   "databaseType": "mongodb",
   "fields": [
     {
@@ -35,7 +35,7 @@
       "fieldType": "String"
     }
   ],
-  "microserviceName": "patientMS",
+  "microserviceName": "adminMS",
   "name": "Stat",
   "pagination": "no",
   "readOnly": false,

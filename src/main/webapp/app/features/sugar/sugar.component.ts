@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { StatComponent } from 'app/entities/patientMS/stat/list/stat.component';
+import { StatComponent } from 'app/entities/adminMS/stat/list/stat.component';
 import { Subject } from 'rxjs';
 
 @Component({

@@ -103,7 +103,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         if (!this.isOpen) {
           this.isOpen = true;
           const modalRef: NgbModalRef = this.modalService.open(BloodPressureComponent, { size: 'xl', centered: true });
-          modalRef.componentInstance.patient = this.account;
+          modalRef.componentInstance.admin = this.account;
           modalRef.result.finally(() => (this.isOpen = false));
         }
         break;
@@ -113,7 +113,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         if (!this.isOpen) {
           this.isOpen = true;
           const modalRef: NgbModalRef = this.modalService.open(HeartRateComponent, { size: 'xl', centered: true });
-          modalRef.componentInstance.patient = this.account;
+          modalRef.componentInstance.admin = this.account;
           modalRef.result.finally(() => (this.isOpen = false));
         }
         break;
@@ -123,7 +123,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         if (!this.isOpen) {
           this.isOpen = true;
           const modalRef: NgbModalRef = this.modalService.open(SugarComponent, { size: 'xl', centered: true });
-          modalRef.componentInstance.patient = this.account;
+          modalRef.componentInstance.admin = this.account;
           modalRef.result.finally(() => (this.isOpen = false));
         }
         break;
@@ -133,7 +133,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         if (!this.isOpen) {
           this.isOpen = true;
           const modalRef: NgbModalRef = this.modalService.open(EmergencyComponent, { size: 'xl', centered: true });
-          modalRef.componentInstance.patient = this.account;
+          modalRef.componentInstance.admin = this.account;
           modalRef.result.finally(() => (this.isOpen = false));
         }
         break;
@@ -143,7 +143,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         if (!this.isOpen) {
           this.isOpen = true;
           const modalRef: NgbModalRef = this.modalService.open(AllergyComponent, { size: 'xl', centered: true });
-          modalRef.componentInstance.patient = this.account;
+          modalRef.componentInstance.admin = this.account;
           modalRef.result.finally(() => (this.isOpen = false));
         }
         break;

@@ -13,7 +13,7 @@ git pull -r
 
 # Set the version for the build and deploy
 export version=$1
-echo "Building and Deploying to Health Connect Patient Dashboard version $version"
+echo "Building and Deploying to Health Connect Admin Dashboard version $version"
 
 name=patientdashboard
 folder=`pwd`

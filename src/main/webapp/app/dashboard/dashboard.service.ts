@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class DashboardService {
-  private resourceUrl = this.applicationConfigService.getEndpointFor('api/profiles', 'hcpatientservice');
+  private resourceUrl = this.applicationConfigService.getEndpointFor('api/profiles', 'hcadminservice');
 
   constructor(
     private http: HttpClient,
