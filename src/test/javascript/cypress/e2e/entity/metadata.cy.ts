@@ -24,16 +24,16 @@ describe('Metadata e2e test', () => {
   });
 
   beforeEach(() => {
-    cy.intercept('GET', '/services/patientms/api/metadata+(?*|)').as('entitiesRequest');
-    cy.intercept('POST', '/services/patientms/api/metadata').as('postEntityRequest');
-    cy.intercept('DELETE', '/services/patientms/api/metadata/*').as('deleteEntityRequest');
+    cy.intercept('GET', '/services/adminms/api/metadata+(?*|)').as('entitiesRequest');
+    cy.intercept('POST', '/services/adminms/api/metadata').as('postEntityRequest');
+    cy.intercept('DELETE', '/services/adminms/api/metadata/*').as('deleteEntityRequest');
   });
 
   afterEach(() => {
     if (metadata) {
       cy.authenticatedRequest({
         method: 'DELETE',
-        url: `/services/patientms/api/metadata/${metadata.id}`,
+        url: `/services/adminms/api/metadata/${metadata.id}`,
       }).then(() => {
         metadata = undefined;
       });
@@ -78,7 +78,7 @@ describe('Metadata e2e test', () => {
       beforeEach(() => {
         cy.authenticatedRequest({
           method: 'POST',
-          url: '/services/patientms/api/metadata',
+          url: '/services/adminms/api/metadata',
           body: metadataSample,
         }).then(({ body }) => {
           metadata = body;
@@ -86,7 +86,7 @@ describe('Metadata e2e test', () => {
           cy.intercept(
             {
               method: 'GET',
-              url: '/services/patientms/api/metadata+(?*|)',
+              url: '/services/adminms/api/metadata+(?*|)',
               times: 1,
             },
             {

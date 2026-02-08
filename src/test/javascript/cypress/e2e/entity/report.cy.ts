@@ -24,16 +24,16 @@ describe('Report e2e test', () => {
   });
 
   beforeEach(() => {
-    cy.intercept('GET', '/services/patientms/api/reports+(?*|)').as('entitiesRequest');
-    cy.intercept('POST', '/services/patientms/api/reports').as('postEntityRequest');
-    cy.intercept('DELETE', '/services/patientms/api/reports/*').as('deleteEntityRequest');
+    cy.intercept('GET', '/services/adminms/api/reports+(?*|)').as('entitiesRequest');
+    cy.intercept('POST', '/services/adminms/api/reports').as('postEntityRequest');
+    cy.intercept('DELETE', '/services/adminms/api/reports/*').as('deleteEntityRequest');
   });
 
   afterEach(() => {
     if (report) {
       cy.authenticatedRequest({
         method: 'DELETE',
-        url: `/services/patientms/api/reports/${report.id}`,
+        url: `/services/adminms/api/reports/${report.id}`,
       }).then(() => {
         report = undefined;
       });
@@ -78,7 +78,7 @@ describe('Report e2e test', () => {
       beforeEach(() => {
         cy.authenticatedRequest({
           method: 'POST',
-          url: '/services/patientms/api/reports',
+          url: '/services/adminms/api/reports',
           body: reportSample,
         }).then(({ body }) => {
           report = body;
@@ -86,7 +86,7 @@ describe('Report e2e test', () => {
           cy.intercept(
             {
               method: 'GET',
-              url: '/services/patientms/api/reports+(?*|)',
+              url: '/services/adminms/api/reports+(?*|)',
               times: 1,
             },
             {

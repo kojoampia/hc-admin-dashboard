@@ -24,16 +24,16 @@ describe('HCCredential e2e test', () => {
   });
 
   beforeEach(() => {
-    cy.intercept('GET', '/services/patientms/api/hc-credentials+(?*|)').as('entitiesRequest');
-    cy.intercept('POST', '/services/patientms/api/hc-credentials').as('postEntityRequest');
-    cy.intercept('DELETE', '/services/patientms/api/hc-credentials/*').as('deleteEntityRequest');
+    cy.intercept('GET', '/services/adminms/api/hc-credentials+(?*|)').as('entitiesRequest');
+    cy.intercept('POST', '/services/adminms/api/hc-credentials').as('postEntityRequest');
+    cy.intercept('DELETE', '/services/adminms/api/hc-credentials/*').as('deleteEntityRequest');
   });
 
   afterEach(() => {
     if (hCCredential) {
       cy.authenticatedRequest({
         method: 'DELETE',
-        url: `/services/patientms/api/hc-credentials/${hCCredential.id}`,
+        url: `/services/adminms/api/hc-credentials/${hCCredential.id}`,
       }).then(() => {
         hCCredential = undefined;
       });
@@ -78,7 +78,7 @@ describe('HCCredential e2e test', () => {
       beforeEach(() => {
         cy.authenticatedRequest({
           method: 'POST',
-          url: '/services/patientms/api/hc-credentials',
+          url: '/services/adminms/api/hc-credentials',
           body: hCCredentialSample,
         }).then(({ body }) => {
           hCCredential = body;
@@ -86,7 +86,7 @@ describe('HCCredential e2e test', () => {
           cy.intercept(
             {
               method: 'GET',
-              url: '/services/patientms/api/hc-credentials+(?*|)',
+              url: '/services/adminms/api/hc-credentials+(?*|)',
               times: 1,
             },
             {

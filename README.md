@@ -1,4 +1,4 @@
-# patientGateway
+# Admin Dashboard
 
 This application was generated using JHipster 8.1.0, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v8.1.0](https://www.jhipster.tech/documentation-archive/v8.1.0).
 
@@ -116,7 +116,7 @@ update src/main/webapp/app/app.config.ts
 
 ### Packaging as jar
 
-To build the final jar and optimize the patientGateway application for production, run:
+To build the final jar and optimize the adminGateway application for production, run:
 
 ```
 ./mvnw -Pprod clean verify

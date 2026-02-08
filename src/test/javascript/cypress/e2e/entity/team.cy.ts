@@ -24,16 +24,16 @@ describe('Team e2e test', () => {
   });
 
   beforeEach(() => {
-    cy.intercept('GET', '/services/patientms/api/teams+(?*|)').as('entitiesRequest');
-    cy.intercept('POST', '/services/patientms/api/teams').as('postEntityRequest');
-    cy.intercept('DELETE', '/services/patientms/api/teams/*').as('deleteEntityRequest');
+    cy.intercept('GET', '/services/adminms/api/teams+(?*|)').as('entitiesRequest');
+    cy.intercept('POST', '/services/adminms/api/teams').as('postEntityRequest');
+    cy.intercept('DELETE', '/services/adminms/api/teams/*').as('deleteEntityRequest');
   });
 
   afterEach(() => {
     if (team) {
       cy.authenticatedRequest({
         method: 'DELETE',
-        url: `/services/patientms/api/teams/${team.id}`,
+        url: `/services/adminms/api/teams/${team.id}`,
       }).then(() => {
         team = undefined;
       });
@@ -78,7 +78,7 @@ describe('Team e2e test', () => {
       beforeEach(() => {
         cy.authenticatedRequest({
           method: 'POST',
-          url: '/services/patientms/api/teams',
+          url: '/services/adminms/api/teams',
           body: teamSample,
         }).then(({ body }) => {
           team = body;
@@ -86,7 +86,7 @@ describe('Team e2e test', () => {
           cy.intercept(
             {
               method: 'GET',
-              url: '/services/patientms/api/teams+(?*|)',
+              url: '/services/adminms/api/teams+(?*|)',
               times: 1,
             },
             {

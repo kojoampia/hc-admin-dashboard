@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "patient-gateway": {
+    "admin-gateway": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -77,15 +77,15 @@
         "serve": {
           "builder": "@angular-builders/custom-webpack:dev-server",
           "options": {
-            "buildTarget": "patient-gateway:build:development",
+            "buildTarget": "admin-gateway:build:development",
             "port": 4200
           },
           "configurations": {
             "production": {
-              "buildTarget": "patient-gateway:build:production"
+              "buildTarget": "admin-gateway:build:production"
             },
             "development": {
-              "buildTarget": "patient-gateway:build:development"
+              "buildTarget": "admin-gateway:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -106,6 +106,7 @@
       "path": "./target/angular/",
       "environment": "all"
     },
-    "packageManager": "npm"
+    "packageManager": "npm",
+    "analytics": false
   }
 }

@@ -1,7 +1,7 @@
 {
   "home": {
     "title": "Welcome!",
-    "subtitle": "Here is Health Connect Administration Dashboard. Your health is our duty.",
+    "subtitle": "Here is Health Connect Administration Dashboard. Health service is our duty.",
     "logged": {
       "message": "You are logged in as user \"{{username}}\"."
     },

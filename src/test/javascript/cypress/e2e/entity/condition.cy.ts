@@ -24,16 +24,16 @@ describe('Condition e2e test', () => {
   });
 
   beforeEach(() => {
-    cy.intercept('GET', '/services/patientms/api/conditions+(?*|)').as('entitiesRequest');
-    cy.intercept('POST', '/services/patientms/api/conditions').as('postEntityRequest');
-    cy.intercept('DELETE', '/services/patientms/api/conditions/*').as('deleteEntityRequest');
+    cy.intercept('GET', '/services/adminms/api/conditions+(?*|)').as('entitiesRequest');
+    cy.intercept('POST', '/services/adminms/api/conditions').as('postEntityRequest');
+    cy.intercept('DELETE', '/services/adminms/api/conditions/*').as('deleteEntityRequest');
   });
 
   afterEach(() => {
     if (condition) {
       cy.authenticatedRequest({
         method: 'DELETE',
-        url: `/services/patientms/api/conditions/${condition.id}`,
+        url: `/services/adminms/api/conditions/${condition.id}`,
       }).then(() => {
         condition = undefined;
       });
@@ -78,7 +78,7 @@ describe('Condition e2e test', () => {
       beforeEach(() => {
         cy.authenticatedRequest({
           method: 'POST',
-          url: '/services/patientms/api/conditions',
+          url: '/services/adminms/api/conditions',
           body: conditionSample,
         }).then(({ body }) => {
           condition = body;
@@ -86,7 +86,7 @@ describe('Condition e2e test', () => {
           cy.intercept(
             {
               method: 'GET',
-              url: '/services/patientms/api/conditions+(?*|)',
+              url: '/services/adminms/api/conditions+(?*|)',
               times: 1,
             },
             {

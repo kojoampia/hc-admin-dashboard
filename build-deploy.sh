@@ -15,7 +15,7 @@ git pull -r
 export version=$1
 echo "Building and Deploying to Health Connect Admin Dashboard version $version"
 
-name=patientdashboard
+name=admindashboard
 folder=`pwd`
 
 if [[ "$folder" != *"$name"* ]]; then
@@ -27,15 +27,15 @@ cd $folder
 
 
 echo "building..."
-docker build -t "patientdashboard" .
+docker build -t "admindashboard" .
 echo "done."
 
 echo "tagging..."
-docker tag hc-patient-dashboard docker-registry.jojoaddison.net/hc-patient-dashboard:$version
-docker image ls | grep 'hc-patient-dashboard'
+docker tag hc-admin-dashboard docker-registry.jojoaddison.net/hc-admin-dashboard:$version
+docker image ls | grep 'hc-admin-dashboard'
 echo "done."
 
 echo "pushing..."
-docker push docker-registry.jojoaddison.net/hc-patient-dashboard:$version
+docker push docker-registry.jojoaddison.net/hc-admin-dashboard:$version
 echo "done."
 echo "build and deploy completed."

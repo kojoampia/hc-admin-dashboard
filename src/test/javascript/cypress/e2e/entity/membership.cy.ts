@@ -24,16 +24,16 @@ describe('Membership e2e test', () => {
   });
 
   beforeEach(() => {
-    cy.intercept('GET', '/services/patientms/api/memberships+(?*|)').as('entitiesRequest');
-    cy.intercept('POST', '/services/patientms/api/memberships').as('postEntityRequest');
-    cy.intercept('DELETE', '/services/patientms/api/memberships/*').as('deleteEntityRequest');
+    cy.intercept('GET', '/services/adminms/api/memberships+(?*|)').as('entitiesRequest');
+    cy.intercept('POST', '/services/adminms/api/memberships').as('postEntityRequest');
+    cy.intercept('DELETE', '/services/adminms/api/memberships/*').as('deleteEntityRequest');
   });
 
   afterEach(() => {
     if (membership) {
       cy.authenticatedRequest({
         method: 'DELETE',
-        url: `/services/patientms/api/memberships/${membership.id}`,
+        url: `/services/adminms/api/memberships/${membership.id}`,
       }).then(() => {
         membership = undefined;
       });
@@ -78,7 +78,7 @@ describe('Membership e2e test', () => {
       beforeEach(() => {
         cy.authenticatedRequest({
           method: 'POST',
-          url: '/services/patientms/api/memberships',
+          url: '/services/adminms/api/memberships',
           body: membershipSample,
         }).then(({ body }) => {
           membership = body;
@@ -86,7 +86,7 @@ describe('Membership e2e test', () => {
           cy.intercept(
             {
               method: 'GET',
-              url: '/services/patientms/api/memberships+(?*|)',
+              url: '/services/adminms/api/memberships+(?*|)',
               times: 1,
             },
             {

@@ -1,4 +1,4 @@
-version: '3.5'
+name: health-connect
 services:
   admindashboard:
     image: hc-admin-dashboard:0.0.1
@@ -15,7 +15,7 @@ services:
     volumes:
       - './admindashboard:/usr/src/app'
     ports:
-      - 127.0.0.1:5501:80
+      - 127.0.0.1:5506:80
     networks:
       - devnet
 

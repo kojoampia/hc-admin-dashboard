@@ -24,16 +24,16 @@ describe('HCPayOption e2e test', () => {
   });
 
   beforeEach(() => {
-    cy.intercept('GET', '/services/patientms/api/hc-pay-options+(?*|)').as('entitiesRequest');
-    cy.intercept('POST', '/services/patientms/api/hc-pay-options').as('postEntityRequest');
-    cy.intercept('DELETE', '/services/patientms/api/hc-pay-options/*').as('deleteEntityRequest');
+    cy.intercept('GET', '/services/adminms/api/hc-pay-options+(?*|)').as('entitiesRequest');
+    cy.intercept('POST', '/services/adminms/api/hc-pay-options').as('postEntityRequest');
+    cy.intercept('DELETE', '/services/adminms/api/hc-pay-options/*').as('deleteEntityRequest');
   });
 
   afterEach(() => {
     if (hCPayOption) {
       cy.authenticatedRequest({
         method: 'DELETE',
-        url: `/services/patientms/api/hc-pay-options/${hCPayOption.id}`,
+        url: `/services/adminms/api/hc-pay-options/${hCPayOption.id}`,
       }).then(() => {
         hCPayOption = undefined;
       });
@@ -78,7 +78,7 @@ describe('HCPayOption e2e test', () => {
       beforeEach(() => {
         cy.authenticatedRequest({
           method: 'POST',
-          url: '/services/patientms/api/hc-pay-options',
+          url: '/services/adminms/api/hc-pay-options',
           body: hCPayOptionSample,
         }).then(({ body }) => {
           hCPayOption = body;
@@ -86,7 +86,7 @@ describe('HCPayOption e2e test', () => {
           cy.intercept(
             {
               method: 'GET',
-              url: '/services/patientms/api/hc-pay-options+(?*|)',
+              url: '/services/adminms/api/hc-pay-options+(?*|)',
               times: 1,
             },
             {

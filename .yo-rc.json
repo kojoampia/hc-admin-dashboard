@@ -1,6 +1,6 @@
 {
   "generator-jhipster": {
-    "baseName": "patientDashboard",
+    "baseName": "adminDashboard",
     "clientFramework": "angular",
     "clientTestFrameworks": ["cypress"],
     "clientTheme": "none",

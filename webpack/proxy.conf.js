@@ -3,7 +3,7 @@ function setupProxy({ tls }) {
   const conf = [
     {
       context: serverResources,
-      target: `http${tls ? 's' : ''}://localhost:5505`,
+      target: `http${tls ? 's' : ''}://localhost:5508`,
       secure: false,
       changeOrigin: tls,
     },

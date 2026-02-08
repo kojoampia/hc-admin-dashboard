@@ -24,16 +24,16 @@ describe('Profile e2e test', () => {
   });
 
   beforeEach(() => {
-    cy.intercept('GET', '/services/patientms/api/profiles+(?*|)').as('entitiesRequest');
-    cy.intercept('POST', '/services/patientms/api/profiles').as('postEntityRequest');
-    cy.intercept('DELETE', '/services/patientms/api/profiles/*').as('deleteEntityRequest');
+    cy.intercept('GET', '/services/adminms/api/profiles+(?*|)').as('entitiesRequest');
+    cy.intercept('POST', '/services/adminms/api/profiles').as('postEntityRequest');
+    cy.intercept('DELETE', '/services/adminms/api/profiles/*').as('deleteEntityRequest');
   });
 
   afterEach(() => {
     if (profile) {
       cy.authenticatedRequest({
         method: 'DELETE',
-        url: `/services/patientms/api/profiles/${profile.id}`,
+        url: `/services/adminms/api/profiles/${profile.id}`,
       }).then(() => {
         profile = undefined;
       });
@@ -78,7 +78,7 @@ describe('Profile e2e test', () => {
       beforeEach(() => {
         cy.authenticatedRequest({
           method: 'POST',
-          url: '/services/patientms/api/profiles',
+          url: '/services/adminms/api/profiles',
           body: profileSample,
         }).then(({ body }) => {
           profile = body;
@@ -86,13 +86,13 @@ describe('Profile e2e test', () => {
           cy.intercept(
             {
               method: 'GET',
-              url: '/services/patientms/api/profiles+(?*|)',
+              url: '/services/adminms/api/profiles+(?*|)',
               times: 1,
             },
             {
               statusCode: 200,
               headers: {
-                link: '<http://localhost/services/patientms/api/profiles?page=0&size=20>; rel="last",<http://localhost/services/patientms/api/profiles?page=0&size=20>; rel="first"',
+                link: '<http://localhost/services/adminms/api/profiles?page=0&size=20>; rel="last",<http://localhost/services/adminms/api/profiles?page=0&size=20>; rel="first"',
               },
               body: [profile],
             },
