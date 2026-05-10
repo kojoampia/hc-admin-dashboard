@@ -3,9 +3,10 @@ function setupProxy({ tls }) {
   const conf = [
     {
       context: serverResources,
-      target: `http${tls ? 's' : ''}://localhost:5508`,
+      // Point to the mock server
+      target: `http://localhost:5508`,
       secure: false,
-      changeOrigin: tls,
+      changeOrigin: false,
     },
   ];
   return conf;

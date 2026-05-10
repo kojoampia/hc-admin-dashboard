@@ -1,0 +1,4 @@
+{
+  "/api/authenticate": "/authentication",
+  "/api/account": "/account"
+}

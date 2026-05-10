@@ -1,0 +1,170 @@
+{
+  "profiles": [
+    {
+      "id": 1,
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "john.doe@example.com",
+      "addressId": 1
+    },
+    {
+      "id": 2,
+      "firstName": "Jane",
+      "lastName": "Smith",
+      "email": "jane.smith@example.com",
+      "addressId": 2
+    }
+  ],
+  "teams": [
+    {
+      "id": 1,
+      "name": "Cardiology",
+      "description": "Team specializing in heart conditions."
+    },
+    {
+      "id": 2,
+      "name": "Pediatrics",
+      "description": "Team specializing in child healthcare."
+    }
+  ],
+  "addresses": [
+    {
+      "id": 1,
+      "street": "123 Main St",
+      "city": "Anytown",
+      "state": "CA",
+      "zip": "12345"
+    },
+    {
+      "id": 2,
+      "street": "456 Oak Ave",
+      "city": "Someplace",
+      "state": "NY",
+      "zip": "54321"
+    }
+  ],
+  "conditions": [
+    {
+      "id": 1,
+      "name": "Hypertension",
+      "snomed_id": "59621000",
+      "profileId": 1
+    },
+    {
+      "id": 2,
+      "name": "Asthma",
+      "snomed_id": "195967001",
+      "profileId": 2
+    }
+  ],
+  "hccredentials": [
+    {
+      "id": 1,
+      "username": "john.doe",
+      "profileId": 1
+    },
+    {
+      "id": 2,
+      "username": "jane.smith",
+      "profileId": 2
+    }
+  ],
+  "hcpayoptions": [
+    {
+      "id": 1,
+      "name": "Visa **** 1234",
+      "type": "credit_card",
+      "profileId": 1
+    },
+    {
+      "id": 2,
+      "name": "PayPal",
+      "type": "paypal",
+      "profileId": 2
+    }
+  ],
+  "medications": [
+    {
+      "id": 1,
+      "name": "Lisinopril",
+      "dosage": "10mg",
+      "frequency": "daily",
+      "conditionId": 1
+    },
+    {
+      "id": 2,
+      "name": "Albuterol",
+      "dosage": "90mcg",
+      "frequency": "as needed",
+      "conditionId": 2
+    }
+  ],
+  "memberships": [
+    {
+      "id": 1,
+      "type": "Premium",
+      "startDate": "2023-01-01",
+      "endDate": "2024-01-01",
+      "profileId": 1
+    },
+    {
+      "id": 2,
+      "type": "Basic",
+      "startDate": "2023-03-15",
+      "endDate": "2024-03-15",
+      "profileId": 2
+    }
+  ],
+  "metadata": [
+    {
+      "id": 1,
+      "key": "last_login",
+      "value": "2023-10-26T10:00:00Z",
+      "profileId": 1
+    }
+  ],
+  "reports": [
+    {
+      "id": 1,
+      "name": "Blood Panel - Oct 2023",
+      "generatedDate": "2023-10-25",
+      "profileId": 1
+    }
+  ],
+  "stats": [
+    {
+      "id": 1,
+      "name": "logins_last_7_days",
+      "value": 12,
+      "date": "2023-10-26"
+    }
+  ],
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Review patient reports",
+      "description": "Review reports for week of Oct 23",
+      "dueDate": "2023-10-30",
+      "completed": false,
+      "assigneeId": 1
+    }
+  ],
+  "authentication": {
+    "username": "admin",
+    "password": "admin",
+    "rememberMe": false
+  },
+  "account": {
+    "id": 1,
+    "login": "user",
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "john.doe@example.com",
+    "activated": true,
+    "langKey": "en",
+    "authorities": [
+      "ROLE_USER",
+      "ROLE_ADMIN"
+    ]
+  }
+}
