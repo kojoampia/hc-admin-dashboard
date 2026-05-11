@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "admin-gateway": {
+    "admin-dashboard": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -37,7 +37,7 @@
             ],
             "styles": ["src/main/webapp/content/scss/vendor.scss", "src/main/webapp/content/scss/global.scss"],
             "scripts": [],
-            "allowedCommonJsDependencies": ["hammerjs", "sockjs-client", "webstomp-client"]
+            "allowedCommonJsDependencies": ["hammerjs", "sockjs-client", "webstomp-client", "rfdc"]
           },
           "configurations": {
             "production": {
@@ -77,15 +77,15 @@
         "serve": {
           "builder": "@angular-builders/custom-webpack:dev-server",
           "options": {
-            "buildTarget": "admin-gateway:build:development",
+            "buildTarget": "admin-dashboard:build:development",
             "port": 4200
           },
           "configurations": {
             "production": {
-              "buildTarget": "admin-gateway:build:production"
+              "buildTarget": "admin-dashboard:build:production"
             },
             "development": {
-              "buildTarget": "admin-gateway:build:development"
+              "buildTarget": "admin-dashboard:build:development"
             }
           },
           "defaultConfiguration": "development"

@@ -2,52 +2,52 @@
   <div class="col-8">
     @if (stat) {
     <div>
-      <h2 data-cy="statDetailsHeading"><span jhiTranslate="adminDashboardApp.adminMsStat.detail.title">Stat</span>
+      <h2 data-cy="statDetailsHeading"><span hpdTranslate="adminDashboardApp.adminMsStat.detail.title">Stat</span>
       </h2>
 
       <hr />
 
-      <jhi-alert-error></jhi-alert-error>
+      <hpd-alert-error></hpd-alert-error>
 
-      <jhi-alert></jhi-alert>
+      <hpd-alert></hpd-alert>
 
       <dl class="row-md jh-entity-details">
-        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dt><span hpdTranslate="global.field.id">ID</span></dt>
         <dd>
           <span>{{ stat.id }}</span>
         </dd>
-        <dt><span jhiTranslate="adminDashboardApp.adminMsStat.name">Name</span></dt>
+        <dt><span hpdTranslate="adminDashboardApp.adminMsStat.name">Name</span></dt>
         <dd>
           <span>{{ stat.name }}</span>
         </dd>
-        <dt><span jhiTranslate="adminDashboardApp.adminMsStat.description">Description</span></dt>
+        <dt><span hpdTranslate="adminDashboardApp.adminMsStat.description">Description</span></dt>
         <dd>
           <span>{{ stat.description }}</span>
         </dd>
-        <dt><span jhiTranslate="adminDashboardApp.adminMsStat.value">Value</span></dt>
+        <dt><span hpdTranslate="adminDashboardApp.adminMsStat.value">Value</span></dt>
         <dd>
           <span>{{ stat.value }}</span>
         </dd>
-        <dt><span jhiTranslate="adminDashboardApp.adminMsStat.note">Note</span></dt>
+        <dt><span hpdTranslate="adminDashboardApp.adminMsStat.note">Note</span></dt>
         <dd>
           <span>{{ stat.note }}</span>
         </dd>
-        <dt><span jhiTranslate="adminDashboardApp.adminMsStat.createdDate">Created Date</span></dt>
+        <dt><span hpdTranslate="adminDashboardApp.adminMsStat.createdDate">Created Date</span></dt>
         <dd>
           <span>{{ stat.createdDate | formatMediumDate }}</span>
         </dd>
-        <dt><span jhiTranslate="adminDashboardApp.adminMsStat.createdBy">Created By</span></dt>
+        <dt><span hpdTranslate="adminDashboardApp.adminMsStat.createdBy">Created By</span></dt>
         <dd>
           <span>{{ stat.createdBy }}</span>
         </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span hpdTranslate="entity.action.back">Back</span>
       </button>
 
       <button type="button" [routerLink]="['/stat', stat.id, 'edit']" class="btn btn-primary">
-        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span hpdTranslate="entity.action.edit">Edit</span>
       </button>
     </div>
     }

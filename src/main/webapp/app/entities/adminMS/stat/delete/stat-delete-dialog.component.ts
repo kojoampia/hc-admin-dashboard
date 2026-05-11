@@ -9,9 +9,8 @@ import { StatService } from '../service/stat.service';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-  standalone: true,
-  templateUrl: './stat-delete-dialog.component.html',
-  imports: [SharedModule, FormsModule, TranslateModule],
+    templateUrl: './stat-delete-dialog.component.html',
+    imports: [SharedModule, FormsModule, TranslateModule]
 })
 export class StatDeleteDialogComponent {
   stat?: IStat;

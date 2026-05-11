@@ -2,7 +2,7 @@ import { Directive, EventEmitter, Input, Output } from '@angular/core';
 
 @Directive({
   standalone: true,
-  selector: '[jhiSort]',
+  selector: '[hpdSort]',
 })
 export default class SortDirective<T> {
   @Input()

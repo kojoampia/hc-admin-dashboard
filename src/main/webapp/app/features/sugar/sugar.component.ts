@@ -4,11 +4,10 @@ import { StatComponent } from 'app/entities/adminMS/stat/list/stat.component';
 import { Subject } from 'rxjs';
 
 @Component({
-  selector: 'jhi-sugar',
-  standalone: true,
-  imports: [StatComponent],
-  templateUrl: './sugar.component.html',
-  styleUrl: './sugar.component.scss',
+    selector: 'hpd-sugar',
+    imports: [StatComponent],
+    templateUrl: './sugar.component.html',
+    styleUrl: './sugar.component.scss'
 })
 export class SugarComponent {
   public type = 'sugar';

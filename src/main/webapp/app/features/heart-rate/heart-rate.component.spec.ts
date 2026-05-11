@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { HeartRateComponent } from './heart-rate.component';
 
@@ -8,8 +9,10 @@ describe('HeartRateComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HeartRateComponent]
+      imports: [HeartRateComponent],
+      providers: [NgbActiveModal],
     })
+    .overrideTemplate(HeartRateComponent, '')
     .compileComponents();
     
     fixture = TestBed.createComponent(HeartRateComponent);

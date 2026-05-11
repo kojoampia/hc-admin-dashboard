@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { EmergencyComponent } from './emergency.component';
 
@@ -8,8 +9,10 @@ describe('EmergencyComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [EmergencyComponent]
+      imports: [EmergencyComponent],
+      providers: [NgbActiveModal],
     })
+    .overrideTemplate(EmergencyComponent, '')
     .compileComponents();
     
     fixture = TestBed.createComponent(EmergencyComponent);

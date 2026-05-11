@@ -8,11 +8,11 @@ import SortByDirective from './sort-by.directive';
 import SortDirective from './sort.directive';
 
 @Component({
-  template: `
+    template: `
     <table>
       <thead>
-        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="transition($event)">
-          <th jhiSortBy="name">
+        <tr hpdSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="transition($event)">
+          <th hpdSortBy="name">
             ID
             @if (sortAllowed) {
               <fa-icon [icon]="'sort'"></fa-icon>
@@ -22,6 +22,7 @@ import SortDirective from './sort.directive';
       </thead>
     </table>
   `,
+    standalone: false
 })
 class TestSortByDirectiveComponent {
   predicate?: string;
@@ -59,7 +60,7 @@ describe('Directive: SortByDirective', () => {
     fixture.detectChanges();
 
     // THEN
-    expect(sortByDirective.jhiSortBy).toEqual('name');
+    expect(sortByDirective.hpdSortBy).toEqual('name');
     expect(component.predicate).toEqual('id');
     expect(sortByDirective.iconComponent?.icon).toEqual('sort');
     expect(component.transition).toHaveBeenCalledTimes(0);
@@ -75,7 +76,7 @@ describe('Directive: SortByDirective', () => {
     fixture.detectChanges();
 
     // THEN
-    expect(sortByDirective.jhiSortBy).toEqual('name');
+    expect(sortByDirective.hpdSortBy).toEqual('name');
     expect(component.predicate).toEqual('name');
     expect(component.ascending).toEqual(true);
     expect(sortByDirective.iconComponent?.icon).toEqual(faSortUp.iconName);

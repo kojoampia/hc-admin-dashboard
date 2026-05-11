@@ -2,14 +2,13 @@ import { Component, Input } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 
 import SharedModule from 'app/shared/shared.module';
-import { DurationPipe, FormatMediumDatetimePipe, FormatMediumDatePipe } from 'app/shared/date';
+import { FormatMediumDatePipe } from 'app/shared/date';
 import { IStat } from '../stat.model';
 
 @Component({
-  standalone: true,
-  selector: 'jhi-stat-detail',
-  templateUrl: './stat-detail.component.html',
-  imports: [SharedModule, RouterModule, DurationPipe, FormatMediumDatetimePipe, FormatMediumDatePipe],
+    selector: 'hpd-stat-detail',
+    templateUrl: './stat-detail.component.html',
+  imports: [SharedModule, RouterModule, FormatMediumDatePipe]
 })
 export class StatDetailComponent {
   @Input() stat: IStat | null = null;

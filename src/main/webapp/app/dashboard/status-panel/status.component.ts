@@ -4,11 +4,10 @@ import { IChartItem } from './chart-item-model';
 import { StatusService } from './status.service';
 
 @Component({
-  selector: 'jhi-status',
-  standalone: true,
-  imports: [NgxChartsModule],
-  templateUrl: './status.component.html',
-  styleUrl: './status.component.scss',
+    selector: 'hpd-status',
+    imports: [NgxChartsModule],
+    templateUrl: './status.component.html',
+    styleUrl: './status.component.scss'
 })
 export class StatusComponent {
   /* Chart title */
@@ -89,9 +88,6 @@ export class StatusComponent {
     this.chartItems = this.statusService.getServicesPerDay();
     this.chartSeries = this.statusService.getServiceSeries();
   }
-
-  /* On component initialization function*/
-  ngOnInit(): void {}
 
   /* Click event */
   onSelect(): void {

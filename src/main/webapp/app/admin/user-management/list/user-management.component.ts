@@ -16,10 +16,9 @@ import { User } from '../user-management.model';
 import UserManagementDeleteDialogComponent from '../delete/user-management-delete-dialog.component';
 
 @Component({
-  standalone: true,
-  selector: 'jhi-user-mgmt',
-  templateUrl: './user-management.component.html',
-  imports: [RouterModule, SharedModule, SortDirective, SortByDirective, UserManagementDeleteDialogComponent, ItemCountComponent],
+    selector: 'hpd-user-mgmt',
+    templateUrl: './user-management.component.html',
+  imports: [RouterModule, SharedModule, SortDirective, SortByDirective, ItemCountComponent]
 })
 export default class UserManagementComponent implements OnInit {
   currentAccount: Account | null = null;

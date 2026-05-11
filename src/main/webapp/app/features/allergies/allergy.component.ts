@@ -4,11 +4,10 @@ import { Subject } from 'rxjs';
 import { StatComponent } from '../../entities/adminMS/stat/list/stat.component';
 
 @Component({
-  selector: 'jhi-allergy',
-  standalone: true,
-  imports: [StatComponent],
-  templateUrl: './allergy.component.html',
-  styleUrl: './allergy.component.scss',
+    selector: 'hpd-allergy',
+    imports: [StatComponent],
+    templateUrl: './allergy.component.html',
+    styleUrl: './allergy.component.scss'
 })
 export class AllergyComponent {
   public type = 'allergies';

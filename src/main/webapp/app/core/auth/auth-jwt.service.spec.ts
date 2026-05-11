@@ -1,7 +1,8 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { AuthServerProvider } from 'app/core/auth/auth-jwt.service';
 import { StateStorageService } from './state-storage.service';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('Auth JWT', () => {
   let service: AuthServerProvider;
@@ -10,8 +11,9 @@ describe('Auth JWT', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-    });
+    imports: [],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
 
     mockStorageService = TestBed.inject(StateStorageService);
     httpMock = TestBed.inject(HttpTestingController);
@@ -25,13 +27,13 @@ describe('Auth JWT', () => {
     });
 
     it('should return token from session storage if local storage is empty', () => {
-      sessionStorage.setItem('jhi-authenticationToken', JSON.stringify('sessionStorageToken'));
+      sessionStorage.setItem('hpd-authenticationToken', JSON.stringify('sessionStorageToken'));
       const result = service.getToken();
       expect(result).toEqual('sessionStorageToken');
     });
 
     it('should return token from localstorage storage', () => {
-      localStorage.setItem('jhi-authenticationToken', JSON.stringify('localStorageToken'));
+      localStorage.setItem('hpd-authenticationToken', JSON.stringify('localStorageToken'));
       const result = service.getToken();
       expect(result).toEqual('localStorageToken');
     });

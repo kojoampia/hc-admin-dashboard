@@ -1,11 +1,12 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 
 import { DATE_FORMAT } from 'app/config/input.constants';
 import { IStat } from '../stat.model';
 import { sampleWithRequiredData, sampleWithNewData, sampleWithPartialData, sampleWithFullData } from '../stat.test-samples';
 
 import { StatService, RestStat } from './stat.service';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 const requireRestSample: RestStat = {
   ...sampleWithRequiredData,
@@ -19,8 +20,9 @@ describe('Stat Service', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-    });
+    imports: [],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
     expectedResult = null;
     service = TestBed.inject(StatService);
     httpMock = TestBed.inject(HttpTestingController);
@@ -79,7 +81,7 @@ describe('Stat Service', () => {
 
       const expected = { ...sampleWithRequiredData };
 
-      service.query().subscribe(resp => (expectedResult = resp.body));
+      service.query('test').subscribe(resp => (expectedResult = resp.body));
 
       const req = httpMock.expectOne({ method: 'GET' });
       req.flush([returnedFromService]);
@@ -104,7 +106,7 @@ describe('Stat Service', () => {
         query: '',
         sort: [],
       };
-      service.search(queryObject).subscribe(() => expectedResult);
+      service.search('test', queryObject).subscribe(() => expectedResult);
 
       const req = httpMock.expectOne({ method: 'GET' });
       req.flush(null, { status: 500, statusText: 'Internal Server Error' });

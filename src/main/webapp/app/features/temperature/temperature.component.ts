@@ -5,11 +5,10 @@ import { IStat } from 'app/entities/adminMS/stat/stat.model';
 import { StatComponent } from 'app/entities/adminMS/stat/list/stat.component';
 
 @Component({
-  selector: 'jhi-temperature',
-  standalone: true,
-  imports: [StatComponent],
-  templateUrl: './temperature.component.html',
-  styleUrl: './temperature.component.scss',
+    selector: 'hpd-temperature',
+    imports: [StatComponent],
+    templateUrl: './temperature.component.html',
+    styleUrl: './temperature.component.scss'
 })
 export class TemperatureComponent implements OnDestroy, OnInit {
   public type = 'temperature';

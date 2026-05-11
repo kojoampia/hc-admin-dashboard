@@ -48,14 +48,14 @@ spring:
       bindings:
         binding-out-0:
           content-type: text/plain
-          group: admin-gateway
+          group: admin-dashboard
         kafkaConsumer-in-0:
           destination: sse-topic
           content-type: text/plain
-          group: admin-gateway
+          group: admin-dashboard
         kafkaProducer-out-0:
           content-type: text/plain
-          group: admin-gateway
+          group: admin-dashboard
   jackson:
     serialization:
       write-durations-as-timestamps: false
@@ -67,13 +67,13 @@ spring:
     basename: i18n/messages
   task:
     execution:
-      thread-name-prefix: admin-gateway-task-
+      thread-name-prefix: admin-dashboard-task-
       pool:
         core-size: 1
         max-size: 50
         queue-capacity: 10000
     scheduling:
-      thread-name-prefix: admin-gateway-scheduling-
+      thread-name-prefix: admin-dashboard-scheduling-
       pool:
         size: 20
   thymeleaf:

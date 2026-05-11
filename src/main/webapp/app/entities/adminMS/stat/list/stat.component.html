@@ -3,28 +3,28 @@
 
     <div class="d-flex justify-content-end">
       <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
-        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span jhiTranslate="adminDashboardApp.adminMsStat.home.refreshListLabel">Refresh list</span>
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+        <span hpdTranslate="adminDashboardApp.adminMsStat.home.refreshListLabel">Refresh list</span>
       </button>
 
       <button id="jh-create-entity" data-cy="entityCreateButton" class="btn btn-primary jh-create-entity create-stat"
         [routerLink]="['/stat/new']">
         <fa-icon icon="plus"></fa-icon>
-        <span class="hidden-sm-down" jhiTranslate="adminDashboardApp.adminMsStat.home.createLabel">Create a new
+        <span class="hidden-sm-down" hpdTranslate="adminDashboardApp.adminMsStat.home.createLabel">Create a new
           Stat</span>
       </button>
     </div>
   </h2>
 
-  <jhi-alert-error></jhi-alert-error>
+  <hpd-alert-error></hpd-alert-error>
 
-  <jhi-alert></jhi-alert>
+  <hpd-alert></hpd-alert>
 
   <form name="searchForm" class="row row-cols-sm-auto align-items-center">
     <div class="col-sm-12">
       <div class="input-group w-100 mt-3">
         <label class="visually-hidden" for="currentSearch"
-          jhiTranslate="adminDashboardApp.adminMsStat.home.search">Search for Stat</label>
+          hpdTranslate="adminDashboardApp.adminMsStat.home.search">Search for Stat</label>
         <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch"
           placeholder="{{ 'adminDashboardApp.adminMsStat.home.search' | translate }}" />
 
@@ -43,7 +43,7 @@
 
   @if (stats?.length === 0) {
   <div class="alert alert-warning" id="no-result">
-    <span jhiTranslate="adminDashboardApp.adminMsStat.home.notFound">No Stats found</span>
+    <span hpdTranslate="adminDashboardApp.adminMsStat.home.notFound">No Stats found</span>
   </div>
   }
 
@@ -51,17 +51,17 @@
   <div class="table-responsive table-entities" id="entities">
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
-        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" jhiSortBy="createdDate">
+        <tr hpdSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" hpdSortBy="createdDate">
             <div class="d-flex">
-              <span jhiTranslate="adminDashboardApp.adminMsStat.createdDate">Created Date</span>
+              <span hpdTranslate="adminDashboardApp.adminMsStat.createdDate">Created Date</span>
 
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="value">
+          <th scope="col" hpdSortBy="value">
             <div class="d-flex">
-              <span jhiTranslate="adminDashboardApp.adminMsStat.value">Value</span>
+              <span hpdTranslate="adminDashboardApp.adminMsStat.value">Value</span>
 
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
@@ -78,17 +78,17 @@
             <div class="btn-group">
               <button type="button" (click)="view(stat)" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
                 <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                <span class="d-none d-md-inline" hpdTranslate="entity.action.view">View</span>
               </button>
 
               <button type="button" (click)="edit(stat)" class="btn btn-primary btn-sm" data-cy="entityEditButton">
                 <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                <span class="d-none d-md-inline" hpdTranslate="entity.action.edit">Edit</span>
               </button>
 
               <button type="submit" (click)="delete(stat)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                <span class="d-none d-md-inline" hpdTranslate="entity.action.delete">Delete</span>
               </button>
             </div>
           </td>

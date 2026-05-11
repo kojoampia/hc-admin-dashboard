@@ -6,7 +6,7 @@
         </button>
     </div>
     <div *ngIf="showCodeInput" class="form-group p-1">
-        <label class="form-control-label" jhiTranslate="register.form.code" for="field_code">Verfication Code</label>
+        <label class="form-control-label" hpdTranslate="register.form.code" for="field_code">Verfication Code</label>
         <input type="text" maxlength="5" placeholder="-----" class="col-md-2" name="verificationCode" id="field_code"
             formControlName="verificationCode" (keyup)="verifyCode()" />
     </div>

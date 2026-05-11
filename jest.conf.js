@@ -1,4 +1,5 @@
 const { pathsToModuleNameMapper } = require('ts-jest');
+const { createCjsPreset } = require('jest-preset-angular/presets');
 
 const {
   compilerOptions: { paths = {}, baseUrl = './' },
@@ -6,14 +7,15 @@ const {
 const environment = require('./webpack/environment');
 
 module.exports = {
-  transformIgnorePatterns: ['node_modules/(?!.*\\.mjs$|dayjs/esm)'],
-  resolver: 'jest-preset-angular/build/resolvers/ng-jest-resolver.js',
+  ...createCjsPreset(),
+  transformIgnorePatterns: ['node_modules/(?!(.*\\.mjs$|dayjs/esm|@angular/common/locales/.*\\.js$|d3-.*|internmap))'],
   globals: {
     ...environment,
   },
   roots: ['<rootDir>', `<rootDir>/${baseUrl}`],
   modulePaths: [`<rootDir>/${baseUrl}`],
   setupFiles: ['jest-date-mock'],
+  setupFilesAfterEnv: ['<rootDir>/setup-jest.ts'],
   cacheDirectory: '<rootDir>/target/jest-cache',
   coverageDirectory: '<rootDir>/target/test-results/',
   moduleNameMapper: pathsToModuleNameMapper(paths, { prefix: `<rootDir>/${baseUrl}/` }),

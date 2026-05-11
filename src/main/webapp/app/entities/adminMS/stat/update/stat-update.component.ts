@@ -13,10 +13,9 @@ import { StatFormService, StatFormGroup } from './stat-form.service';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-  standalone: true,
-  selector: 'jhi-stat-update',
-  templateUrl: './stat-update.component.html',
-  imports: [SharedModule, FormsModule, ReactiveFormsModule, TranslateModule],
+    selector: 'hpd-stat-update',
+    templateUrl: './stat-update.component.html',
+    imports: [SharedModule, FormsModule, ReactiveFormsModule, TranslateModule]
 })
 export class StatUpdateComponent implements OnInit {
   isSaving = false;

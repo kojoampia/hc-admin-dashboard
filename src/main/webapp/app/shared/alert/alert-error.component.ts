@@ -10,10 +10,9 @@ import { EventManager, EventWithContent } from 'app/core/util/event-manager.serv
 import { AlertError } from './alert-error.model';
 
 @Component({
-  standalone: true,
-  selector: 'jhi-alert-error',
-  templateUrl: './alert-error.component.html',
-  imports: [CommonModule, NgbModule],
+    selector: 'hpd-alert-error',
+    templateUrl: './alert-error.component.html',
+    imports: [CommonModule, NgbModule]
 })
 export class AlertErrorComponent implements OnDestroy {
   alerts: Alert[] = [];
@@ -94,7 +93,7 @@ export class AlertErrorComponent implements OnDestroy {
   }
 
   setClasses(alert: Alert): { [key: string]: boolean } {
-    const classes = { 'jhi-toast': Boolean(alert.toast) };
+    const classes = { 'hpd-toast': Boolean(alert.toast) };
     if (alert.position) {
       return { ...classes, [alert.position]: true };
     }

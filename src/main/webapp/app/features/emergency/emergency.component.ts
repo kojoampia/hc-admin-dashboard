@@ -4,11 +4,10 @@ import { StatComponent } from '../..//entities/adminMS/stat/list/stat.component'
 import { Subject } from 'rxjs';
 
 @Component({
-  selector: 'jhi-emergency',
-  standalone: true,
-  imports: [StatComponent],
-  templateUrl: './emergency.component.html',
-  styleUrl: './emergency.component.scss',
+    selector: 'hpd-emergency',
+    imports: [StatComponent],
+    templateUrl: './emergency.component.html',
+    styleUrl: './emergency.component.scss'
 })
 export class EmergencyComponent {
   public type = 'emergencies';

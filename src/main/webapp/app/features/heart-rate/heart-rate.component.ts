@@ -4,11 +4,10 @@ import { StatComponent } from 'app/entities/adminMS/stat/list/stat.component';
 import { Subject } from 'rxjs';
 
 @Component({
-  selector: 'jhi-heart-rate',
-  standalone: true,
-  imports: [StatComponent],
-  templateUrl: './heart-rate.component.html',
-  styleUrl: './heart-rate.component.scss',
+    selector: 'hpd-heart-rate',
+    imports: [StatComponent],
+    templateUrl: './heart-rate.component.html',
+    styleUrl: './heart-rate.component.scss'
 })
 export class HeartRateComponent {
   public type = 'heartrate';
