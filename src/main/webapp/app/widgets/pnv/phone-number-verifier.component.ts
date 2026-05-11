@@ -23,7 +23,7 @@ export class PhoneNumberVerifierComponent implements OnInit, OnDestroy {
   isCodeNumberValid = false;
   isCodeNumberChecking = false;
   showCodeInput = false;
-  eventSubscriber!: Subscription;
+  eventSubscriber?: Subscription;
   registerForm = this.fb.group({
     verificationCode: ['', Validators.required, Validators.minLength(5), Validators.maxLength(5), validatePhoneCode()],
   });

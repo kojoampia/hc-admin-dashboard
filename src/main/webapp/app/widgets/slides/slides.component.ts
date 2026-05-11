@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnDestroy, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, Input, Output, EventEmitter, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import SharedModule from 'app/shared/shared.module';
 
 @Component({
@@ -8,7 +8,7 @@ import SharedModule from 'app/shared/shared.module';
     styleUrls: ['./slides.component.scss'],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class SlidesComponent implements OnDestroy {
+export class SlidesComponent {
   @Input() slides: any[] = [];
   @Input() imageWidth = '';
   @Input() imageHeight = '';
@@ -23,15 +23,11 @@ export class SlidesComponent implements OnDestroy {
     this.containerStyle = 'width: '.concat(this.slideWidth).concat(' !important; height: ').concat(this.slideHeight).concat(' !important;');
   }
 
-  ngOnDestroy(): void {
-    this.slideSelected = Object.assign({});
-  }
-
   onClick(item: any): void {
     this.slideSelected.emit(item);
   }
 
   trackId(index: number, item: any): number {
-    return item.id;
+    return index;
   }
 }

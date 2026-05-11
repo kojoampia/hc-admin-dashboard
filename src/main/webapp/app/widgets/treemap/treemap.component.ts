@@ -1,4 +1,4 @@
-import { OnInit, OnChanges, Component, Input, EventEmitter, Output, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, Input, EventEmitter, Output, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 @Component({
     selector: 'hpd-treemap',
@@ -7,7 +7,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     imports: [NgxChartsModule],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class TreeMapComponent implements OnInit {
+export class TreeMapComponent {
   @Input() isFiltered = true;
   @Input() data: TreeMap[] = [];
   @Output() dataSelected: EventEmitter<any> = new EventEmitter<any>();
@@ -17,11 +17,7 @@ export class TreeMapComponent implements OnInit {
   @Input() view!: number[];
   @Input() customColors: any[] = [];
 
-  ngOnInit() {}
-
-  onSelect(event: any) {
-    console.log('broadcast: on-treemap-select');
-    console.log(event);
+  onSelect(event: any): void {
     this.dataSelected.emit(event);
   }
 }

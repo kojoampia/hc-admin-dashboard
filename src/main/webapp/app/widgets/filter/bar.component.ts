@@ -10,11 +10,11 @@ import SharedModule from 'app/shared/shared.module';
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class BarComponent implements OnInit {
-  @Input() itemList?: any[] | [];
+  @Input() itemList?: any[];
   @Output() selectedItem: EventEmitter<any> = new EventEmitter<any>();
 
-  filterSelected?: string | '';
-  searchInput?: string | '';
+  filterSelected?: string;
+  searchInput?: string;
 
   constructor() {}
 

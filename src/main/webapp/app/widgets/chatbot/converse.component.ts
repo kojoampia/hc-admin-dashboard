@@ -26,7 +26,6 @@ export class ConverseComponent implements OnInit, OnDestroy, AfterViewChecked {
   @SessionStorage() public client?: IChatUser;
   privateSubscription?: Subscription;
   public success = false;
-  @ViewChild('chatScreen') private chatScreen: ElementRef = {} as ElementRef;
   public autoScrollError = '';
   registrationInvalid = false;
 
@@ -51,6 +50,7 @@ export class ConverseComponent implements OnInit, OnDestroy, AfterViewChecked {
     ],
     email: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(254), Validators.email]],
   });
+  @ViewChild('chatScreen') private chatScreen: ElementRef = {} as ElementRef;
 
   constructor(
     private chatService: ConversationService,
@@ -58,10 +58,7 @@ export class ConverseComponent implements OnInit, OnDestroy, AfterViewChecked {
     private languageService: TranslateService,
     private localStorageService: LocalStorageService,
   ) {
-    this.messages = this.localStorageService.retrieve('messages');
-    if (!this.messages) {
-      this.messages = [];
-    }
+    this.messages = this.localStorageService.retrieve('messages') ?? [];
   }
 
   ngAfterViewChecked(): void {
@@ -96,7 +93,7 @@ export class ConverseComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   initMessage(): void {
     this.clear();
-    const name = this.client?.firstName || 'a';
+    const name = this.client?.firstName ?? 'a';
     const fName = name.charAt(0).toUpperCase() + name.slice(1);
     const welcomeMessage = 'Hello ' + fName + ', how may I help you?';
     const serviceName = 'Customer Service';
@@ -143,7 +140,7 @@ export class ConverseComponent implements OnInit, OnDestroy, AfterViewChecked {
         ...new ChatMessage(),
         name: clientName,
         sender: this.client.email,
-        language: this.languageService.currentLang as string,
+        language: this.languageService.currentLang,
         content: this.message,
         recipient: 'customer-service@bedrockinsurancegh.com',
         createdDate: dayjs(new Date(), DATE_TIME_FORMAT),
@@ -186,7 +183,7 @@ export class ConverseComponent implements OnInit, OnDestroy, AfterViewChecked {
     try {
       this.chatScreen.nativeElement.scrollTop = this.chatScreen.nativeElement.scrollHeight;
     } catch (err) {
-      this.autoScrollError = err as string;
+      this.autoScrollError = String(err);
     }
   }
 

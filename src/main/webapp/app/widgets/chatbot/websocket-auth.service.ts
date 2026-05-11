@@ -9,13 +9,13 @@ import { EventManager } from 'app/core/util/event-manager.service';
 
 @Injectable({ providedIn: 'root' })
 export class WebsocketAuthService {
+  MAX_RETRIES = 5;
+  CURRENT_TRY = 0;
+  authToken: string;
+
   private $stompClient: Stomp.Client | null = null;
   private routerSubscription: Subscription | null = null;
   private connectionSubject: ReplaySubject<void> = new ReplaySubject(1);
-  MAX_RETRIES = 5;
-  CURRENT_TRY = 0;
-
-  authToken: string;
 
   constructor(
     private authServerProvider: AuthServerProvider,

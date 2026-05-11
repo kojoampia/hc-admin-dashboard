@@ -1,4 +1,4 @@
-import { OnInit, Component, Input, EventEmitter, Output, TemplateRef } from '@angular/core';
+import { Component, Input, EventEmitter, Output, TemplateRef } from '@angular/core';
 import { NgxChartsModule, ScaleType } from '@swimlane/ngx-charts';
 
 @Component({
@@ -7,7 +7,7 @@ import { NgxChartsModule, ScaleType } from '@swimlane/ngx-charts';
     styleUrls: ['./linechart.component.scss'],
     imports: [NgxChartsModule]
 })
-export class LineChartComponent implements OnInit {
+export class LineChartComponent {
   @Output() dataSelected: EventEmitter<any> = new EventEmitter<any>();
   @Input() lineData!: any[];
   @Input() colorScheme = {
@@ -61,11 +61,7 @@ export class LineChartComponent implements OnInit {
   @Input() roundEdges = true;
   @Input() view = [600, 400];
 
-  ngOnInit() {}
-
-  onSelect(event: any) {
-    console.log('listen: on-line-chart-select');
-    console.log(event);
+  onSelect(event: any): void {
     this.dataSelected.emit(event);
   }
 }

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { OnInit, Input, Component, EventEmitter, Output } from '@angular/core';
+import { Input, Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
     selector: 'hpd-badgebox',
@@ -7,7 +7,7 @@ import { OnInit, Input, Component, EventEmitter, Output } from '@angular/core';
     styleUrls: ['./badgebox.component.scss'],
     imports: [CommonModule]
 })
-export class BadgeboxComponent implements OnInit {
+export class BadgeboxComponent {
   @Input() config: {};
   @Input() title!: string;
   @Input() badges!: any[];
@@ -56,10 +56,6 @@ export class BadgeboxComponent implements OnInit {
       easing: 'ease',
       animation: 'lazy',
     };
-  }
-
-  ngOnInit(): void {
-    // No initialization logic required
   }
 
   toggleSelected(badge: Badge): void {

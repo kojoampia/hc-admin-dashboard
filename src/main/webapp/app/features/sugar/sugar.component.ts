@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { StatComponent } from 'app/entities/adminMS/stat/list/stat.component';
 import { Subject } from 'rxjs';
@@ -9,7 +9,7 @@ import { Subject } from 'rxjs';
     templateUrl: './sugar.component.html',
     styleUrl: './sugar.component.scss'
 })
-export class SugarComponent implements OnInit, OnDestroy {
+export class SugarComponent implements OnDestroy {
   public type = 'sugar';
   private destroyed$ = new Subject<boolean>();
 

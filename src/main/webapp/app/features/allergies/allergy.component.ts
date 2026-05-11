@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
 import { StatComponent } from '../../entities/adminMS/stat/list/stat.component';
@@ -9,7 +9,7 @@ import { StatComponent } from '../../entities/adminMS/stat/list/stat.component';
     templateUrl: './allergy.component.html',
     styleUrl: './allergy.component.scss'
 })
-export class AllergyComponent implements OnInit, OnDestroy {
+export class AllergyComponent implements OnDestroy {
   public type = 'allergies';
   private destroyed$ = new Subject<boolean>();
 

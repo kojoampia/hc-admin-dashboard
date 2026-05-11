@@ -1,4 +1,4 @@
-import { OnInit, Input, Component, EventEmitter, Output, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Input, Component, EventEmitter, Output, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ConsoleLoggerService } from 'app/core/util/console-logger.service';
 import { NguCarousel, NguCarouselConfig } from '@ngu/carousel';
 import SharedModule from 'app/shared/shared.module';
@@ -9,7 +9,7 @@ import SharedModule from 'app/shared/shared.module';
     styleUrls: ['./tilebox.component.scss'],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class TileboxComponent implements OnInit {
+export class TileboxComponent {
   @Input() config: NguCarouselConfig = {
     grid: { xs: 1, sm: 2, md: 3, lg: 4, all: 0 },
     interval: {
@@ -38,8 +38,6 @@ export class TileboxComponent implements OnInit {
       this.tiles = [];
     }
   }
-
-  ngOnInit(): void {}
 
   toggleSelected(tile: Tile): void {
     tile.selected = !tile.selected;

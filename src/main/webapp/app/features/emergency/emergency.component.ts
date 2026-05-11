@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { StatComponent } from '../..//entities/adminMS/stat/list/stat.component';
 import { Subject } from 'rxjs';
@@ -9,7 +9,7 @@ import { Subject } from 'rxjs';
     templateUrl: './emergency.component.html',
     styleUrl: './emergency.component.scss'
 })
-export class EmergencyComponent implements OnInit, OnDestroy {
+export class EmergencyComponent implements OnDestroy {
   public type = 'emergencies';
   private destroyed$ = new Subject<boolean>();
 

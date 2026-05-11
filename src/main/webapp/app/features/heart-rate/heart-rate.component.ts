@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { StatComponent } from 'app/entities/adminMS/stat/list/stat.component';
 import { Subject } from 'rxjs';
@@ -9,7 +9,7 @@ import { Subject } from 'rxjs';
     templateUrl: './heart-rate.component.html',
     styleUrl: './heart-rate.component.scss'
 })
-export class HeartRateComponent implements OnInit, OnDestroy {
+export class HeartRateComponent implements OnDestroy {
   public type = 'heartrate';
   private destroyed$ = new Subject<boolean>();
 
