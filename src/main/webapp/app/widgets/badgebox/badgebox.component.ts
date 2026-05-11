@@ -16,7 +16,7 @@ export class BadgeboxComponent implements OnInit {
   @Input() medium = false;
   @Input() large = false;
   @Output() badgeSelected: EventEmitter<any> = new EventEmitter<any>();
-  @Output() onClose: EventEmitter<any> = new EventEmitter<any>();
+  @Output() closed: EventEmitter<any> = new EventEmitter<any>();
 
   constructor() {
     this.config = {
@@ -58,10 +58,8 @@ export class BadgeboxComponent implements OnInit {
     };
   }
 
-  ngOnInit() {
-    console.log('init-badgebox');
-    console.log(this.title);
-    console.log(this.badges);
+  ngOnInit(): void {
+    // No initialization logic required
   }
 
   toggleSelected(badge: Badge): void {
@@ -69,10 +67,8 @@ export class BadgeboxComponent implements OnInit {
     badge.selected = !badge.selected;
     this.badgeSelected.emit(badge);
   }
-  closeBadge() {
-    // this.badges = null;
-    console.log('closing: ' + this.title);
-    this.onClose.emit('close');
+  closeBadge(): void {
+    this.closed.emit('close');
   }
 }
 

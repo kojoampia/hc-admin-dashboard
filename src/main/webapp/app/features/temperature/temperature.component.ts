@@ -10,13 +10,13 @@ import { StatComponent } from 'app/entities/adminMS/stat/list/stat.component';
     templateUrl: './temperature.component.html',
     styleUrl: './temperature.component.scss'
 })
-export class TemperatureComponent implements OnDestroy, OnInit {
+export class TemperatureComponent implements OnInit, OnDestroy {
   public type = 'temperature';
   private destroyed$ = new Subject<boolean>();
 
   constructor(private modal: NgbActiveModal) {}
 
-  ngOnInit(): void {}
+  // ngOnInit intentionally omitted: no initialization logic required
 
   ngOnDestroy(): void {
     this.destroyed$.next(true);

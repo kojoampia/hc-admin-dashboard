@@ -9,13 +9,13 @@ import { StatComponent } from '../../entities/adminMS/stat/list/stat.component';
     templateUrl: './allergy.component.html',
     styleUrl: './allergy.component.scss'
 })
-export class AllergyComponent {
+export class AllergyComponent implements OnInit, OnDestroy {
   public type = 'allergies';
   private destroyed$ = new Subject<boolean>();
 
   constructor(private modal: NgbActiveModal) {}
 
-  ngOnInit(): void {}
+  // ngOnInit intentionally omitted: no initialization logic required
 
   ngOnDestroy(): void {
     this.destroyed$.next(true);

@@ -9,13 +9,13 @@ import { Subject } from 'rxjs';
     templateUrl: './sugar.component.html',
     styleUrl: './sugar.component.scss'
 })
-export class SugarComponent {
+export class SugarComponent implements OnInit, OnDestroy {
   public type = 'sugar';
   private destroyed$ = new Subject<boolean>();
 
   constructor(private modal: NgbActiveModal) {}
 
-  ngOnInit(): void {}
+  // ngOnInit intentionally omitted: no initialization logic required
 
   ngOnDestroy(): void {
     this.destroyed$.next(true);

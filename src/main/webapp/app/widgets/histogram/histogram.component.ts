@@ -48,11 +48,9 @@ export class HistogramComponent implements OnInit {
   @Input() yScale!: number;
   @Input() roundEdges!: boolean;
 
-  ngOnInit() {}
+  // ngOnInit intentionally omitted: no initialization logic required
 
-  onSelect(event: any) {
-    console.log('listen: on-histogram-select');
-    console.log(event);
+  onSelect(event: any): void {
     this.dataSelected.emit(event);
   }
 }

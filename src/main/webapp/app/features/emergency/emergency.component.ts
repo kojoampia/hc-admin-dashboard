@@ -9,13 +9,13 @@ import { Subject } from 'rxjs';
     templateUrl: './emergency.component.html',
     styleUrl: './emergency.component.scss'
 })
-export class EmergencyComponent {
+export class EmergencyComponent implements OnInit, OnDestroy {
   public type = 'emergencies';
   private destroyed$ = new Subject<boolean>();
 
   constructor(private modal: NgbActiveModal) {}
 
-  ngOnInit(): void {}
+  // ngOnInit intentionally omitted: no initialization logic required
 
   ngOnDestroy(): void {
     this.destroyed$.next(true);

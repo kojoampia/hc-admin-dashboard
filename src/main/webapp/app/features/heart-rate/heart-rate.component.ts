@@ -9,13 +9,13 @@ import { Subject } from 'rxjs';
     templateUrl: './heart-rate.component.html',
     styleUrl: './heart-rate.component.scss'
 })
-export class HeartRateComponent {
+export class HeartRateComponent implements OnInit, OnDestroy {
   public type = 'heartrate';
   private destroyed$ = new Subject<boolean>();
 
   constructor(private modal: NgbActiveModal) {}
 
-  ngOnInit(): void {}
+  // ngOnInit intentionally omitted: no initialization logic required
 
   ngOnDestroy(): void {
     this.destroyed$.next(true);

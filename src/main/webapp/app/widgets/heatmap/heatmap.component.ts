@@ -30,11 +30,9 @@ export class HeatmapComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {}
+  // ngOnInit intentionally omitted: no initialization logic required
 
-  onSelect(event: any) {
-    console.log('listen: on-heatmap-select');
-    console.log(event);
+  onSelect(event: any): void {
     this.dataSelected.emit(event);
   }
 }

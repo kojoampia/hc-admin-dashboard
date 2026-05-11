@@ -14,7 +14,7 @@ export class InfoBoxSmallComponent implements OnInit {
   @Output() infoSelected: EventEmitter<any> = new EventEmitter();
   constructor() {}
 
-  ngOnInit(): void {}
+  // ngOnInit intentionally omitted: no initialization logic required
 
   select(item: any): void {
     this.infoSelected.emit(item);

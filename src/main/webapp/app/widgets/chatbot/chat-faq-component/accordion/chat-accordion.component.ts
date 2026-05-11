@@ -16,7 +16,7 @@ export class ChatAccordionComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {}
+  // ngOnInit intentionally omitted: no initialization logic required
 
   togglePanel(): void {
     this.isPanelOpen = !this.isPanelOpen;

@@ -9,13 +9,13 @@ import { Subject } from 'rxjs';
     templateUrl: './blood-pressure.component.html',
     styleUrl: './blood-pressure.component.scss'
 })
-export class BloodPressureComponent {
+export class BloodPressureComponent implements OnInit, OnDestroy {
   public type = 'pressure';
   private destroyed$ = new Subject<boolean>();
 
   constructor(private modal: NgbActiveModal) {}
 
-  ngOnInit(): void {}
+  // ngOnInit intentionally omitted: no initialization logic required
 
   ngOnDestroy(): void {
     this.destroyed$.next(true);
