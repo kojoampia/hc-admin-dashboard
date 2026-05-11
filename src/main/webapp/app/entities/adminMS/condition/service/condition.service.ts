@@ -99,7 +99,7 @@ export class ConditionService {
   ): Type[] {
     const conditions: Type[] = conditionsToCheck.filter(isPresent);
     if (conditions.length > 0) {
-      const conditionCollectionIdentifiers = conditionCollection.map(conditionItem => this.getConditionIdentifier(conditionItem)!);
+      const conditionCollectionIdentifiers = conditionCollection.map(conditionItem => this.getConditionIdentifier(conditionItem));
       const conditionsToAdd = conditions.filter(conditionItem => {
         const conditionIdentifier = this.getConditionIdentifier(conditionItem);
         if (conditionCollectionIdentifiers.includes(conditionIdentifier)) {

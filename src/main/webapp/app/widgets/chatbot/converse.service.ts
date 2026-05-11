@@ -127,7 +127,7 @@ export class ConversationService {
 
   protected convertDateFromClient(chatUser: IChatUser): IChatUser {
     const copy: IChatUser = Object.assign({}, chatUser, {
-      createdDate: chatUser.createdDate && chatUser.createdDate.isValid() ? chatUser.createdDate.toJSON() : undefined,
+      createdDate: chatUser.createdDate?.isValid() ? chatUser.createdDate.toJSON() : undefined,
     });
     return copy;
   }

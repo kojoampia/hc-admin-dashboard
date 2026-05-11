@@ -99,7 +99,7 @@ export class MembershipService {
   ): Type[] {
     const memberships: Type[] = membershipsToCheck.filter(isPresent);
     if (memberships.length > 0) {
-      const membershipCollectionIdentifiers = membershipCollection.map(membershipItem => this.getMembershipIdentifier(membershipItem)!);
+      const membershipCollectionIdentifiers = membershipCollection.map(membershipItem => this.getMembershipIdentifier(membershipItem));
       const membershipsToAdd = memberships.filter(membershipItem => {
         const membershipIdentifier = this.getMembershipIdentifier(membershipItem);
         if (membershipCollectionIdentifiers.includes(membershipIdentifier)) {

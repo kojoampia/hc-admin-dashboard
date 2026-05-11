@@ -79,14 +79,6 @@
     "default_environment": "prod",
     "packaging": "jar"
   },
-  "resolutions": {
-    "@angular/animations": "17.0.6",
-    "@angular/cdk": "17.0.6",
-    "@angular/cli": "17.0.6",
-    "@angular/common": "17.0.6",
-    "@angular/compiler": "17.0.6",
-    "@angular/core": "17.0.6"
-  },
   "dependencies": {
     "@angular/animations": "19.2.21",
     "@angular/cdk": "^19.2.2",

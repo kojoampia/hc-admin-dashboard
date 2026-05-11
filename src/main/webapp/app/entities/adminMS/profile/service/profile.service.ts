@@ -98,7 +98,7 @@ export class ProfileService {
   ): Type[] {
     const profiles: Type[] = profilesToCheck.filter(isPresent);
     if (profiles.length > 0) {
-      const profileCollectionIdentifiers = profileCollection.map(profileItem => this.getProfileIdentifier(profileItem)!);
+      const profileCollectionIdentifiers = profileCollection.map(profileItem => this.getProfileIdentifier(profileItem));
       const profilesToAdd = profiles.filter(profileItem => {
         const profileIdentifier = this.getProfileIdentifier(profileItem);
         if (profileCollectionIdentifiers.includes(profileIdentifier)) {

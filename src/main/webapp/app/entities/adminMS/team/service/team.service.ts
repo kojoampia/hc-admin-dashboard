@@ -71,7 +71,7 @@ export class TeamService {
   ): Type[] {
     const teams: Type[] = teamsToCheck.filter(isPresent);
     if (teams.length > 0) {
-      const teamCollectionIdentifiers = teamCollection.map(teamItem => this.getTeamIdentifier(teamItem)!);
+      const teamCollectionIdentifiers = teamCollection.map(teamItem => this.getTeamIdentifier(teamItem));
       const teamsToAdd = teams.filter(teamItem => {
         const teamIdentifier = this.getTeamIdentifier(teamItem);
         if (teamCollectionIdentifiers.includes(teamIdentifier)) {

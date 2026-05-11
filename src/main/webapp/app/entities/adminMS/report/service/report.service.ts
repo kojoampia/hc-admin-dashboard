@@ -99,7 +99,7 @@ export class ReportService {
   ): Type[] {
     const reports: Type[] = reportsToCheck.filter(isPresent);
     if (reports.length > 0) {
-      const reportCollectionIdentifiers = reportCollection.map(reportItem => this.getReportIdentifier(reportItem)!);
+      const reportCollectionIdentifiers = reportCollection.map(reportItem => this.getReportIdentifier(reportItem));
       const reportsToAdd = reports.filter(reportItem => {
         const reportIdentifier = this.getReportIdentifier(reportItem);
         if (reportCollectionIdentifiers.includes(reportIdentifier)) {

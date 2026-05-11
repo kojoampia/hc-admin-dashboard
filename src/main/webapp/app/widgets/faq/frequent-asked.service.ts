@@ -95,8 +95,8 @@ export class FrequentAskedService {
 
   protected convertDateFromClient(frequentAsked: IFrequentAsked): IFrequentAsked {
     const copy: IFrequentAsked = Object.assign({}, frequentAsked, {
-      createdDate: frequentAsked.createdDate && frequentAsked.createdDate.isValid() ? frequentAsked.createdDate.toJSON() : undefined,
-      modifiedDate: frequentAsked.modifiedDate && frequentAsked.modifiedDate.isValid() ? frequentAsked.modifiedDate.toJSON() : undefined,
+      createdDate: frequentAsked.createdDate?.isValid() ? frequentAsked.createdDate.toJSON() : undefined,
+      modifiedDate: frequentAsked.modifiedDate?.isValid() ? frequentAsked.modifiedDate.toJSON() : undefined,
     });
     return copy;
   }

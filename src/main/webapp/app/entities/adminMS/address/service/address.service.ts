@@ -99,7 +99,7 @@ export class AddressService {
   ): Type[] {
     const addresses: Type[] = addressesToCheck.filter(isPresent);
     if (addresses.length > 0) {
-      const addressCollectionIdentifiers = addressCollection.map(addressItem => this.getAddressIdentifier(addressItem)!);
+      const addressCollectionIdentifiers = addressCollection.map(addressItem => this.getAddressIdentifier(addressItem));
       const addressesToAdd = addresses.filter(addressItem => {
         const addressIdentifier = this.getAddressIdentifier(addressItem);
         if (addressCollectionIdentifiers.includes(addressIdentifier)) {

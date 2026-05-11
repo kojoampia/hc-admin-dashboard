@@ -5,6 +5,7 @@ import { By } from '@angular/platform-browser';
 import SortDirective from './sort.directive';
 
 @Component({
+  standalone: false,
     template: `
     <table>
       <thead>
@@ -12,7 +13,7 @@ import SortDirective from './sort.directive';
       </thead>
     </table>
   `,
-    standalone: false
+    
 })
 class TestSortDirectiveComponent {
   predicate?: string;

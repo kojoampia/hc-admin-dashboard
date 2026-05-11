@@ -35,11 +35,11 @@ export class WebsocketAuthService {
   }
 
   isConnected(): boolean {
-    return this.$stompClient !== null && this.$stompClient.connected;
+    return this.$stompClient?.connected === true;
   }
 
   connect(): void {
-    if (this.$stompClient && this.$stompClient.connected) {
+    if (this.$stompClient?.connected) {
       this.eventManager.broadcast('chat-websocket-connected');
       return;
     }

@@ -99,7 +99,7 @@ export class MedicationService {
   ): Type[] {
     const medications: Type[] = medicationsToCheck.filter(isPresent);
     if (medications.length > 0) {
-      const medicationCollectionIdentifiers = medicationCollection.map(medicationItem => this.getMedicationIdentifier(medicationItem)!);
+      const medicationCollectionIdentifiers = medicationCollection.map(medicationItem => this.getMedicationIdentifier(medicationItem));
       const medicationsToAdd = medications.filter(medicationItem => {
         const medicationIdentifier = this.getMedicationIdentifier(medicationItem);
         if (medicationCollectionIdentifiers.includes(medicationIdentifier)) {

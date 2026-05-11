@@ -100,7 +100,7 @@ export class HCCredentialService {
     const hCCredentials: Type[] = hCCredentialsToCheck.filter(isPresent);
     if (hCCredentials.length > 0) {
       const hCCredentialCollectionIdentifiers = hCCredentialCollection.map(
-        hCCredentialItem => this.getHCCredentialIdentifier(hCCredentialItem)!,
+        hCCredentialItem => this.getHCCredentialIdentifier(hCCredentialItem),
       );
       const hCCredentialsToAdd = hCCredentials.filter(hCCredentialItem => {
         const hCCredentialIdentifier = this.getHCCredentialIdentifier(hCCredentialItem);

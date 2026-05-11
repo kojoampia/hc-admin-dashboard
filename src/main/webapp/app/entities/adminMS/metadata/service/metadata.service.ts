@@ -99,7 +99,7 @@ export class MetadataService {
   ): Type[] {
     const metadata: Type[] = metadataToCheck.filter(isPresent);
     if (metadata.length > 0) {
-      const metadataCollectionIdentifiers = metadataCollection.map(metadataItem => this.getMetadataIdentifier(metadataItem)!);
+      const metadataCollectionIdentifiers = metadataCollection.map(metadataItem => this.getMetadataIdentifier(metadataItem));
       const metadataToAdd = metadata.filter(metadataItem => {
         const metadataIdentifier = this.getMetadataIdentifier(metadataItem);
         if (metadataCollectionIdentifiers.includes(metadataIdentifier)) {

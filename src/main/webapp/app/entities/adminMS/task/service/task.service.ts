@@ -98,7 +98,7 @@ export class TaskService {
   ): Type[] {
     const tasks: Type[] = tasksToCheck.filter(isPresent);
     if (tasks.length > 0) {
-      const taskCollectionIdentifiers = taskCollection.map(taskItem => this.getTaskIdentifier(taskItem)!);
+      const taskCollectionIdentifiers = taskCollection.map(taskItem => this.getTaskIdentifier(taskItem));
       const tasksToAdd = tasks.filter(taskItem => {
         const taskIdentifier = this.getTaskIdentifier(taskItem);
         if (taskCollectionIdentifiers.includes(taskIdentifier)) {

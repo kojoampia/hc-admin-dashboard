@@ -76,7 +76,7 @@ export class HCPayOptionService {
     const hCPayOptions: Type[] = hCPayOptionsToCheck.filter(isPresent);
     if (hCPayOptions.length > 0) {
       const hCPayOptionCollectionIdentifiers = hCPayOptionCollection.map(
-        hCPayOptionItem => this.getHCPayOptionIdentifier(hCPayOptionItem)!,
+        hCPayOptionItem => this.getHCPayOptionIdentifier(hCPayOptionItem),
       );
       const hCPayOptionsToAdd = hCPayOptions.filter(hCPayOptionItem => {
         const hCPayOptionIdentifier = this.getHCPayOptionIdentifier(hCPayOptionItem);

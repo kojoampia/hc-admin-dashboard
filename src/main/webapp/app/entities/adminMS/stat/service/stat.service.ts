@@ -96,7 +96,7 @@ export class StatService {
   ): Type[] {
     const stats: Type[] = statsToCheck.filter(isPresent);
     if (stats.length > 0) {
-      const statCollectionIdentifiers = statCollection.map(statItem => this.getStatIdentifier(statItem)!);
+      const statCollectionIdentifiers = statCollection.map(statItem => this.getStatIdentifier(statItem));
       const statsToAdd = stats.filter(statItem => {
         const statIdentifier = this.getStatIdentifier(statItem);
         if (statCollectionIdentifiers.includes(statIdentifier)) {

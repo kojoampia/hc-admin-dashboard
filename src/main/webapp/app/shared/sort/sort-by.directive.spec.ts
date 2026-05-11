@@ -8,6 +8,7 @@ import SortByDirective from './sort-by.directive';
 import SortDirective from './sort.directive';
 
 @Component({
+  standalone: false,
     template: `
     <table>
       <thead>
@@ -22,7 +23,7 @@ import SortDirective from './sort.directive';
       </thead>
     </table>
   `,
-    standalone: false
+    
 })
 class TestSortByDirectiveComponent {
   predicate?: string;
