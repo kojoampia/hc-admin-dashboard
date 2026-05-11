@@ -1,265 +1,191 @@
-# Admin Dashboard
+# Health Connect Admin Dashboard
 
-This application was generated using JHipster 8.1.0, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v8.1.0](https://www.jhipster.tech/documentation-archive/v8.1.0).
+Frontend-only Angular application generated from JHipster and customized for the Health Connect admin domain.
 
-This is a "gateway" application intended to be part of a microservice architecture, please refer to the [Doing microservices with JHipster][] page of the documentation for more information.
-This application is configured for Service Discovery and Configuration with the JHipster-Registry. On launch, it will refuse to start if it is not able to connect to the JHipster-Registry at [http://localhost:8761](http://localhost:8761). For more information, read our documentation on [Service Discovery and Configuration with the JHipster-Registry][].
+## What Is Actually Implemented
 
-## Project Structure
+- Project type: JHipster Angular app with server skipped (`skipServer: true`)
+- Framework: Angular 19
+- UI: Bootstrap, ng-bootstrap, ngx-charts, TailwindCSS (configured)
+- State/storage: ngx-webstorage
+- Realtime/chat widgets: SockJS + webstomp-client
+- Linting: ESLint + angular-eslint
+- Formatting: Prettier
+- Unit tests: Jest
+- E2E tests: Cypress
 
-Node is required for generation and recommended for development. `package.json` is always generated for a better development experience with prettier, commit hooks, scripts and so on.
+Reference source:
+- `.yo-rc.json` confirms `skipServer: true` and `jhiPrefix: hpd`
 
-In the project root, JHipster generates configuration files for tools like git, prettier, eslint, husky, and others that are well known and you can find references in the web.
+## Requirements
 
-`/src/*` structure follows default Java structure.
+- Node.js >= 18.18.2
+- npm
 
-- `.yo-rc.json` - Yeoman configuration file
-  JHipster configuration is stored in this file at `generator-jhipster` key. You may find `generator-jhipster-*` for specific blueprints configuration.
-- `.yo-resolve` (optional) - Yeoman conflict resolver
-  Allows to use a specific action when conflicts are found skipping prompts for files that matches a pattern. Each line should match `[pattern] [action]` with pattern been a [Minimatch](https://github.com/isaacs/minimatch#minimatch) pattern and action been one of skip (default if ommited) or force. Lines starting with `#` are considered comments and are ignored.
-- `.jhipster/*.json` - JHipster entity configuration files
+## Install
 
-- `npmw` - wrapper to use locally installed npm.
-  JHipster installs Node and npm locally using the build tool by default. This wrapper makes sure npm is installed locally and uses it avoiding some differences different versions can cause. By using `./npmw` instead of the traditional `npm` you can configure a Node-less environment to develop or test your application.
-- `/src/main/docker` - Docker configurations for the application and services that the application depends on
-
-## Development
-
-Before you can build this project, you must install and configure the following dependencies on your machine:
-
-1. [Node.js][]: We use Node to run a development web server and build the project.
-   Depending on your system, you can install Node either from source or as a pre-packaged bundle.
-
-After installing Node, you should be able to run the following command to install development tools.
-You will only need to run this command when dependencies change in [package.json](package.json).
-
-```
+```bash
 npm install
 ```
 
-We use npm scripts and [Angular CLI][] with [Webpack][] as our build system.
+## Development
 
-Run the following commands in two separate terminals to create a blissful development experience where your browser
-auto-refreshes when files change on your hard drive.
+Start frontend dev server:
 
-```
-./mvnw
+```bash
 npm start
 ```
 
-Npm is also used to manage CSS and JavaScript dependencies used in this application. You can upgrade dependencies by
-specifying a newer version in [package.json](package.json). You can also run `npm update` and `npm install` to manage dependencies.
-Add the `help` flag on any command to see how you can use it. For example, `npm help update`.
+- App URL: http://localhost:4200
 
-The `npm run` command will list all of the scripts available to run for this project.
+### API/Backend During Local Development
 
-### PWA Support
+This repository does not include a Spring Boot backend.
 
-JHipster ships with PWA (Progressive Web App) support, and it's turned off by default. One of the main components of a PWA is a service worker.
+Current proxy setup points API calls to the local mock server at port 5508:
 
-The service worker initialization code is disabled by default. To enable it, uncomment the following code in `src/main/webapp/app/app.config.ts`:
+- Proxy config: `webpack/proxy.conf.js`
+- Proxied paths: `/api`, `/services`, `/management`, `/v3/api-docs`, `/h2-console`, `/auth`, `/health`
 
-```typescript
-ServiceWorkerModule.register('ngsw-worker.js', { enabled: false }),
+Start mock API server:
+
+```bash
+npm run mock:api
 ```
 
-### Managing dependencies
+## Build
 
-For example, to add [Leaflet][] library as a runtime dependency of your application, you would run following command:
+Development build:
 
-```
-npm install --save --save-exact leaflet
-```
-
-To benefit from TypeScript type definitions from [DefinitelyTyped][] repository in development, you would run following command:
-
-```
-npm install --save-dev --save-exact @types/leaflet
+```bash
+npm run webapp:build:dev
 ```
 
-Then you would import the JS and CSS files specified in library's installation instructions so that [Webpack][] knows about them:
-Edit [src/main/webapp/app/app.config.ts](src/main/webapp/app/app.config.ts) file:
+Production build:
 
-```
-import 'leaflet/dist/leaflet.js';
-```
-
-Edit [src/main/webapp/content/scss/vendor.scss](src/main/webapp/content/scss/vendor.scss) file:
-
-```
-@import 'leaflet/dist/leaflet.css';
+```bash
+npm run webapp:prod
 ```
 
-Note: There are still a few other things remaining to do for Leaflet that we won't detail here.
+Build output:
 
-For further instructions on how to develop with JHipster, have a look at [Using JHipster in development][].
+- `target/classes/static/`
 
-### Using Angular CLI
+Bundle report (generated by production build):
 
-You can also use [Angular CLI][] to generate some custom client code.
-
-For example, the following command:
-
-```
-ng generate component my-component
-```
-
-will generate few files:
-
-```
-create src/main/webapp/app/my-component/my-component.component.html
-create src/main/webapp/app/my-component/my-component.component.ts
-update src/main/webapp/app/app.config.ts
-```
-
-## Building for production
-
-### Packaging as jar
-
-To build the final jar and optimize the adminGateway application for production, run:
-
-```
-./mvnw -Pprod clean verify
-```
-
-This will concatenate and minify the client CSS and JavaScript files. It will also modify `index.html` so it references these new files.
-To ensure everything worked, run:
-
-```
-java -jar target/*.jar
-```
-
-Then navigate to [http://localhost:5055](http://localhost:5055) in your browser.
-
-Refer to [Using JHipster in production][] for more details.
-
-### Packaging as war
-
-To package your application as a war in order to deploy it to an application server, run:
-
-```
-./mvnw -Pprod,war clean verify
-```
-
-### JHipster Control Center
-
-JHipster Control Center can help you manage and control your application(s). You can start a local control center server (accessible on http://localhost:7419) with:
-
-```
-docker compose -f src/main/docker/jhipster-control-center.yml up
-```
+- `target/stats.html`
 
 ## Testing
 
-### Spring Boot tests
+Run lint:
 
-To launch your application's tests, run:
-
-```
-./mvnw verify
+```bash
+npm run lint
 ```
 
-### Client tests
+Auto-fix lint:
 
-Unit tests are run by [Jest][]. They're located in [src/test/javascript/](src/test/javascript/) and can be run with:
-
+```bash
+npm run lint:fix
 ```
+
+Run unit tests (configured Jest path):
+
+```bash
+npx jest --runInBand --config jest.conf.js --passWithNoTests
+```
+
+Alternative test command via Angular builder:
+
+```bash
 npm test
 ```
 
-## Others
+Watch mode:
 
-### Code quality using Sonar
-
-Sonar is used to analyse code quality. You can start a local Sonar server (accessible on http://localhost:9001) with:
-
-```
-docker compose -f src/main/docker/sonar.yml up -d
+```bash
+npm run test:watch
 ```
 
-Note: we have turned off forced authentication redirect for UI in [src/main/docker/sonar.yml](src/main/docker/sonar.yml) for out of the box experience while trying out SonarQube, for real use cases turn it back on.
+## Code Style And Conventions
 
-You can run a Sonar analysis with using the [sonar-scanner](https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner) or by using the maven plugin.
+- Angular selectors/directives use the `hpd` prefix
+- Main frontend source root: `src/main/webapp`
+- Keep feature boundaries aligned with existing app folders:
+  - `core`
+  - `shared`
+  - `entities`
+  - `layouts`
+  - `dashboard`
+  - `admin`
+  - `features`
+  - `widgets`
 
-Then, run a Sonar analysis:
+## Useful Scripts
 
-```
-./mvnw -Pprod clean verify sonar:sonar -Dsonar.login=admin -Dsonar.password=admin
-```
-
-If you need to re-run the Sonar phase, please be sure to specify at least the `initialize` phase since Sonar properties are loaded from the sonar-project.properties file.
-
-```
-./mvnw initialize sonar:sonar -Dsonar.login=admin -Dsonar.password=admin
-```
-
-Additionally, Instead of passing `sonar.password` and `sonar.login` as CLI arguments, these parameters can be configured from [sonar-project.properties](sonar-project.properties) as shown below:
-
-```
-sonar.login=admin
-sonar.password=admin
-```
-
-For more information, refer to the [Code quality page][].
-
-### Using Docker to simplify development (optional)
-
-You can use Docker to improve your JHipster development experience. A number of docker-compose configuration are available in the [src/main/docker](src/main/docker) folder to launch required third party services.
-
-For example, to start a mongodb database in a docker container, run:
-
-```
-docker compose -f src/main/docker/mongodb.yml up -d
+```bash
+npm run prettier:check
+npm run prettier:format
+npm run webapp:dev
+npm run webapp:dev-ssl
+npm run webapp:dev-verbose
 ```
 
-To stop it and remove the container, run:
+## Notes
 
-```
-docker compose -f src/main/docker/mongodb.yml down
-```
+- Legacy JHipster backend-related commands may still exist in `package.json`, but this repository currently runs as a frontend-only application.
+- If a real backend is needed locally, run a compatible external service and update proxy targets in `webpack/proxy.conf.js`.
 
-You can also fully dockerize your application and all the services that it depends on.
-To achieve this, first build a docker image of your app by running:
+## Troubleshooting
 
-```
-npm run java:docker
-```
+### Jest fails with lifecycle interface/type errors
 
-Or build a arm64 docker image when using an arm64 processor os like MacOS with M1 processor family running:
+Symptom examples:
 
-```
-npm run java:docker:arm64
-```
+- `incorrectly implements interface 'OnInit'`
+- `Cannot find name 'OnDestroy'`
 
-Then run:
+What to check:
 
-```
-docker compose -f src/main/docker/app.yml up -d
-```
+- If a component declares `implements OnInit` or `implements OnDestroy`, the corresponding lifecycle method and import must exist.
+- If you remove an empty lifecycle method to satisfy lint, also remove the interface from the class declaration.
 
-When running Docker Desktop on MacOS Big Sur or later, consider enabling experimental `Use the new Virtualization framework` for better processing performance ([disk access performance is worse](https://github.com/docker/roadmap/issues/7)).
+### ESLint typed-project parsing error for config files
 
-For more information refer to [Using Docker and Docker-Compose][], this page also contains information on the docker-compose sub-generator (`jhipster docker-compose`), which is able to generate docker configurations for one or several JHipster applications.
+Symptom example:
 
-## Continuous Integration (optional)
+- `ESLint was configured to run on ... tailwind.config.js using parserOptions.project ... however none of those TSConfigs include this file`
 
-To configure CI for your project, run the ci-cd sub-generator (`jhipster ci-cd`), this will let you generate configuration files for a number of Continuous Integration systems. Consult the [Setting up Continuous Integration][] page for more information.
+Fix options:
 
-[JHipster Homepage and latest documentation]: https://www.jhipster.tech
-[JHipster 8.1.0 archive]: https://www.jhipster.tech/documentation-archive/v8.1.0
-[Doing microservices with JHipster]: https://www.jhipster.tech/documentation-archive/v8.1.0/microservices-architecture/
-[Using JHipster in development]: https://www.jhipster.tech/documentation-archive/v8.1.0/development/
-[Service Discovery and Configuration with the JHipster-Registry]: https://www.jhipster.tech/documentation-archive/v8.1.0/microservices-architecture/#jhipster-registry
-[Using Docker and Docker-Compose]: https://www.jhipster.tech/documentation-archive/v8.1.0/docker-compose
-[Using JHipster in production]: https://www.jhipster.tech/documentation-archive/v8.1.0/production/
-[Running tests page]: https://www.jhipster.tech/documentation-archive/v8.1.0/running-tests/
-[Code quality page]: https://www.jhipster.tech/documentation-archive/v8.1.0/code-quality/
-[Setting up Continuous Integration]: https://www.jhipster.tech/documentation-archive/v8.1.0/setting-up-ci/
-[Node.js]: https://nodejs.org/
-[NPM]: https://www.npmjs.com/
-[Webpack]: https://webpack.github.io/
-[BrowserSync]: https://www.browsersync.io/
-[Jest]: https://facebook.github.io/jest/
-[Leaflet]: https://leafletjs.com/
-[DefinitelyTyped]: https://definitelytyped.org/
-[Angular CLI]: https://cli.angular.io/
+- Add the file to an included tsconfig used by ESLint, or
+- Exclude it with `ignorePatterns` in `.eslintrc.json`.
+
+Current project behavior:
+
+- `tailwind.config.js` is excluded via `ignorePatterns`.
+
+### TypeScript-eslint support warning
+
+Symptom example:
+
+- `SUPPORTED TYPESCRIPT VERSIONS: >=4.3.5 <5.4.0` with local TypeScript 5.5.x
+
+Impact:
+
+- This is a warning from tooling compatibility ranges; lint can still pass.
+
+If stricter compatibility is required:
+
+- Align TypeScript and `@typescript-eslint/*` versions in `package.json`.
+
+### API calls fail during local UI development
+
+Symptom examples:
+
+- `404` or network errors on `/api` and `/services` endpoints while `npm start` is running
+
+What to do:
+
+- Start the mock API: `npm run mock:api`.
+- Ensure `webpack/proxy.conf.js` target matches your intended backend/mock host and port.
