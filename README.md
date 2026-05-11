@@ -101,6 +101,10 @@ Alternative test command via Angular builder:
 npm test
 ```
 
+Note:
+
+- `npm test` uses Angular's Karma builder and does not accept Jest CLI flags such as `--runInBand` or `--passWithNoTests`.
+
 Watch mode:
 
 ```bash
@@ -165,19 +169,13 @@ Current project behavior:
 
 - `tailwind.config.js` is excluded via `ignorePatterns`.
 
-### TypeScript-eslint support warning
+### TypeScript-eslint support warning (legacy)
 
-Symptom example:
+Previous lint runs could emit a TypeScript support-range warning from `@typescript-eslint`.
 
-- `SUPPORTED TYPESCRIPT VERSIONS: >=4.3.5 <5.4.0` with local TypeScript 5.5.x
+Current project behavior:
 
-Impact:
-
-- This is a warning from tooling compatibility ranges; lint can still pass.
-
-If stricter compatibility is required:
-
-- Align TypeScript and `@typescript-eslint/*` versions in `package.json`.
+- This warning is suppressed through `.eslintrc.json` parser options.
 
 ### API calls fail during local UI development
 

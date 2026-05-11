@@ -15,7 +15,7 @@
       },
       "root": "",
       "sourceRoot": "src/main/webapp",
-      "prefix": "jhi",
+      "prefix": "hpd",
       "architect": {
         "build": {
           "builder": "@angular-builders/custom-webpack:browser",
@@ -26,7 +26,9 @@
             "outputPath": "target/classes/static/",
             "index": "src/main/webapp/index.html",
             "main": "src/main/webapp/main.ts",
-            "polyfills": ["zone.js"],
+            "polyfills": [
+              "zone.js"
+            ],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -35,9 +37,17 @@
               "src/main/webapp/manifest.webapp",
               "src/main/webapp/robots.txt"
             ],
-            "styles": ["src/main/webapp/content/scss/vendor.scss", "src/main/webapp/content/scss/global.scss"],
+            "styles": [
+              "src/main/webapp/content/scss/vendor.scss",
+              "src/main/webapp/content/scss/global.scss"
+            ],
             "scripts": [],
-            "allowedCommonJsDependencies": ["hammerjs", "sockjs-client", "webstomp-client", "rfdc"]
+            "allowedCommonJsDependencies": [
+              "hammerjs",
+              "sockjs-client",
+              "webstomp-client",
+              "rfdc"
+            ]
           },
           "configurations": {
             "production": {
@@ -96,6 +106,15 @@
             "configPath": "jest.conf.js",
             "tsConfig": "tsconfig.spec.json"
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/main/webapp/**/*.ts",
+              "src/main/webapp/**/*.html"
+            ]
+          }
         }
       }
     }
@@ -107,6 +126,9 @@
       "environment": "all"
     },
     "packageManager": "npm",
-    "analytics": false
+    "analytics": false,
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ]
   }
 }
