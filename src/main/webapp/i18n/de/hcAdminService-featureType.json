@@ -1,0 +1,10 @@
+{
+  "adminDashboardApp": {
+    "FeatureType": {
+      "null": "",
+      "CORE": "CORE",
+      "ADDON": "ADDON",
+      "PREMIUM": "PREMIUM"
+    }
+  }
+}

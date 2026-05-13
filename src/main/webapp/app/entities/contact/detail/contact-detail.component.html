@@ -1,0 +1,46 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (contact(); as contactRef) {
+      <div>
+        <h2 data-cy="contactDetailsHeading"><span hpdTranslate="adminDashboardApp.contact.detail.title">Contact</span></h2>
+
+        <hr />
+
+        <hpd-alert-error />
+
+        <hpd-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span hpdTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ contactRef.id }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.contact.personId">Person Id</span></dt>
+          <dd>
+            <span>{{ contactRef.personId }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.contact.email">Email</span></dt>
+          <dd>
+            <span>{{ contactRef.email }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.contact.phoneNumber">Phone Number</span></dt>
+          <dd>
+            <span>{{ contactRef.phoneNumber }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.contact.countryCode">Country Code</span></dt>
+          <dd>
+            <span>{{ contactRef.countryCode }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span hpdTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/contact', contactRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span hpdTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

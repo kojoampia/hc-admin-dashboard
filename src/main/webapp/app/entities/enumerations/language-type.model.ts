@@ -1,0 +1,21 @@
+export enum LanguageType {
+  AKAN = 'AKAN',
+
+  DAGBANI = 'DAGBANI',
+
+  EWE = 'EWE',
+
+  HAUSA = 'HAUSA',
+
+  GA = 'GA',
+
+  MAMPRUSI = 'MAMPRUSI',
+
+  EN = 'EN',
+
+  FR = 'FR',
+
+  DE = 'DE',
+
+  ES = 'ES',
+}

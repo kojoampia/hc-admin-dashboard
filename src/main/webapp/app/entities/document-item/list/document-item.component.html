@@ -1,0 +1,172 @@
+<div>
+  <h2 id="page-heading" data-cy="DocumentItemHeading">
+    <span hpdTranslate="adminDashboardApp.documentItem.home.title">Document Items</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+        <span hpdTranslate="adminDashboardApp.documentItem.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-document-item"
+        [routerLink]="['/document-item/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span hpdTranslate="adminDashboardApp.documentItem.home.createLabel">Create a new Document Item</span>
+      </button>
+    </div>
+  </h2>
+
+  <hpd-alert-error />
+
+  <hpd-alert />
+
+  @if (documentItems().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span hpdTranslate="adminDashboardApp.documentItem.home.notFound">No Document Items found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr hpdSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" hpdSortBy="id">
+              <div class="d-flex">
+                <span hpdTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="name">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.documentItem.name">Name</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="description">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.documentItem.description">Description</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="documentType">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.documentItem.documentType">Document Type</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="url">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.documentItem.url">Url</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="createdDate">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.documentItem.createdDate">Created Date</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="createdBy">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.documentItem.createdBy">Created By</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="modifiedDate">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.documentItem.modifiedDate">Modified Date</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="modifiedBy">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.documentItem.modifiedBy">Modified By</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (documentItem of documentItems(); track trackId(documentItem)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/document-item', documentItem.id, 'view']">{{ documentItem.id }}</a>
+              </td>
+              <td>{{ documentItem.name }}</td>
+              <td>{{ documentItem.description }}</td>
+              <td [hpdTranslate]="'adminDashboardApp.DocumentType.' + (documentItem.documentType ?? 'null')">
+                {{
+                  {
+                    null: '',
+                    PASSPORT: 'PASSPORT',
+                    ID_CARD: 'ID_CARD',
+                    DRIVER_LICENSE: 'DRIVER_LICENSE',
+                    CERTIFICATE: 'CERTIFICATE',
+                    BUSINESS_LICENCE: 'BUSINESS_LICENCE',
+                    PROFESSIONAL_LICENSE: 'PROFESSIONAL_LICENSE',
+                    OTHER: 'OTHER',
+                  }[documentItem.documentType ?? 'null']
+                }}
+              </td>
+              <td>{{ documentItem.url }}</td>
+              <td>{{ documentItem.createdDate | formatMediumDatetime }}</td>
+              <td>{{ documentItem.createdBy }}</td>
+              <td>{{ documentItem.modifiedDate | formatMediumDatetime }}</td>
+              <td>{{ documentItem.modifiedBy }}</td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/document-item', documentItem.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" hpdTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/document-item', documentItem.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" hpdTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(documentItem)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" hpdTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (documentItems().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <hpd-item-count [params]="{ page, totalItems, itemsPerPage }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+  }
+</div>

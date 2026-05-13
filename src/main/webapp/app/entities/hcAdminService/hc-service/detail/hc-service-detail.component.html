@@ -1,0 +1,64 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (hCService(); as hCServiceRef) {
+      <div>
+        <h2 data-cy="hCServiceDetailsHeading">
+          <span hpdTranslate="adminDashboardApp.hcAdminServiceHCService.detail.title">HC Service</span>
+        </h2>
+
+        <hr />
+
+        <hpd-alert-error />
+
+        <hpd-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span hpdTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ hCServiceRef.id }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceHCService.name">Name</span></dt>
+          <dd>
+            <span>{{ hCServiceRef.name }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceHCService.description">Description</span></dt>
+          <dd>
+            <span>{{ hCServiceRef.description }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceHCService.serviceItems">Service Items</span></dt>
+          <dd>
+            <span>{{ hCServiceRef.serviceItems }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceHCService.amount">Amount</span></dt>
+          <dd>
+            <span>{{ hCServiceRef.amount }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceHCService.createdDate">Created Date</span></dt>
+          <dd>
+            <span>{{ hCServiceRef.createdDate | formatMediumDate }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceHCService.createdBy">Created By</span></dt>
+          <dd>
+            <span>{{ hCServiceRef.createdBy }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceHCService.modifiedDate">Modified Date</span></dt>
+          <dd>
+            <span>{{ hCServiceRef.modifiedDate | formatMediumDate }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceHCService.modifiedBy">Modified By</span></dt>
+          <dd>
+            <span>{{ hCServiceRef.modifiedBy }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span hpdTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/hc-service', hCServiceRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span hpdTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

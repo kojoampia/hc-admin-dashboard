@@ -1,0 +1,31 @@
+{
+  "adminDashboardApp": {
+    "hcAdminServiceHCService": {
+      "home": {
+        "title": "HC Services",
+        "refreshListLabel": "Liste aktualisieren",
+        "createLabel": "HC Service erstellen",
+        "createOrEditLabel": "HC Service erstellen oder bearbeiten",
+        "notFound": "Keine HC Services gefunden"
+      },
+      "created": "HC Service erstellt mit ID {{ param }}",
+      "updated": "HC Service aktualisiert mit ID {{ param }}",
+      "deleted": "HC Service gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll HC Service {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "HC Service"
+      },
+      "id": "ID",
+      "name": "Name",
+      "description": "Description",
+      "serviceItems": "Service Items",
+      "amount": "Amount",
+      "createdDate": "Created Date",
+      "createdBy": "Created By",
+      "modifiedDate": "Modified Date",
+      "modifiedBy": "Modified By"
+    }
+  }
+}

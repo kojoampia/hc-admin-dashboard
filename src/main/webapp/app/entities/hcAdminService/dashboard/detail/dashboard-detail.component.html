@@ -1,0 +1,44 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (dashboard(); as dashboardRef) {
+      <div>
+        <h2 data-cy="dashboardDetailsHeading">
+          <span hpdTranslate="adminDashboardApp.hcAdminServiceDashboard.detail.title">Dashboard</span>
+        </h2>
+
+        <hr />
+
+        <hpd-alert-error />
+
+        <hpd-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span hpdTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ dashboardRef.id }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceDashboard.name">Name</span></dt>
+          <dd>
+            <span>{{ dashboardRef.name }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceDashboard.description">Description</span></dt>
+          <dd>
+            <span>{{ dashboardRef.description }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceDashboard.elements">Elements</span></dt>
+          <dd>
+            <span>{{ dashboardRef.elements }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span hpdTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/dashboard', dashboardRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span hpdTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

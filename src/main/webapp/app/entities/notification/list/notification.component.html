@@ -1,0 +1,124 @@
+<div>
+  <h2 id="page-heading" data-cy="NotificationHeading">
+    <span hpdTranslate="adminDashboardApp.notification.home.title">Notifications</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+        <span hpdTranslate="adminDashboardApp.notification.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-notification"
+        [routerLink]="['/notification/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span hpdTranslate="adminDashboardApp.notification.home.createLabel">Create a new Notification</span>
+      </button>
+    </div>
+  </h2>
+
+  <hpd-alert-error />
+
+  <hpd-alert />
+
+  @if (notifications().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span hpdTranslate="adminDashboardApp.notification.home.notFound">No Notifications found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr hpdSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" hpdSortBy="id">
+              <div class="d-flex">
+                <span hpdTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="content">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.notification.content">Content</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="recipientId">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.notification.recipientId">Recipient Id</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="senderId">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.notification.senderId">Sender Id</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="messageType">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.notification.messageType">Message Type</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="createdDate">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.notification.createdDate">Created Date</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="modifiedDate">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.notification.modifiedDate">Modified Date</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (notification of notifications(); track trackId(notification)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/notification', notification.id, 'view']">{{ notification.id }}</a>
+              </td>
+              <td>{{ notification.content }}</td>
+              <td>{{ notification.recipientId }}</td>
+              <td>{{ notification.senderId }}</td>
+              <td>{{ notification.messageType }}</td>
+              <td>{{ notification.createdDate | formatMediumDatetime }}</td>
+              <td>{{ notification.modifiedDate | formatMediumDatetime }}</td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/notification', notification.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" hpdTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/notification', notification.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" hpdTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(notification)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" hpdTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

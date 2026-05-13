@@ -1,0 +1,26 @@
+{
+  "adminDashboardApp": {
+    "facilityCatalog": {
+      "home": {
+        "title": "Facility Catalogs",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Facility Catalog",
+        "createOrEditLabel": "Create or edit a Facility Catalog",
+        "notFound": "No Facility Catalogs found"
+      },
+      "created": "A new Facility Catalog is created with identifier {{ param }}",
+      "updated": "A Facility Catalog is updated with identifier {{ param }}",
+      "deleted": "A Facility Catalog is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Facility Catalog {{ id }}?"
+      },
+      "detail": {
+        "title": "Facility Catalog"
+      },
+      "id": "ID",
+      "name": "Name",
+      "description": "Description",
+      "facilities": "Facilities"
+    }
+  }
+}

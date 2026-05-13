@@ -1,0 +1,82 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (profile(); as profileRef) {
+      <div>
+        <h2 data-cy="profileDetailsHeading"><span hpdTranslate="adminDashboardApp.profile.detail.title">Profile</span></h2>
+
+        <hr />
+
+        <hpd-alert-error />
+
+        <hpd-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span hpdTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ profileRef.id }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.profile.personId">Person Id</span></dt>
+          <dd>
+            <span>{{ profileRef.personId }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.profile.photoId">Photo Id</span></dt>
+          <dd>
+            <span>{{ profileRef.photoId }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.profile.contactId">Contact Id</span></dt>
+          <dd>
+            <span>{{ profileRef.contactId }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.profile.addressList">Address List</span></dt>
+          <dd>
+            <span>{{ profileRef.addressList }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.profile.roles">Roles</span></dt>
+          <dd>
+            <span>{{ profileRef.roles }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.profile.status">Status</span></dt>
+          <dd>
+            <span>{{ profileRef.status }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.profile.organisationId">Organisation Id</span></dt>
+          <dd>
+            <span>{{ profileRef.organisationId }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.profile.teamId">Team Id</span></dt>
+          <dd>
+            <span>{{ profileRef.teamId }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.profile.documentItems">Document Items</span></dt>
+          <dd>
+            <span>{{ profileRef.documentItems }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.profile.createdBy">Created By</span></dt>
+          <dd>
+            <span>{{ profileRef.createdBy }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.profile.createdDate">Created Date</span></dt>
+          <dd>
+            <span>{{ profileRef.createdDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.profile.modifiedBy">Modified By</span></dt>
+          <dd>
+            <span>{{ profileRef.modifiedBy }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.profile.modifiedDate">Modified Date</span></dt>
+          <dd>
+            <span>{{ profileRef.modifiedDate | formatMediumDatetime }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span hpdTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/profile', profileRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span hpdTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

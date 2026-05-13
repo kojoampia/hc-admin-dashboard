@@ -1,0 +1,199 @@
+<div>
+  <h2 id="page-heading" data-cy="ProfileHeading">
+    <span hpdTranslate="adminDashboardApp.profile.home.title">Profiles</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+        <span hpdTranslate="adminDashboardApp.profile.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-profile"
+        [routerLink]="['/profile/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span hpdTranslate="adminDashboardApp.profile.home.createLabel">Create a new Profile</span>
+      </button>
+    </div>
+  </h2>
+
+  <hpd-alert-error />
+
+  <hpd-alert />
+
+  @if (profiles().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span hpdTranslate="adminDashboardApp.profile.home.notFound">No Profiles found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr hpdSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" hpdSortBy="id">
+              <div class="d-flex">
+                <span hpdTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="personId">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.profile.personId">Person Id</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="photoId">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.profile.photoId">Photo Id</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="contactId">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.profile.contactId">Contact Id</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="addressList">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.profile.addressList">Address List</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="roles">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.profile.roles">Roles</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="status">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.profile.status">Status</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="organisationId">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.profile.organisationId">Organisation Id</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="teamId">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.profile.teamId">Team Id</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="documentItems">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.profile.documentItems">Document Items</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="createdBy">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.profile.createdBy">Created By</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="createdDate">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.profile.createdDate">Created Date</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="modifiedBy">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.profile.modifiedBy">Modified By</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="modifiedDate">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.profile.modifiedDate">Modified Date</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (profile of profiles(); track trackId(profile)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/profile', profile.id, 'view']">{{ profile.id }}</a>
+              </td>
+              <td>{{ profile.personId }}</td>
+              <td>{{ profile.photoId }}</td>
+              <td>{{ profile.contactId }}</td>
+              <td>{{ profile.addressList }}</td>
+              <td>{{ profile.roles }}</td>
+              <td>{{ profile.status }}</td>
+              <td>{{ profile.organisationId }}</td>
+              <td>{{ profile.teamId }}</td>
+              <td>{{ profile.documentItems }}</td>
+              <td>{{ profile.createdBy }}</td>
+              <td>{{ profile.createdDate | formatMediumDatetime }}</td>
+              <td>{{ profile.modifiedBy }}</td>
+              <td>{{ profile.modifiedDate | formatMediumDatetime }}</td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/profile', profile.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" hpdTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/profile', profile.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" hpdTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(profile)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" hpdTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (profiles().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <hpd-item-count [params]="{ page, totalItems, itemsPerPage }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+  }
+</div>

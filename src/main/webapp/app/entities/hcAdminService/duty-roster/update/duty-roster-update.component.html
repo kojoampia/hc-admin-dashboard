@@ -1,0 +1,165 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="hpd-duty-roster-heading"
+        data-cy="DutyRosterCreateUpdateHeading"
+        hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.home.createOrEditLabel"
+      >
+        Create or edit a Duty Roster
+      </h2>
+
+      <div>
+        <hpd-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.id">ID</label>
+            <input type="text" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let dateRef = editForm.get('date')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_date" hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.date">Date</label>
+          <div class="input-group">
+            <input
+              id="field_date"
+              data-cy="date"
+              type="text"
+              class="form-control"
+              name="date"
+              ngbDatepicker
+              #dateDp="ngbDatepicker"
+              formControlName="date"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dateDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+          @if (dateRef.invalid && (dateRef.dirty || dateRef.touched)) {
+            <div>
+              @if (editForm.get('date')?.errors?.required) {
+                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let dutyRef = editForm.get('duty')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_duty" hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.duty">Duty</label>
+          <select class="form-control" name="duty" formControlName="duty" id="field_duty" data-cy="duty">
+            <option [ngValue]="null">{{ 'adminDashboardApp.DutyRole.null' | translate }}</option>
+            @for (dutyRole of dutyRoleValues; track $index) {
+              <option [value]="dutyRole">{{ 'adminDashboardApp.DutyRole.' + dutyRole | translate }}</option>
+            }
+          </select>
+          @if (dutyRef.invalid && (dutyRef.dirty || dutyRef.touched)) {
+            <div>
+              @if (editForm.get('duty')?.errors?.required) {
+                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let professionalIdRef = editForm.get('professionalId')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_professionalId" hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.professionalId"
+            >Professional Id</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="professionalId"
+            id="field_professionalId"
+            data-cy="professionalId"
+            formControlName="professionalId"
+          />
+          @if (professionalIdRef.invalid && (professionalIdRef.dirty || professionalIdRef.touched)) {
+            <div>
+              @if (editForm.get('professionalId')?.errors?.required) {
+                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let shiftRef = editForm.get('shift')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_shift" hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.shift">Shift</label>
+          <select class="form-control" name="shift" formControlName="shift" id="field_shift" data-cy="shift">
+            <option [ngValue]="null">{{ 'adminDashboardApp.ShiftType.null' | translate }}</option>
+            @for (shiftType of shiftTypeValues; track $index) {
+              <option [value]="shiftType">{{ 'adminDashboardApp.ShiftType.' + shiftType | translate }}</option>
+            }
+          </select>
+          @if (shiftRef.invalid && (shiftRef.dirty || shiftRef.touched)) {
+            <div>
+              @if (editForm.get('shift')?.errors?.required) {
+                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let nameRef = editForm.get('name')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_name" hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.name">Name</label>
+          <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
+          @if (nameRef.invalid && (nameRef.dirty || nameRef.touched)) {
+            <div>
+              @if (editForm.get('name')?.errors?.required) {
+                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_description" hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.description"
+            >Description</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="description"
+            id="field_description"
+            data-cy="description"
+            formControlName="description"
+          />
+        </div>
+
+        @let patientIdRef = editForm.get('patientId')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_patientId" hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.patientId"
+            >Patient Id</label
+          >
+          <input type="text" class="form-control" name="patientId" id="field_patientId" data-cy="patientId" formControlName="patientId" />
+          @if (patientIdRef.invalid && (patientIdRef.dirty || patientIdRef.touched)) {
+            <div>
+              @if (editForm.get('patientId')?.errors?.required) {
+                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span hpdTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span hpdTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

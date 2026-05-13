@@ -1,0 +1,74 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (dutyRoster(); as dutyRosterRef) {
+      <div>
+        <h2 data-cy="dutyRosterDetailsHeading">
+          <span hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.detail.title">Duty Roster</span>
+        </h2>
+
+        <hr />
+
+        <hpd-alert-error />
+
+        <hpd-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span hpdTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ dutyRosterRef.id }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.date">Date</span></dt>
+          <dd>
+            <span>{{ dutyRosterRef.date | formatMediumDate }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.duty">Duty</span></dt>
+          <dd>
+            <span [hpdTranslate]="'adminDashboardApp.DutyRole.' + (dutyRosterRef.duty ?? 'null')">{{
+              {
+                null: '',
+                CARE: 'CARE',
+                VENDOR: 'VENDOR',
+                DOCTOR: 'DOCTOR',
+                NURSE: 'NURSE',
+                MEDIC: 'MEDIC',
+                TECHNICIAN: 'TECHNICIAN',
+                ADMINISTRATOR: 'ADMINISTRATOR',
+                OTHER: 'OTHER',
+              }[dutyRosterRef.duty ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.professionalId">Professional Id</span></dt>
+          <dd>
+            <span>{{ dutyRosterRef.professionalId }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.shift">Shift</span></dt>
+          <dd>
+            <span [hpdTranslate]="'adminDashboardApp.ShiftType.' + (dutyRosterRef.shift ?? 'null')">{{
+              { null: '', MORNING: 'MORNING', AFTERNOON: 'AFTERNOON', NIGHT: 'NIGHT' }[dutyRosterRef.shift ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.name">Name</span></dt>
+          <dd>
+            <span>{{ dutyRosterRef.name }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.description">Description</span></dt>
+          <dd>
+            <span>{{ dutyRosterRef.description }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.patientId">Patient Id</span></dt>
+          <dd>
+            <span>{{ dutyRosterRef.patientId }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span hpdTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/duty-roster', dutyRosterRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span hpdTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

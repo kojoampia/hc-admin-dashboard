@@ -1,0 +1,209 @@
+<div>
+  <h2 id="page-heading" data-cy="PersonHeading">
+    <span hpdTranslate="adminDashboardApp.person.home.title">People</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+        <span hpdTranslate="adminDashboardApp.person.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-person"
+        [routerLink]="['/person/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span hpdTranslate="adminDashboardApp.person.home.createLabel">Create a new Person</span>
+      </button>
+    </div>
+  </h2>
+
+  <hpd-alert-error />
+
+  <hpd-alert />
+
+  @if (people().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span hpdTranslate="adminDashboardApp.person.home.notFound">No People found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr hpdSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" hpdSortBy="id">
+              <div class="d-flex">
+                <span hpdTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="firstName">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.person.firstName">First Name</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="middleName">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.person.middleName">Middle Name</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="lastName">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.person.lastName">Last Name</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="birthDate">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.person.birthDate">Birth Date</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="gender">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.person.gender">Gender</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="maritalStatus">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.person.maritalStatus">Marital Status</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="nationality">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.person.nationality">Nationality</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="language">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.person.language">Language</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="createdDate">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.person.createdDate">Created Date</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="modifiedDate">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.person.modifiedDate">Modified Date</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="createdBy">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.person.createdBy">Created By</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="modifiedBy">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.person.modifiedBy">Modified By</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (person of people(); track trackId(person)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/person', person.id, 'view']">{{ person.id }}</a>
+              </td>
+              <td>{{ person.firstName }}</td>
+              <td>{{ person.middleName }}</td>
+              <td>{{ person.lastName }}</td>
+              <td>{{ person.birthDate | formatMediumDate }}</td>
+              <td [hpdTranslate]="'adminDashboardApp.GenderType.' + (person.gender ?? 'null')">
+                {{ { null: '', FEMALE: 'FEMALE', MALE: 'MALE' }[person.gender ?? 'null'] }}
+              </td>
+              <td>{{ person.maritalStatus }}</td>
+              <td>{{ person.nationality }}</td>
+              <td [hpdTranslate]="'adminDashboardApp.LanguageType.' + (person.language ?? 'null')">
+                {{
+                  {
+                    null: '',
+                    AKAN: 'AKAN',
+                    DAGBANI: 'DAGBANI',
+                    EWE: 'EWE',
+                    HAUSA: 'HAUSA',
+                    GA: 'GA',
+                    MAMPRUSI: 'MAMPRUSI',
+                    EN: 'EN',
+                    FR: 'FR',
+                    DE: 'DE',
+                    ES: 'ES',
+                  }[person.language ?? 'null']
+                }}
+              </td>
+              <td>{{ person.createdDate | formatMediumDatetime }}</td>
+              <td>{{ person.modifiedDate | formatMediumDatetime }}</td>
+              <td>{{ person.createdBy }}</td>
+              <td>{{ person.modifiedBy }}</td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/person', person.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" hpdTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/person', person.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" hpdTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(person)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" hpdTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (people().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <hpd-item-count [params]="{ page, totalItems, itemsPerPage }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+  }
+</div>

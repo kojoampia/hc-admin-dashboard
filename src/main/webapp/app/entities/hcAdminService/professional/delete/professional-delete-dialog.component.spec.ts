@@ -1,0 +1,61 @@
+jest.mock('@ng-bootstrap/ng-bootstrap');
+
+import { ComponentFixture, TestBed, fakeAsync, inject, tick } from '@angular/core/testing';
+import { HttpResponse, provideHttpClient } from '@angular/common/http';
+import { of } from 'rxjs';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+
+import { ProfessionalService } from '../service/professional.service';
+
+import { ProfessionalDeleteDialogComponent } from './professional-delete-dialog.component';
+
+describe('Professional Management Delete Component', () => {
+  let comp: ProfessionalDeleteDialogComponent;
+  let fixture: ComponentFixture<ProfessionalDeleteDialogComponent>;
+  let service: ProfessionalService;
+  let mockActiveModal: NgbActiveModal;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [ProfessionalDeleteDialogComponent],
+      providers: [provideHttpClient(), NgbActiveModal],
+    })
+      .overrideTemplate(ProfessionalDeleteDialogComponent, '')
+      .compileComponents();
+    fixture = TestBed.createComponent(ProfessionalDeleteDialogComponent);
+    comp = fixture.componentInstance;
+    service = TestBed.inject(ProfessionalService);
+    mockActiveModal = TestBed.inject(NgbActiveModal);
+  });
+
+  describe('confirmDelete', () => {
+    it('should call delete service on confirmDelete', inject(
+      [],
+      fakeAsync(() => {
+        // GIVEN
+        jest.spyOn(service, 'delete').mockReturnValue(of(new HttpResponse({ body: {} })));
+
+        // WHEN
+        comp.confirmDelete('ABC');
+        tick();
+
+        // THEN
+        expect(service.delete).toHaveBeenCalledWith('ABC');
+        expect(mockActiveModal.close).toHaveBeenCalledWith('deleted');
+      }),
+    ));
+
+    it('should not call delete service on clear', () => {
+      // GIVEN
+      jest.spyOn(service, 'delete');
+
+      // WHEN
+      comp.cancel();
+
+      // THEN
+      expect(service.delete).not.toHaveBeenCalled();
+      expect(mockActiveModal.close).not.toHaveBeenCalled();
+      expect(mockActiveModal.dismiss).toHaveBeenCalled();
+    });
+  });
+});

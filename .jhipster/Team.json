@@ -1,29 +1,56 @@
 {
   "annotations": {
-    "changelogDate": "20240206215921"
+    "changelogDate": "20260512223442"
   },
-  "changelogDate": "20240206215921",
-  "clientRootFolder": "adminMS",
-  "databaseType": "mongodb",
+  "dto": "mapstruct",
   "fields": [
     {
       "fieldName": "name",
-      "fieldType": "String"
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "description",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "members",
+      "fieldType": "String",
+      "fieldValidateRules": []
+    },
+    {
+      "fieldName": "supervisorId",
       "fieldType": "String"
     },
     {
-      "fieldName": "contact",
+      "fieldName": "organisationId",
       "fieldType": "String"
+    },
+    {
+      "fieldName": "createdBy",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "createdDate",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "modifiedBy",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "modifiedDate",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
     }
   ],
-  "microserviceName": "adminMS",
   "name": "Team",
-  "pagination": "no",
+  "pagination": "pagination",
   "readOnly": false,
   "relationships": [],
-  "searchEngine": true,
-  "service": "no"
+  "service": "serviceClass"
 }

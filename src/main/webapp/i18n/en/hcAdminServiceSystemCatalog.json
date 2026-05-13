@@ -1,0 +1,31 @@
+{
+  "adminDashboardApp": {
+    "hcAdminServiceSystemCatalog": {
+      "home": {
+        "title": "System Catalogs",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new System Catalog",
+        "createOrEditLabel": "Create or edit a System Catalog",
+        "notFound": "No System Catalogs found"
+      },
+      "created": "A new System Catalog is created with identifier {{ param }}",
+      "updated": "A System Catalog is updated with identifier {{ param }}",
+      "deleted": "A System Catalog is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete System Catalog {{ id }}?"
+      },
+      "detail": {
+        "title": "System Catalog"
+      },
+      "id": "ID",
+      "name": "Name",
+      "description": "Description",
+      "type": "Type",
+      "content": "Content",
+      "createdDate": "Created Date",
+      "modifiedDate": "Modified Date",
+      "createdBy": "Created By",
+      "modifiedBy": "Modified By"
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "adminDashboardApp": {
+    "documentItem": {
+      "home": {
+        "title": "DocumentItems",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Document Item",
+        "createOrEditLabel": "Créer ou éditer un Document Item",
+        "notFound": "Aucun Document Item trouvé"
+      },
+      "created": "Un nouveau Document Item a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Document Item avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Document Item avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Document Item {{ id }} ?"
+      },
+      "detail": {
+        "title": "Document Item"
+      },
+      "id": "ID",
+      "name": "Name",
+      "description": "Description",
+      "documentType": "Document Type",
+      "url": "Url",
+      "createdDate": "Created Date",
+      "createdBy": "Created By",
+      "modifiedDate": "Modified Date",
+      "modifiedBy": "Modified By"
+    }
+  }
+}

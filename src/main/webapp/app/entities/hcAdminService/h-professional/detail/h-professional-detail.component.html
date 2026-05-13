@@ -1,0 +1,64 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (hProfessional(); as hProfessionalRef) {
+      <div>
+        <h2 data-cy="hProfessionalDetailsHeading">
+          <span hpdTranslate="adminDashboardApp.hcAdminServiceHProfessional.detail.title">H Professional</span>
+        </h2>
+
+        <hr />
+
+        <hpd-alert-error />
+
+        <hpd-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span hpdTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ hProfessionalRef.id }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceHProfessional.name">Name</span></dt>
+          <dd>
+            <span>{{ hProfessionalRef.name }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceHProfessional.organisation">Organisation</span></dt>
+          <dd>
+            <span>{{ hProfessionalRef.organisation }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceHProfessional.roster">Roster</span></dt>
+          <dd>
+            <span>{{ hProfessionalRef.roster }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceHProfessional.createdDate">Created Date</span></dt>
+          <dd>
+            <span>{{ hProfessionalRef.createdDate | formatMediumDate }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceHProfessional.createdBy">Created By</span></dt>
+          <dd>
+            <span>{{ hProfessionalRef.createdBy }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceHProfessional.modifiedDate">Modified Date</span></dt>
+          <dd>
+            <span>{{ hProfessionalRef.modifiedDate | formatMediumDate }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceHProfessional.modifiedBy">Modified By</span></dt>
+          <dd>
+            <span>{{ hProfessionalRef.modifiedBy }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceHProfessional.profile">Profile</span></dt>
+          <dd>
+            <span>{{ hProfessionalRef.profile }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span hpdTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/h-professional', hProfessionalRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span hpdTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

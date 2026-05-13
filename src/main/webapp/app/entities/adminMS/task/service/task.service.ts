@@ -32,8 +32,8 @@ export type EntityArrayResponseType = HttpResponse<ITask[]>;
 
 @Injectable({ providedIn: 'root' })
 export class TaskService {
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/tasks');
-  protected resourceSearchUrl = this.applicationConfigService.getEndpointFor('api/tasks/_search');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/tasks', 'services/admin-service');
+  protected resourceSearchUrl = this.applicationConfigService.getEndpointFor('api/tasks/_search', 'services/admin-service');
 
   constructor(
     protected http: HttpClient,

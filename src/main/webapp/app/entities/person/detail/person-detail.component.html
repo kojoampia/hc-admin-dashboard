@@ -1,0 +1,94 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (person(); as personRef) {
+      <div>
+        <h2 data-cy="personDetailsHeading"><span hpdTranslate="adminDashboardApp.person.detail.title">Person</span></h2>
+
+        <hr />
+
+        <hpd-alert-error />
+
+        <hpd-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span hpdTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ personRef.id }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.person.firstName">First Name</span></dt>
+          <dd>
+            <span>{{ personRef.firstName }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.person.middleName">Middle Name</span></dt>
+          <dd>
+            <span>{{ personRef.middleName }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.person.lastName">Last Name</span></dt>
+          <dd>
+            <span>{{ personRef.lastName }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.person.birthDate">Birth Date</span></dt>
+          <dd>
+            <span>{{ personRef.birthDate | formatMediumDate }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.person.gender">Gender</span></dt>
+          <dd>
+            <span [hpdTranslate]="'adminDashboardApp.GenderType.' + (personRef.gender ?? 'null')">{{
+              { null: '', FEMALE: 'FEMALE', MALE: 'MALE' }[personRef.gender ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.person.maritalStatus">Marital Status</span></dt>
+          <dd>
+            <span>{{ personRef.maritalStatus }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.person.nationality">Nationality</span></dt>
+          <dd>
+            <span>{{ personRef.nationality }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.person.language">Language</span></dt>
+          <dd>
+            <span [hpdTranslate]="'adminDashboardApp.LanguageType.' + (personRef.language ?? 'null')">{{
+              {
+                null: '',
+                AKAN: 'AKAN',
+                DAGBANI: 'DAGBANI',
+                EWE: 'EWE',
+                HAUSA: 'HAUSA',
+                GA: 'GA',
+                MAMPRUSI: 'MAMPRUSI',
+                EN: 'EN',
+                FR: 'FR',
+                DE: 'DE',
+                ES: 'ES',
+              }[personRef.language ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.person.createdDate">Created Date</span></dt>
+          <dd>
+            <span>{{ personRef.createdDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.person.modifiedDate">Modified Date</span></dt>
+          <dd>
+            <span>{{ personRef.modifiedDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.person.createdBy">Created By</span></dt>
+          <dd>
+            <span>{{ personRef.createdBy }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.person.modifiedBy">Modified By</span></dt>
+          <dd>
+            <span>{{ personRef.modifiedBy }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span hpdTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/person', personRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span hpdTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,10 @@
+{
+  "adminDashboardApp": {
+    "MessageType": {
+      "null": "",
+      "NOTIFICATION": "NOTIFICATION",
+      "ALERT": "ALERT",
+      "REMINDER": "REMINDER"
+    }
+  }
+}

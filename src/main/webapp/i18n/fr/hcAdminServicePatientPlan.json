@@ -1,0 +1,29 @@
+{
+  "adminDashboardApp": {
+    "hcAdminServicePatientPlan": {
+      "home": {
+        "title": "PatientPlans",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Patient Plan",
+        "createOrEditLabel": "Créer ou éditer un Patient Plan",
+        "notFound": "Aucun Patient Plan trouvé"
+      },
+      "created": "Un nouveau Patient Plan a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Patient Plan avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Patient Plan avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Patient Plan {{ id }} ?"
+      },
+      "detail": {
+        "title": "Patient Plan"
+      },
+      "id": "ID",
+      "planId": "Plan Id",
+      "patientId": "Patient Id",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "createdDate": "Created Date",
+      "createdBy": "Created By"
+    }
+  }
+}

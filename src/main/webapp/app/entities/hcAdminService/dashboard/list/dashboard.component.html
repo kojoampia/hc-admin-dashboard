@@ -1,0 +1,100 @@
+<div>
+  <h2 id="page-heading" data-cy="DashboardHeading">
+    <span hpdTranslate="adminDashboardApp.hcAdminServiceDashboard.home.title">Dashboards</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+        <span hpdTranslate="adminDashboardApp.hcAdminServiceDashboard.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-dashboard"
+        [routerLink]="['/dashboard/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span hpdTranslate="adminDashboardApp.hcAdminServiceDashboard.home.createLabel">Create a new Dashboard</span>
+      </button>
+    </div>
+  </h2>
+
+  <hpd-alert-error />
+
+  <hpd-alert />
+
+  @if (dashboards().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span hpdTranslate="adminDashboardApp.hcAdminServiceDashboard.home.notFound">No Dashboards found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr hpdSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" hpdSortBy="id">
+              <div class="d-flex">
+                <span hpdTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="name">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.hcAdminServiceDashboard.name">Name</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="description">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.hcAdminServiceDashboard.description">Description</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="elements">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.hcAdminServiceDashboard.elements">Elements</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (dashboard of dashboards(); track trackId(dashboard)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/dashboard', dashboard.id, 'view']">{{ dashboard.id }}</a>
+              </td>
+              <td>{{ dashboard.name }}</td>
+              <td>{{ dashboard.description }}</td>
+              <td>{{ dashboard.elements }}</td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/dashboard', dashboard.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" hpdTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/dashboard', dashboard.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" hpdTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(dashboard)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" hpdTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

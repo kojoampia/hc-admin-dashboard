@@ -1,0 +1,35 @@
+{
+  "adminDashboardApp": {
+    "person": {
+      "home": {
+        "title": "People",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Person",
+        "createOrEditLabel": "Create or edit a Person",
+        "notFound": "No People found"
+      },
+      "created": "A new Person is created with identifier {{ param }}",
+      "updated": "A Person is updated with identifier {{ param }}",
+      "deleted": "A Person is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Person {{ id }}?"
+      },
+      "detail": {
+        "title": "Person"
+      },
+      "id": "ID",
+      "firstName": "First Name",
+      "middleName": "Middle Name",
+      "lastName": "Last Name",
+      "birthDate": "Birth Date",
+      "gender": "Gender",
+      "maritalStatus": "Marital Status",
+      "nationality": "Nationality",
+      "language": "Language",
+      "createdDate": "Created Date",
+      "modifiedDate": "Modified Date",
+      "createdBy": "Created By",
+      "modifiedBy": "Modified By"
+    }
+  }
+}

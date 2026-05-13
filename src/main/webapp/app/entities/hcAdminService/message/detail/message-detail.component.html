@@ -1,0 +1,52 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (message(); as messageRef) {
+      <div>
+        <h2 data-cy="messageDetailsHeading"><span hpdTranslate="adminDashboardApp.hcAdminServiceMessage.detail.title">Message</span></h2>
+
+        <hr />
+
+        <hpd-alert-error />
+
+        <hpd-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span hpdTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ messageRef.id }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceMessage.content">Content</span></dt>
+          <dd>
+            <span>{{ messageRef.content }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceMessage.timestamp">Timestamp</span></dt>
+          <dd>
+            <span>{{ messageRef.timestamp | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceMessage.senderId">Sender Id</span></dt>
+          <dd>
+            <span>{{ messageRef.senderId }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceMessage.recipients">Recipients</span></dt>
+          <dd>
+            <span>{{ messageRef.recipients }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceMessage.type">Type</span></dt>
+          <dd>
+            <span [hpdTranslate]="'adminDashboardApp.MessageType.' + (messageRef.type ?? 'null')">{{
+              { null: '', NOTIFICATION: 'NOTIFICATION', ALERT: 'ALERT', REMINDER: 'REMINDER' }[messageRef.type ?? 'null']
+            }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span hpdTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/message', messageRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span hpdTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,26 @@
+{
+  "adminDashboardApp": {
+    "facilityCatalog": {
+      "home": {
+        "title": "Facility Catalogs",
+        "refreshListLabel": "Liste aktualisieren",
+        "createLabel": "Facility Catalog erstellen",
+        "createOrEditLabel": "Facility Catalog erstellen oder bearbeiten",
+        "notFound": "Keine Facility Catalogs gefunden"
+      },
+      "created": "Facility Catalog erstellt mit ID {{ param }}",
+      "updated": "Facility Catalog aktualisiert mit ID {{ param }}",
+      "deleted": "Facility Catalog gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll Facility Catalog {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "Facility Catalog"
+      },
+      "id": "ID",
+      "name": "Name",
+      "description": "Description",
+      "facilities": "Facilities"
+    }
+  }
+}

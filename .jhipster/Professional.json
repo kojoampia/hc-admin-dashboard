@@ -1,0 +1,49 @@
+{
+  "annotations": {
+    "changelogDate": "20240402075117"
+  },
+  "clientRootFolder": "hcAdminService",
+  "databaseType": "mongodb",
+  "entityTableName": "professional",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "organisation",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "roster",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "profile",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "createdDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "createdBy",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "modifiedDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "modifiedBy",
+      "fieldType": "String"
+    }
+  ],
+  "microserviceName": "hcAdminService",
+  "name": "Professional",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "no"
+}

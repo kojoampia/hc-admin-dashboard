@@ -1,0 +1,31 @@
+{
+  "adminDashboardApp": {
+    "hcAdminServiceProfessional": {
+      "home": {
+        "title": "Professionals",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Professional",
+        "createOrEditLabel": "Créer ou éditer un Professional",
+        "notFound": "Aucun Professional trouvé"
+      },
+      "created": "Un nouveau Professional a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Professional avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Professional avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Professional {{ id }} ?"
+      },
+      "detail": {
+        "title": "Professional"
+      },
+      "id": "ID",
+      "name": "Name",
+      "organisation": "Organisation",
+      "roster": "Roster",
+      "profile": "Profile",
+      "createdDate": "Created Date",
+      "createdBy": "Created By",
+      "modifiedDate": "Modified Date",
+      "modifiedBy": "Modified By"
+    }
+  }
+}

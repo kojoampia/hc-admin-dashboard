@@ -1,0 +1,29 @@
+{
+  "adminDashboardApp": {
+    "notification": {
+      "home": {
+        "title": "Notifications",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Notification",
+        "createOrEditLabel": "Créer ou éditer un Notification",
+        "notFound": "Aucun Notification trouvé"
+      },
+      "created": "Un nouveau Notification a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Notification avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Notification avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Notification {{ id }} ?"
+      },
+      "detail": {
+        "title": "Notification"
+      },
+      "id": "ID",
+      "content": "Content",
+      "recipientId": "Recipient Id",
+      "senderId": "Sender Id",
+      "messageType": "Message Type",
+      "createdDate": "Created Date",
+      "modifiedDate": "Modified Date"
+    }
+  }
+}

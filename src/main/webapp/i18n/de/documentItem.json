@@ -1,0 +1,31 @@
+{
+  "adminDashboardApp": {
+    "documentItem": {
+      "home": {
+        "title": "Document Items",
+        "refreshListLabel": "Liste aktualisieren",
+        "createLabel": "Document Item erstellen",
+        "createOrEditLabel": "Document Item erstellen oder bearbeiten",
+        "notFound": "Keine Document Items gefunden"
+      },
+      "created": "Document Item erstellt mit ID {{ param }}",
+      "updated": "Document Item aktualisiert mit ID {{ param }}",
+      "deleted": "Document Item gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll Document Item {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "Document Item"
+      },
+      "id": "ID",
+      "name": "Name",
+      "description": "Description",
+      "documentType": "Document Type",
+      "url": "Url",
+      "createdDate": "Created Date",
+      "createdBy": "Created By",
+      "modifiedDate": "Modified Date",
+      "modifiedBy": "Modified By"
+    }
+  }
+}

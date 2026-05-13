@@ -1,0 +1,116 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="hpd-contact-heading" data-cy="ContactCreateUpdateHeading" hpdTranslate="adminDashboardApp.contact.home.createOrEditLabel">
+        Create or edit a Contact
+      </h2>
+
+      <div>
+        <hpd-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" hpdTranslate="adminDashboardApp.contact.id">ID</label>
+            <input type="text" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let personIdRef = editForm.get('personId')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_personId" hpdTranslate="adminDashboardApp.contact.personId">Person Id</label>
+          <input type="text" class="form-control" name="personId" id="field_personId" data-cy="personId" formControlName="personId" />
+          @if (personIdRef.invalid && (personIdRef.dirty || personIdRef.touched)) {
+            <div>
+              @if (editForm.get('personId')?.errors?.required) {
+                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let emailRef = editForm.get('email')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_email" hpdTranslate="adminDashboardApp.contact.email">Email</label>
+          <input type="text" class="form-control" name="email" id="field_email" data-cy="email" formControlName="email" />
+          @if (emailRef.invalid && (emailRef.dirty || emailRef.touched)) {
+            <div>
+              @if (editForm.get('email')?.errors?.required) {
+                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let phoneNumberRef = editForm.get('phoneNumber')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_phoneNumber" hpdTranslate="adminDashboardApp.contact.phoneNumber">Phone Number</label>
+          <input
+            type="text"
+            class="form-control"
+            name="phoneNumber"
+            id="field_phoneNumber"
+            data-cy="phoneNumber"
+            formControlName="phoneNumber"
+          />
+          @if (phoneNumberRef.invalid && (phoneNumberRef.dirty || phoneNumberRef.touched)) {
+            <div>
+              @if (editForm.get('phoneNumber')?.errors?.required) {
+                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
+              }
+              @if (editForm.get('phoneNumber')?.errors?.pattern) {
+                <small
+                  class="form-text text-danger"
+                  hpdTranslate="entity.validation.pattern"
+                  [translateValues]="{ pattern: 'Phone Number' }"
+                  >This field should follow pattern for Phone Number.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let countryCodeRef = editForm.get('countryCode')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_countryCode" hpdTranslate="adminDashboardApp.contact.countryCode">Country Code</label>
+          <input
+            type="number"
+            class="form-control"
+            name="countryCode"
+            id="field_countryCode"
+            data-cy="countryCode"
+            formControlName="countryCode"
+          />
+          @if (countryCodeRef.invalid && (countryCodeRef.dirty || countryCodeRef.touched)) {
+            <div>
+              @if (editForm.get('countryCode')?.errors?.required) {
+                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('countryCode')?.errors?.number"
+                hpdTranslate="entity.validation.number"
+                >This field should be a number.</small
+              >
+            </div>
+          }
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span hpdTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span hpdTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

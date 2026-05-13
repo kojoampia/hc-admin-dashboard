@@ -1,0 +1,54 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (notification(); as notificationRef) {
+      <div>
+        <h2 data-cy="notificationDetailsHeading"><span hpdTranslate="adminDashboardApp.notification.detail.title">Notification</span></h2>
+
+        <hr />
+
+        <hpd-alert-error />
+
+        <hpd-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span hpdTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ notificationRef.id }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.notification.content">Content</span></dt>
+          <dd>
+            <span>{{ notificationRef.content }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.notification.recipientId">Recipient Id</span></dt>
+          <dd>
+            <span>{{ notificationRef.recipientId }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.notification.senderId">Sender Id</span></dt>
+          <dd>
+            <span>{{ notificationRef.senderId }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.notification.messageType">Message Type</span></dt>
+          <dd>
+            <span>{{ notificationRef.messageType }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.notification.createdDate">Created Date</span></dt>
+          <dd>
+            <span>{{ notificationRef.createdDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.notification.modifiedDate">Modified Date</span></dt>
+          <dd>
+            <span>{{ notificationRef.modifiedDate | formatMediumDatetime }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span hpdTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/notification', notificationRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span hpdTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

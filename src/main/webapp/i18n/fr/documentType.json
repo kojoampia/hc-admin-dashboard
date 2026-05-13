@@ -1,0 +1,14 @@
+{
+  "adminDashboardApp": {
+    "DocumentType": {
+      "null": "",
+      "PASSPORT": "PASSPORT",
+      "ID_CARD": "ID_CARD",
+      "DRIVER_LICENSE": "DRIVER_LICENSE",
+      "CERTIFICATE": "CERTIFICATE",
+      "BUSINESS_LICENCE": "BUSINESS_LICENCE",
+      "PROFESSIONAL_LICENSE": "PROFESSIONAL_LICENSE",
+      "OTHER": "OTHER"
+    }
+  }
+}

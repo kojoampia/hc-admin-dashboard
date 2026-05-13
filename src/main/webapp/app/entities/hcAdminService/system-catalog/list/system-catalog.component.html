@@ -1,0 +1,152 @@
+<div>
+  <h2 id="page-heading" data-cy="SystemCatalogHeading">
+    <span hpdTranslate="adminDashboardApp.hcAdminServiceSystemCatalog.home.title">System Catalogs</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+        <span hpdTranslate="adminDashboardApp.hcAdminServiceSystemCatalog.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-system-catalog"
+        [routerLink]="['/system-catalog/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span hpdTranslate="adminDashboardApp.hcAdminServiceSystemCatalog.home.createLabel">Create a new System Catalog</span>
+      </button>
+    </div>
+  </h2>
+
+  <hpd-alert-error />
+
+  <hpd-alert />
+
+  @if (systemCatalogs().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span hpdTranslate="adminDashboardApp.hcAdminServiceSystemCatalog.home.notFound">No System Catalogs found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr hpdSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" hpdSortBy="id">
+              <div class="d-flex">
+                <span hpdTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="name">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.hcAdminServiceSystemCatalog.name">Name</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="description">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.hcAdminServiceSystemCatalog.description">Description</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="type">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.hcAdminServiceSystemCatalog.type">Type</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="content">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.hcAdminServiceSystemCatalog.content">Content</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="createdDate">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.hcAdminServiceSystemCatalog.createdDate">Created Date</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="modifiedDate">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.hcAdminServiceSystemCatalog.modifiedDate">Modified Date</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="createdBy">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.hcAdminServiceSystemCatalog.createdBy">Created By</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="modifiedBy">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.hcAdminServiceSystemCatalog.modifiedBy">Modified By</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody infinite-scroll (scrolled)="loadNextPage()" [infiniteScrollDisabled]="!hasMorePage()" [infiniteScrollDistance]="0">
+          @for (systemCatalog of systemCatalogs(); track trackId(systemCatalog)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/system-catalog', systemCatalog.id, 'view']">{{ systemCatalog.id }}</a>
+              </td>
+              <td>{{ systemCatalog.name }}</td>
+              <td>{{ systemCatalog.description }}</td>
+              <td [hpdTranslate]="'adminDashboardApp.CatalogType.' + (systemCatalog.type ?? 'null')">
+                {{
+                  {
+                    null: '',
+                    SERVICE: 'SERVICE',
+                    PRODUCT: 'PRODUCT',
+                    INFORMATION: 'INFORMATION',
+                    CONTACT: 'CONTACT',
+                    ABOUT: 'ABOUT',
+                    LEGAL: 'LEGAL',
+                  }[systemCatalog.type ?? 'null']
+                }}
+              </td>
+              <td>{{ systemCatalog.content }}</td>
+              <td>{{ systemCatalog.createdDate | formatMediumDatetime }}</td>
+              <td>{{ systemCatalog.modifiedDate | formatMediumDatetime }}</td>
+              <td>{{ systemCatalog.createdBy }}</td>
+              <td>{{ systemCatalog.modifiedBy }}</td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/system-catalog', systemCatalog.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" hpdTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/system-catalog', systemCatalog.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" hpdTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(systemCatalog)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" hpdTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

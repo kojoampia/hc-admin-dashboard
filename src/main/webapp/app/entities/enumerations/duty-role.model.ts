@@ -1,0 +1,17 @@
+export enum DutyRole {
+  CARE = 'CARE',
+
+  VENDOR = 'VENDOR',
+
+  DOCTOR = 'DOCTOR',
+
+  NURSE = 'NURSE',
+
+  MEDIC = 'MEDIC',
+
+  TECHNICIAN = 'TECHNICIAN',
+
+  ADMINISTRATOR = 'ADMINISTRATOR',
+
+  OTHER = 'OTHER',
+}

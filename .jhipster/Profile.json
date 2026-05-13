@@ -1,70 +1,77 @@
 {
   "annotations": {
-    "changelogDate": "20240206221158"
+    "changelogDate": "20260512225320"
   },
-  "changelogDate": "20240206221158",
-  "clientRootFolder": "adminMS",
-  "databaseType": "mongodb",
-  "dto": "no",
+  "dto": "mapstruct",
   "fields": [
     {
-      "fieldName": "firstName",
+      "fieldName": "personId",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "photoId",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "contactId",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "addressList",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "roles",
       "fieldType": "String"
     },
     {
-      "fieldName": "middleNames",
-      "fieldType": "String"
+      "fieldName": "status",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "lastName",
-      "fieldType": "String"
+      "fieldName": "organisationId",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "membership",
-      "fieldType": "String"
+      "fieldName": "teamId",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "birthDate",
-      "fieldType": "LocalDate"
+      "fieldName": "documentItems",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "sex",
-      "fieldType": "String"
+      "fieldName": "createdBy",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "mobilePhone",
-      "fieldType": "String"
+      "fieldName": "createdDate",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "phoneNumber",
-      "fieldType": "String"
+      "fieldName": "modifiedBy",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "email",
-      "fieldType": "String"
-    },
-    {
-      "fieldName": "idType",
-      "fieldType": "String"
-    },
-    {
-      "fieldName": "idNumber",
-      "fieldType": "String"
-    },
-    {
-      "fieldName": "contacts",
-      "fieldType": "String"
-    },
-    {
-      "fieldName": "address",
-      "fieldType": "String"
+      "fieldName": "modifiedDate",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
     }
   ],
-  "microserviceName": "adminMS",
   "name": "Profile",
   "pagination": "pagination",
   "readOnly": false,
   "relationships": [],
-  "searchEngine": true,
   "service": "serviceClass"
 }

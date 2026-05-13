@@ -1,0 +1,29 @@
+{
+  "adminDashboardApp": {
+    "hcAdminServicePricingPlan": {
+      "home": {
+        "title": "Pricing Plans",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Pricing Plan",
+        "createOrEditLabel": "Create or edit a Pricing Plan",
+        "notFound": "No Pricing Plans found"
+      },
+      "created": "A new Pricing Plan is created with identifier {{ param }}",
+      "updated": "A Pricing Plan is updated with identifier {{ param }}",
+      "deleted": "A Pricing Plan is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Pricing Plan {{ id }}?"
+      },
+      "detail": {
+        "title": "Pricing Plan"
+      },
+      "id": "ID",
+      "name": "Name",
+      "description": "Description",
+      "price": "Price",
+      "features": "Features",
+      "billingCycle": "Billing Cycle",
+      "active": "Active"
+    }
+  }
+}

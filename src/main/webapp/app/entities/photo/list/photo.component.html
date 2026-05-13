@@ -1,0 +1,202 @@
+<div>
+  <h2 id="page-heading" data-cy="PhotoHeading">
+    <span hpdTranslate="adminDashboardApp.photo.home.title">Photos</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+        <span hpdTranslate="adminDashboardApp.photo.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-photo"
+        [routerLink]="['/photo/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span hpdTranslate="adminDashboardApp.photo.home.createLabel">Create a new Photo</span>
+      </button>
+    </div>
+  </h2>
+
+  <hpd-alert-error />
+
+  <hpd-alert />
+
+  @if (photos().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span hpdTranslate="adminDashboardApp.photo.home.notFound">No Photos found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr hpdSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" hpdSortBy="id">
+              <div class="d-flex">
+                <span hpdTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="description">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.photo.description">Description</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="altText">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.photo.altText">Alt Text</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="url">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.photo.url">Url</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="profileId">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.photo.profileId">Profile Id</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="photoType">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.photo.photoType">Photo Type</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="data">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.photo.data">Data</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="photoMetadata">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.photo.photoMetadata">Photo Metadata</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="createdBy">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.photo.createdBy">Created By</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="createdDate">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.photo.createdDate">Created Date</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="modifiedBy">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.photo.modifiedBy">Modified By</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="modifiedDate">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.photo.modifiedDate">Modified Date</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (photo of photos(); track trackId(photo)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/photo', photo.id, 'view']">{{ photo.id }}</a>
+              </td>
+              <td>{{ photo.description }}</td>
+              <td>{{ photo.altText }}</td>
+              <td>{{ photo.url }}</td>
+              <td>{{ photo.profileId }}</td>
+              <td [hpdTranslate]="'adminDashboardApp.PhotoType.' + (photo.photoType ?? 'null')">
+                {{
+                  {
+                    null: '',
+                    ID_PHOTO: 'ID_PHOTO',
+                    PORTRAIT: 'PORTRAIT',
+                    MUGSHOT: 'MUGSHOT',
+                    DOCUMENT_PHOTO: 'DOCUMENT_PHOTO',
+                    REPORT_PHOTO: 'REPORT_PHOTO',
+                    OTHER: 'OTHER',
+                  }[photo.photoType ?? 'null']
+                }}
+              </td>
+              <td>
+                @if (photo.data) {
+                  <a (click)="openFile(photo.data, photo.dataContentType)">
+                    <img [src]="'data:' + photo.dataContentType + ';base64,' + photo.data" style="max-height: 30px" alt="photo" />
+                  </a>
+                  <span>{{ photo.dataContentType }}, {{ byteSize(photo.data) }}</span>
+                }
+              </td>
+              <td>{{ photo.photoMetadata }}</td>
+              <td>{{ photo.createdBy }}</td>
+              <td>{{ photo.createdDate | formatMediumDatetime }}</td>
+              <td>{{ photo.modifiedBy }}</td>
+              <td>{{ photo.modifiedDate | formatMediumDatetime }}</td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/photo', photo.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" hpdTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/photo', photo.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" hpdTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(photo)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" hpdTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (photos().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <hpd-item-count [params]="{ page, totalItems, itemsPerPage }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+  }
+</div>

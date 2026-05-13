@@ -1,0 +1,34 @@
+{
+  "adminDashboardApp": {
+    "photo": {
+      "home": {
+        "title": "Photos",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Photo",
+        "createOrEditLabel": "Créer ou éditer un Photo",
+        "notFound": "Aucun Photo trouvé"
+      },
+      "created": "Un nouveau Photo a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Photo avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Photo avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Photo {{ id }} ?"
+      },
+      "detail": {
+        "title": "Photo"
+      },
+      "id": "ID",
+      "description": "Description",
+      "altText": "Alt Text",
+      "url": "Url",
+      "profileId": "Profile Id",
+      "photoType": "Photo Type",
+      "data": "Data",
+      "photoMetadata": "Photo Metadata",
+      "createdBy": "Created By",
+      "createdDate": "Created Date",
+      "modifiedBy": "Modified By",
+      "modifiedDate": "Modified Date"
+    }
+  }
+}

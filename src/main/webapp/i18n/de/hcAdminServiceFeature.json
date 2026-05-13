@@ -1,0 +1,26 @@
+{
+  "adminDashboardApp": {
+    "hcAdminServiceFeature": {
+      "home": {
+        "title": "Features",
+        "refreshListLabel": "Liste aktualisieren",
+        "createLabel": "Feature erstellen",
+        "createOrEditLabel": "Feature erstellen oder bearbeiten",
+        "notFound": "Keine Features gefunden"
+      },
+      "created": "Feature erstellt mit ID {{ param }}",
+      "updated": "Feature aktualisiert mit ID {{ param }}",
+      "deleted": "Feature gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll Feature {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "Feature"
+      },
+      "id": "ID",
+      "name": "Name",
+      "description": "Description",
+      "type": "Type"
+    }
+  }
+}

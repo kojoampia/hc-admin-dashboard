@@ -1,13 +1,13 @@
 import {
-  entityTableSelector,
-  entityDetailsButtonSelector,
-  entityDetailsBackButtonSelector,
-  entityCreateButtonSelector,
-  entityCreateSaveButtonSelector,
-  entityCreateCancelButtonSelector,
-  entityEditButtonSelector,
-  entityDeleteButtonSelector,
   entityConfirmDeleteButtonSelector,
+  entityCreateButtonSelector,
+  entityCreateCancelButtonSelector,
+  entityCreateSaveButtonSelector,
+  entityDeleteButtonSelector,
+  entityDetailsBackButtonSelector,
+  entityDetailsButtonSelector,
+  entityEditButtonSelector,
+  entityTableSelector,
 } from '../../support/entity';
 
 describe('Profile e2e test', () => {
@@ -15,7 +15,20 @@ describe('Profile e2e test', () => {
   const profilePageUrlPattern = new RegExp('/profile(\\?.*)?$');
   const username = Cypress.env('E2E_USERNAME') ?? 'user';
   const password = Cypress.env('E2E_PASSWORD') ?? 'user';
-  const profileSample = {};
+  const profileSample = {
+    personId: 'bah colossal',
+    photoId: 'supposing typewriter',
+    contactId: 'which shred gleefully',
+    addressList: 'whenever unselfish throughout',
+    status: false,
+    organisationId: 'officially gently vestment',
+    teamId: 'slather beside',
+    documentItems: 'cleave uncork warped',
+    createdBy: 'come frightfully excepting',
+    createdDate: '2026-05-12T20:28:50.478Z',
+    modifiedBy: 'fall',
+    modifiedDate: '2026-05-12T17:52:21.225Z',
+  };
 
   let profile;
 
@@ -24,16 +37,16 @@ describe('Profile e2e test', () => {
   });
 
   beforeEach(() => {
-    cy.intercept('GET', '/services/adminms/api/profiles+(?*|)').as('entitiesRequest');
-    cy.intercept('POST', '/services/adminms/api/profiles').as('postEntityRequest');
-    cy.intercept('DELETE', '/services/adminms/api/profiles/*').as('deleteEntityRequest');
+    cy.intercept('GET', '/api/profiles+(?*|)').as('entitiesRequest');
+    cy.intercept('POST', '/api/profiles').as('postEntityRequest');
+    cy.intercept('DELETE', '/api/profiles/*').as('deleteEntityRequest');
   });
 
   afterEach(() => {
     if (profile) {
       cy.authenticatedRequest({
         method: 'DELETE',
-        url: `/services/adminms/api/profiles/${profile.id}`,
+        url: `/api/profiles/${profile.id}`,
       }).then(() => {
         profile = undefined;
       });
@@ -44,7 +57,7 @@ describe('Profile e2e test', () => {
     cy.visit('/');
     cy.clickOnEntityMenuItem('profile');
     cy.wait('@entitiesRequest').then(({ response }) => {
-      if (response.body.length === 0) {
+      if (response?.body.length === 0) {
         cy.get(entityTableSelector).should('not.exist');
       } else {
         cy.get(entityTableSelector).should('exist');
@@ -68,7 +81,7 @@ describe('Profile e2e test', () => {
         cy.get(entityCreateSaveButtonSelector).should('exist');
         cy.get(entityCreateCancelButtonSelector).click();
         cy.wait('@entitiesRequest').then(({ response }) => {
-          expect(response.statusCode).to.equal(200);
+          expect(response?.statusCode).to.equal(200);
         });
         cy.url().should('match', profilePageUrlPattern);
       });
@@ -78,7 +91,7 @@ describe('Profile e2e test', () => {
       beforeEach(() => {
         cy.authenticatedRequest({
           method: 'POST',
-          url: '/services/adminms/api/profiles',
+          url: '/api/profiles',
           body: profileSample,
         }).then(({ body }) => {
           profile = body;
@@ -86,13 +99,13 @@ describe('Profile e2e test', () => {
           cy.intercept(
             {
               method: 'GET',
-              url: '/services/adminms/api/profiles+(?*|)',
+              url: '/api/profiles+(?*|)',
               times: 1,
             },
             {
               statusCode: 200,
               headers: {
-                link: '<http://localhost/services/adminms/api/profiles?page=0&size=20>; rel="last",<http://localhost/services/adminms/api/profiles?page=0&size=20>; rel="first"',
+                link: '<http://localhost/api/profiles?page=0&size=20>; rel="last",<http://localhost/api/profiles?page=0&size=20>; rel="first"',
               },
               body: [profile],
             },
@@ -109,7 +122,7 @@ describe('Profile e2e test', () => {
         cy.getEntityDetailsHeading('profile');
         cy.get(entityDetailsBackButtonSelector).click();
         cy.wait('@entitiesRequest').then(({ response }) => {
-          expect(response.statusCode).to.equal(200);
+          expect(response?.statusCode).to.equal(200);
         });
         cy.url().should('match', profilePageUrlPattern);
       });
@@ -120,7 +133,7 @@ describe('Profile e2e test', () => {
         cy.get(entityCreateSaveButtonSelector).should('exist');
         cy.get(entityCreateCancelButtonSelector).click();
         cy.wait('@entitiesRequest').then(({ response }) => {
-          expect(response.statusCode).to.equal(200);
+          expect(response?.statusCode).to.equal(200);
         });
         cy.url().should('match', profilePageUrlPattern);
       });
@@ -130,7 +143,7 @@ describe('Profile e2e test', () => {
         cy.getEntityCreateUpdateHeading('Profile');
         cy.get(entityCreateSaveButtonSelector).click();
         cy.wait('@entitiesRequest').then(({ response }) => {
-          expect(response.statusCode).to.equal(200);
+          expect(response?.statusCode).to.equal(200);
         });
         cy.url().should('match', profilePageUrlPattern);
       });
@@ -140,10 +153,10 @@ describe('Profile e2e test', () => {
         cy.getEntityDeleteDialogHeading('profile').should('exist');
         cy.get(entityConfirmDeleteButtonSelector).click();
         cy.wait('@deleteEntityRequest').then(({ response }) => {
-          expect(response.statusCode).to.equal(204);
+          expect(response?.statusCode).to.equal(204);
         });
         cy.wait('@entitiesRequest').then(({ response }) => {
-          expect(response.statusCode).to.equal(200);
+          expect(response?.statusCode).to.equal(200);
         });
         cy.url().should('match', profilePageUrlPattern);
 
@@ -160,54 +173,56 @@ describe('Profile e2e test', () => {
     });
 
     it('should create an instance of Profile', () => {
-      cy.get(`[data-cy="firstName"]`).type('Paula');
-      cy.get(`[data-cy="firstName"]`).should('have.value', 'Paula');
+      cy.get(`[data-cy="personId"]`).type('swerve provided');
+      cy.get(`[data-cy="personId"]`).should('have.value', 'swerve provided');
 
-      cy.get(`[data-cy="middleNames"]`).type('palatable');
-      cy.get(`[data-cy="middleNames"]`).should('have.value', 'palatable');
+      cy.get(`[data-cy="photoId"]`).type('vacantly');
+      cy.get(`[data-cy="photoId"]`).should('have.value', 'vacantly');
 
-      cy.get(`[data-cy="lastName"]`).type('Crist');
-      cy.get(`[data-cy="lastName"]`).should('have.value', 'Crist');
+      cy.get(`[data-cy="contactId"]`).type('smoggy');
+      cy.get(`[data-cy="contactId"]`).should('have.value', 'smoggy');
 
-      cy.get(`[data-cy="membership"]`).type('yahoo');
-      cy.get(`[data-cy="membership"]`).should('have.value', 'yahoo');
+      cy.get(`[data-cy="addressList"]`).type('as adventurously behest');
+      cy.get(`[data-cy="addressList"]`).should('have.value', 'as adventurously behest');
 
-      cy.get(`[data-cy="birthDate"]`).type('2024-02-06');
-      cy.get(`[data-cy="birthDate"]`).blur();
-      cy.get(`[data-cy="birthDate"]`).should('have.value', '2024-02-06');
+      cy.get(`[data-cy="roles"]`).type('inure impish');
+      cy.get(`[data-cy="roles"]`).should('have.value', 'inure impish');
 
-      cy.get(`[data-cy="sex"]`).type('sturdy elegantly beyond');
-      cy.get(`[data-cy="sex"]`).should('have.value', 'sturdy elegantly beyond');
+      cy.get(`[data-cy="status"]`).should('not.be.checked');
+      cy.get(`[data-cy="status"]`).click();
+      cy.get(`[data-cy="status"]`).should('be.checked');
 
-      cy.get(`[data-cy="mobilePhone"]`).type('whereas plus');
-      cy.get(`[data-cy="mobilePhone"]`).should('have.value', 'whereas plus');
+      cy.get(`[data-cy="organisationId"]`).type('exploration selfish');
+      cy.get(`[data-cy="organisationId"]`).should('have.value', 'exploration selfish');
 
-      cy.get(`[data-cy="phoneNumber"]`).type('gee');
-      cy.get(`[data-cy="phoneNumber"]`).should('have.value', 'gee');
+      cy.get(`[data-cy="teamId"]`).type('sans condense unnaturally');
+      cy.get(`[data-cy="teamId"]`).should('have.value', 'sans condense unnaturally');
 
-      cy.get(`[data-cy="email"]`).type('Anika.Borer@hotmail.com');
-      cy.get(`[data-cy="email"]`).should('have.value', 'Anika.Borer@hotmail.com');
+      cy.get(`[data-cy="documentItems"]`).type('zowie drat cap');
+      cy.get(`[data-cy="documentItems"]`).should('have.value', 'zowie drat cap');
 
-      cy.get(`[data-cy="idType"]`).type('what');
-      cy.get(`[data-cy="idType"]`).should('have.value', 'what');
+      cy.get(`[data-cy="createdBy"]`).type('physically');
+      cy.get(`[data-cy="createdBy"]`).should('have.value', 'physically');
 
-      cy.get(`[data-cy="idNumber"]`).type('cuff-link civilisation');
-      cy.get(`[data-cy="idNumber"]`).should('have.value', 'cuff-link civilisation');
+      cy.get(`[data-cy="createdDate"]`).type('2026-05-12T15:03');
+      cy.get(`[data-cy="createdDate"]`).blur();
+      cy.get(`[data-cy="createdDate"]`).should('have.value', '2026-05-12T15:03');
 
-      cy.get(`[data-cy="contacts"]`).type('miserably after');
-      cy.get(`[data-cy="contacts"]`).should('have.value', 'miserably after');
+      cy.get(`[data-cy="modifiedBy"]`).type('since muffled calmly');
+      cy.get(`[data-cy="modifiedBy"]`).should('have.value', 'since muffled calmly');
 
-      cy.get(`[data-cy="address"]`).type('dismal stunt acclimatise');
-      cy.get(`[data-cy="address"]`).should('have.value', 'dismal stunt acclimatise');
+      cy.get(`[data-cy="modifiedDate"]`).type('2026-05-12T15:26');
+      cy.get(`[data-cy="modifiedDate"]`).blur();
+      cy.get(`[data-cy="modifiedDate"]`).should('have.value', '2026-05-12T15:26');
 
       cy.get(entityCreateSaveButtonSelector).click();
 
       cy.wait('@postEntityRequest').then(({ response }) => {
-        expect(response.statusCode).to.equal(201);
+        expect(response?.statusCode).to.equal(201);
         profile = response.body;
       });
       cy.wait('@entitiesRequest').then(({ response }) => {
-        expect(response.statusCode).to.equal(200);
+        expect(response?.statusCode).to.equal(200);
       });
       cy.url().should('match', profilePageUrlPattern);
     });

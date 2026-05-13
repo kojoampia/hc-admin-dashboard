@@ -1,0 +1,9 @@
+{
+  "adminDashboardApp": {
+    "GenderType": {
+      "null": "",
+      "FEMALE": "FEMALE",
+      "MALE": "MALE"
+    }
+  }
+}

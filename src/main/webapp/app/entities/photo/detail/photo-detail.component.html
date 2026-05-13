@@ -1,0 +1,91 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (photo(); as photoRef) {
+      <div>
+        <h2 data-cy="photoDetailsHeading"><span hpdTranslate="adminDashboardApp.photo.detail.title">Photo</span></h2>
+
+        <hr />
+
+        <hpd-alert-error />
+
+        <hpd-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span hpdTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ photoRef.id }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.photo.description">Description</span></dt>
+          <dd>
+            <span>{{ photoRef.description }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.photo.altText">Alt Text</span></dt>
+          <dd>
+            <span>{{ photoRef.altText }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.photo.url">Url</span></dt>
+          <dd>
+            <span>{{ photoRef.url }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.photo.profileId">Profile Id</span></dt>
+          <dd>
+            <span>{{ photoRef.profileId }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.photo.photoType">Photo Type</span></dt>
+          <dd>
+            <span [hpdTranslate]="'adminDashboardApp.PhotoType.' + (photoRef.photoType ?? 'null')">{{
+              {
+                null: '',
+                ID_PHOTO: 'ID_PHOTO',
+                PORTRAIT: 'PORTRAIT',
+                MUGSHOT: 'MUGSHOT',
+                DOCUMENT_PHOTO: 'DOCUMENT_PHOTO',
+                REPORT_PHOTO: 'REPORT_PHOTO',
+                OTHER: 'OTHER',
+              }[photoRef.photoType ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.photo.data">Data</span></dt>
+          <dd>
+            @if (photoRef.data) {
+              <div>
+                <a (click)="openFile(photoRef.data, photoRef.dataContentType)">
+                  <img [src]="'data:' + photoRef.dataContentType + ';base64,' + photoRef.data" style="max-width: 100%" alt="photo" />
+                </a>
+                {{ photoRef.dataContentType }}, {{ byteSize(photoRef.data) }}
+              </div>
+            }
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.photo.photoMetadata">Photo Metadata</span></dt>
+          <dd>
+            <span>{{ photoRef.photoMetadata }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.photo.createdBy">Created By</span></dt>
+          <dd>
+            <span>{{ photoRef.createdBy }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.photo.createdDate">Created Date</span></dt>
+          <dd>
+            <span>{{ photoRef.createdDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.photo.modifiedBy">Modified By</span></dt>
+          <dd>
+            <span>{{ photoRef.modifiedBy }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.photo.modifiedDate">Modified Date</span></dt>
+          <dd>
+            <span>{{ photoRef.modifiedDate | formatMediumDatetime }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span hpdTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/photo', photoRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span hpdTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

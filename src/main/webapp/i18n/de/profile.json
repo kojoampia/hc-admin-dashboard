@@ -1,0 +1,36 @@
+{
+  "adminDashboardApp": {
+    "profile": {
+      "home": {
+        "title": "Profiles",
+        "refreshListLabel": "Liste aktualisieren",
+        "createLabel": "Profile erstellen",
+        "createOrEditLabel": "Profile erstellen oder bearbeiten",
+        "notFound": "Keine Profiles gefunden"
+      },
+      "created": "Profile erstellt mit ID {{ param }}",
+      "updated": "Profile aktualisiert mit ID {{ param }}",
+      "deleted": "Profile gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll Profile {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "Profile"
+      },
+      "id": "ID",
+      "personId": "Person Id",
+      "photoId": "Photo Id",
+      "contactId": "Contact Id",
+      "addressList": "Address List",
+      "roles": "Roles",
+      "status": "Status",
+      "organisationId": "Organisation Id",
+      "teamId": "Team Id",
+      "documentItems": "Document Items",
+      "createdBy": "Created By",
+      "createdDate": "Created Date",
+      "modifiedBy": "Modified By",
+      "modifiedDate": "Modified Date"
+    }
+  }
+}

@@ -1,0 +1,74 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (facility(); as facilityRef) {
+      <div>
+        <h2 data-cy="facilityDetailsHeading"><span hpdTranslate="adminDashboardApp.facility.detail.title">Facility</span></h2>
+
+        <hr />
+
+        <hpd-alert-error />
+
+        <hpd-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span hpdTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ facilityRef.id }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.facility.name">Name</span></dt>
+          <dd>
+            <span>{{ facilityRef.name }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.facility.description">Description</span></dt>
+          <dd>
+            <span>{{ facilityRef.description }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.facility.type">Type</span></dt>
+          <dd>
+            <span [hpdTranslate]="'adminDashboardApp.FacilityType.' + (facilityRef.type ?? 'null')">{{
+              { null: '', HOSPITAL: 'HOSPITAL', HOSPICE: 'HOSPICE', CLINIC: 'CLINIC', LAB: 'LAB', PHARMACY: 'PHARMACY', OTHER: 'OTHER' }[
+                facilityRef.type ?? 'null'
+              ]
+            }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.facility.addressId">Address Id</span></dt>
+          <dd>
+            <span>{{ facilityRef.addressId }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.facility.contactId">Contact Id</span></dt>
+          <dd>
+            <span>{{ facilityRef.contactId }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.facility.photos">Photos</span></dt>
+          <dd>
+            <span>{{ facilityRef.photos }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.facility.createdBy">Created By</span></dt>
+          <dd>
+            <span>{{ facilityRef.createdBy }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.facility.createdDate">Created Date</span></dt>
+          <dd>
+            <span>{{ facilityRef.createdDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.facility.modifiedBy">Modified By</span></dt>
+          <dd>
+            <span>{{ facilityRef.modifiedBy }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.facility.modifiedDate">Modified Date</span></dt>
+          <dd>
+            <span>{{ facilityRef.modifiedDate | formatMediumDatetime }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span hpdTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/facility', facilityRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span hpdTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

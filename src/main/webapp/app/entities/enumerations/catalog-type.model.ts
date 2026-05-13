@@ -1,0 +1,13 @@
+export enum CatalogType {
+  SERVICE = 'SERVICE',
+
+  PRODUCT = 'PRODUCT',
+
+  INFORMATION = 'INFORMATION',
+
+  CONTACT = 'CONTACT',
+
+  ABOUT = 'ABOUT',
+
+  LEGAL = 'LEGAL',
+}

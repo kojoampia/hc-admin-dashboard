@@ -1,0 +1,30 @@
+{
+  "adminDashboardApp": {
+    "hcAdminServiceOrganisation": {
+      "home": {
+        "title": "Organisations",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Organisation",
+        "createOrEditLabel": "Create or edit a Organisation",
+        "notFound": "No Organisations found"
+      },
+      "created": "A new Organisation is created with identifier {{ param }}",
+      "updated": "A Organisation is updated with identifier {{ param }}",
+      "deleted": "A Organisation is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Organisation {{ id }}?"
+      },
+      "detail": {
+        "title": "Organisation"
+      },
+      "id": "ID",
+      "name": "Name",
+      "description": "Description",
+      "profile": "Profile",
+      "createdDate": "Created Date",
+      "createdBy": "Created By",
+      "modifiedDate": "Modified Date",
+      "modifiedBy": "Modified By"
+    }
+  }
+}

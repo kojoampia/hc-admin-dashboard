@@ -1,0 +1,44 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (facilityCatalog(); as facilityCatalogRef) {
+      <div>
+        <h2 data-cy="facilityCatalogDetailsHeading">
+          <span hpdTranslate="adminDashboardApp.facilityCatalog.detail.title">Facility Catalog</span>
+        </h2>
+
+        <hr />
+
+        <hpd-alert-error />
+
+        <hpd-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span hpdTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ facilityCatalogRef.id }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.facilityCatalog.name">Name</span></dt>
+          <dd>
+            <span>{{ facilityCatalogRef.name }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.facilityCatalog.description">Description</span></dt>
+          <dd>
+            <span>{{ facilityCatalogRef.description }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.facilityCatalog.facilities">Facilities</span></dt>
+          <dd>
+            <span>{{ facilityCatalogRef.facilities }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span hpdTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/facility-catalog', facilityCatalogRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span hpdTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

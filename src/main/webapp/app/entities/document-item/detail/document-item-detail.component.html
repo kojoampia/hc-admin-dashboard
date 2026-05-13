@@ -1,0 +1,73 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (documentItem(); as documentItemRef) {
+      <div>
+        <h2 data-cy="documentItemDetailsHeading"><span hpdTranslate="adminDashboardApp.documentItem.detail.title">Document Item</span></h2>
+
+        <hr />
+
+        <hpd-alert-error />
+
+        <hpd-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span hpdTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ documentItemRef.id }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.documentItem.name">Name</span></dt>
+          <dd>
+            <span>{{ documentItemRef.name }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.documentItem.description">Description</span></dt>
+          <dd>
+            <span>{{ documentItemRef.description }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.documentItem.documentType">Document Type</span></dt>
+          <dd>
+            <span [hpdTranslate]="'adminDashboardApp.DocumentType.' + (documentItemRef.documentType ?? 'null')">{{
+              {
+                null: '',
+                PASSPORT: 'PASSPORT',
+                ID_CARD: 'ID_CARD',
+                DRIVER_LICENSE: 'DRIVER_LICENSE',
+                CERTIFICATE: 'CERTIFICATE',
+                BUSINESS_LICENCE: 'BUSINESS_LICENCE',
+                PROFESSIONAL_LICENSE: 'PROFESSIONAL_LICENSE',
+                OTHER: 'OTHER',
+              }[documentItemRef.documentType ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.documentItem.url">Url</span></dt>
+          <dd>
+            <span>{{ documentItemRef.url }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.documentItem.createdDate">Created Date</span></dt>
+          <dd>
+            <span>{{ documentItemRef.createdDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.documentItem.createdBy">Created By</span></dt>
+          <dd>
+            <span>{{ documentItemRef.createdBy }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.documentItem.modifiedDate">Modified Date</span></dt>
+          <dd>
+            <span>{{ documentItemRef.modifiedDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.documentItem.modifiedBy">Modified By</span></dt>
+          <dd>
+            <span>{{ documentItemRef.modifiedBy }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span hpdTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/document-item', documentItemRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span hpdTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

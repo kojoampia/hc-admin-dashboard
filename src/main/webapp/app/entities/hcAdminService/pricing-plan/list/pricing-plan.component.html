@@ -1,0 +1,130 @@
+<div>
+  <h2 id="page-heading" data-cy="PricingPlanHeading">
+    <span hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.home.title">Pricing Plans</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+        <span hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-pricing-plan"
+        [routerLink]="['/pricing-plan/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.home.createLabel">Create a new Pricing Plan</span>
+      </button>
+    </div>
+  </h2>
+
+  <hpd-alert-error />
+
+  <hpd-alert />
+
+  @if (pricingPlans().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.home.notFound">No Pricing Plans found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr hpdSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" hpdSortBy="id">
+              <div class="d-flex">
+                <span hpdTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="name">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.name">Name</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="description">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.description">Description</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="price">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.price">Price</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="features">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.features">Features</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="billingCycle">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.billingCycle">Billing Cycle</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="active">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.active">Active</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (pricingPlan of pricingPlans(); track trackId(pricingPlan)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/pricing-plan', pricingPlan.id, 'view']">{{ pricingPlan.id }}</a>
+              </td>
+              <td>{{ pricingPlan.name }}</td>
+              <td>{{ pricingPlan.description }}</td>
+              <td>{{ pricingPlan.price }}</td>
+              <td>{{ pricingPlan.features }}</td>
+              <td [hpdTranslate]="'adminDashboardApp.BillingType.' + (pricingPlan.billingCycle ?? 'null')">
+                {{
+                  { null: '', DAILY: 'DAILY', WEEKLY: 'WEEKLY', MONTHLY: 'MONTHLY', QUARTERLY: 'QUARTERLY', ANNUALLY: 'ANNUALLY' }[
+                    pricingPlan.billingCycle ?? 'null'
+                  ]
+                }}
+              </td>
+              <td>{{ pricingPlan.active }}</td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/pricing-plan', pricingPlan.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" hpdTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/pricing-plan', pricingPlan.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" hpdTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(pricingPlan)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" hpdTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

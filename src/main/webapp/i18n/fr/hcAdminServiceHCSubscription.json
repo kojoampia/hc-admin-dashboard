@@ -1,0 +1,30 @@
+{
+  "adminDashboardApp": {
+    "hcAdminServiceHCSubscription": {
+      "home": {
+        "title": "HCSubscriptions",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau HC Subscription",
+        "createOrEditLabel": "Créer ou éditer un HC Subscription",
+        "notFound": "Aucun HC Subscription trouvé"
+      },
+      "created": "Un nouveau HC Subscription a été créé avec l'identifiant {{ param }}",
+      "updated": "Le HC Subscription avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le HC Subscription avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le HC Subscription {{ id }} ?"
+      },
+      "detail": {
+        "title": "HC Subscription"
+      },
+      "id": "ID",
+      "serviceId": "Service Id",
+      "patientId": "Patient Id",
+      "isActive": "Is Active",
+      "createdDate": "Created Date",
+      "modifiedDate": "Modified Date",
+      "createdBy": "Created By",
+      "modifiedBy": "Modified By"
+    }
+  }
+}

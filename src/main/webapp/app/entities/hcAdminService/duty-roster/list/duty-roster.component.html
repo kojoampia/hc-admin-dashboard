@@ -1,0 +1,167 @@
+<div>
+  <h2 id="page-heading" data-cy="DutyRosterHeading">
+    <span hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.home.title">Duty Rosters</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+        <span hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-duty-roster"
+        [routerLink]="['/duty-roster/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.home.createLabel">Create a new Duty Roster</span>
+      </button>
+    </div>
+  </h2>
+
+  <hpd-alert-error />
+
+  <hpd-alert />
+
+  @if (dutyRosters().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.home.notFound">No Duty Rosters found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr hpdSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" hpdSortBy="id">
+              <div class="d-flex">
+                <span hpdTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="date">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.date">Date</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="duty">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.duty">Duty</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="professionalId">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.professionalId">Professional Id</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="shift">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.shift">Shift</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="name">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.name">Name</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="description">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.description">Description</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="patientId">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.patientId">Patient Id</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (dutyRoster of dutyRosters(); track trackId(dutyRoster)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/duty-roster', dutyRoster.id, 'view']">{{ dutyRoster.id }}</a>
+              </td>
+              <td>{{ dutyRoster.date | formatMediumDate }}</td>
+              <td [hpdTranslate]="'adminDashboardApp.DutyRole.' + (dutyRoster.duty ?? 'null')">
+                {{
+                  {
+                    null: '',
+                    CARE: 'CARE',
+                    VENDOR: 'VENDOR',
+                    DOCTOR: 'DOCTOR',
+                    NURSE: 'NURSE',
+                    MEDIC: 'MEDIC',
+                    TECHNICIAN: 'TECHNICIAN',
+                    ADMINISTRATOR: 'ADMINISTRATOR',
+                    OTHER: 'OTHER',
+                  }[dutyRoster.duty ?? 'null']
+                }}
+              </td>
+              <td>{{ dutyRoster.professionalId }}</td>
+              <td [hpdTranslate]="'adminDashboardApp.ShiftType.' + (dutyRoster.shift ?? 'null')">
+                {{ { null: '', MORNING: 'MORNING', AFTERNOON: 'AFTERNOON', NIGHT: 'NIGHT' }[dutyRoster.shift ?? 'null'] }}
+              </td>
+              <td>{{ dutyRoster.name }}</td>
+              <td>{{ dutyRoster.description }}</td>
+              <td>{{ dutyRoster.patientId }}</td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/duty-roster', dutyRoster.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" hpdTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/duty-roster', dutyRoster.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" hpdTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(dutyRoster)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" hpdTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (dutyRosters().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <hpd-item-count [params]="{ page, totalItems, itemsPerPage }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+  }
+</div>

@@ -1,22 +1,18 @@
 {
   "annotations": {
-    "changelogDate": "20240206205816"
+    "changelogDate": "20260512214055"
   },
-  "changelogDate": "20240206205816",
-  "clientRootFolder": "adminMS",
-  "databaseType": "mongodb",
+  "dto": "mapstruct",
   "fields": [
     {
-      "fieldName": "digitalAddress",
-      "fieldType": "String"
+      "fieldName": "street",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "streetAddress",
-      "fieldType": "String"
-    },
-    {
-      "fieldName": "areaCode",
-      "fieldType": "String"
+      "fieldName": "district",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "town",
@@ -24,46 +20,38 @@
     },
     {
       "fieldName": "city",
-      "fieldType": "String"
-    },
-    {
-      "fieldName": "district",
-      "fieldType": "String"
-    },
-    {
-      "fieldName": "state",
-      "fieldType": "String"
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "region",
-      "fieldType": "String"
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "code",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "country",
-      "fieldType": "String"
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "createdDate",
-      "fieldType": "LocalDate"
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "modifiedDate",
-      "fieldType": "LocalDate"
-    },
-    {
-      "fieldName": "createdBy",
-      "fieldType": "String"
-    },
-    {
-      "fieldName": "modifiedBy",
-      "fieldType": "String"
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
     }
   ],
-  "microserviceName": "adminMS",
   "name": "Address",
-  "pagination": "no",
+  "pagination": "pagination",
   "readOnly": false,
   "relationships": [],
-  "searchEngine": true,
-  "service": "no"
+  "service": "serviceClass"
 }

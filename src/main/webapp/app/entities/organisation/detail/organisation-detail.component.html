@@ -1,0 +1,62 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (organisation(); as organisationRef) {
+      <div>
+        <h2 data-cy="organisationDetailsHeading"><span hpdTranslate="adminDashboardApp.organisation.detail.title">Organisation</span></h2>
+
+        <hr />
+
+        <hpd-alert-error />
+
+        <hpd-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span hpdTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ organisationRef.id }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.organisation.name">Name</span></dt>
+          <dd>
+            <span>{{ organisationRef.name }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.organisation.description">Description</span></dt>
+          <dd>
+            <span>{{ organisationRef.description }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.organisation.addressId">Address Id</span></dt>
+          <dd>
+            <span>{{ organisationRef.addressId }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.organisation.contactId">Contact Id</span></dt>
+          <dd>
+            <span>{{ organisationRef.contactId }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.organisation.createdBy">Created By</span></dt>
+          <dd>
+            <span>{{ organisationRef.createdBy }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.organisation.createdDate">Created Date</span></dt>
+          <dd>
+            <span>{{ organisationRef.createdDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.organisation.modifiedBy">Modified By</span></dt>
+          <dd>
+            <span>{{ organisationRef.modifiedBy }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.organisation.modifiedDate">Modified Date</span></dt>
+          <dd>
+            <span>{{ organisationRef.modifiedDate | formatMediumDatetime }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span hpdTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/organisation', organisationRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span hpdTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,60 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (pricingPlan(); as pricingPlanRef) {
+      <div>
+        <h2 data-cy="pricingPlanDetailsHeading">
+          <span hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.detail.title">Pricing Plan</span>
+        </h2>
+
+        <hr />
+
+        <hpd-alert-error />
+
+        <hpd-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span hpdTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ pricingPlanRef.id }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.name">Name</span></dt>
+          <dd>
+            <span>{{ pricingPlanRef.name }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.description">Description</span></dt>
+          <dd>
+            <span>{{ pricingPlanRef.description }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.price">Price</span></dt>
+          <dd>
+            <span>{{ pricingPlanRef.price }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.features">Features</span></dt>
+          <dd>
+            <span>{{ pricingPlanRef.features }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.billingCycle">Billing Cycle</span></dt>
+          <dd>
+            <span [hpdTranslate]="'adminDashboardApp.BillingType.' + (pricingPlanRef.billingCycle ?? 'null')">{{
+              { null: '', DAILY: 'DAILY', WEEKLY: 'WEEKLY', MONTHLY: 'MONTHLY', QUARTERLY: 'QUARTERLY', ANNUALLY: 'ANNUALLY' }[
+                pricingPlanRef.billingCycle ?? 'null'
+              ]
+            }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.active">Active</span></dt>
+          <dd>
+            <span>{{ pricingPlanRef.active }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span hpdTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/pricing-plan', pricingPlanRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span hpdTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

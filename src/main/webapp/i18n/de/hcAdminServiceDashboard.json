@@ -1,0 +1,26 @@
+{
+  "adminDashboardApp": {
+    "hcAdminServiceDashboard": {
+      "home": {
+        "title": "Dashboards",
+        "refreshListLabel": "Liste aktualisieren",
+        "createLabel": "Dashboard erstellen",
+        "createOrEditLabel": "Dashboard erstellen oder bearbeiten",
+        "notFound": "Keine Dashboards gefunden"
+      },
+      "created": "Dashboard erstellt mit ID {{ param }}",
+      "updated": "Dashboard aktualisiert mit ID {{ param }}",
+      "deleted": "Dashboard gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll Dashboard {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "Dashboard"
+      },
+      "id": "ID",
+      "name": "Name",
+      "description": "Description",
+      "elements": "Elements"
+    }
+  }
+}

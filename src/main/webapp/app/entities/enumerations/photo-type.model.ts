@@ -1,0 +1,13 @@
+export enum PhotoType {
+  ID_PHOTO = 'ID_PHOTO',
+
+  PORTRAIT = 'PORTRAIT',
+
+  MUGSHOT = 'MUGSHOT',
+
+  DOCUMENT_PHOTO = 'DOCUMENT_PHOTO',
+
+  REPORT_PHOTO = 'REPORT_PHOTO',
+
+  OTHER = 'OTHER',
+}

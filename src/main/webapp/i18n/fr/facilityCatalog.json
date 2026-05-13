@@ -1,0 +1,26 @@
+{
+  "adminDashboardApp": {
+    "facilityCatalog": {
+      "home": {
+        "title": "FacilityCatalogs",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Facility Catalog",
+        "createOrEditLabel": "Créer ou éditer un Facility Catalog",
+        "notFound": "Aucun Facility Catalog trouvé"
+      },
+      "created": "Un nouveau Facility Catalog a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Facility Catalog avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Facility Catalog avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Facility Catalog {{ id }} ?"
+      },
+      "detail": {
+        "title": "Facility Catalog"
+      },
+      "id": "ID",
+      "name": "Name",
+      "description": "Description",
+      "facilities": "Facilities"
+    }
+  }
+}

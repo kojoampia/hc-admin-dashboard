@@ -1,0 +1,29 @@
+{
+  "adminDashboardApp": {
+    "hcAdminServicePatientPlan": {
+      "home": {
+        "title": "Patient Plans",
+        "refreshListLabel": "Liste aktualisieren",
+        "createLabel": "Patient Plan erstellen",
+        "createOrEditLabel": "Patient Plan erstellen oder bearbeiten",
+        "notFound": "Keine Patient Plans gefunden"
+      },
+      "created": "Patient Plan erstellt mit ID {{ param }}",
+      "updated": "Patient Plan aktualisiert mit ID {{ param }}",
+      "deleted": "Patient Plan gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll Patient Plan {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "Patient Plan"
+      },
+      "id": "ID",
+      "planId": "Plan Id",
+      "patientId": "Patient Id",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "createdDate": "Created Date",
+      "createdBy": "Created By"
+    }
+  }
+}

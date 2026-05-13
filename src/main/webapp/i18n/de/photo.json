@@ -1,0 +1,34 @@
+{
+  "adminDashboardApp": {
+    "photo": {
+      "home": {
+        "title": "Photos",
+        "refreshListLabel": "Liste aktualisieren",
+        "createLabel": "Photo erstellen",
+        "createOrEditLabel": "Photo erstellen oder bearbeiten",
+        "notFound": "Keine Photos gefunden"
+      },
+      "created": "Photo erstellt mit ID {{ param }}",
+      "updated": "Photo aktualisiert mit ID {{ param }}",
+      "deleted": "Photo gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll Photo {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "Photo"
+      },
+      "id": "ID",
+      "description": "Description",
+      "altText": "Alt Text",
+      "url": "Url",
+      "profileId": "Profile Id",
+      "photoType": "Photo Type",
+      "data": "Data",
+      "photoMetadata": "Photo Metadata",
+      "createdBy": "Created By",
+      "createdDate": "Created Date",
+      "modifiedBy": "Modified By",
+      "modifiedDate": "Modified Date"
+    }
+  }
+}

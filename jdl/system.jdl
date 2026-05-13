@@ -1,0 +1,18 @@
+
+entity Notification {
+  content String required,
+  recipientId String required,
+  senderId String required,
+  messageType String required // INFO, WARNING, ERROR etc.
+  createdDate Instant,
+  modifiedDate Instant
+}
+entity AuditLog {
+    actionType String required,
+    userId String required,
+    metadata String,
+    createdBy String,
+    createdDate Instant,
+    modifiedBy String,
+    modifiedDate Instant
+}

@@ -1,0 +1,33 @@
+{
+  "adminDashboardApp": {
+    "facility": {
+      "home": {
+        "title": "Facilities",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Facility",
+        "createOrEditLabel": "Create or edit a Facility",
+        "notFound": "No Facilities found"
+      },
+      "created": "A new Facility is created with identifier {{ param }}",
+      "updated": "A Facility is updated with identifier {{ param }}",
+      "deleted": "A Facility is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Facility {{ id }}?"
+      },
+      "detail": {
+        "title": "Facility"
+      },
+      "id": "ID",
+      "name": "Name",
+      "description": "Description",
+      "type": "Type",
+      "addressId": "Address Id",
+      "contactId": "Contact Id",
+      "photos": "Photos",
+      "createdBy": "Created By",
+      "createdDate": "Created Date",
+      "modifiedBy": "Modified By",
+      "modifiedDate": "Modified Date"
+    }
+  }
+}

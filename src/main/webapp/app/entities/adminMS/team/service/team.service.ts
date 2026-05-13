@@ -17,8 +17,8 @@ export type EntityArrayResponseType = HttpResponse<ITeam[]>;
 
 @Injectable({ providedIn: 'root' })
 export class TeamService {
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/teams');
-  protected resourceSearchUrl = this.applicationConfigService.getEndpointFor('api/teams/_search');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/teams','services/admin-service');
+  protected resourceSearchUrl = this.applicationConfigService.getEndpointFor('api/teams/_search','services/admin-service');
 
   constructor(
     protected http: HttpClient,

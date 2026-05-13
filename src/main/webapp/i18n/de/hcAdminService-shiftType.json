@@ -1,0 +1,10 @@
+{
+  "adminDashboardApp": {
+    "ShiftType": {
+      "null": "",
+      "MORNING": "MORNING",
+      "AFTERNOON": "AFTERNOON",
+      "NIGHT": "NIGHT"
+    }
+  }
+}

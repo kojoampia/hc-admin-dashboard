@@ -1,0 +1,31 @@
+{
+  "adminDashboardApp": {
+    "hcAdminServiceHProfessional": {
+      "home": {
+        "title": "H Professionals",
+        "refreshListLabel": "Liste aktualisieren",
+        "createLabel": "H Professional erstellen",
+        "createOrEditLabel": "H Professional erstellen oder bearbeiten",
+        "notFound": "Keine H Professionals gefunden"
+      },
+      "created": "H Professional erstellt mit ID {{ param }}",
+      "updated": "H Professional aktualisiert mit ID {{ param }}",
+      "deleted": "H Professional gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll H Professional {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "H Professional"
+      },
+      "id": "ID",
+      "name": "Name",
+      "organisation": "Organisation",
+      "roster": "Roster",
+      "createdDate": "Created Date",
+      "createdBy": "Created By",
+      "modifiedDate": "Modified Date",
+      "modifiedBy": "Modified By",
+      "profile": "Profile"
+    }
+  }
+}

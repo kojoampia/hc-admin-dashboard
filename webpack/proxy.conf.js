@@ -4,7 +4,7 @@ function setupProxy({ tls }) {
     {
       context: serverResources,
       // Point to the mock server
-      target: `http://localhost:5508`,
+      target: `http://localhost:5504`,
       secure: false,
       changeOrigin: false,
     },

@@ -1,0 +1,30 @@
+{
+  "adminDashboardApp": {
+    "auditLog": {
+      "home": {
+        "title": "Audit Logs",
+        "refreshListLabel": "Liste aktualisieren",
+        "createLabel": "Audit Log erstellen",
+        "createOrEditLabel": "Audit Log erstellen oder bearbeiten",
+        "notFound": "Keine Audit Logs gefunden"
+      },
+      "created": "Audit Log erstellt mit ID {{ param }}",
+      "updated": "Audit Log aktualisiert mit ID {{ param }}",
+      "deleted": "Audit Log gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll Audit Log {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "Audit Log"
+      },
+      "id": "ID",
+      "actionType": "Action Type",
+      "userId": "User Id",
+      "metadata": "Metadata",
+      "createdBy": "Created By",
+      "createdDate": "Created Date",
+      "modifiedBy": "Modified By",
+      "modifiedDate": "Modified Date"
+    }
+  }
+}

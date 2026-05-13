@@ -1,0 +1,66 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (team(); as teamRef) {
+      <div>
+        <h2 data-cy="teamDetailsHeading"><span hpdTranslate="adminDashboardApp.team.detail.title">Team</span></h2>
+
+        <hr />
+
+        <hpd-alert-error />
+
+        <hpd-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span hpdTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ teamRef.id }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.team.name">Name</span></dt>
+          <dd>
+            <span>{{ teamRef.name }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.team.description">Description</span></dt>
+          <dd>
+            <span>{{ teamRef.description }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.team.members">Members</span></dt>
+          <dd>
+            <span>{{ teamRef.members }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.team.supervisorId">Supervisor Id</span></dt>
+          <dd>
+            <span>{{ teamRef.supervisorId }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.team.organisationId">Organisation Id</span></dt>
+          <dd>
+            <span>{{ teamRef.organisationId }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.team.createdBy">Created By</span></dt>
+          <dd>
+            <span>{{ teamRef.createdBy }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.team.createdDate">Created Date</span></dt>
+          <dd>
+            <span>{{ teamRef.createdDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.team.modifiedBy">Modified By</span></dt>
+          <dd>
+            <span>{{ teamRef.modifiedBy }}</span>
+          </dd>
+          <dt><span hpdTranslate="adminDashboardApp.team.modifiedDate">Modified Date</span></dt>
+          <dd>
+            <span>{{ teamRef.modifiedDate | formatMediumDatetime }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span hpdTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/team', teamRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span hpdTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>
