@@ -5,6 +5,7 @@ import { Observable, map } from 'rxjs';
 import dayjs from 'dayjs/esm';
 
 import { isPresent } from 'app/core/util/operators';
+import { DATE_FORMAT } from 'app/config/input.constants';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { IOrganisation, NewOrganisation } from '../organisation.model';
@@ -103,8 +104,8 @@ export class OrganisationService {
   protected convertDateFromClient<T extends IOrganisation | NewOrganisation | PartialUpdateOrganisation>(organisation: T): RestOf<T> {
     return {
       ...organisation,
-      createdDate: organisation.createdDate?.toJSON() ?? null,
-      modifiedDate: organisation.modifiedDate?.toJSON() ?? null,
+      createdDate: organisation.createdDate?.format(DATE_FORMAT) ?? null,
+      modifiedDate: organisation.modifiedDate?.format(DATE_FORMAT) ?? null,
     };
   }
 

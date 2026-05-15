@@ -4,12 +4,11 @@ export interface IOrganisation {
   id: string;
   name?: string | null;
   description?: string | null;
-  addressId?: string | null;
-  contactId?: string | null;
-  createdBy?: string | null;
+  profile?: string | null;
   createdDate?: dayjs.Dayjs | null;
-  modifiedBy?: string | null;
+  createdBy?: string | null;
   modifiedDate?: dayjs.Dayjs | null;
+  modifiedBy?: string | null;
 }
 
 export type NewOrganisation = Omit<IOrganisation, 'id'> & { id: null };

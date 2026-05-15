@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideHttpClient } from '@angular/common/http';
 
+import { DATE_FORMAT } from 'app/config/input.constants';
 import { IOrganisation } from '../organisation.model';
 import { sampleWithFullData, sampleWithNewData, sampleWithPartialData, sampleWithRequiredData } from '../organisation.test-samples';
 
@@ -9,8 +10,8 @@ import { OrganisationService, RestOrganisation } from './organisation.service';
 
 const requireRestSample: RestOrganisation = {
   ...sampleWithRequiredData,
-  createdDate: sampleWithRequiredData.createdDate?.toJSON(),
-  modifiedDate: sampleWithRequiredData.modifiedDate?.toJSON(),
+  createdDate: sampleWithRequiredData.createdDate?.format(DATE_FORMAT),
+  modifiedDate: sampleWithRequiredData.modifiedDate?.format(DATE_FORMAT),
 };
 
 describe('Organisation Service', () => {

@@ -2,7 +2,6 @@
   "annotations": {
     "changelogDate": "20240402040832"
   },
-  "clientRootFolder": "hcAdminService",
   "databaseType": "mongodb",
   "entityTableName": "dashboard",
   "fields": [
@@ -19,7 +18,6 @@
       "fieldType": "String"
     }
   ],
-  "microserviceName": "hcAdminService",
   "name": "Dashboard",
   "pagination": "no",
   "readOnly": false,

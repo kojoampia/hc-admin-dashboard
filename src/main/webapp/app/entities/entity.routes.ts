@@ -2,64 +2,49 @@ import { Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'hc-service',
-    data: { pageTitle: 'adminDashboardApp.hcAdminServiceHCService.home.title' },
-    loadChildren: () => import('./hcAdminService/hc-service/hc-service.routes'),
-  },
-  {
-    path: 'hc-subscription',
-    data: { pageTitle: 'adminDashboardApp.hcAdminServiceHCSubscription.home.title' },
-    loadChildren: () => import('./hcAdminService/hc-subscription/hc-subscription.routes'),
-  },
-  {
     path: 'organisation',
     data: { pageTitle: 'adminDashboardApp.hcAdminServiceOrganisation.home.title' },
-    loadChildren: () => import('./hcAdminService/organisation/organisation.routes'),
+    loadChildren: () => import('./organisation/organisation.routes'),
   },
   {
     path: 'dashboard',
     data: { pageTitle: 'adminDashboardApp.hcAdminServiceDashboard.home.title' },
-    loadChildren: () => import('./hcAdminService/dashboard/dashboard.routes'),
-  },
-  {
-    path: 'h-professional',
-    data: { pageTitle: 'adminDashboardApp.hcAdminServiceHProfessional.home.title' },
-    loadChildren: () => import('./hcAdminService/h-professional/h-professional.routes'),
+    loadChildren: () => import('./dashboard/dashboard.routes'),
   },
   {
     path: 'feature',
     data: { pageTitle: 'adminDashboardApp.hcAdminServiceFeature.home.title' },
-    loadChildren: () => import('./hcAdminService/feature/feature.routes'),
+    loadChildren: () => import('./feature/feature.routes'),
   },
   {
     path: 'message',
     data: { pageTitle: 'adminDashboardApp.hcAdminServiceMessage.home.title' },
-    loadChildren: () => import('./hcAdminService/message/message.routes'),
+    loadChildren: () => import('./message/message.routes'),
   },
   {
     path: 'duty-roster',
     data: { pageTitle: 'adminDashboardApp.hcAdminServiceDutyRoster.home.title' },
-    loadChildren: () => import('./hcAdminService/duty-roster/duty-roster.routes'),
+    loadChildren: () => import('./duty-roster/duty-roster.routes'),
   },
   {
     path: 'system-catalog',
     data: { pageTitle: 'adminDashboardApp.hcAdminServiceSystemCatalog.home.title' },
-    loadChildren: () => import('./hcAdminService/system-catalog/system-catalog.routes'),
+    loadChildren: () => import('./system-catalog/system-catalog.routes'),
   },
   {
     path: 'pricing-plan',
     data: { pageTitle: 'adminDashboardApp.hcAdminServicePricingPlan.home.title' },
-    loadChildren: () => import('./hcAdminService/pricing-plan/pricing-plan.routes'),
+    loadChildren: () => import('./pricing-plan/pricing-plan.routes'),
   },
   {
     path: 'patient-plan',
     data: { pageTitle: 'adminDashboardApp.hcAdminServicePatientPlan.home.title' },
-    loadChildren: () => import('./hcAdminService/patient-plan/patient-plan.routes'),
+    loadChildren: () => import('./patient-plan/patient-plan.routes'),
   },
   {
     path: 'professional',
     data: { pageTitle: 'adminDashboardApp.hcAdminServiceProfessional.home.title' },
-    loadChildren: () => import('./hcAdminService/professional/professional.routes'),
+    loadChildren: () => import('./professional/professional.routes'),
   },
   {
     path: 'address',

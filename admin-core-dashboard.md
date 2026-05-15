@@ -11,7 +11,8 @@ The Core Administration Dashboard is a web-based interface that allows administr
 
 ### 2. User Interface (UI)
 The dashboard will consist of several key sections:
-- **Dashboard Home:** Overview of system status, recent activities, and quick access to key features.
+- **Dashboard Home:** Overview of system status, recent activities, and quick access to key features. Analytics Overview component showing system health, user activity, and recent notifications.
+- **Messages:** Interface to view and manage messages between administrators and healthcare professionals.
 - **Duty Rosters:** Interface to create, view, and manage duty rosters for healthcare professionals. This includes drag-and-drop functionality for scheduling and real-time updates when changes are made.
 - **System Catalogs (CMS):** Manage catalogs for services, facilities, and other system components.
 - **Pricing Plans:** Interface to define and manage pricing plans for various services offered on the platform.

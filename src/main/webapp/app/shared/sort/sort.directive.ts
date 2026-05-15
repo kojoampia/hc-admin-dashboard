@@ -1,40 +1,47 @@
-import { Directive, EventEmitter, Input, Output } from '@angular/core';
+import { Directive, EventEmitter, Input, Output, model } from '@angular/core';
+
+import type { SortState } from './sort.service';
 
 @Directive({
   standalone: true,
   selector: '[hpdSort]',
 })
-export default class SortDirective<T> {
+export default class SortDirective<T extends string = string> {
+  readonly sortState = model<SortState<T>>({});
+
   @Input()
   get predicate(): T | undefined {
-    return this._predicate;
+    return this.sortState().predicate;
   }
   set predicate(predicate: T | undefined) {
-    this._predicate = predicate;
+    this.updateSortState({ predicate, order: this.sortState().order });
     this.predicateChange.emit(predicate);
   }
 
   @Input()
   get ascending(): boolean | undefined {
-    return this._ascending;
+    return this.sortState().order ? this.sortState().order === 'asc' : undefined;
   }
   set ascending(ascending: boolean | undefined) {
-    this._ascending = ascending;
+    this.updateSortState({ predicate: this.sortState().predicate, order: ascending === undefined ? undefined : ascending ? 'asc' : 'desc' });
     this.ascendingChange.emit(ascending);
   }
 
   @Output() predicateChange = new EventEmitter<T>();
   @Output() ascendingChange = new EventEmitter<boolean>();
-  @Output() sortChange = new EventEmitter<{ predicate: T; ascending: boolean }>();
-
-  private _predicate?: T;
-  private _ascending?: boolean;
+  @Output() sortChange = new EventEmitter<SortState<T> & { ascending: boolean }>();
 
   sort(field: T): void {
-    this.ascending = field !== this.predicate ? true : !this.ascending;
-    this.predicate = field;
+    const ascending = field !== this.predicate ? true : !this.ascending;
+    const nextSortState: SortState<T> = { predicate: field, order: ascending ? 'asc' : 'desc' };
+
+    this.updateSortState(nextSortState);
     this.predicateChange.emit(field);
-    this.ascendingChange.emit(this.ascending);
-    this.sortChange.emit({ predicate: this.predicate, ascending: this.ascending });
+    this.ascendingChange.emit(ascending);
+    this.sortChange.emit({ ...nextSortState, ascending });
+  }
+
+  private updateSortState(sortState: SortState<T>): void {
+    this.sortState.set(sortState);
   }
 }

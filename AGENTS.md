@@ -1,69 +1,101 @@
-# Project Overview 
+# Project Overview
+
+This is `hc-admin-dashboard` — the Health Connect Admin frontend. It is an Angular 19 SPA generated with **JHipster 8.11.0** (`skipServer: true`). There is no Java backend in this project; the frontend proxies API calls to the `hc-admin-ms` microservice and `hc-admin-gw` gateway.
+
+- JHipster prefix: `hpd` (component selectors `hpd-*`, directive selectors `hpdCamelCase`)
+- Backend port (proxy target): `5054`
+- Development server: `http://localhost:4200`
+- Mock API (json-server): `http://localhost:5508`
 
 ## Code Quality and Style
-- Follow SOLID principles and clean code practices.
-- Use consistent naming conventions and code formatting.
-- Implement comprehensive unit and integration tests using JUnit 5 and Mockito.
-- Ensure proper documentation of code and APIs using JavaDoc and Swagger/OpenAPI.
-- No null pointer deferences; use Optional where applicable.
-- Handle exceptions gracefully and provide meaningful error messages.
-- Use Lombok for boilerplate code reduction (getters, setters, constructors).
-- Adhere to RESTful API design principles for all endpoints.
-- Use Liquibase for database migrations and version control.
-- Implement logging using SLF4J and Logback for all critical operations and exceptions.
-- Follow resource leak prevention best practices, especially in file handling and database connections.
+
+- Follow Angular style guide and JHipster conventions already established in the project.
+- Use consistent naming: component selectors prefixed `hpd-` (kebab-case), directive selectors prefixed `hpd` (camelCase) per `.eslintrc.json`.
+- Format with Prettier: `npm run prettier:format`; check with `npm run prettier:check`.
+- Lint with ESLint: `npm run lint`; auto-fix with `npm run lint:fix`.
+- Use 2-space indentation for TypeScript, HTML, JSON, YAML, and CSS/SCSS files (see `.editorconfig`).
+- Write unit tests with Jest via `@angular-builders/jest`; E2E tests with Cypress.
+- Use RxJS `Observable` patterns and takeUntil-based cleanup already established in existing services and components.
+- Prefer `ngx-webstorage` for browser storage over direct `localStorage`/`sessionStorage` access.
+- Sanitize all user-supplied content rendered via `[innerHTML]` to prevent XSS.
+- Do not store sensitive data (tokens, PII) in non-secure browser storage.
 
 ## Architecture and Design
-- Use a layered architecture (Controller, Service, Repository) for separation of concerns.
-- Implement domain-driven design principles for modeling the healthcare workforce and related entities.
-- Dependency injection should be used for all services and repositories to promote testability and maintainability.
-- Use Kafka for asynchronous communication between services, especially for telemetry data and alerts.
-- Integrate MinIO for document storage, ensuring secure and efficient handling of professional and vendor documents
-- No static initialization blocks; use dependency injection for all configurations and services.
-- Implement a robust error handling mechanism using `@ControllerAdvice` to return RFC 7807 compliant error responses for all exceptions.
-- Immutable objects for data transfer objects (DTOs) and domain models where appropriate to ensure thread safety and maintainability.
+
+- **Frontend only** — no Spring Boot, no JPA, no Liquibase, no Java source in this project.
+- Source root is `src/main/webapp`; all Angular source lives under `src/main/webapp/app`.
+- Folder responsibilities:
+  - `core/` — authentication (`AccountService`, `UserRouteAccessService`), interceptors, `ApplicationConfigService`, low-level utilities.
+  - `shared/` — reusable pipes, directives, `SharedModule`, alert/filter/sort/pagination helpers.
+  - `entities/` — one sub-folder per domain entity; each contains model, service, list/detail/update/delete components, and route config.
+  - `layouts/` — shell components (navbar, footer, error pages).
+  - `widgets/` — reusable chart and display widgets (badgebox, chatbot, faq, file-viewer, filter, heatmap, histogram, info-box, info-box-sm, linechart, page-display, piechart, pnv, slides, tilebox, treemap).
+  - `pages/` — reserved for standalone page components outside the entity CRUD pattern.
+- Use Angular standalone components; the legacy `SharedModule` exists for backward compatibility but new components should be standalone.
+- Build API URLs through `ApplicationConfigService.getEndpointFor(api, microservice?)` instead of hardcoding paths.
+- Route-level lazy loading is configured in `app.routes.ts` and `entity.routes.ts`; keep new routes consistent with this pattern.
+- Real-time updates connect via SockJS + webstomp-client to the gateway WebSocket endpoint.
+- Use `dayjs` for all date parsing and formatting.
+- Use `ngx-charts` + D3 for dashboard charts and visualisations.
+
+## Implemented Entities
+
+The following domain entities are scaffolded and routed under `/entities`:
+
+`Organisation`, `Dashboard`, `Feature`, `Message`, `DutyRoster`, `SystemCatalog`, `PricingPlan`, `PatientPlan`, `Professional`, `Address`, `Person`, `Contact`, `Photo`, `DocumentItem`, `Team`, `Profile`, `Facility`, `FacilityCatalog`, `Notification`, `AuditLog`
 
 ## Security Considerations
-- Implement authentication and authorization using Spring Security, with role-based access control for all stakeholders (Professionals, Vendors, Admins).
-- Ensure all sensitive data (e.g., personal information, documents) is encrypted at rest and in transit.
-- Use secure password storage practices (e.g., bcrypt) for any user credentials.
-- Implement input validation and sanitization to prevent common vulnerabilities such as SQL injection and cross-site scripting (XSS).
-- Ensure proper CORS configuration for the Angular frontend to securely interact with the backend APIs.
-- Regularly update dependencies to mitigate known security vulnerabilities.
-- Implement rate limiting and monitoring to prevent abuse of the APIs and ensure system stability under load.
-- Use HTTPS for all communications between the frontend and backend services to ensure data confidentiality and integrity.
-- Ensure logs do not contain sensitive data or PII information and are properly secured to prevent unauthorized access.
-- Implement comprehensive testing for security vulnerabilities, including penetration testing and vulnerability scanning as part of the development lifecycle.
-- Ensure compliance with relevant data protection regulations (e.g., GDPR, HIPAA) in the handling of personal and health-related data.
-- Use secure coding practices and conduct regular code reviews to identify and mitigate potential security issues early in the development process.
-- Implement a secure document upload mechanism that validates file types, sizes, and content to prevent malicious uploads and ensure the integrity of stored documents.
+
+- Authentication state is managed by `AccountService`; route guards use `UserRouteAccessService` with `Authority` constants.
+- Bearer JWT tokens are attached to outgoing API requests by the auth interceptor in `core/interceptor`.
+- Admin-only routes are gated by `Authority.ADMIN`; do not remove or weaken route guards.
+- Sanitize dynamic HTML output; never bypass Angular's DomSanitizer without explicit justification.
+- Do not log or expose tokens, passwords, or PII in console output.
+- Keep dependencies up to date; run `npm audit` regularly and address high/critical findings.
+- HTTPS is enforced in production via the Nginx configuration and the gateway; the dev server uses plain HTTP on `localhost` only.
+- Comply with GDPR/HIPAA by avoiding unnecessary persistence of personal or health-related data in the browser.
 
 ## Performance Optimization
-- Use pagination and filtering for API endpoints that return large datasets to improve response times and reduce memory usage.
-- Implement caching strategies (e.g., using Spring Cache) for frequently accessed data to reduce database load and improve response times.
-- Optimize database queries using indexing and proper query design to ensure efficient data retrieval and manipulation.
-- Use asynchronous processing for long-running tasks (e.g., document uploads, complex matching algorithms) to improve responsiveness and user experience.
-- Monitor application performance using tools like Spring Boot Actuator and implement necessary optimizations based on observed metrics and bottlenecks.
-- Implement connection pooling for database connections to improve performance and resource management.
-- Use efficient data structures and algorithms in the implementation of the matching service and threshold engine to ensure optimal performance under load.
-- Regularly profile the application to identify and address performance bottlenecks, especially in critical paths such as the matching service and Kafka consumer.
-- Ensure that the application can scale horizontally by designing stateless services and using appropriate load balancing strategies to handle increased traffic and workload effectively.
+
+- Use lazy-loaded routes (already in place) to keep initial bundle size small.
+- Apply pagination (`ngx-infinite-scroll` or page-based) for entity list views that return large datasets.
+- Use `OnPush` change detection on list components that receive data via `Input` or `Observable` streams.
+- Prefer `trackBy` functions on `*ngFor` to reduce DOM re-renders.
+- Defer heavy chart/widget rendering until the component is visible (use `@defer` blocks in Angular 19 templates where appropriate).
+- Avoid blocking the main thread with synchronous heavy computation; offload to Web Workers when necessary.
 
 ## Technology Stack
-- Java 26
-- Spring Boot 4
-- Spring Web, Spring Data JPA, Spring Security, Spring Kafka, Spring Cloud AWS
-- PostgreSQL
-- MinIO for document storage
-- Angular 19+ for the frontend
-- Docker and Docker Compose for containerization
-- Liquibase for database migrations
-- JUnit 5 and Mockito for testing
-- SLF4J and Logback for logging
-- Swagger/OpenAPI for API documentation
-- Maven for build and dependency management
-- NPM for frontend package management
-- Nginx for serving the Angular frontend in production
-- Testcontainers for integration testing with PostgreSQL and MinIO
-- Git for version control and collaboration
-- GitHub Actions for CI/CD pipelines to automate testing and deployment processes.
+
+- **Angular 19.2.21** with standalone components and lazy-loaded routes
+- **Bootstrap 5.3.2** + **ng-bootstrap 18** for UI components and modals
+- **TailwindCSS 3.4** for layout and spacing utilities
+- **Font Awesome 6.5** (`@fortawesome/angular-fontawesome`) for icons
+- **RxJS 7.8** for reactive state and async data flows
+- **@ngx-translate** (en, fr, de) for internationalisation
+- **ngx-charts** + **D3.js** for data visualisation widgets
+- **SockJS** + **webstomp-client** for WebSocket connectivity
+- **ngx-webstorage** for browser storage abstraction
+- **dayjs** for date/time handling
+- **ngx-infinite-scroll** for infinite-scroll pagination
+- **Jest 30** + `@angular-builders/jest` for unit testing
+- **Cypress** for E2E testing
+- **ESLint** + **Prettier** for linting and formatting
+- **Husky** + **lint-staged** for pre-commit quality gates
+- **json-server** for local mock API development (`npm run mock:api`)
+- **Nginx** for serving the SPA in production (see `nginx.conf`)
+- **Docker** + **Docker Compose** for containerised local development and production deployments
+- **Git** for version control
+- **GitHub Actions** for CI/CD pipelines
+
+## Build and Test
+
+- Install dependencies: `npm install`
+- Development server (HMR): `npm start`
+- Production build: `npm run webapp:prod`
+- Lint: `npm run lint`
+- Auto-fix lint: `npm run lint:fix`
+- Unit tests: `npm test`
+- E2E tests: `npm run e2e`
+- Mock API: `npm run mock:api`
+- Format check: `npm run prettier:check`
+- Format write: `npm run prettier:format`

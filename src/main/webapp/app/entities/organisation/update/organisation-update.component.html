@@ -4,7 +4,7 @@
       <h2
         id="hpd-organisation-heading"
         data-cy="OrganisationCreateUpdateHeading"
-        hpdTranslate="adminDashboardApp.organisation.home.createOrEditLabel"
+        hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.home.createOrEditLabel"
       >
         Create or edit a Organisation
       </h2>
@@ -14,27 +14,20 @@
 
         @if (editForm.controls.id.value !== null) {
           <div class="mb-3">
-            <label class="form-label" for="field_id" hpdTranslate="adminDashboardApp.organisation.id">ID</label>
+            <label class="form-label" for="field_id" hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.id">ID</label>
             <input type="text" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
           </div>
         }
 
-        @let nameRef = editForm.get('name')!;
         <div class="mb-3">
-          <label class="form-label" for="field_name" hpdTranslate="adminDashboardApp.organisation.name">Name</label>
+          <label class="form-label" for="field_name" hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.name">Name</label>
           <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
-          @if (nameRef.invalid && (nameRef.dirty || nameRef.touched)) {
-            <div>
-              @if (editForm.get('name')?.errors?.required) {
-                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
-              }
-            </div>
-          }
         </div>
 
-        @let descriptionRef = editForm.get('description')!;
         <div class="mb-3">
-          <label class="form-label" for="field_description" hpdTranslate="adminDashboardApp.organisation.description">Description</label>
+          <label class="form-label" for="field_description" hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.description"
+            >Description</label
+          >
           <input
             type="text"
             class="form-control"
@@ -43,86 +36,66 @@
             data-cy="description"
             formControlName="description"
           />
-          @if (descriptionRef.invalid && (descriptionRef.dirty || descriptionRef.touched)) {
-            <div>
-              @if (editForm.get('description')?.errors?.required) {
-                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
-              }
-            </div>
-          }
         </div>
 
-        @let addressIdRef = editForm.get('addressId')!;
         <div class="mb-3">
-          <label class="form-label" for="field_addressId" hpdTranslate="adminDashboardApp.organisation.addressId">Address Id</label>
-          <input type="text" class="form-control" name="addressId" id="field_addressId" data-cy="addressId" formControlName="addressId" />
-          @if (addressIdRef.invalid && (addressIdRef.dirty || addressIdRef.touched)) {
-            <div>
-              @if (editForm.get('addressId')?.errors?.required) {
-                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
-              }
-            </div>
-          }
+          <label class="form-label" for="field_profile" hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.profile">Profile</label>
+          <input type="text" class="form-control" name="profile" id="field_profile" data-cy="profile" formControlName="profile" />
         </div>
 
-        @let contactIdRef = editForm.get('contactId')!;
         <div class="mb-3">
-          <label class="form-label" for="field_contactId" hpdTranslate="adminDashboardApp.organisation.contactId">Contact Id</label>
-          <input type="text" class="form-control" name="contactId" id="field_contactId" data-cy="contactId" formControlName="contactId" />
-          @if (contactIdRef.invalid && (contactIdRef.dirty || contactIdRef.touched)) {
-            <div>
-              @if (editForm.get('contactId')?.errors?.required) {
-                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
-              }
-            </div>
-          }
-        </div>
-
-        @let createdByRef = editForm.get('createdBy')!;
-        <div class="mb-3">
-          <label class="form-label" for="field_createdBy" hpdTranslate="adminDashboardApp.organisation.createdBy">Created By</label>
-          <input type="text" class="form-control" name="createdBy" id="field_createdBy" data-cy="createdBy" formControlName="createdBy" />
-          @if (createdByRef.invalid && (createdByRef.dirty || createdByRef.touched)) {
-            <div>
-              @if (editForm.get('createdBy')?.errors?.required) {
-                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
-              }
-            </div>
-          }
-        </div>
-
-        @let createdDateRef = editForm.get('createdDate')!;
-        <div class="mb-3">
-          <label class="form-label" for="field_createdDate" hpdTranslate="adminDashboardApp.organisation.createdDate">Created Date</label>
-          <div class="d-flex">
+          <label class="form-label" for="field_createdDate" hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.createdDate"
+            >Created Date</label
+          >
+          <div class="input-group">
             <input
               id="field_createdDate"
               data-cy="createdDate"
-              type="datetime-local"
+              type="text"
               class="form-control"
               name="createdDate"
+              ngbDatepicker
+              #createdDateDp="ngbDatepicker"
               formControlName="createdDate"
-              placeholder="YYYY-MM-DD HH:mm"
             />
+            <button type="button" class="btn btn-secondary" (click)="createdDateDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
           </div>
-          @if (createdDateRef.invalid && (createdDateRef.dirty || createdDateRef.touched)) {
-            <div>
-              @if (editForm.get('createdDate')?.errors?.required) {
-                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
-              }
-              <small
-                class="form-text text-danger"
-                [hidden]="!editForm.get('createdDate')?.errors?.datetimelocal"
-                hpdTranslate="entity.validation.datetimelocal"
-                >This field should be a date and time.</small
-              >
-            </div>
-          }
         </div>
 
-        @let modifiedByRef = editForm.get('modifiedBy')!;
         <div class="mb-3">
-          <label class="form-label" for="field_modifiedBy" hpdTranslate="adminDashboardApp.organisation.modifiedBy">Modified By</label>
+          <label class="form-label" for="field_createdBy" hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.createdBy"
+            >Created By</label
+          >
+          <input type="text" class="form-control" name="createdBy" id="field_createdBy" data-cy="createdBy" formControlName="createdBy" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_modifiedDate" hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.modifiedDate"
+            >Modified Date</label
+          >
+          <div class="input-group">
+            <input
+              id="field_modifiedDate"
+              data-cy="modifiedDate"
+              type="text"
+              class="form-control"
+              name="modifiedDate"
+              ngbDatepicker
+              #modifiedDateDp="ngbDatepicker"
+              formControlName="modifiedDate"
+            />
+            <button type="button" class="btn btn-secondary" (click)="modifiedDateDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_modifiedBy" hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.modifiedBy"
+            >Modified By</label
+          >
           <input
             type="text"
             class="form-control"
@@ -131,44 +104,6 @@
             data-cy="modifiedBy"
             formControlName="modifiedBy"
           />
-          @if (modifiedByRef.invalid && (modifiedByRef.dirty || modifiedByRef.touched)) {
-            <div>
-              @if (editForm.get('modifiedBy')?.errors?.required) {
-                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
-              }
-            </div>
-          }
-        </div>
-
-        @let modifiedDateRef = editForm.get('modifiedDate')!;
-        <div class="mb-3">
-          <label class="form-label" for="field_modifiedDate" hpdTranslate="adminDashboardApp.organisation.modifiedDate"
-            >Modified Date</label
-          >
-          <div class="d-flex">
-            <input
-              id="field_modifiedDate"
-              data-cy="modifiedDate"
-              type="datetime-local"
-              class="form-control"
-              name="modifiedDate"
-              formControlName="modifiedDate"
-              placeholder="YYYY-MM-DD HH:mm"
-            />
-          </div>
-          @if (modifiedDateRef.invalid && (modifiedDateRef.dirty || modifiedDateRef.touched)) {
-            <div>
-              @if (editForm.get('modifiedDate')?.errors?.required) {
-                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
-              }
-              <small
-                class="form-text text-danger"
-                [hidden]="!editForm.get('modifiedDate')?.errors?.datetimelocal"
-                hpdTranslate="entity.validation.datetimelocal"
-                >This field should be a date and time.</small
-              >
-            </div>
-          }
         </div>
       </div>
 

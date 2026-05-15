@@ -100,7 +100,7 @@ describe('Directive: SortByDirective', () => {
     expect(component.ascending).toEqual(false);
     expect(sortByDirective.iconComponent?.icon).toEqual(faSortDown.iconName);
     expect(component.transition).toHaveBeenCalledTimes(1);
-    expect(component.transition).toHaveBeenCalledWith({ predicate: 'name', ascending: false });
+    expect(component.transition).toHaveBeenCalledWith({ predicate: 'name', order: 'desc', ascending: false });
   });
 
   it('should update component predicate, order, icon when user double clicks on column header', () => {
@@ -123,8 +123,8 @@ describe('Directive: SortByDirective', () => {
     expect(component.ascending).toEqual(true);
     expect(sortByDirective.iconComponent?.icon).toEqual(faSortUp.iconName);
     expect(component.transition).toHaveBeenCalledTimes(2);
-    expect(component.transition).toHaveBeenNthCalledWith(1, { predicate: 'name', ascending: false });
-    expect(component.transition).toHaveBeenNthCalledWith(2, { predicate: 'name', ascending: true });
+    expect(component.transition).toHaveBeenNthCalledWith(1, { predicate: 'name', order: 'desc', ascending: false });
+    expect(component.transition).toHaveBeenNthCalledWith(2, { predicate: 'name', order: 'asc', ascending: true });
   });
 
   it('should not run sorting on click if sorting icon is hidden', () => {

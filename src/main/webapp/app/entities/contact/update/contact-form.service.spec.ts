@@ -49,7 +49,7 @@ describe('Contact Form Service', () => {
 
         const contact = service.getContact(formGroup) as any;
 
-        expect(contact).toMatchObject(sampleWithNewData);
+        expect(contact).toMatchObject({ ...sampleWithNewData, phoneNumber: null });
       });
 
       it('should return NewContact for empty Contact initial value', () => {

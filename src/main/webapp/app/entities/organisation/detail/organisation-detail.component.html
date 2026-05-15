@@ -2,7 +2,9 @@
   <div class="col-8">
     @if (organisation(); as organisationRef) {
       <div>
-        <h2 data-cy="organisationDetailsHeading"><span hpdTranslate="adminDashboardApp.organisation.detail.title">Organisation</span></h2>
+        <h2 data-cy="organisationDetailsHeading">
+          <span hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.detail.title">Organisation</span>
+        </h2>
 
         <hr />
 
@@ -15,37 +17,33 @@
           <dd>
             <span>{{ organisationRef.id }}</span>
           </dd>
-          <dt><span hpdTranslate="adminDashboardApp.organisation.name">Name</span></dt>
+          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.name">Name</span></dt>
           <dd>
             <span>{{ organisationRef.name }}</span>
           </dd>
-          <dt><span hpdTranslate="adminDashboardApp.organisation.description">Description</span></dt>
+          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.description">Description</span></dt>
           <dd>
             <span>{{ organisationRef.description }}</span>
           </dd>
-          <dt><span hpdTranslate="adminDashboardApp.organisation.addressId">Address Id</span></dt>
+          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.profile">Profile</span></dt>
           <dd>
-            <span>{{ organisationRef.addressId }}</span>
+            <span>{{ organisationRef.profile }}</span>
           </dd>
-          <dt><span hpdTranslate="adminDashboardApp.organisation.contactId">Contact Id</span></dt>
+          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.createdDate">Created Date</span></dt>
           <dd>
-            <span>{{ organisationRef.contactId }}</span>
+            <span>{{ organisationRef.createdDate | formatMediumDate }}</span>
           </dd>
-          <dt><span hpdTranslate="adminDashboardApp.organisation.createdBy">Created By</span></dt>
+          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.createdBy">Created By</span></dt>
           <dd>
             <span>{{ organisationRef.createdBy }}</span>
           </dd>
-          <dt><span hpdTranslate="adminDashboardApp.organisation.createdDate">Created Date</span></dt>
+          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.modifiedDate">Modified Date</span></dt>
           <dd>
-            <span>{{ organisationRef.createdDate | formatMediumDatetime }}</span>
+            <span>{{ organisationRef.modifiedDate | formatMediumDate }}</span>
           </dd>
-          <dt><span hpdTranslate="adminDashboardApp.organisation.modifiedBy">Modified By</span></dt>
+          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.modifiedBy">Modified By</span></dt>
           <dd>
             <span>{{ organisationRef.modifiedBy }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.organisation.modifiedDate">Modified Date</span></dt>
-          <dd>
-            <span>{{ organisationRef.modifiedDate | formatMediumDatetime }}</span>
           </dd>
         </dl>
 

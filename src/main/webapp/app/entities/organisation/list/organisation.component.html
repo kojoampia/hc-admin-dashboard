@@ -1,11 +1,11 @@
 <div>
   <h2 id="page-heading" data-cy="OrganisationHeading">
-    <span hpdTranslate="adminDashboardApp.organisation.home.title">Organisations</span>
+    <span hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.home.title">Organisations</span>
 
     <div class="d-flex justify-content-end">
       <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
         <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
-        <span hpdTranslate="adminDashboardApp.organisation.home.refreshListLabel">Refresh list</span>
+        <span hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.home.refreshListLabel">Refresh list</span>
       </button>
 
       <button
@@ -15,7 +15,7 @@
         [routerLink]="['/organisation/new']"
       >
         <fa-icon icon="plus"></fa-icon>
-        <span hpdTranslate="adminDashboardApp.organisation.home.createLabel">Create a new Organisation</span>
+        <span hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.home.createLabel">Create a new Organisation</span>
       </button>
     </div>
   </h2>
@@ -26,7 +26,7 @@
 
   @if (organisations().length === 0) {
     <div class="alert alert-warning" id="no-result">
-      <span hpdTranslate="adminDashboardApp.organisation.home.notFound">No Organisations found</span>
+      <span hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.home.notFound">No Organisations found</span>
     </div>
   } @else {
     <div class="table-responsive table-entities" id="entities">
@@ -42,56 +42,49 @@
             </th>
             <th scope="col" hpdSortBy="name">
               <div class="d-flex">
-                <span hpdTranslate="adminDashboardApp.organisation.name">Name</span>
+                <span hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.name">Name</span>
 
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
             <th scope="col" hpdSortBy="description">
               <div class="d-flex">
-                <span hpdTranslate="adminDashboardApp.organisation.description">Description</span>
+                <span hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.description">Description</span>
 
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" hpdSortBy="addressId">
+            <th scope="col" hpdSortBy="profile">
               <div class="d-flex">
-                <span hpdTranslate="adminDashboardApp.organisation.addressId">Address Id</span>
-
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-            <th scope="col" hpdSortBy="contactId">
-              <div class="d-flex">
-                <span hpdTranslate="adminDashboardApp.organisation.contactId">Contact Id</span>
-
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-            <th scope="col" hpdSortBy="createdBy">
-              <div class="d-flex">
-                <span hpdTranslate="adminDashboardApp.organisation.createdBy">Created By</span>
+                <span hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.profile">Profile</span>
 
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
             <th scope="col" hpdSortBy="createdDate">
               <div class="d-flex">
-                <span hpdTranslate="adminDashboardApp.organisation.createdDate">Created Date</span>
+                <span hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.createdDate">Created Date</span>
 
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" hpdSortBy="modifiedBy">
+            <th scope="col" hpdSortBy="createdBy">
               <div class="d-flex">
-                <span hpdTranslate="adminDashboardApp.organisation.modifiedBy">Modified By</span>
+                <span hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.createdBy">Created By</span>
 
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
             <th scope="col" hpdSortBy="modifiedDate">
               <div class="d-flex">
-                <span hpdTranslate="adminDashboardApp.organisation.modifiedDate">Modified Date</span>
+                <span hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.modifiedDate">Modified Date</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" hpdSortBy="modifiedBy">
+              <div class="d-flex">
+                <span hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.modifiedBy">Modified By</span>
 
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
@@ -107,12 +100,11 @@
               </td>
               <td>{{ organisation.name }}</td>
               <td>{{ organisation.description }}</td>
-              <td>{{ organisation.addressId }}</td>
-              <td>{{ organisation.contactId }}</td>
+              <td>{{ organisation.profile }}</td>
+              <td>{{ organisation.createdDate | formatMediumDate }}</td>
               <td>{{ organisation.createdBy }}</td>
-              <td>{{ organisation.createdDate | formatMediumDatetime }}</td>
+              <td>{{ organisation.modifiedDate | formatMediumDate }}</td>
               <td>{{ organisation.modifiedBy }}</td>
-              <td>{{ organisation.modifiedDate | formatMediumDatetime }}</td>
               <td class="text-end">
                 <div class="btn-group">
                   <a [routerLink]="['/organisation', organisation.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
@@ -135,25 +127,6 @@
           }
         </tbody>
       </table>
-    </div>
-  }
-  @if (organisations().length > 0) {
-    <div>
-      <div class="d-flex justify-content-center">
-        <hpd-item-count [params]="{ page, totalItems, itemsPerPage }" />
-      </div>
-
-      <div class="d-flex justify-content-center">
-        <ngb-pagination
-          [collectionSize]="totalItems"
-          [page]="page"
-          [pageSize]="itemsPerPage"
-          [maxSize]="5"
-          [rotate]="true"
-          [boundaryLinks]="true"
-          (pageChange)="navigateToPage($event)"
-        ></ngb-pagination>
-      </div>
     </div>
   }
 </div>

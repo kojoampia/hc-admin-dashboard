@@ -6,7 +6,7 @@ import { takeUntil } from 'rxjs/operators';
 import SharedModule from 'app/shared/shared.module';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/auth/account.model';
-import { DashboardComponent } from 'app/dashboard/dashboard.component';
+import { DashboardComponent } from 'app/entities/dashboard/list/dashboard.component';
 
 @Component({
     selector: 'hpd-home',

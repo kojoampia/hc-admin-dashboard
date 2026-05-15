@@ -10,7 +10,7 @@ import SortDirective from './sort.directive';
   standalone: true,
   selector: '[hpdSortBy]',
 })
-export default class SortByDirective<T> implements AfterContentInit, OnDestroy {
+export default class SortByDirective<T extends string = string> implements AfterContentInit, OnDestroy {
   @Input() hpdSortBy!: T;
 
   @ContentChild(FaIconComponent, { static: false })

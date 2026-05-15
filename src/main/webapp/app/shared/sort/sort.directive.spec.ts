@@ -48,7 +48,7 @@ describe('Directive: SortDirective', () => {
     expect(component.predicate).toEqual('ID');
     expect(component.ascending).toEqual(true);
     expect(component.transition).toHaveBeenCalledTimes(1);
-    expect(component.transition).toHaveBeenCalledWith({ predicate: 'ID', ascending: true });
+    expect(component.transition).toHaveBeenCalledWith({ predicate: 'ID', order: 'asc', ascending: true });
   });
 
   it('should change sort order to descending when same field is sorted again', () => {
@@ -65,8 +65,8 @@ describe('Directive: SortDirective', () => {
     expect(component.predicate).toEqual('ID');
     expect(component.ascending).toEqual(false);
     expect(component.transition).toHaveBeenCalledTimes(2);
-    expect(component.transition).toHaveBeenNthCalledWith(1, { predicate: 'ID', ascending: true });
-    expect(component.transition).toHaveBeenNthCalledWith(2, { predicate: 'ID', ascending: false });
+    expect(component.transition).toHaveBeenNthCalledWith(1, { predicate: 'ID', order: 'asc', ascending: true });
+    expect(component.transition).toHaveBeenNthCalledWith(2, { predicate: 'ID', order: 'desc', ascending: false });
   });
 
   it('should change sort order to ascending when different field is sorted', () => {
@@ -83,7 +83,7 @@ describe('Directive: SortDirective', () => {
     expect(component.predicate).toEqual('NAME');
     expect(component.ascending).toEqual(true);
     expect(component.transition).toHaveBeenCalledTimes(2);
-    expect(component.transition).toHaveBeenNthCalledWith(1, { predicate: 'ID', ascending: true });
-    expect(component.transition).toHaveBeenNthCalledWith(2, { predicate: 'NAME', ascending: true });
+    expect(component.transition).toHaveBeenNthCalledWith(1, { predicate: 'ID', order: 'asc', ascending: true });
+    expect(component.transition).toHaveBeenNthCalledWith(2, { predicate: 'NAME', order: 'asc', ascending: true });
   });
 });

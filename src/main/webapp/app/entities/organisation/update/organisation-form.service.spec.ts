@@ -22,12 +22,11 @@ describe('Organisation Form Service', () => {
             id: expect.any(Object),
             name: expect.any(Object),
             description: expect.any(Object),
-            addressId: expect.any(Object),
-            contactId: expect.any(Object),
-            createdBy: expect.any(Object),
+            profile: expect.any(Object),
             createdDate: expect.any(Object),
-            modifiedBy: expect.any(Object),
+            createdBy: expect.any(Object),
             modifiedDate: expect.any(Object),
+            modifiedBy: expect.any(Object),
           }),
         );
       });
@@ -40,12 +39,11 @@ describe('Organisation Form Service', () => {
             id: expect.any(Object),
             name: expect.any(Object),
             description: expect.any(Object),
-            addressId: expect.any(Object),
-            contactId: expect.any(Object),
-            createdBy: expect.any(Object),
+            profile: expect.any(Object),
             createdDate: expect.any(Object),
-            modifiedBy: expect.any(Object),
+            createdBy: expect.any(Object),
             modifiedDate: expect.any(Object),
+            modifiedBy: expect.any(Object),
           }),
         );
       });
