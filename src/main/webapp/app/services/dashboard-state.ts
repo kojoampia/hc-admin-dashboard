@@ -23,10 +23,16 @@ export class DashboardStateService {
 
   readonly menu = computed(() => this.activeMenu());
 
+  readonly sidebarExpanded = signal(true);
+
   private readonly activeMenu = signal<string>('DASHBOARD');
 
   setMenu(label: string): void {
     this.activeMenu.set(label);
+  }
+
+  toggleSidebar(): void {
+    this.sidebarExpanded.update(v => !v);
   }
 
   setUser(user: AppUser): void {

@@ -1,16 +1,16 @@
-import { Component, OnInit, RendererFactory2, Renderer2, ViewChild, inject } from '@angular/core';
+import { Component, OnInit, RendererFactory2, Renderer2, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs/operators';
-import { MatSidenavModule, MatSidenav } from '@angular/material/sidenav';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import dayjs from 'dayjs/esm';
 
 import { AccountService } from 'app/core/auth/account.service';
 import { AppPageTitleStrategy } from 'app/app-page-title-strategy';
+import { DashboardStateService } from 'app/services/dashboard-state';
 import { SidebarComponent } from './sidebar/sidebar.component';
-import { ToolbarComponent } from './toolbar/toolbar.component';
 
 @Component({
   selector: 'hpd-main',
@@ -18,10 +18,10 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
   styleUrl: './main.component.scss',
   standalone: true,
   providers: [AppPageTitleStrategy],
-  imports: [RouterOutlet, MatSidenavModule, SidebarComponent, ToolbarComponent],
+  imports: [RouterOutlet, MatSidenavModule, SidebarComponent],
 })
 export default class MainComponent implements OnInit {
-  @ViewChild('mainSidebar') mainSidebar?: MatSidenav;
+  readonly state = inject(DashboardStateService);
 
   readonly isHandset = toSignal(
     inject(BreakpointObserver)

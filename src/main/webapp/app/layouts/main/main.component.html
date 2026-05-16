@@ -1,9 +1,8 @@
 <div class="h-100 w-100">
-  <hdb-toolbar (sidenavToggle)="mainSidebar.toggle()"></hdb-toolbar>
   <mat-sidenav-container class="sidebar-container">
     <mat-sidenav
-      #mainSidebar
       class="sidenav light-bg"
+      [style.width]="state.sidebarExpanded() ? '256px' : '80px'"
       [attr.role]="isHandset() ? 'dialog' : 'navigation'"
       [mode]="isHandset() ? 'over' : 'side'"
       [opened]="!isHandset()"
