@@ -1,9 +1,10 @@
-import { ApplicationConfig, LOCALE_ID, importProvidersFrom } from '@angular/core';
+import { ApplicationConfig, LOCALE_ID, importProvidersFrom, inject, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterFeatures, TitleStrategy, provideRouter, withComponentInputBinding, withDebugTracing } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { MatIconRegistry } from '@angular/material/icon';
 
 import { NgbDateAdapter } from '@ng-bootstrap/ng-bootstrap';
 
@@ -35,6 +36,14 @@ export const appConfig: ApplicationConfig = {
     { provide: NgbDateAdapter, useClass: NgbDateDayjsAdapter },
     httpInterceptorProviders,
     { provide: TitleStrategy, useClass: AppPageTitleStrategy },
+    {
+      provide: APP_INITIALIZER,
+      useFactory() {
+        const iconRegistry = inject(MatIconRegistry);
+        return () => iconRegistry.setDefaultFontSetClass('material-icons');
+      },
+      multi: true,
+    },
     // jhipster-needle-angular-add-module JHipster will add new module here
   ],
 };

@@ -1,19 +1,19 @@
 {
   "home": {
-    "title": "Bienvenue, Java Hipster !",
-    "subtitle": "Ceci est votre page d'accueil",
+    "title": "Bienvenue !",
+    "subtitle": "Ceci est le tableau de bord d'administration de Health Connect",
     "logged": {
       "message": "Vous êtes connecté en tant que \"{{username}}\"."
     },
-    "question": "Si vous avez des questions à propos de JHipster :",
+    "question": "Si vous avez des questions à propos de HealthConnect :",
     "link": {
-      "homepage": "Page d'accueil de JHipster",
-      "stackoverflow": "JHipster sur Stack Overflow",
-      "bugtracker": "JHipster bug tracker",
-      "chat": "JHipster public chat room",
-      "follow": "Suivez @jhipster sur Twitter"
+      "homepage": "Page d'accueil de HealthConnect",
+      "stackoverflow": "HealthConnect sur Stack Overflow",
+      "bugtracker": "HealthConnect bug tracker",
+      "chat": "HealthConnect public chat room",
+      "follow": "Suivez @healthconnect sur Twitter"
     },
-    "like": "Si vous aimez JHipster, donnez nous une étoile sur",
+    "like": "Aimez-nous sur ",
     "github": "GitHub "
   }
 }

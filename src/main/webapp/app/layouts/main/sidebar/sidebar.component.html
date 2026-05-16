@@ -1,0 +1,74 @@
+<div
+  class="flex flex-col h-full bg-white border-r border-slate-200 overflow-hidden whitespace-nowrap transition-all duration-300 ease-in-out"
+  [class]="isExpanded() ? 'w-64' : 'w-20'"
+>
+  <!-- Header / Logo -->
+  <div
+    class="flex items-center p-4 border-b border-slate-100 shrink-0"
+    [class.justify-center]="!isExpanded()"
+  >
+    <button
+      class="flex items-center justify-center w-10 h-10 rounded-xl bg-indigo-600 text-white font-bold text-sm cursor-pointer hover:scale-105 active:scale-95 transition-transform duration-200 shrink-0"
+      (click)="toggleExpanded()"
+      aria-label="Toggle sidebar"
+    >
+      HC
+    </button>
+    @if (isExpanded()) {
+      <span class="ml-3 text-slate-800 font-bold tracking-tight text-base">HealthConnect</span>
+    }
+  </div>
+
+  <!-- Navigation -->
+  <nav class="flex-1 overflow-y-auto py-3 px-2">
+    <ul class="space-y-1 list-none p-0 m-0">
+      @for (item of filteredMenuItems(); track item.path) {
+        <li>
+          <a
+            [routerLink]="item.path"
+            routerLinkActive="bg-slate-50 !text-indigo-600 shadow-sm"
+            [routerLinkActiveOptions]="{ exact: item.path === '/' }"
+            (click)="state.setMenu(item.label)"
+            class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-500 hover:bg-slate-50 hover:text-slate-800 hover:scale-[1.03] active:scale-95 transition-all duration-200 no-underline"
+            [class.justify-center]="!isExpanded()"
+          >
+            <mat-icon class="shrink-0 text-[20px] w-5 h-5">{{ item.icon }}</mat-icon>
+            @if (isExpanded()) {
+              <span class="text-sm font-medium">{{ item.label }}</span>
+            }
+          </a>
+        </li>
+      }
+    </ul>
+  </nav>
+
+  <!-- User Profile Footer -->
+  <div
+    class="mt-auto border-t border-slate-100 shrink-0"
+    [class]="isExpanded() ? 'p-4' : 'p-2 flex justify-center'"
+  >
+    <div
+      class="flex items-center gap-3"
+      [class.justify-center]="!isExpanded()"
+    >
+      <!-- Avatar -->
+      <div
+        class="w-10 h-10 rounded-full bg-indigo-100 text-indigo-600 font-bold text-sm flex items-center justify-center shrink-0"
+      >
+        {{ userInitials() }}
+      </div>
+
+      @if (isExpanded()) {
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-bold text-slate-800 truncate">{{ state.currentUser().name }}</p>
+          <p class="text-[10px] font-semibold text-slate-500 tracking-wider uppercase truncate">
+            {{ state.currentUser().role }}
+          </p>
+        </div>
+        <button mat-icon-button aria-label="Logout" class="shrink-0">
+          <mat-icon class="text-slate-400 text-[18px]">logout</mat-icon>
+        </button>
+      }
+    </div>
+  </div>
+</div>

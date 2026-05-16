@@ -8,5 +8,9 @@ eg $input-color: red;
 @import 'bootstrap-variables';
 // Import Bootstrap source files from node_modules
 @import 'bootstrap/scss/bootstrap';
+// Angular Material theme
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+// Material Icons font (includes @font-face referencing local woff2/woff files)
+@import 'material-icons/iconfont/filled.css';
 
 /* jhipster-needle-scss-add-vendor JHipster will add new css style */

@@ -1,40 +1,51 @@
-import { Component, OnInit, RendererFactory2, Renderer2 } from '@angular/core';
-import { RouterOutlet, Router } from '@angular/router';
+import { Component, OnInit, RendererFactory2, Renderer2, ViewChild, inject } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { map } from 'rxjs/operators';
+import { MatSidenavModule, MatSidenav } from '@angular/material/sidenav';
 import dayjs from 'dayjs/esm';
 
 import { AccountService } from 'app/core/auth/account.service';
 import { AppPageTitleStrategy } from 'app/app-page-title-strategy';
-import FooterComponent from '../footer/footer.component';
-import PageRibbonComponent from '../profiles/page-ribbon.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { ToolbarComponent } from './toolbar/toolbar.component';
 
 @Component({
-    selector: 'hpd-main',
-    templateUrl: './main.component.html',
-    providers: [AppPageTitleStrategy],
-    imports: [RouterOutlet, FooterComponent, PageRibbonComponent]
+  selector: 'hpd-main',
+  templateUrl: './main.component.html',
+  styleUrl: './main.component.scss',
+  standalone: true,
+  providers: [AppPageTitleStrategy],
+  imports: [RouterOutlet, MatSidenavModule, SidebarComponent, ToolbarComponent],
 })
 export default class MainComponent implements OnInit {
+  @ViewChild('mainSidebar') mainSidebar?: MatSidenav;
+
+  readonly isHandset = toSignal(
+    inject(BreakpointObserver)
+      .observe(Breakpoints.Handset)
+      .pipe(map(result => result.matches)),
+    { initialValue: false },
+  );
+
+  private readonly accountService = inject(AccountService);
+  private readonly appPageTitleStrategy = inject(AppPageTitleStrategy);
+  private readonly translateService = inject(TranslateService);
   private renderer: Renderer2;
 
-  constructor(
-    private router: Router,
-    private appPageTitleStrategy: AppPageTitleStrategy,
-    private accountService: AccountService,
-    private translateService: TranslateService,
-    rootRenderer: RendererFactory2,
-  ) {
+  constructor(rootRenderer: RendererFactory2) {
     this.renderer = rootRenderer.createRenderer(document.querySelector('html'), null);
   }
 
   ngOnInit(): void {
-    // try to log in automatically
     this.accountService.identity().subscribe();
 
-    this.translateService.onLangChange.subscribe((langChangeEvent: LangChangeEvent) => {
-      this.appPageTitleStrategy.updateTitle(this.router.routerState.snapshot);
-      dayjs.locale(langChangeEvent.lang);
-      this.renderer.setAttribute(document.querySelector('html'), 'lang', langChangeEvent.lang);
+    this.translateService.onLangChange.subscribe((event: LangChangeEvent) => {
+      dayjs.locale(event.lang);
+      this.renderer.setAttribute(document.querySelector('html'), 'lang', event.lang);
     });
   }
+
 }

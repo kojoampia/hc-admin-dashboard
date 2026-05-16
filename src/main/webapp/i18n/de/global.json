@@ -4,10 +4,10 @@
     "browsehappy": "Sie benutzen einen <strong>veralteten</strong> Browser. Bitte <a href=\"http://browsehappy.com/?locale=de/\">aktualisieren Sie Ihren Browser</a>, um die Benutzerfreundlichkeit zu erhöhen.",
     "menu": {
       "home": "Startseite",
-      "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
+      "jhipster-needle-menu-add-element": "HealthConnect will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entitäten",
-        "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)",
+        "jhipster-needle-menu-add-entry": "HealthConnect will add additional entities here (do not translate!)",
         "hcAdminServiceDashboard": "Dashboard",
         "hcAdminServiceProfessional": "Professional",
         "hcAdminServiceFeature": "Feature",
@@ -48,7 +48,7 @@
         "logs": "Protokoll",
         "apidocs": "API",
         "database": "Datenbank",
-        "jhipster-needle-menu-add-admin-element": "JHipster will add additional menu entries here (do not translate!)"
+        "jhipster-needle-menu-add-admin-element": "HealthConnect will add additional menu entries here (do not translate!)"
       },
       "language": "Sprache"
     },
@@ -67,7 +67,7 @@
     "messages": {
       "info": {
         "authenticated": {
-          "prefix": "Wenn Sie sich ",
+          "prefix": "Bitte ",
           "link": "anmelden",
           "suffix": " möchten, versuchen Sie es mit <br/>- Administrator (Name=\"admin\" und Passwort=\"admin\")<br/>- Benutzer (Name=\"user\" und Passwort=\"user\")."
         },

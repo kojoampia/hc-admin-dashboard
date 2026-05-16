@@ -1,0 +1,12 @@
+<button mat-button [matMenuTriggerFor]="langMenu" aria-label="Language menu" class="lang-trigger">
+  <span class="flag-emoji" aria-hidden="true">{{ flagOf(currentLang()) }}</span>
+  <span class="lang-code">{{ currentLang() | uppercase }}</span>
+</button>
+<mat-menu #langMenu="matMenu">
+  @for (lang of languages; track lang) {
+    <button mat-menu-item (click)="changeLanguage(lang)" [class.active-lang]="lang === currentLang()">
+      <span class="flag-emoji mr-2" aria-hidden="true">{{ flagOf(lang) }}</span>
+      <span>{{ nameOf(lang) }}</span>
+    </button>
+  }
+</mat-menu>

@@ -1,0 +1,23 @@
+.lang-trigger {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+  padding: 0 8px;
+}
+
+.flag-emoji {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.lang-code {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.active-lang {
+  color: var(--mat-sys-primary, #3f51b5);
+  font-weight: 600;
+}

@@ -6,7 +6,8 @@ You are an expert Angular developer specializing in modern, accessible, and high
 You must use **Angular 19+ (Standalone Components, Signals, new control flow)** and **Tailwind CSS**. Do not use legacy Angular features (no `ngIf`, no `ngFor`, no `Observable` for local UI state).
 
 # Component Overview
-Build a standalone Angular component (`app-sidebar`) that serves as the main navigation for the dashboard. The sidebar must be collapsible (expand/shrink), automatically highlight the active route, filter navigation items based on the user's role-based access control (RBAC), and display a user profile widget at the bottom.
+Build a standalone Angular component (`hpd-sidebar`) that serves as the main navigation for the dashboard. The sidebar must be collapsible (expand/shrink), automatically highlight the active route, filter navigation items based on the user's role-based access control (RBAC), and display a user profile widget at the bottom.
+The component will be used in the HomeComponent layout and should integrate seamlessly with the existing routing and state management patterns of the application.
 
 # Technical Requirements
 - **Framework:** Angular (Standalone Component)
