@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import dayjs from 'dayjs/esm';
-import { DATE_TIME_FORMAT } from 'app/config/input.constants';
+import { DATE_FORMAT, DATE_TIME_FORMAT } from 'app/config/input.constants';
 import { IPatientPlan, NewPatientPlan } from '../patient-plan.model';
 
 /**
@@ -19,7 +19,9 @@ type PatientPlanFormGroupInput = IPatientPlan | PartialWithRequiredKeyOf<NewPati
 /**
  * Type that converts some properties for forms.
  */
-type FormValueOf<T extends IPatientPlan | NewPatientPlan> = Omit<T, 'createdDate'> & {
+type FormValueOf<T extends IPatientPlan | NewPatientPlan> = Omit<T, 'startDate' | 'endDate' | 'createdDate'> & {
+  startDate?: string | null;
+  endDate?: string | null;
   createdDate?: string | null;
 };
 
@@ -105,6 +107,8 @@ export class PatientPlanFormService {
   ): IPatientPlan | NewPatientPlan {
     return {
       ...rawPatientPlan,
+      startDate: rawPatientPlan.startDate ? dayjs(rawPatientPlan.startDate, DATE_FORMAT) : undefined,
+      endDate: rawPatientPlan.endDate ? dayjs(rawPatientPlan.endDate, DATE_FORMAT) : undefined,
       createdDate: dayjs(rawPatientPlan.createdDate, DATE_TIME_FORMAT),
     };
   }
@@ -114,6 +118,8 @@ export class PatientPlanFormService {
   ): PatientPlanFormRawValue | PartialWithRequiredKeyOf<NewPatientPlanFormRawValue> {
     return {
       ...patientPlan,
+      startDate: patientPlan.startDate ? patientPlan.startDate.format(DATE_FORMAT) : undefined,
+      endDate: patientPlan.endDate ? patientPlan.endDate.format(DATE_FORMAT) : undefined,
       createdDate: patientPlan.createdDate ? patientPlan.createdDate.format(DATE_TIME_FORMAT) : undefined,
     };
   }

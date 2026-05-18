@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import dayjs from 'dayjs/esm';
-import { DATE_TIME_FORMAT } from 'app/config/input.constants';
+import { DATE_FORMAT, DATE_TIME_FORMAT } from 'app/config/input.constants';
 import { IPerson, NewPerson } from '../person.model';
 
 /**
@@ -19,7 +19,8 @@ type PersonFormGroupInput = IPerson | PartialWithRequiredKeyOf<NewPerson>;
 /**
  * Type that converts some properties for forms.
  */
-type FormValueOf<T extends IPerson | NewPerson> = Omit<T, 'createdDate' | 'modifiedDate'> & {
+type FormValueOf<T extends IPerson | NewPerson> = Omit<T, 'birthDate' | 'createdDate' | 'modifiedDate'> & {
+  birthDate?: string | null;
   createdDate?: string | null;
   modifiedDate?: string | null;
 };
@@ -129,6 +130,7 @@ export class PersonFormService {
   private convertPersonRawValueToPerson(rawPerson: PersonFormRawValue | NewPersonFormRawValue): IPerson | NewPerson {
     return {
       ...rawPerson,
+      birthDate: rawPerson.birthDate ? dayjs(rawPerson.birthDate, DATE_FORMAT) : undefined,
       createdDate: dayjs(rawPerson.createdDate, DATE_TIME_FORMAT),
       modifiedDate: dayjs(rawPerson.modifiedDate, DATE_TIME_FORMAT),
     };
@@ -139,6 +141,7 @@ export class PersonFormService {
   ): PersonFormRawValue | PartialWithRequiredKeyOf<NewPersonFormRawValue> {
     return {
       ...person,
+      birthDate: person.birthDate ? person.birthDate.format(DATE_FORMAT) : undefined,
       createdDate: person.createdDate ? person.createdDate.format(DATE_TIME_FORMAT) : undefined,
       modifiedDate: person.modifiedDate ? person.modifiedDate.format(DATE_TIME_FORMAT) : undefined,
     };

@@ -1,13 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { MatCardModule } from '@angular/material/card';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import SharedModule from 'app/shared/shared.module';
 
 @Component({
-    selector: 'hpd-error',
-    templateUrl: './error.component.html',
-    imports: [SharedModule]
+  selector: 'hpd-error',
+  templateUrl: './error.component.html',
+  imports: [SharedModule, MatCardModule],
 })
 export default class ErrorComponent implements OnInit, OnDestroy {
   errorMessage?: string;

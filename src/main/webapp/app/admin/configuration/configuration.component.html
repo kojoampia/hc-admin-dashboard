@@ -1,70 +1,88 @@
 @if (allBeans) {
-  <div>
-    <h2 id="configuration-page-heading" hpdTranslate="configuration.title" data-cy="configurationPageHeading">Configuration</h2>
+  <div class="space-y-6">
+    <mat-card class="!rounded-[2rem] !border !border-slate-200 !bg-white/95 !p-6 !shadow-sm">
+      <div class="space-y-6">
+        <div class="space-y-1">
+          <h2
+            id="configuration-page-heading"
+            class="text-3xl font-semibold text-slate-900"
+            hpdTranslate="configuration.title"
+            data-cy="configurationPageHeading"
+          >
+            Configuration
+          </h2>
+          <h3 id="spring-configuration" class="text-sm font-medium uppercase tracking-wide text-slate-500">Spring configuration</h3>
+        </div>
 
-    <span hpdTranslate="configuration.filter">Filter (by prefix)</span>
-    <input type="text" [(ngModel)]="beansFilter" (ngModelChange)="filterAndSortBeans()" class="form-control" />
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label hpdTranslate="configuration.filter">Filter (by prefix)</mat-label>
+          <input matInput type="text" [(ngModel)]="beansFilter" (ngModelChange)="filterAndSortBeans()" />
+        </mat-form-field>
 
-    <h3 id="spring-configuration">Spring configuration</h3>
-
-    <table class="table table-striped table-bordered table-responsive d-table" aria-describedby="spring-configuration">
-      <thead>
-        <tr hpdSort predicate="prefix" [(ascending)]="beansAscending" (sortChange)="filterAndSortBeans()">
-          <th hpdSortBy="prefix" scope="col" class="w-40">
-            <span hpdTranslate="configuration.table.prefix">Prefix</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" class="w-60"><span hpdTranslate="configuration.table.properties">Properties</span></th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (bean of beans; track $index) {
-          <tr>
-            <td>
-              <span>{{ bean.prefix }}</span>
-            </td>
-            <td>
-              @for (property of bean.properties | keyvalue; track property.key) {
-                <div class="row">
-                  <div class="col-md-4">{{ property.key }}</div>
-                  <div class="col-md-8">
-                    <span class="float-end bg-secondary break">{{ property.value | json }}</span>
-                  </div>
-                </div>
+        <div class="overflow-x-auto rounded-2xl border border-slate-200">
+          <table class="min-w-full divide-y divide-slate-200 bg-white" aria-describedby="spring-configuration">
+            <thead class="bg-slate-50">
+              <tr
+                hpdSort
+                predicate="prefix"
+                [(ascending)]="beansAscending"
+                (sortChange)="filterAndSortBeans()"
+                class="text-left text-xs font-semibold uppercase tracking-wide text-slate-500"
+              >
+                <th hpdSortBy="prefix" scope="col" class="px-4 py-3">
+                  <span hpdTranslate="configuration.table.prefix">Prefix</span>
+                  <mat-icon class="align-middle !text-base">unfold_more</mat-icon>
+                </th>
+                <th scope="col" class="px-4 py-3"><span hpdTranslate="configuration.table.properties">Properties</span></th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 text-sm text-slate-700">
+              @for (bean of beans; track $index) {
+                <tr class="align-top">
+                  <td class="px-4 py-4 font-medium text-slate-900">{{ bean.prefix }}</td>
+                  <td class="px-4 py-4">
+                    <div class="space-y-2">
+                      @for (property of bean.properties | keyvalue; track property.key) {
+                        <div class="grid gap-2 rounded-xl bg-slate-50 px-3 py-2 md:grid-cols-[14rem_minmax(0,1fr)]">
+                          <div class="font-medium text-slate-600">{{ property.key }}</div>
+                          <div class="break text-slate-800">{{ property.value | json }}</div>
+                        </div>
+                      }
+                    </div>
+                  </td>
+                </tr>
               }
-            </td>
-          </tr>
-        }
-      </tbody>
-    </table>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </mat-card>
 
     @for (propertySource of propertySources; track i; let i = $index) {
-      <div>
-        <h4 [id]="'property-source-' + i">
-          <span>{{ propertySource.name }}</span>
-        </h4>
+      <mat-card class="!rounded-[2rem] !border !border-slate-200 !bg-white/95 !p-6 !shadow-sm">
+        <div class="space-y-4">
+          <h4 [id]="'property-source-' + i" class="text-lg font-semibold text-slate-900">{{ propertySource.name }}</h4>
 
-        <table
-          class="table table-sm table-striped table-bordered table-responsive d-table"
-          [attr.aria-describedby]="'property-source-' + i"
-        >
-          <thead>
-            <tr>
-              <th scope="col" class="w-40">Property</th>
-              <th scope="col" class="w-60">Value</th>
-            </tr>
-          </thead>
-          <tbody>
-            @for (property of propertySource.properties | keyvalue; track property.key) {
-              <tr>
-                <td class="break">{{ property.key }}</td>
-                <td class="break">
-                  <span class="float-end bg-secondary break">{{ property.value.value }}</span>
-                </td>
-              </tr>
-            }
-          </tbody>
-        </table>
-      </div>
+          <div class="overflow-x-auto rounded-2xl border border-slate-200">
+            <table class="min-w-full divide-y divide-slate-200 bg-white" [attr.aria-describedby]="'property-source-' + i">
+              <thead class="bg-slate-50 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                <tr>
+                  <th scope="col" class="px-4 py-3">Property</th>
+                  <th scope="col" class="px-4 py-3">Value</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 text-sm text-slate-700">
+                @for (property of propertySource.properties | keyvalue; track property.key) {
+                  <tr class="align-top">
+                    <td class="break px-4 py-4 font-medium text-slate-900">{{ property.key }}</td>
+                    <td class="break px-4 py-4">{{ property.value.value }}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </mat-card>
     }
   </div>
 }

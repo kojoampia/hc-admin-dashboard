@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
 import { finalize, map } from 'rxjs/operators';
 
 import SharedModule from 'app/shared/shared.module';
@@ -9,12 +16,25 @@ import { Log, LoggersResponse, Level } from './log.model';
 import { LogsService } from './logs.service';
 
 @Component({
-    selector: 'hpd-logs',
-    templateUrl: './logs.component.html',
-    providers: [GatewayRoutesService],
-    imports: [SharedModule, FormsModule, SortDirective, SortByDirective]
+  selector: 'hpd-logs',
+  templateUrl: './logs.component.html',
+  providers: [GatewayRoutesService],
+  imports: [
+    SharedModule,
+    FormsModule,
+    SortDirective,
+    SortByDirective,
+    MatButtonModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatProgressSpinnerModule,
+    MatSelectModule,
+  ],
 })
 export default class LogsComponent implements OnInit {
+  readonly logLevels: Level[] = ['TRACE', 'DEBUG', 'INFO', 'WARN', 'ERROR', 'OFF'];
   loggers?: Log[];
   filteredAndOrderedLoggers?: Log[];
   isLoading = false;
@@ -38,8 +58,8 @@ export default class LogsComponent implements OnInit {
     this.logsService.changeLevel(name, level, this.selectedService).subscribe(() => this.findAndExtractLoggers());
   }
 
-  changeService(event: any): void {
-    this.selectedService = event.target.value?.replace('Service', '')?.toLowerCase();
+  changeService(service: string): void {
+    this.selectedService = service.replace('Service', '').toLowerCase();
     this.findAndExtractLoggers();
   }
 

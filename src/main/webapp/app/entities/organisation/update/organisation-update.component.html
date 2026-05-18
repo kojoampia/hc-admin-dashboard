@@ -1,127 +1,114 @@
-<div class="d-flex justify-content-center">
-  <div class="col-8">
-    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+<div class="mx-auto max-w-4xl">
+  <form
+    name="editForm"
+    novalidate
+    (ngSubmit)="save()"
+    [formGroup]="editForm"
+    class="space-y-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"
+  >
+    <div class="space-y-2">
       <h2
         id="hpd-organisation-heading"
         data-cy="OrganisationCreateUpdateHeading"
+        class="text-2xl font-semibold text-slate-900"
         hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.home.createOrEditLabel"
       >
         Create or edit a Organisation
       </h2>
+      <p class="text-sm text-slate-500">Update organisation metadata, profile details, and audit timestamps.</p>
+    </div>
 
-      <div>
-        <hpd-alert-error />
+    <hpd-alert-error />
 
-        @if (editForm.controls.id.value !== null) {
-          <div class="mb-3">
-            <label class="form-label" for="field_id" hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.id">ID</label>
-            <input type="text" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-          </div>
-        }
+    <div class="grid gap-4 md:grid-cols-2">
+      @if (editForm.controls.id.value !== null) {
+        <mat-form-field class="md:col-span-2">
+          <mat-label hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.id">ID</mat-label>
+          <input matInput name="id" id="field_id" data-cy="id" formControlName="id" readonly />
+        </mat-form-field>
+      }
 
-        <div class="mb-3">
-          <label class="form-label" for="field_name" hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.name">Name</label>
-          <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
-        </div>
+      <mat-form-field>
+        <mat-label hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.name">Name</mat-label>
+        <input matInput name="name" id="field_name" data-cy="name" formControlName="name" />
+      </mat-form-field>
 
-        <div class="mb-3">
-          <label class="form-label" for="field_description" hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.description"
-            >Description</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            name="description"
-            id="field_description"
-            data-cy="description"
-            formControlName="description"
-          />
-        </div>
+      <mat-form-field>
+        <mat-label hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.profile">Profile</mat-label>
+        <input matInput name="profile" id="field_profile" data-cy="profile" formControlName="profile" />
+      </mat-form-field>
 
-        <div class="mb-3">
-          <label class="form-label" for="field_profile" hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.profile">Profile</label>
-          <input type="text" class="form-control" name="profile" id="field_profile" data-cy="profile" formControlName="profile" />
-        </div>
+      <mat-form-field class="md:col-span-2">
+        <mat-label hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.description">Description</mat-label>
+        <textarea
+          matInput
+          name="description"
+          id="field_description"
+          data-cy="description"
+          formControlName="description"
+          rows="3"
+        ></textarea>
+      </mat-form-field>
 
-        <div class="mb-3">
-          <label class="form-label" for="field_createdDate" hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.createdDate"
-            >Created Date</label
-          >
-          <div class="input-group">
-            <input
-              id="field_createdDate"
-              data-cy="createdDate"
-              type="text"
-              class="form-control"
-              name="createdDate"
-              ngbDatepicker
-              #createdDateDp="ngbDatepicker"
-              formControlName="createdDate"
-            />
-            <button type="button" class="btn btn-secondary" (click)="createdDateDp.toggle()">
-              <fa-icon icon="calendar-alt"></fa-icon>
-            </button>
-          </div>
-        </div>
+      <mat-form-field>
+        <mat-label hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.createdDate">Created Date</mat-label>
+        <input
+          matInput
+          id="field_createdDate"
+          data-cy="createdDate"
+          type="datetime-local"
+          name="createdDate"
+          formControlName="createdDate"
+        />
+      </mat-form-field>
 
-        <div class="mb-3">
-          <label class="form-label" for="field_createdBy" hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.createdBy"
-            >Created By</label
-          >
-          <input type="text" class="form-control" name="createdBy" id="field_createdBy" data-cy="createdBy" formControlName="createdBy" />
-        </div>
+      <mat-form-field>
+        <mat-label hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.createdBy">Created By</mat-label>
+        <input matInput name="createdBy" id="field_createdBy" data-cy="createdBy" formControlName="createdBy" />
+      </mat-form-field>
 
-        <div class="mb-3">
-          <label class="form-label" for="field_modifiedDate" hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.modifiedDate"
-            >Modified Date</label
-          >
-          <div class="input-group">
-            <input
-              id="field_modifiedDate"
-              data-cy="modifiedDate"
-              type="text"
-              class="form-control"
-              name="modifiedDate"
-              ngbDatepicker
-              #modifiedDateDp="ngbDatepicker"
-              formControlName="modifiedDate"
-            />
-            <button type="button" class="btn btn-secondary" (click)="modifiedDateDp.toggle()">
-              <fa-icon icon="calendar-alt"></fa-icon>
-            </button>
-          </div>
-        </div>
+      <mat-form-field>
+        <mat-label hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.modifiedDate">Modified Date</mat-label>
+        <input
+          matInput
+          id="field_modifiedDate"
+          data-cy="modifiedDate"
+          type="datetime-local"
+          name="modifiedDate"
+          formControlName="modifiedDate"
+        />
+      </mat-form-field>
 
-        <div class="mb-3">
-          <label class="form-label" for="field_modifiedBy" hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.modifiedBy"
-            >Modified By</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            name="modifiedBy"
-            id="field_modifiedBy"
-            data-cy="modifiedBy"
-            formControlName="modifiedBy"
-          />
-        </div>
-      </div>
+      <mat-form-field>
+        <mat-label hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.modifiedBy">Modified By</mat-label>
+        <input matInput name="modifiedBy" id="field_modifiedBy" data-cy="modifiedBy" formControlName="modifiedBy" />
+      </mat-form-field>
+    </div>
 
-      <div>
-        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
-          <fa-icon icon="ban"></fa-icon>&nbsp;<span hpdTranslate="entity.action.cancel">Cancel</span>
-        </button>
+    <div class="flex flex-wrap justify-end gap-3">
+      <button
+        type="button"
+        id="cancel-save"
+        data-cy="entityCreateCancelButton"
+        mat-button
+        class="!rounded-full !px-4"
+        (click)="previousState()"
+      >
+        <mat-icon>close</mat-icon>
+        <span hpdTranslate="entity.action.cancel">Cancel</span>
+      </button>
 
-        <button
-          type="submit"
-          id="save-entity"
-          data-cy="entityCreateSaveButton"
-          [disabled]="editForm.invalid || isSaving"
-          class="btn btn-primary"
-        >
-          <fa-icon icon="save"></fa-icon>&nbsp;<span hpdTranslate="entity.action.save">Save</span>
-        </button>
-      </div>
-    </form>
-  </div>
+      <button
+        type="submit"
+        id="save-entity"
+        data-cy="entityCreateSaveButton"
+        [disabled]="editForm.invalid || isSaving"
+        mat-flat-button
+        class="!rounded-full !bg-slate-900 !px-4 !text-white"
+      >
+        <mat-icon>save</mat-icon>
+        <span hpdTranslate="entity.action.save">Save</span>
+      </button>
+    </div>
+  </form>
 </div>

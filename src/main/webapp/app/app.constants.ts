@@ -4,6 +4,8 @@
 
 declare const __DEBUG_INFO_ENABLED__: boolean;
 declare const __VERSION__: string;
+declare const WEBSOCKET_ENABLED: boolean;
 
 export const VERSION = __VERSION__;
 export const DEBUG_INFO_ENABLED = __DEBUG_INFO_ENABLED__;
+export const ENABLE_WEBSOCKET = WEBSOCKET_ENABLED;

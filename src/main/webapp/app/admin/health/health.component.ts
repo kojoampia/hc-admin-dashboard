@@ -1,22 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 import SharedModule from 'app/shared/shared.module';
 import { HealthService } from './health.service';
-import { Health, HealthDetails, HealthStatus } from './health.model';
+import { Health, HealthDetails, HealthKey, HealthStatus } from './health.model';
 import HealthModalComponent from './modal/health-modal.component';
 
 @Component({
-    selector: 'hpd-health',
-    templateUrl: './health.component.html',
-  imports: [SharedModule]
+  selector: 'hpd-health',
+  templateUrl: './health.component.html',
+  imports: [SharedModule, MatDialogModule],
 })
 export default class HealthComponent implements OnInit {
   health?: Health;
 
   constructor(
-    private modalService: NgbModal,
+    private dialog: MatDialog,
     private healthService: HealthService,
   ) {}
 
@@ -31,6 +31,10 @@ export default class HealthComponent implements OnInit {
     return 'bg-danger';
   }
 
+  badgeClasses(statusState: HealthStatus): string {
+    return statusState === 'UP' ? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-700';
+  }
+
   refresh(): void {
     this.healthService.checkHealth().subscribe({
       next: health => (this.health = health),
@@ -43,7 +47,7 @@ export default class HealthComponent implements OnInit {
   }
 
   showHealth(health: { key: string; value: HealthDetails }): void {
-    const modalRef = this.modalService.open(HealthModalComponent);
-    modalRef.componentInstance.health = health;
+    const dialogRef = this.dialog.open(HealthModalComponent, { width: '48rem', maxWidth: '95vw' });
+    dialogRef.componentInstance.health = health as { key: HealthKey; value: HealthDetails };
   }
 }

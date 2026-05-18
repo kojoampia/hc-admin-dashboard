@@ -1,104 +1,126 @@
-<div class="modal-header">
-  <h4 class="modal-title" hpdTranslate="metrics.jvm.threads.dump.title">Threads dump</h4>
+<div class="space-y-6 p-2">
+  <div class="flex items-start justify-between gap-4 border-b border-slate-200 pb-4">
+    <div class="space-y-1">
+      <h2 class="text-xl font-semibold text-slate-900" hpdTranslate="metrics.jvm.threads.dump.title">Threads dump</h2>
+      <p class="text-sm text-slate-500">Inspect thread states and stack traces.</p>
+    </div>
 
-  <button type="button" class="btn-close" (click)="dismiss()">&times;</button>
-</div>
+    <button mat-icon-button type="button" aria-label="Close dialog" (click)="dismiss()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
 
-<div class="modal-body">
-  <div class="mb-3">
-    <span class="badge bg-primary hand" (click)="threadStateFilter = undefined">
-      @if (threadStateFilter === undefined) {
-        <fa-icon icon="check"></fa-icon>
-      }
-      All&nbsp;<span class="badge rounded-pill bg-default">{{ threadDumpAll }}</span>
-    </span>
-
-    <span class="badge bg-success hand" (click)="threadStateFilter = ThreadState.Runnable">
-      @if (threadStateFilter === ThreadState.Runnable) {
-        <fa-icon icon="check"></fa-icon>
-      }
-      Runnable&nbsp;<span class="badge rounded-pill bg-default">{{ threadDumpRunnable }}</span>
-    </span>
-
-    <span class="badge bg-info hand" (click)="threadStateFilter = ThreadState.Waiting">
-      @if (threadStateFilter === ThreadState.Waiting) {
-        <fa-icon icon="check"></fa-icon>
-      }
-      Waiting&nbsp;<span class="badge rounded-pill bg-default">{{ threadDumpWaiting }}</span>
-    </span>
-
-    <span class="badge bg-warning hand" (click)="threadStateFilter = ThreadState.TimedWaiting">
-      @if (threadStateFilter === ThreadState.TimedWaiting) {
-        <fa-icon icon="check"></fa-icon>
-      }
-      Timed Waiting&nbsp;<span class="badge rounded-pill bg-default">{{ threadDumpTimedWaiting }}</span>
-    </span>
-
-    <span class="badge bg-danger hand" (click)="threadStateFilter = ThreadState.Blocked">
-      @if (threadStateFilter === ThreadState.Blocked) {
-        <fa-icon icon="check"></fa-icon>
-      }
-      Blocked&nbsp;<span class="badge rounded-pill bg-default">{{ threadDumpBlocked }}</span>
-    </span>
+  <div class="flex flex-wrap gap-2">
+    <button
+      mat-button
+      type="button"
+      class="!rounded-full"
+      [class.!bg-slate-900]="threadStateFilter === undefined"
+      [class.!text-white]="threadStateFilter === undefined"
+      (click)="threadStateFilter = undefined"
+    >
+      All <span class="ml-1 rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-700">{{ threadDumpAll }}</span>
+    </button>
+    <button
+      mat-button
+      type="button"
+      class="!rounded-full"
+      [class.!bg-emerald-600]="threadStateFilter === ThreadState.Runnable"
+      [class.!text-white]="threadStateFilter === ThreadState.Runnable"
+      (click)="threadStateFilter = ThreadState.Runnable"
+    >
+      Runnable <span class="ml-1 rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-700">{{ threadDumpRunnable }}</span>
+    </button>
+    <button
+      mat-button
+      type="button"
+      class="!rounded-full"
+      [class.!bg-sky-600]="threadStateFilter === ThreadState.Waiting"
+      [class.!text-white]="threadStateFilter === ThreadState.Waiting"
+      (click)="threadStateFilter = ThreadState.Waiting"
+    >
+      Waiting <span class="ml-1 rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-700">{{ threadDumpWaiting }}</span>
+    </button>
+    <button
+      mat-button
+      type="button"
+      class="!rounded-full"
+      [class.!bg-amber-500]="threadStateFilter === ThreadState.TimedWaiting"
+      [class.!text-white]="threadStateFilter === ThreadState.TimedWaiting"
+      (click)="threadStateFilter = ThreadState.TimedWaiting"
+    >
+      Timed Waiting <span class="ml-1 rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-700">{{ threadDumpTimedWaiting }}</span>
+    </button>
+    <button
+      mat-button
+      type="button"
+      class="!rounded-full"
+      [class.!bg-rose-600]="threadStateFilter === ThreadState.Blocked"
+      [class.!text-white]="threadStateFilter === ThreadState.Blocked"
+      (click)="threadStateFilter = ThreadState.Blocked"
+    >
+      Blocked <span class="ml-1 rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-700">{{ threadDumpBlocked }}</span>
+    </button>
   </div>
 
   @for (thread of getThreads(); track $index) {
-    <div class="pad">
-      <h6>
-        <span class="badge" [ngClass]="getBadgeClass(thread.threadState)">{{ thread.threadState }}</span>
-
-        &nbsp;{{ thread.threadName }} (ID {{ thread.threadId }})
-
-        <a (click)="thread.showThreadDump = !thread.showThreadDump" href="javascript:void(0);">
+    <div class="space-y-4 rounded-2xl border border-slate-200 p-4">
+      <div class="flex flex-wrap items-center gap-3">
+        <span class="rounded-full px-3 py-1 text-xs font-semibold" [ngClass]="getBadgeClass(thread.threadState)">{{
+          thread.threadState
+        }}</span>
+        <span class="font-medium text-slate-900">{{ thread.threadName }} (ID {{ thread.threadId }})</span>
+        <button mat-button type="button" class="!min-w-0 !px-0" (click)="thread.showThreadDump = !thread.showThreadDump">
           <span [hidden]="thread.showThreadDump" hpdTranslate="metrics.jvm.threads.dump.show">Show Stacktrace</span>
           <span [hidden]="!thread.showThreadDump" hpdTranslate="metrics.jvm.threads.dump.hide">Hide Stacktrace</span>
-        </a>
-      </h6>
-
-      <div class="card" [hidden]="!thread.showThreadDump">
-        <div class="card-body">
-          @for (st of thread.stackTrace; track $index) {
-            <div class="break">
-              <samp
-                >{{ st.className }}.{{ st.methodName }}(<code>{{ st.fileName }}:{{ st.lineNumber }}</code
-                >)</samp
-              >
-              <span class="mt-1"></span>
-            </div>
-          }
-        </div>
+        </button>
       </div>
-      <table class="table table-sm table-responsive">
-        <caption>
-          Threads dump:
-          {{
-            thread.threadName
-          }}
-        </caption>
-        <thead>
-          <tr>
-            <th scope="col" hpdTranslate="metrics.jvm.threads.dump.blockedtime">Blocked Time</th>
-            <th scope="col" hpdTranslate="metrics.jvm.threads.dump.blockedcount">Blocked Count</th>
-            <th scope="col" hpdTranslate="metrics.jvm.threads.dump.waitedtime">Waited Time</th>
-            <th scope="col" hpdTranslate="metrics.jvm.threads.dump.waitedcount">Waited Count</th>
-            <th scope="col" hpdTranslate="metrics.jvm.threads.dump.lockname">Lock name</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>{{ thread.blockedTime }}</td>
-            <td>{{ thread.blockedCount }}</td>
-            <td>{{ thread.waitedTime }}</td>
-            <td>{{ thread.waitedCount }}</td>
-            <td class="thread-dump-modal-lock" title="{{ thread.lockName }}">
-              <code>{{ thread.lockName }}</code>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+
+      <div class="rounded-2xl bg-slate-50 p-4" [hidden]="!thread.showThreadDump">
+        @for (st of thread.stackTrace; track $index) {
+          <div class="break">
+            <samp
+              >{{ st.className }}.{{ st.methodName }}(<code>{{ st.fileName }}:{{ st.lineNumber }}</code
+              >)</samp
+            >
+          </div>
+        }
+      </div>
+
+      <div class="overflow-x-auto rounded-2xl border border-slate-200">
+        <table class="min-w-full divide-y divide-slate-200 bg-white">
+          <caption class="sr-only">
+            Threads dump:
+            {{
+              thread.threadName
+            }}
+          </caption>
+          <thead class="bg-slate-50 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+            <tr>
+              <th scope="col" class="px-4 py-3" hpdTranslate="metrics.jvm.threads.dump.blockedtime">Blocked Time</th>
+              <th scope="col" class="px-4 py-3" hpdTranslate="metrics.jvm.threads.dump.blockedcount">Blocked Count</th>
+              <th scope="col" class="px-4 py-3" hpdTranslate="metrics.jvm.threads.dump.waitedtime">Waited Time</th>
+              <th scope="col" class="px-4 py-3" hpdTranslate="metrics.jvm.threads.dump.waitedcount">Waited Count</th>
+              <th scope="col" class="px-4 py-3" hpdTranslate="metrics.jvm.threads.dump.lockname">Lock name</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 text-sm text-slate-700">
+            <tr>
+              <td class="px-4 py-4">{{ thread.blockedTime }}</td>
+              <td class="px-4 py-4">{{ thread.blockedCount }}</td>
+              <td class="px-4 py-4">{{ thread.waitedTime }}</td>
+              <td class="px-4 py-4">{{ thread.waitedCount }}</td>
+              <td class="thread-dump-modal-lock px-4 py-4" title="{{ thread.lockName }}">
+                <code>{{ thread.lockName }}</code>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   }
-</div>
-<div class="modal-footer">
-  <button type="button" class="btn btn-secondary float-start" data-dismiss="modal" (click)="dismiss()">Done</button>
+
+  <div class="flex justify-end">
+    <button mat-button type="button" (click)="dismiss()">Done</button>
+  </div>
 </div>

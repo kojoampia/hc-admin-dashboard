@@ -1,100 +1,94 @@
-<h3 id="garbageCollectorMetrics" hpdTranslate="metrics.jvm.gc.title">Garbage collections</h3>
+<div class="rounded-[2rem] border border-slate-200 bg-white/95 p-6 shadow-sm">
+  <div class="space-y-6">
+    <h3 id="garbageCollectorMetrics" class="text-xl font-semibold text-slate-900" hpdTranslate="metrics.jvm.gc.title">
+      Garbage collections
+    </h3>
 
-<div class="row">
-  <div class="col-md-4">
-    @if (garbageCollectorMetrics) {
-      <div>
-        <span>
-          GC Live Data Size/GC Max Data Size ({{ garbageCollectorMetrics['jvm.gc.live.data.size'] / 1048576 | number: '1.0-0' }}M /
-          {{ garbageCollectorMetrics['jvm.gc.max.data.size'] / 1048576 | number: '1.0-0' }}M)
-        </span>
-
-        <ngb-progressbar
-          [max]="garbageCollectorMetrics['jvm.gc.max.data.size']"
-          [value]="garbageCollectorMetrics['jvm.gc.live.data.size']"
-          [striped]="true"
-          [animated]="false"
-          type="success"
-        >
-          <span>
+    <div class="grid gap-4 lg:grid-cols-3">
+      @if (garbageCollectorMetrics) {
+        <div class="space-y-2 rounded-2xl bg-slate-50 p-4">
+          <span class="text-sm text-slate-700">
+            GC Live Data Size/GC Max Data Size ({{ garbageCollectorMetrics['jvm.gc.live.data.size'] / 1048576 | number: '1.0-0' }}M /
+            {{ garbageCollectorMetrics['jvm.gc.max.data.size'] / 1048576 | number: '1.0-0' }}M)
+          </span>
+          <div class="h-3 overflow-hidden rounded-full bg-slate-200">
+            <div
+              class="h-full rounded-full bg-emerald-500"
+              [style.width.%]="(100 * garbageCollectorMetrics['jvm.gc.live.data.size']) / garbageCollectorMetrics['jvm.gc.max.data.size']"
+            ></div>
+          </div>
+          <div class="text-right text-xs font-semibold text-slate-500">
             {{
               (100 * garbageCollectorMetrics['jvm.gc.live.data.size']) / garbageCollectorMetrics['jvm.gc.max.data.size'] | number: '1.0-2'
             }}%
+          </div>
+        </div>
+
+        <div class="space-y-2 rounded-2xl bg-slate-50 p-4">
+          <span class="text-sm text-slate-700">
+            GC Memory Promoted/GC Memory Allocated ({{ garbageCollectorMetrics['jvm.gc.memory.promoted'] / 1048576 | number: '1.0-0' }}M /
+            {{ garbageCollectorMetrics['jvm.gc.memory.allocated'] / 1048576 | number: '1.0-0' }}M)
           </span>
-        </ngb-progressbar>
-      </div>
-    }
-  </div>
-
-  <div class="col-md-4">
-    @if (garbageCollectorMetrics) {
-      <div>
-        <span>
-          GC Memory Promoted/GC Memory Allocated ({{ garbageCollectorMetrics['jvm.gc.memory.promoted'] / 1048576 | number: '1.0-0' }}M /
-          {{ garbageCollectorMetrics['jvm.gc.memory.allocated'] / 1048576 | number: '1.0-0' }}M)
-        </span>
-
-        <ngb-progressbar
-          [max]="garbageCollectorMetrics['jvm.gc.memory.allocated']"
-          [value]="garbageCollectorMetrics['jvm.gc.memory.promoted']"
-          [striped]="true"
-          [animated]="false"
-          type="success"
-        >
-          <span>
+          <div class="h-3 overflow-hidden rounded-full bg-slate-200">
+            <div
+              class="h-full rounded-full bg-sky-500"
+              [style.width.%]="
+                (100 * garbageCollectorMetrics['jvm.gc.memory.promoted']) / garbageCollectorMetrics['jvm.gc.memory.allocated']
+              "
+            ></div>
+          </div>
+          <div class="text-right text-xs font-semibold text-slate-500">
             {{
               (100 * garbageCollectorMetrics['jvm.gc.memory.promoted']) / garbageCollectorMetrics['jvm.gc.memory.allocated']
                 | number: '1.0-2'
             }}%
-          </span>
-        </ngb-progressbar>
-      </div>
-    }
-  </div>
+          </div>
+        </div>
 
-  <div id="garbageCollectorMetrics" class="col-md-4">
-    @if (garbageCollectorMetrics) {
-      <div class="row">
-        <div class="col-md-9">Classes loaded</div>
-        <div class="col-md-3 text-end">{{ garbageCollectorMetrics.classesLoaded }}</div>
-      </div>
-      <div class="row">
-        <div class="col-md-9">Classes unloaded</div>
-        <div class="col-md-3 text-end">{{ garbageCollectorMetrics.classesUnloaded }}</div>
-      </div>
-    }
-  </div>
-
-  @if (!updating && garbageCollectorMetrics) {
-    <div class="table-responsive">
-      <table class="table table-striped" aria-describedby="garbageCollectorMetrics">
-        <thead>
-          <tr>
-            <th scope="col"></th>
-            <th scope="col" class="text-end" hpdTranslate="metrics.servicesstats.table.count">Count</th>
-            <th scope="col" class="text-end" hpdTranslate="metrics.servicesstats.table.mean">Mean</th>
-            <th scope="col" class="text-end" hpdTranslate="metrics.servicesstats.table.min">Min</th>
-            <th scope="col" class="text-end" hpdTranslate="metrics.servicesstats.table.p50">p50</th>
-            <th scope="col" class="text-end" hpdTranslate="metrics.servicesstats.table.p75">p75</th>
-            <th scope="col" class="text-end" hpdTranslate="metrics.servicesstats.table.p95">p95</th>
-            <th scope="col" class="text-end" hpdTranslate="metrics.servicesstats.table.p99">p99</th>
-            <th scope="col" class="text-end" hpdTranslate="metrics.servicesstats.table.max">Max</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>jvm.gc.pause</td>
-            <td class="text-end">{{ garbageCollectorMetrics['jvm.gc.pause'].count }}</td>
-            <td class="text-end">{{ garbageCollectorMetrics['jvm.gc.pause'].mean | number: '1.0-3' }}</td>
-            <td class="text-end">{{ garbageCollectorMetrics['jvm.gc.pause']['0.0'] | number: '1.0-3' }}</td>
-            <td class="text-end">{{ garbageCollectorMetrics['jvm.gc.pause']['0.5'] | number: '1.0-3' }}</td>
-            <td class="text-end">{{ garbageCollectorMetrics['jvm.gc.pause']['0.75'] | number: '1.0-3' }}</td>
-            <td class="text-end">{{ garbageCollectorMetrics['jvm.gc.pause']['0.95'] | number: '1.0-3' }}</td>
-            <td class="text-end">{{ garbageCollectorMetrics['jvm.gc.pause']['0.99'] | number: '1.0-3' }}</td>
-            <td class="text-end">{{ garbageCollectorMetrics['jvm.gc.pause'].max | number: '1.0-3' }}</td>
-          </tr>
-        </tbody>
-      </table>
+        <div class="space-y-3 rounded-2xl bg-slate-50 p-4 text-sm text-slate-700">
+          <div class="grid grid-cols-[minmax(0,1fr)_auto] gap-3">
+            <div>Classes loaded</div>
+            <div>{{ garbageCollectorMetrics.classesLoaded }}</div>
+          </div>
+          <div class="grid grid-cols-[minmax(0,1fr)_auto] gap-3">
+            <div>Classes unloaded</div>
+            <div>{{ garbageCollectorMetrics.classesUnloaded }}</div>
+          </div>
+        </div>
+      }
     </div>
-  }
+
+    @if (!updating && garbageCollectorMetrics) {
+      <div class="overflow-x-auto rounded-2xl border border-slate-200">
+        <table class="min-w-full divide-y divide-slate-200 bg-white" aria-describedby="garbageCollectorMetrics">
+          <thead class="bg-slate-50 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+            <tr>
+              <th scope="col" class="px-4 py-3"></th>
+              <th scope="col" class="px-4 py-3 text-right" hpdTranslate="metrics.servicesstats.table.count">Count</th>
+              <th scope="col" class="px-4 py-3 text-right" hpdTranslate="metrics.servicesstats.table.mean">Mean</th>
+              <th scope="col" class="px-4 py-3 text-right" hpdTranslate="metrics.servicesstats.table.min">Min</th>
+              <th scope="col" class="px-4 py-3 text-right" hpdTranslate="metrics.servicesstats.table.p50">p50</th>
+              <th scope="col" class="px-4 py-3 text-right" hpdTranslate="metrics.servicesstats.table.p75">p75</th>
+              <th scope="col" class="px-4 py-3 text-right" hpdTranslate="metrics.servicesstats.table.p95">p95</th>
+              <th scope="col" class="px-4 py-3 text-right" hpdTranslate="metrics.servicesstats.table.p99">p99</th>
+              <th scope="col" class="px-4 py-3 text-right" hpdTranslate="metrics.servicesstats.table.max">Max</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 text-sm text-slate-700">
+            <tr>
+              <td class="px-4 py-4 font-medium text-slate-900">jvm.gc.pause</td>
+              <td class="px-4 py-4 text-right">{{ garbageCollectorMetrics['jvm.gc.pause'].count }}</td>
+              <td class="px-4 py-4 text-right">{{ garbageCollectorMetrics['jvm.gc.pause'].mean | number: '1.0-3' }}</td>
+              <td class="px-4 py-4 text-right">{{ garbageCollectorMetrics['jvm.gc.pause']['0.0'] | number: '1.0-3' }}</td>
+              <td class="px-4 py-4 text-right">{{ garbageCollectorMetrics['jvm.gc.pause']['0.5'] | number: '1.0-3' }}</td>
+              <td class="px-4 py-4 text-right">{{ garbageCollectorMetrics['jvm.gc.pause']['0.75'] | number: '1.0-3' }}</td>
+              <td class="px-4 py-4 text-right">{{ garbageCollectorMetrics['jvm.gc.pause']['0.95'] | number: '1.0-3' }}</td>
+              <td class="px-4 py-4 text-right">{{ garbageCollectorMetrics['jvm.gc.pause']['0.99'] | number: '1.0-3' }}</td>
+              <td class="px-4 py-4 text-right">{{ garbageCollectorMetrics['jvm.gc.pause'].max | number: '1.0-3' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
 </div>

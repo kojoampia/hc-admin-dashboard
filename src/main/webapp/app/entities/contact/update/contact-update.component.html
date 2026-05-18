@@ -1,116 +1,100 @@
-<div class="d-flex justify-content-center">
-  <div class="col-8">
-    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2 id="hpd-contact-heading" data-cy="ContactCreateUpdateHeading" hpdTranslate="adminDashboardApp.contact.home.createOrEditLabel">
+<div class="mx-auto max-w-4xl">
+  <form
+    name="editForm"
+    novalidate
+    (ngSubmit)="save()"
+    [formGroup]="editForm"
+    class="space-y-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"
+  >
+    <div class="space-y-2">
+      <h2
+        id="hpd-contact-heading"
+        data-cy="ContactCreateUpdateHeading"
+        class="text-2xl font-semibold text-slate-900"
+        hpdTranslate="adminDashboardApp.contact.home.createOrEditLabel"
+      >
         Create or edit a Contact
       </h2>
+      <p class="text-sm text-slate-500">Manage the person reference and primary communication channels for this contact.</p>
+    </div>
 
-      <div>
-        <hpd-alert-error />
+    <hpd-alert-error />
 
-        @if (editForm.controls.id.value !== null) {
-          <div class="mb-3">
-            <label class="form-label" for="field_id" hpdTranslate="adminDashboardApp.contact.id">ID</label>
-            <input type="text" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-          </div>
-        }
+    <div class="grid gap-4 md:grid-cols-2">
+      @if (editForm.controls.id.value !== null) {
+        <mat-form-field class="md:col-span-2">
+          <mat-label hpdTranslate="adminDashboardApp.contact.id">ID</mat-label>
+          <input matInput name="id" id="field_id" data-cy="id" formControlName="id" readonly />
+        </mat-form-field>
+      }
 
-        @let personIdRef = editForm.get('personId')!;
-        <div class="mb-3">
-          <label class="form-label" for="field_personId" hpdTranslate="adminDashboardApp.contact.personId">Person Id</label>
-          <input type="text" class="form-control" name="personId" id="field_personId" data-cy="personId" formControlName="personId" />
-          @if (personIdRef.invalid && (personIdRef.dirty || personIdRef.touched)) {
-            <div>
-              @if (editForm.get('personId')?.errors?.required) {
-                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
-              }
-            </div>
-          }
-        </div>
-
-        @let emailRef = editForm.get('email')!;
-        <div class="mb-3">
-          <label class="form-label" for="field_email" hpdTranslate="adminDashboardApp.contact.email">Email</label>
-          <input type="text" class="form-control" name="email" id="field_email" data-cy="email" formControlName="email" />
-          @if (emailRef.invalid && (emailRef.dirty || emailRef.touched)) {
-            <div>
-              @if (editForm.get('email')?.errors?.required) {
-                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
-              }
-            </div>
-          }
-        </div>
-
-        @let phoneNumberRef = editForm.get('phoneNumber')!;
-        <div class="mb-3">
-          <label class="form-label" for="field_phoneNumber" hpdTranslate="adminDashboardApp.contact.phoneNumber">Phone Number</label>
-          <input
-            type="text"
-            class="form-control"
-            name="phoneNumber"
-            id="field_phoneNumber"
-            data-cy="phoneNumber"
-            formControlName="phoneNumber"
-          />
-          @if (phoneNumberRef.invalid && (phoneNumberRef.dirty || phoneNumberRef.touched)) {
-            <div>
-              @if (editForm.get('phoneNumber')?.errors?.required) {
-                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
-              }
-              @if (editForm.get('phoneNumber')?.errors?.pattern) {
-                <small
-                  class="form-text text-danger"
-                  hpdTranslate="entity.validation.pattern"
-                  [translateValues]="{ pattern: 'Phone Number' }"
-                  >This field should follow pattern for Phone Number.</small
-                >
-              }
-            </div>
-          }
-        </div>
-
-        @let countryCodeRef = editForm.get('countryCode')!;
-        <div class="mb-3">
-          <label class="form-label" for="field_countryCode" hpdTranslate="adminDashboardApp.contact.countryCode">Country Code</label>
-          <input
-            type="number"
-            class="form-control"
-            name="countryCode"
-            id="field_countryCode"
-            data-cy="countryCode"
-            formControlName="countryCode"
-          />
-          @if (countryCodeRef.invalid && (countryCodeRef.dirty || countryCodeRef.touched)) {
-            <div>
-              @if (editForm.get('countryCode')?.errors?.required) {
-                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
-              }
-              <small
-                class="form-text text-danger"
-                [hidden]="!editForm.get('countryCode')?.errors?.number"
-                hpdTranslate="entity.validation.number"
-                >This field should be a number.</small
-              >
-            </div>
-          }
-        </div>
-      </div>
-
-      <div>
-        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
-          <fa-icon icon="ban"></fa-icon>&nbsp;<span hpdTranslate="entity.action.cancel">Cancel</span>
-        </button>
-
-        <button
-          type="submit"
-          id="save-entity"
-          data-cy="entityCreateSaveButton"
-          [disabled]="editForm.invalid || isSaving"
-          class="btn btn-primary"
+      <mat-form-field>
+        <mat-label hpdTranslate="adminDashboardApp.contact.personId">Person Id</mat-label>
+        <input matInput name="personId" id="field_personId" data-cy="personId" formControlName="personId" />
+        <mat-error *ngIf="editForm.get('personId')?.errors?.required" hpdTranslate="entity.validation.required"
+          >This field is required.</mat-error
         >
-          <fa-icon icon="save"></fa-icon>&nbsp;<span hpdTranslate="entity.action.save">Save</span>
-        </button>
-      </div>
-    </form>
-  </div>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label hpdTranslate="adminDashboardApp.contact.email">Email</mat-label>
+        <input matInput type="email" name="email" id="field_email" data-cy="email" formControlName="email" />
+        <mat-error *ngIf="editForm.get('email')?.errors?.required" hpdTranslate="entity.validation.required"
+          >This field is required.</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label hpdTranslate="adminDashboardApp.contact.phoneNumber">Phone Number</mat-label>
+        <input matInput type="tel" name="phoneNumber" id="field_phoneNumber" data-cy="phoneNumber" formControlName="phoneNumber" />
+        <mat-error *ngIf="editForm.get('phoneNumber')?.errors?.required" hpdTranslate="entity.validation.required"
+          >This field is required.</mat-error
+        >
+        <mat-error
+          *ngIf="editForm.get('phoneNumber')?.errors?.pattern"
+          hpdTranslate="entity.validation.pattern"
+          [translateValues]="{ pattern: 'Phone Number' }"
+        >
+          This field should follow pattern for Phone Number.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label hpdTranslate="adminDashboardApp.contact.countryCode">Country Code</mat-label>
+        <input matInput type="number" name="countryCode" id="field_countryCode" data-cy="countryCode" formControlName="countryCode" />
+        <mat-error *ngIf="editForm.get('countryCode')?.errors?.required" hpdTranslate="entity.validation.required"
+          >This field is required.</mat-error
+        >
+        <mat-error *ngIf="editForm.get('countryCode')?.errors?.number" hpdTranslate="entity.validation.number"
+          >This field should be a number.</mat-error
+        >
+      </mat-form-field>
+    </div>
+
+    <div class="flex flex-wrap justify-end gap-3">
+      <button
+        type="button"
+        id="cancel-save"
+        data-cy="entityCreateCancelButton"
+        mat-button
+        class="!rounded-full !px-4"
+        (click)="previousState()"
+      >
+        <mat-icon>close</mat-icon>
+        <span hpdTranslate="entity.action.cancel">Cancel</span>
+      </button>
+
+      <button
+        type="submit"
+        id="save-entity"
+        data-cy="entityCreateSaveButton"
+        [disabled]="editForm.invalid || isSaving"
+        mat-flat-button
+        class="!rounded-full !bg-slate-900 !px-4 !text-white"
+      >
+        <mat-icon>save</mat-icon>
+        <span hpdTranslate="entity.action.save">Save</span>
+      </button>
+    </div>
+  </form>
 </div>

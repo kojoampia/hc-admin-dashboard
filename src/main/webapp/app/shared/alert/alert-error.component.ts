@@ -2,7 +2,8 @@ import { Component, OnDestroy } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { TranslateService } from '@ngx-translate/core';
 
 import { Alert, AlertService } from 'app/core/util/alert.service';
@@ -10,9 +11,9 @@ import { EventManager, EventWithContent } from 'app/core/util/event-manager.serv
 import { AlertError } from './alert-error.model';
 
 @Component({
-    selector: 'hpd-alert-error',
-    templateUrl: './alert-error.component.html',
-    imports: [CommonModule, NgbModule]
+  selector: 'hpd-alert-error',
+  templateUrl: './alert-error.component.html',
+  imports: [CommonModule, MatButtonModule, MatIconModule],
 })
 export class AlertErrorComponent implements OnDestroy {
   alerts: Alert[] = [];
@@ -107,6 +108,28 @@ export class AlertErrorComponent implements OnDestroy {
 
   close(alert: Alert): void {
     alert.close?.(this.alerts);
+  }
+
+  iconFor(alert: Alert): string {
+    switch (alert.type) {
+      case 'warning':
+        return 'warning';
+      case 'success':
+        return 'check_circle';
+      default:
+        return 'error';
+    }
+  }
+
+  panelClasses(alert: Alert): string {
+    switch (alert.type) {
+      case 'warning':
+        return 'border-amber-200 bg-amber-50 text-amber-900';
+      case 'success':
+        return 'border-emerald-200 bg-emerald-50 text-emerald-900';
+      default:
+        return 'border-rose-200 bg-rose-50 text-rose-900';
+    }
   }
 
   private addErrorAlert(message?: string, translationKey?: string, translationParams?: { [key: string]: unknown }): void {

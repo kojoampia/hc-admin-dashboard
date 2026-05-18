@@ -1,14 +1,14 @@
 import { Component, Input } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 import SharedModule from 'app/shared/shared.module';
 import { Thread, ThreadState } from 'app/admin/metrics/metrics.model';
 import { MetricsModalThreadsComponent } from '../metrics-modal-threads/metrics-modal-threads.component';
 
 @Component({
-    selector: 'hpd-jvm-threads',
-    templateUrl: './jvm-threads.component.html',
-    imports: [SharedModule]
+  selector: 'hpd-jvm-threads',
+  templateUrl: './jvm-threads.component.html',
+  imports: [SharedModule, MatDialogModule],
 })
 export class JvmThreadsComponent {
   threadStats = {
@@ -22,6 +22,13 @@ export class JvmThreadsComponent {
   @Input()
   set threads(threads: Thread[] | undefined) {
     this._threads = threads;
+    this.threadStats = {
+      threadDumpAll: 0,
+      threadDumpRunnable: 0,
+      threadDumpTimedWaiting: 0,
+      threadDumpWaiting: 0,
+      threadDumpBlocked: 0,
+    };
 
     threads?.forEach(thread => {
       if (thread.threadState === ThreadState.Runnable) {
@@ -48,10 +55,14 @@ export class JvmThreadsComponent {
 
   private _threads: Thread[] | undefined;
 
-  constructor(private modalService: NgbModal) {}
+  constructor(private dialog: MatDialog) {}
+
+  percentage(value: number): number {
+    return this.threadStats.threadDumpAll > 0 ? (value * 100) / this.threadStats.threadDumpAll : 0;
+  }
 
   open(): void {
-    const modalRef = this.modalService.open(MetricsModalThreadsComponent);
-    modalRef.componentInstance.threads = this.threads;
+    const dialogRef = this.dialog.open(MetricsModalThreadsComponent, { width: '72rem', maxWidth: '95vw' });
+    dialogRef.componentInstance.threads = this.threads;
   }
 }

@@ -1,95 +1,84 @@
 @if (loggers) {
-  <div class="table-responsive">
-    <h2 id="logs-page-heading" hpdTranslate="logs.title" data-cy="logsPageHeading">Logs</h2>
+  <mat-card class="!rounded-[2rem] !border !border-slate-200 !bg-white/95 !p-6 !shadow-sm">
+    <div class="space-y-6">
+      <div class="flex flex-wrap items-start justify-between gap-4">
+        <div class="space-y-1">
+          <h2 id="logs-page-heading" class="text-3xl font-semibold text-slate-900" hpdTranslate="logs.title" data-cy="logsPageHeading">
+            Logs
+          </h2>
+          <p class="text-sm text-slate-500" hpdTranslate="logs.nbloggers" [translateValues]="{ total: loggers.length }">
+            There are {{ loggers.length }} loggers.
+          </p>
+        </div>
 
-    <div class="float-end">
-      <select class="form-select" id="routesSelect" (change)="changeService($event)">
-        <option [ngValue]="null"></option>
-        @for (service of services; track $index) {
-          <option [value]="service">
-            {{ service }}
-          </option>
-        }
-      </select>
-    </div>
+        <div class="flex flex-wrap items-center gap-3">
+          <mat-form-field appearance="outline" class="min-w-56">
+            <mat-label>Service</mat-label>
+            <mat-select id="routesSelect" (selectionChange)="changeService($event.value ?? '')">
+              <mat-option [value]="''"></mat-option>
+              @for (service of services; track $index) {
+                <mat-option [value]="service">{{ service }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
 
-    @if (isLoading) {
-      <div class="float-end me-3">
-        <div class="spinner-border"></div>
+          @if (isLoading) {
+            <mat-progress-spinner mode="indeterminate" diameter="32"></mat-progress-spinner>
+          }
+        </div>
       </div>
-    }
 
-    <p hpdTranslate="logs.nbloggers" [translateValues]="{ total: loggers.length }">There are {{ loggers.length }} loggers.</p>
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label hpdTranslate="logs.filter">Filter</mat-label>
+        <input matInput type="text" [(ngModel)]="filter" (ngModelChange)="filterAndSort()" />
+      </mat-form-field>
 
-    <span hpdTranslate="logs.filter">Filter</span>
-    <input type="text" [(ngModel)]="filter" (ngModelChange)="filterAndSort()" class="form-control" />
+      <div class="overflow-x-auto rounded-2xl border border-slate-200">
+        <table class="min-w-full divide-y divide-slate-200 bg-white" aria-describedby="logs-page-heading">
+          <thead class="bg-slate-50">
+            <tr
+              hpdSort
+              [(predicate)]="orderProp"
+              [(ascending)]="ascending"
+              (sortChange)="filterAndSort()"
+              class="text-left text-xs font-semibold uppercase tracking-wide text-slate-500"
+            >
+              <th hpdSortBy="name" scope="col" class="px-4 py-3">
+                <span hpdTranslate="logs.table.name">Name</span> <mat-icon class="align-middle !text-base">unfold_more</mat-icon>
+              </th>
+              <th hpdSortBy="level" scope="col" class="px-4 py-3">
+                <span hpdTranslate="logs.table.level">Level</span> <mat-icon class="align-middle !text-base">unfold_more</mat-icon>
+              </th>
+            </tr>
+          </thead>
 
-    <table class="table table-sm table-striped table-bordered" aria-describedby="logs-page-heading">
-      <thead>
-        <tr hpdSort [(predicate)]="orderProp" [(ascending)]="ascending" (sortChange)="filterAndSort()">
-          <th hpdSortBy="name" scope="col"><span hpdTranslate="logs.table.name">Name</span> <fa-icon icon="sort"></fa-icon></th>
-          <th hpdSortBy="level" scope="col"><span hpdTranslate="logs.table.level">Level</span> <fa-icon icon="sort"></fa-icon></th>
-        </tr>
-      </thead>
-
-      <tbody>
-        @for (logger of filteredAndOrderedLoggers; track $index) {
-          <tr>
-            <td>
-              <small>{{ logger.name | slice: 0 : 140 }}</small>
-            </td>
-            <td>
-              <button
-                (click)="changeLevel(logger.name, 'TRACE')"
-                [ngClass]="logger.level === 'TRACE' ? 'btn-primary' : 'btn-light'"
-                class="btn btn-sm"
-              >
-                TRACE
-              </button>
-
-              <button
-                (click)="changeLevel(logger.name, 'DEBUG')"
-                [ngClass]="logger.level === 'DEBUG' ? 'btn-success' : 'btn-light'"
-                class="btn btn-sm"
-              >
-                DEBUG
-              </button>
-
-              <button
-                (click)="changeLevel(logger.name, 'INFO')"
-                [ngClass]="logger.level === 'INFO' ? 'btn-info' : 'btn-light'"
-                class="btn btn-sm"
-              >
-                INFO
-              </button>
-
-              <button
-                (click)="changeLevel(logger.name, 'WARN')"
-                [ngClass]="logger.level === 'WARN' ? 'btn-warning' : 'btn-light'"
-                class="btn btn-sm"
-              >
-                WARN
-              </button>
-
-              <button
-                (click)="changeLevel(logger.name, 'ERROR')"
-                [ngClass]="logger.level === 'ERROR' ? 'btn-danger' : 'btn-light'"
-                class="btn btn-sm"
-              >
-                ERROR
-              </button>
-
-              <button
-                (click)="changeLevel(logger.name, 'OFF')"
-                [ngClass]="logger.level === 'OFF' ? 'btn-secondary' : 'btn-light'"
-                class="btn btn-sm"
-              >
-                OFF
-              </button>
-            </td>
-          </tr>
-        }
-      </tbody>
-    </table>
-  </div>
+          <tbody class="divide-y divide-slate-100 text-sm text-slate-700">
+            @for (logger of filteredAndOrderedLoggers; track $index) {
+              <tr>
+                <td class="px-4 py-4">
+                  <small>{{ logger.name | slice: 0 : 140 }}</small>
+                </td>
+                <td class="px-4 py-4">
+                  <div class="flex flex-wrap gap-2">
+                    @for (level of logLevels; track level) {
+                      <button
+                        mat-button
+                        type="button"
+                        class="!rounded-full"
+                        [class.!bg-slate-900]="logger.level === level"
+                        [class.!text-white]="logger.level === level"
+                        (click)="changeLevel(logger.name, level)"
+                      >
+                        {{ level }}
+                      </button>
+                    }
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </mat-card>
 }

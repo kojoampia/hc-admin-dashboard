@@ -1,31 +1,43 @@
-<div class="card jh-card" *ngIf="info">
-    <img [src]="info.url" [alt]="title" class="card-img-top" *ngIf="info.url">
-    <div class="card-body bg-white">
-        <div class="card-title text-primary">
-            <span>{{title}}</span>
-        </div>
-        <ul class="text-left text-info" style="font-size: medium;">
-            <li *ngIf="info.mobileTelephone">
-                <span>{{ info.mobileTelephone }}</span>
-            </li>
-            <li *ngIf="info.email">
-                <span>{{ info.email }}</span>
-            </li>
-            <li *ngIf="info.digitalAddress || info.city">
-                <span *ngIf="info.digitalAddress">{{info.digitalAddress}}</span>
-                <span>{{ info.city }}</span>
-            </li>
-            <li *ngIf="info.region">
-                <span>&nbsp;{{ info.region }}</span>
-            </li>
-        </ul>
+<div
+  *ngIf="info"
+  class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition-shadow duration-200 hover:shadow-md"
+>
+  @if (info.url) {
+    <img [src]="info.url" [alt]="title" class="h-48 w-full object-cover" />
+  }
+  <div class="space-y-4 p-5">
+    <div class="text-lg font-semibold text-slate-900">
+      <span>{{ title }}</span>
     </div>
-    <div class="card-footer border-0 text-right">
-        <div class="card-link">
-            <button (click)="select(info)" class="btn btn-info btn-sm">
-                <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline" hpdTranslate="entity.action.view">View</span>
-            </button>
-        </div>
+    <ul class="m-0 space-y-2 pl-0 text-sm text-slate-600">
+      <li *ngIf="info.mobileTelephone" class="list-none">
+        <span>{{ info.mobileTelephone }}</span>
+      </li>
+      <li *ngIf="info.email" class="list-none">
+        <span>{{ info.email }}</span>
+      </li>
+      <li *ngIf="info.digitalAddress || info.city" class="list-none">
+        @if (info.digitalAddress) {
+          <span>{{ info.digitalAddress }}</span>
+        }
+        @if (info.city) {
+          <span class="ml-1">{{ info.city }}</span>
+        }
+      </li>
+      <li *ngIf="info.region" class="list-none">
+        <span>{{ info.region }}</span>
+      </li>
+    </ul>
+    <div class="flex justify-end">
+      <button
+        type="button"
+        mat-flat-button
+        class="inline-flex items-center gap-2 !rounded-full !bg-slate-900 !px-4 !py-2 !text-white"
+        (click)="select(info)"
+      >
+        <mat-icon>visibility</mat-icon>
+        <span hpdTranslate="entity.action.view">View</span>
+      </button>
     </div>
+  </div>
 </div>

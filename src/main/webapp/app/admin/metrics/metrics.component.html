@@ -1,21 +1,23 @@
-<div>
-  <h2>
-    <span id="metrics-page-heading" hpdTranslate="metrics.title" data-cy="metricsPageHeading">Application Metrics</span>
+<div class="space-y-6">
+  <div class="flex flex-wrap items-start justify-between gap-4">
+    <div class="space-y-1">
+      <h2 id="metrics-page-heading" class="text-3xl font-semibold text-slate-900" hpdTranslate="metrics.title" data-cy="metricsPageHeading">
+        Application Metrics
+      </h2>
+      <h3 class="text-sm font-medium uppercase tracking-wide text-slate-500" hpdTranslate="metrics.jvm.title">JVM Metrics</h3>
+    </div>
 
-    <button class="btn btn-primary float-end" (click)="refresh()">
-      <fa-icon icon="sync"></fa-icon> <span hpdTranslate="metrics.refresh.button">Refresh</span>
+    <button mat-flat-button color="primary" type="button" (click)="refresh()">
+      <mat-icon>{{ updatingMetrics ? 'progress_activity' : 'refresh' }}</mat-icon>
+      <span hpdTranslate="metrics.refresh.button">Refresh</span>
     </button>
-  </h2>
-
-  <h3 hpdTranslate="metrics.jvm.title">JVM Metrics</h3>
+  </div>
 
   @if (metrics && !updatingMetrics) {
-    <div class="row">
-      <hpd-jvm-memory class="col-md-4" [updating]="updatingMetrics" [jvmMemoryMetrics]="metrics.jvm"></hpd-jvm-memory>
-
-      <hpd-jvm-threads class="col-md-4" [threads]="threads"></hpd-jvm-threads>
-
-      <hpd-metrics-system class="col-md-4" [updating]="updatingMetrics" [systemMetrics]="metrics.processMetrics"></hpd-metrics-system>
+    <div class="grid gap-6 lg:grid-cols-3">
+      <hpd-jvm-memory [updating]="updatingMetrics" [jvmMemoryMetrics]="metrics.jvm"></hpd-jvm-memory>
+      <hpd-jvm-threads [threads]="threads"></hpd-jvm-threads>
+      <hpd-metrics-system [updating]="updatingMetrics" [systemMetrics]="metrics.processMetrics"></hpd-metrics-system>
     </div>
   }
 
@@ -27,7 +29,7 @@
   }
 
   @if (updatingMetrics) {
-    <div class="well well-lg" hpdTranslate="metrics.updating">Updating...</div>
+    <div class="rounded-2xl bg-slate-100 px-4 py-3 text-sm text-slate-600" hpdTranslate="metrics.updating">Updating...</div>
   }
 
   @if (metrics && metricsKeyExists('http.server.requests')) {

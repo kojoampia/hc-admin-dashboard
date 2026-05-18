@@ -9,8 +9,9 @@ import dayjs from 'dayjs/esm';
 
 import { AccountService } from 'app/core/auth/account.service';
 import { AppPageTitleStrategy } from 'app/app-page-title-strategy';
-import { DashboardStateService } from 'app/services/dashboard-state';
+import { DashboardStateService } from 'app/entities/dashboard/dashboard-state';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import FooterComponent from "../footer/footer.component";
 
 @Component({
   selector: 'hpd-main',
@@ -18,7 +19,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
   styleUrl: './main.component.scss',
   standalone: true,
   providers: [AppPageTitleStrategy],
-  imports: [RouterOutlet, MatSidenavModule, SidebarComponent],
+  imports: [RouterOutlet, MatSidenavModule, SidebarComponent, FooterComponent],
 })
 export default class MainComponent implements OnInit {
   readonly state = inject(DashboardStateService);

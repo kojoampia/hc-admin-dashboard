@@ -1,64 +1,92 @@
-<div class="d-flex justify-content-center">
-  <div class="col-8">
-    @if (professional(); as professionalRef) {
-      <div>
-        <h2 data-cy="professionalDetailsHeading">
+<div class="mx-auto max-w-4xl">
+  @if (professional(); as professionalRef) {
+    <div class="space-y-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div class="space-y-2">
+        <h2 data-cy="professionalDetailsHeading" class="text-2xl font-semibold text-slate-900">
           <span hpdTranslate="adminDashboardApp.hcAdminServiceProfessional.detail.title">Professional</span>
         </h2>
-
-        <hr />
-
-        <hpd-alert-error />
-
-        <hpd-alert />
-
-        <dl class="row-md jh-entity-details">
-          <dt><span hpdTranslate="global.field.id">ID</span></dt>
-          <dd>
-            <span>{{ professionalRef.id }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceProfessional.name">Name</span></dt>
-          <dd>
-            <span>{{ professionalRef.name }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceProfessional.organisation">Organisation</span></dt>
-          <dd>
-            <span>{{ professionalRef.organisation }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceProfessional.roster">Roster</span></dt>
-          <dd>
-            <span>{{ professionalRef.roster }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceProfessional.profile">Profile</span></dt>
-          <dd>
-            <span>{{ professionalRef.profile }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceProfessional.createdDate">Created Date</span></dt>
-          <dd>
-            <span>{{ professionalRef.createdDate | formatMediumDate }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceProfessional.createdBy">Created By</span></dt>
-          <dd>
-            <span>{{ professionalRef.createdBy }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceProfessional.modifiedDate">Modified Date</span></dt>
-          <dd>
-            <span>{{ professionalRef.modifiedDate | formatMediumDate }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceProfessional.modifiedBy">Modified By</span></dt>
-          <dd>
-            <span>{{ professionalRef.modifiedBy }}</span>
-          </dd>
-        </dl>
-
-        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span hpdTranslate="entity.action.back">Back</span>
-        </button>
-
-        <button type="button" [routerLink]="['/professional', professionalRef.id, 'edit']" class="btn btn-primary">
-          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span hpdTranslate="entity.action.edit">Edit</span>
-        </button>
+        <p class="text-sm text-slate-500">Inspect professional identity, linked organisation, and audit history.</p>
       </div>
-    }
-  </div>
+
+      <hpd-alert-error />
+      <hpd-alert />
+
+      <div class="grid gap-4 sm:grid-cols-2">
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="global.field.id">ID</p>
+          <p class="mt-1 text-sm text-slate-900">{{ professionalRef.id }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceProfessional.name">
+            Name
+          </p>
+          <p class="mt-1 text-sm text-slate-900">{{ professionalRef.name }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p
+            class="text-xs font-semibold uppercase text-slate-500"
+            hpdTranslate="adminDashboardApp.hcAdminServiceProfessional.organisation"
+          >
+            Organisation
+          </p>
+          <p class="mt-1 text-sm text-slate-900">{{ professionalRef.organisation }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceProfessional.roster">
+            Roster
+          </p>
+          <p class="mt-1 text-sm text-slate-900">{{ professionalRef.roster }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceProfessional.profile">
+            Profile
+          </p>
+          <p class="mt-1 text-sm text-slate-900">{{ professionalRef.profile }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceProfessional.createdDate">
+            Created Date
+          </p>
+          <p class="mt-1 text-sm text-slate-900">{{ professionalRef.createdDate | formatMediumDate }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceProfessional.createdBy">
+            Created By
+          </p>
+          <p class="mt-1 text-sm text-slate-900">{{ professionalRef.createdBy }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p
+            class="text-xs font-semibold uppercase text-slate-500"
+            hpdTranslate="adminDashboardApp.hcAdminServiceProfessional.modifiedDate"
+          >
+            Modified Date
+          </p>
+          <p class="mt-1 text-sm text-slate-900">{{ professionalRef.modifiedDate | formatMediumDate }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceProfessional.modifiedBy">
+            Modified By
+          </p>
+          <p class="mt-1 text-sm text-slate-900">{{ professionalRef.modifiedBy }}</p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap justify-end gap-3">
+        <button type="button" mat-button class="!rounded-full !px-4" (click)="previousState()" data-cy="entityDetailsBackButton">
+          <mat-icon>arrow_back</mat-icon>
+          <span hpdTranslate="entity.action.back">Back</span>
+        </button>
+        <a
+          type="button"
+          [routerLink]="['/professional', professionalRef.id, 'edit']"
+          mat-flat-button
+          class="!rounded-full !bg-slate-900 !px-4 !text-white"
+        >
+          <mat-icon>edit</mat-icon>
+          <span hpdTranslate="entity.action.edit">Edit</span>
+        </a>
+      </div>
+    </div>
+  }
 </div>

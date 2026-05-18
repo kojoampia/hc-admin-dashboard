@@ -3,6 +3,7 @@ import { Subscription, ReplaySubject, Subject } from 'rxjs';
 import SockJS from 'sockjs-client';
 import * as Stomp from 'webstomp-client';
 
+import { ENABLE_WEBSOCKET } from 'app/app.constants';
 import { AuthServerProvider } from 'app/core/auth/auth-jwt.service';
 import { Location } from '@angular/common';
 import { EventManager } from 'app/core/util/event-manager.service';
@@ -39,6 +40,10 @@ export class WebsocketAuthService {
   }
 
   connect(): void {
+    if (!ENABLE_WEBSOCKET) {
+      return;
+    }
+
     if (this.$stompClient?.connected) {
       this.eventManager.broadcast('chat-websocket-connected');
       return;

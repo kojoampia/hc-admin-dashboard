@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 
 import SharedModule from 'app/shared/shared.module';
 import { FormsModule } from '@angular/forms';
@@ -7,9 +11,9 @@ import { ConfigurationService } from './configuration.service';
 import { Bean, PropertySource } from './configuration.model';
 
 @Component({
-    selector: 'hpd-configuration',
-    templateUrl: './configuration.component.html',
-    imports: [SharedModule, FormsModule, SortDirective, SortByDirective]
+  selector: 'hpd-configuration',
+  templateUrl: './configuration.component.html',
+  imports: [SharedModule, FormsModule, SortDirective, SortByDirective, MatCardModule, MatFormFieldModule, MatIconModule, MatInputModule],
 })
 export default class ConfigurationComponent implements OnInit {
   allBeans!: Bean[];
