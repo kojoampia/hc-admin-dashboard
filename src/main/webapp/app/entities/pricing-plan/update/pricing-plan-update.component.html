@@ -1,139 +1,132 @@
-<div class="d-flex justify-content-center">
-  <div class="col-8">
-    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+<div class="mx-auto max-w-5xl">
+  <form
+    name="editForm"
+    novalidate
+    (ngSubmit)="save()"
+    [formGroup]="editForm"
+    class="space-y-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"
+  >
+    <div class="space-y-2">
       <h2
         id="hpd-pricing-plan-heading"
         data-cy="PricingPlanCreateUpdateHeading"
+        class="text-2xl font-semibold text-slate-900"
         hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.home.createOrEditLabel"
       >
         Create or edit a Pricing Plan
       </h2>
+      <p class="text-sm text-slate-500">Update pricing details, feature summaries, billing cadence, and activation status.</p>
+    </div>
 
-      <div>
-        <hpd-alert-error />
+    <hpd-alert-error />
 
-        @if (editForm.controls.id.value !== null) {
-          <div class="mb-3">
-            <label class="form-label" for="field_id" hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.id">ID</label>
-            <input type="text" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-          </div>
-        }
+    <div class="grid gap-4 md:grid-cols-2">
+      @if (editForm.controls.id.value !== null) {
+        <mat-form-field class="md:col-span-2">
+          <mat-label hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.id">ID</mat-label>
+          <input matInput type="text" name="id" id="field_id" data-cy="id" formControlName="id" readonly />
+        </mat-form-field>
+      }
 
-        @let nameRef = editForm.get('name')!;
-        <div class="mb-3">
-          <label class="form-label" for="field_name" hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.name">Name</label>
-          <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
-          @if (nameRef.invalid && (nameRef.dirty || nameRef.touched)) {
-            <div>
-              @if (editForm.get('name')?.errors?.required) {
-                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
-              }
-            </div>
-          }
-        </div>
-
-        @let descriptionRef = editForm.get('description')!;
-        <div class="mb-3">
-          <label class="form-label" for="field_description" hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.description"
-            >Description</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            name="description"
-            id="field_description"
-            data-cy="description"
-            formControlName="description"
-          />
-          @if (descriptionRef.invalid && (descriptionRef.dirty || descriptionRef.touched)) {
-            <div>
-              @if (editForm.get('description')?.errors?.required) {
-                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
-              }
-            </div>
-          }
-        </div>
-
-        @let priceRef = editForm.get('price')!;
-        <div class="mb-3">
-          <label class="form-label" for="field_price" hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.price">Price</label>
-          <input type="number" class="form-control" name="price" id="field_price" data-cy="price" formControlName="price" />
-          @if (priceRef.invalid && (priceRef.dirty || priceRef.touched)) {
-            <div>
-              @if (editForm.get('price')?.errors?.required) {
-                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
-              }
-              <small class="form-text text-danger" [hidden]="!editForm.get('price')?.errors?.number" hpdTranslate="entity.validation.number"
-                >This field should be a number.</small
-              >
-            </div>
-          }
-        </div>
-
-        @let featuresRef = editForm.get('features')!;
-        <div class="mb-3">
-          <label class="form-label" for="field_features" hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.features"
-            >Features</label
-          >
-          <input type="text" class="form-control" name="features" id="field_features" data-cy="features" formControlName="features" />
-          @if (featuresRef.invalid && (featuresRef.dirty || featuresRef.touched)) {
-            <div>
-              @if (editForm.get('features')?.errors?.required) {
-                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
-              }
-            </div>
-          }
-        </div>
-
-        @let billingCycleRef = editForm.get('billingCycle')!;
-        <div class="mb-3">
-          <label class="form-label" for="field_billingCycle" hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.billingCycle"
-            >Billing Cycle</label
-          >
-          <select class="form-control" name="billingCycle" formControlName="billingCycle" id="field_billingCycle" data-cy="billingCycle">
-            <option [ngValue]="null">{{ 'adminDashboardApp.BillingType.null' | translate }}</option>
-            @for (billingType of billingTypeValues; track $index) {
-              <option [value]="billingType">{{ 'adminDashboardApp.BillingType.' + billingType | translate }}</option>
-            }
-          </select>
-          @if (billingCycleRef.invalid && (billingCycleRef.dirty || billingCycleRef.touched)) {
-            <div>
-              @if (editForm.get('billingCycle')?.errors?.required) {
-                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
-              }
-            </div>
-          }
-        </div>
-
-        @let activeRef = editForm.get('active')!;
-        <div class="mb-3">
-          <label class="form-label" for="field_active" hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.active">Active</label>
-          <input type="checkbox" class="form-check" name="active" id="field_active" data-cy="active" formControlName="active" />
-          @if (activeRef.invalid && (activeRef.dirty || activeRef.touched)) {
-            <div>
-              @if (editForm.get('active')?.errors?.required) {
-                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
-              }
-            </div>
-          }
-        </div>
-      </div>
-
-      <div>
-        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
-          <fa-icon icon="ban"></fa-icon>&nbsp;<span hpdTranslate="entity.action.cancel">Cancel</span>
-        </button>
-
-        <button
-          type="submit"
-          id="save-entity"
-          data-cy="entityCreateSaveButton"
-          [disabled]="editForm.invalid || isSaving"
-          class="btn btn-primary"
+      <mat-form-field>
+        <mat-label hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.name">Name</mat-label>
+        <input matInput type="text" name="name" id="field_name" data-cy="name" formControlName="name" />
+        <mat-error *ngIf="editForm.get('name')?.errors?.required" hpdTranslate="entity.validation.required"
+          >This field is required.</mat-error
         >
-          <fa-icon icon="save"></fa-icon>&nbsp;<span hpdTranslate="entity.action.save">Save</span>
-        </button>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.price">Price</mat-label>
+        <input matInput type="number" name="price" id="field_price" data-cy="price" formControlName="price" />
+        <mat-error *ngIf="editForm.get('price')?.errors?.required" hpdTranslate="entity.validation.required"
+          >This field is required.</mat-error
+        >
+        <mat-error *ngIf="editForm.get('price')?.errors?.number" hpdTranslate="entity.validation.number"
+          >This field should be a number.</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field class="md:col-span-2">
+        <mat-label hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.description">Description</mat-label>
+        <textarea
+          matInput
+          name="description"
+          id="field_description"
+          data-cy="description"
+          formControlName="description"
+          rows="3"
+        ></textarea>
+        <mat-error *ngIf="editForm.get('description')?.errors?.required" hpdTranslate="entity.validation.required">
+          This field is required.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="md:col-span-2">
+        <mat-label hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.features">Features</mat-label>
+        <textarea matInput name="features" id="field_features" data-cy="features" formControlName="features" rows="3"></textarea>
+        <mat-error *ngIf="editForm.get('features')?.errors?.required" hpdTranslate="entity.validation.required"
+          >This field is required.</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.billingCycle">Billing Cycle</mat-label>
+        <mat-select name="billingCycle" formControlName="billingCycle" id="field_billingCycle" data-cy="billingCycle">
+          <mat-option [value]="null">{{ 'adminDashboardApp.BillingType.null' | translate }}</mat-option>
+          @for (billingType of billingTypeValues; track billingType) {
+            <mat-option [value]="billingType">{{ 'adminDashboardApp.BillingType.' + billingType | translate }}</mat-option>
+          }
+        </mat-select>
+        <mat-error *ngIf="editForm.get('billingCycle')?.errors?.required" hpdTranslate="entity.validation.required">
+          This field is required.
+        </mat-error>
+      </mat-form-field>
+
+      <div class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3">
+        <label for="field_active" class="flex items-center justify-between gap-4">
+          <div class="space-y-1">
+            <span class="block text-sm font-medium text-slate-900" hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.active"
+              >Active</span
+            >
+            <span class="block text-xs text-slate-500">Toggle whether this pricing plan can be assigned.</span>
+          </div>
+          <input
+            id="field_active"
+            data-cy="active"
+            type="checkbox"
+            name="active"
+            formControlName="active"
+            class="h-4 w-4 rounded border-slate-300 text-slate-900 focus:ring-slate-500"
+          />
+        </label>
       </div>
-    </form>
-  </div>
+    </div>
+
+    <div class="flex flex-wrap justify-end gap-3">
+      <button
+        type="button"
+        id="cancel-save"
+        data-cy="entityCreateCancelButton"
+        mat-button
+        class="!rounded-full !px-4"
+        (click)="previousState()"
+      >
+        <mat-icon>close</mat-icon>
+        <span hpdTranslate="entity.action.cancel">Cancel</span>
+      </button>
+
+      <button
+        type="submit"
+        id="save-entity"
+        data-cy="entityCreateSaveButton"
+        [disabled]="editForm.invalid || isSaving"
+        mat-flat-button
+        class="!rounded-full !bg-slate-900 !px-4 !text-white"
+      >
+        <mat-icon>save</mat-icon>
+        <span hpdTranslate="entity.action.save">Save</span>
+      </button>
+    </div>
+  </form>
 </div>

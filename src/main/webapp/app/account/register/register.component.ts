@@ -1,4 +1,8 @@
 import { Component, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { HttpErrorResponse } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -10,9 +14,19 @@ import PasswordStrengthBarComponent from '../password/password-strength-bar/pass
 import { RegisterService } from './register.service';
 
 @Component({
-    selector: 'hpd-register',
-    imports: [SharedModule, RouterModule, FormsModule, ReactiveFormsModule, PasswordStrengthBarComponent],
-    templateUrl: './register.component.html'
+  selector: 'hpd-register',
+  imports: [
+    SharedModule,
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
+    PasswordStrengthBarComponent,
+    MatButtonModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+  ],
+  templateUrl: './register.component.html',
 })
 export default class RegisterComponent implements AfterViewInit {
   @ViewChild('login', { static: false })

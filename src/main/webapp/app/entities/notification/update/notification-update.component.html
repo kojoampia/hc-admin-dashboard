@@ -1,138 +1,114 @@
-<div class="d-flex justify-content-center">
-  <div class="col-8">
-    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+<div class="mx-auto max-w-5xl">
+  <form
+    name="editForm"
+    novalidate
+    (ngSubmit)="save()"
+    [formGroup]="editForm"
+    class="space-y-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"
+  >
+    <div class="space-y-2">
       <h2
         id="hpd-notification-heading"
         data-cy="NotificationCreateUpdateHeading"
+        class="text-2xl font-semibold text-slate-900"
         hpdTranslate="adminDashboardApp.notification.home.createOrEditLabel"
       >
         Create or edit a Notification
       </h2>
+      <p class="text-sm text-slate-500">Update notification content, routing identifiers, and timestamps.</p>
+    </div>
 
-      <div>
-        <hpd-alert-error />
+    <hpd-alert-error />
 
-        @if (editForm.controls.id.value !== null) {
-          <div class="mb-3">
-            <label class="form-label" for="field_id" hpdTranslate="adminDashboardApp.notification.id">ID</label>
-            <input type="text" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-          </div>
-        }
+    <div class="grid gap-4 md:grid-cols-2">
+      @if (editForm.controls.id.value !== null) {
+        <mat-form-field class="md:col-span-2">
+          <mat-label hpdTranslate="adminDashboardApp.notification.id">ID</mat-label>
+          <input matInput type="text" name="id" id="field_id" data-cy="id" formControlName="id" readonly />
+        </mat-form-field>
+      }
 
-        @let contentRef = editForm.get('content')!;
-        <div class="mb-3">
-          <label class="form-label" for="field_content" hpdTranslate="adminDashboardApp.notification.content">Content</label>
-          <input type="text" class="form-control" name="content" id="field_content" data-cy="content" formControlName="content" />
-          @if (contentRef.invalid && (contentRef.dirty || contentRef.touched)) {
-            <div>
-              @if (editForm.get('content')?.errors?.required) {
-                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
-              }
-            </div>
-          }
-        </div>
-
-        @let recipientIdRef = editForm.get('recipientId')!;
-        <div class="mb-3">
-          <label class="form-label" for="field_recipientId" hpdTranslate="adminDashboardApp.notification.recipientId">Recipient Id</label>
-          <input
-            type="text"
-            class="form-control"
-            name="recipientId"
-            id="field_recipientId"
-            data-cy="recipientId"
-            formControlName="recipientId"
-          />
-          @if (recipientIdRef.invalid && (recipientIdRef.dirty || recipientIdRef.touched)) {
-            <div>
-              @if (editForm.get('recipientId')?.errors?.required) {
-                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
-              }
-            </div>
-          }
-        </div>
-
-        @let senderIdRef = editForm.get('senderId')!;
-        <div class="mb-3">
-          <label class="form-label" for="field_senderId" hpdTranslate="adminDashboardApp.notification.senderId">Sender Id</label>
-          <input type="text" class="form-control" name="senderId" id="field_senderId" data-cy="senderId" formControlName="senderId" />
-          @if (senderIdRef.invalid && (senderIdRef.dirty || senderIdRef.touched)) {
-            <div>
-              @if (editForm.get('senderId')?.errors?.required) {
-                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
-              }
-            </div>
-          }
-        </div>
-
-        @let messageTypeRef = editForm.get('messageType')!;
-        <div class="mb-3">
-          <label class="form-label" for="field_messageType" hpdTranslate="adminDashboardApp.notification.messageType">Message Type</label>
-          <input
-            type="text"
-            class="form-control"
-            name="messageType"
-            id="field_messageType"
-            data-cy="messageType"
-            formControlName="messageType"
-          />
-          @if (messageTypeRef.invalid && (messageTypeRef.dirty || messageTypeRef.touched)) {
-            <div>
-              @if (editForm.get('messageType')?.errors?.required) {
-                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
-              }
-            </div>
-          }
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label" for="field_createdDate" hpdTranslate="adminDashboardApp.notification.createdDate">Created Date</label>
-          <div class="d-flex">
-            <input
-              id="field_createdDate"
-              data-cy="createdDate"
-              type="datetime-local"
-              class="form-control"
-              name="createdDate"
-              formControlName="createdDate"
-              placeholder="YYYY-MM-DD HH:mm"
-            />
-          </div>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label" for="field_modifiedDate" hpdTranslate="adminDashboardApp.notification.modifiedDate"
-            >Modified Date</label
-          >
-          <div class="d-flex">
-            <input
-              id="field_modifiedDate"
-              data-cy="modifiedDate"
-              type="datetime-local"
-              class="form-control"
-              name="modifiedDate"
-              formControlName="modifiedDate"
-              placeholder="YYYY-MM-DD HH:mm"
-            />
-          </div>
-        </div>
-      </div>
-
-      <div>
-        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
-          <fa-icon icon="ban"></fa-icon>&nbsp;<span hpdTranslate="entity.action.cancel">Cancel</span>
-        </button>
-
-        <button
-          type="submit"
-          id="save-entity"
-          data-cy="entityCreateSaveButton"
-          [disabled]="editForm.invalid || isSaving"
-          class="btn btn-primary"
+      <mat-form-field class="md:col-span-2">
+        <mat-label hpdTranslate="adminDashboardApp.notification.content">Content</mat-label>
+        <textarea matInput name="content" id="field_content" data-cy="content" formControlName="content" rows="3"></textarea>
+        <mat-error *ngIf="editForm.get('content')?.errors?.required" hpdTranslate="entity.validation.required"
+          >This field is required.</mat-error
         >
-          <fa-icon icon="save"></fa-icon>&nbsp;<span hpdTranslate="entity.action.save">Save</span>
-        </button>
-      </div>
-    </form>
-  </div>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label hpdTranslate="adminDashboardApp.notification.recipientId">Recipient Id</mat-label>
+        <input matInput type="text" name="recipientId" id="field_recipientId" data-cy="recipientId" formControlName="recipientId" />
+        <mat-error *ngIf="editForm.get('recipientId')?.errors?.required" hpdTranslate="entity.validation.required">
+          This field is required.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label hpdTranslate="adminDashboardApp.notification.senderId">Sender Id</mat-label>
+        <input matInput type="text" name="senderId" id="field_senderId" data-cy="senderId" formControlName="senderId" />
+        <mat-error *ngIf="editForm.get('senderId')?.errors?.required" hpdTranslate="entity.validation.required"
+          >This field is required.</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field class="md:col-span-2">
+        <mat-label hpdTranslate="adminDashboardApp.notification.messageType">Message Type</mat-label>
+        <input matInput type="text" name="messageType" id="field_messageType" data-cy="messageType" formControlName="messageType" />
+        <mat-error *ngIf="editForm.get('messageType')?.errors?.required" hpdTranslate="entity.validation.required">
+          This field is required.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label hpdTranslate="adminDashboardApp.notification.createdDate">Created Date</mat-label>
+        <input
+          matInput
+          id="field_createdDate"
+          data-cy="createdDate"
+          type="datetime-local"
+          name="createdDate"
+          formControlName="createdDate"
+        />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label hpdTranslate="adminDashboardApp.notification.modifiedDate">Modified Date</mat-label>
+        <input
+          matInput
+          id="field_modifiedDate"
+          data-cy="modifiedDate"
+          type="datetime-local"
+          name="modifiedDate"
+          formControlName="modifiedDate"
+        />
+      </mat-form-field>
+    </div>
+
+    <div class="flex flex-wrap justify-end gap-3">
+      <button
+        type="button"
+        id="cancel-save"
+        data-cy="entityCreateCancelButton"
+        mat-button
+        class="!rounded-full !px-4"
+        (click)="previousState()"
+      >
+        <mat-icon>close</mat-icon>
+        <span hpdTranslate="entity.action.cancel">Cancel</span>
+      </button>
+
+      <button
+        type="submit"
+        id="save-entity"
+        data-cy="entityCreateSaveButton"
+        [disabled]="editForm.invalid || isSaving"
+        mat-flat-button
+        class="!rounded-full !bg-slate-900 !px-4 !text-white"
+      >
+        <mat-icon>save</mat-icon>
+        <span hpdTranslate="entity.action.save">Save</span>
+      </button>
+    </div>
+  </form>
 </div>

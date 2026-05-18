@@ -1,28 +1,32 @@
-<h3 id="endpointsRequestsMetrics">Endpoints requests (time in millisecond)</h3>
+<div class="rounded-[2rem] border border-slate-200 bg-white/95 p-6 shadow-sm">
+  <div class="space-y-4">
+    <h3 id="endpointsRequestsMetrics" class="text-xl font-semibold text-slate-900">Endpoints requests (time in millisecond)</h3>
 
-@if (!updating && endpointsRequestsMetrics) {
-  <div class="table-responsive">
-    <table class="table table-striped" aria-describedby="endpointsRequestsMetrics">
-      <thead>
-        <tr>
-          <th scope="col">Method</th>
-          <th scope="col">Endpoint url</th>
-          <th scope="col" class="text-end">Count</th>
-          <th scope="col" class="text-end">Mean</th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (entry of endpointsRequestsMetrics | keyvalue; track entry.key) {
-          @for (method of entry.value | keyvalue; track method.key) {
+    @if (!updating && endpointsRequestsMetrics) {
+      <div class="overflow-x-auto rounded-2xl border border-slate-200">
+        <table class="min-w-full divide-y divide-slate-200 bg-white" aria-describedby="endpointsRequestsMetrics">
+          <thead class="bg-slate-50 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
             <tr>
-              <td>{{ method.key }}</td>
-              <td>{{ entry.key }}</td>
-              <td class="text-end">{{ method.value!.count }}</td>
-              <td class="text-end">{{ method.value!.mean | number: '1.0-3' }}</td>
+              <th scope="col" class="px-4 py-3">Method</th>
+              <th scope="col" class="px-4 py-3">Endpoint url</th>
+              <th scope="col" class="px-4 py-3 text-right">Count</th>
+              <th scope="col" class="px-4 py-3 text-right">Mean</th>
             </tr>
-          }
-        }
-      </tbody>
-    </table>
+          </thead>
+          <tbody class="divide-y divide-slate-100 text-sm text-slate-700">
+            @for (entry of endpointsRequestsMetrics | keyvalue; track entry.key) {
+              @for (method of entry.value | keyvalue; track method.key) {
+                <tr>
+                  <td class="px-4 py-4 font-medium text-slate-900">{{ method.key }}</td>
+                  <td class="px-4 py-4">{{ entry.key }}</td>
+                  <td class="px-4 py-4 text-right">{{ method.value!.count }}</td>
+                  <td class="px-4 py-4 text-right">{{ method.value!.mean | number: '1.0-3' }}</td>
+                </tr>
+              }
+            }
+          </tbody>
+        </table>
+      </div>
+    }
   </div>
-}
+</div>

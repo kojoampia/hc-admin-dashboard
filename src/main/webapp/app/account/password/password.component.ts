@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { FormGroup, FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
 
@@ -9,9 +13,18 @@ import { PasswordService } from './password.service';
 import PasswordStrengthBarComponent from './password-strength-bar/password-strength-bar.component';
 
 @Component({
-    selector: 'hpd-password',
-    imports: [SharedModule, FormsModule, ReactiveFormsModule, PasswordStrengthBarComponent],
-    templateUrl: './password.component.html'
+  selector: 'hpd-password',
+  imports: [
+    SharedModule,
+    FormsModule,
+    ReactiveFormsModule,
+    PasswordStrengthBarComponent,
+    MatButtonModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+  ],
+  templateUrl: './password.component.html',
 })
 export default class PasswordComponent implements OnInit {
   doNotMatch = false;

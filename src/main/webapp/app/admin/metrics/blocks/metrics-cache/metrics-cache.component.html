@@ -1,46 +1,50 @@
-<h3 id="cacheMetrics" hpdTranslate="metrics.cache.title">Cache statistics</h3>
+<div class="rounded-[2rem] border border-slate-200 bg-white/95 p-6 shadow-sm">
+  <div class="space-y-4">
+    <h3 id="cacheMetrics" class="text-xl font-semibold text-slate-900" hpdTranslate="metrics.cache.title">Cache statistics</h3>
 
-@if (!updating && cacheMetrics) {
-  <div class="table-responsive">
-    <table class="table table-striped" aria-describedby="cacheMetrics">
-      <thead>
-        <tr>
-          <th scope="col" hpdTranslate="metrics.cache.cachename">Cache name</th>
-          <th scope="col" class="text-end" hpdTranslate="metrics.cache.hits">Cache Hits</th>
-          <th scope="col" class="text-end" hpdTranslate="metrics.cache.misses">Cache Misses</th>
-          <th scope="col" class="text-end" hpdTranslate="metrics.cache.gets">Cache Gets</th>
-          <th scope="col" class="text-end" hpdTranslate="metrics.cache.puts">Cache Puts</th>
-          <th scope="col" class="text-end" hpdTranslate="metrics.cache.removals">Cache Removals</th>
-          <th scope="col" class="text-end" hpdTranslate="metrics.cache.evictions">Cache Evictions</th>
-          <th scope="col" class="text-end" hpdTranslate="metrics.cache.hitPercent">Cache Hit %</th>
-          <th scope="col" class="text-end" hpdTranslate="metrics.cache.missPercent">Cache Miss %</th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (entry of cacheMetrics | keyvalue; track entry.key) {
-          <tr>
-            <td>{{ entry.key }}</td>
-            <td class="text-end">{{ entry.value['cache.gets.hit'] }}</td>
-            <td class="text-end">{{ entry.value['cache.gets.miss'] }}</td>
-            <td class="text-end">{{ entry.value['cache.gets.hit'] + entry.value['cache.gets.miss'] }}</td>
-            <td class="text-end">{{ entry.value['cache.puts'] }}</td>
-            <td class="text-end">{{ entry.value['cache.removals'] }}</td>
-            <td class="text-end">{{ entry.value['cache.evictions'] }}</td>
-            <td class="text-end">
-              {{
-                filterNaN((100 * entry.value['cache.gets.hit']) / (entry.value['cache.gets.hit'] + entry.value['cache.gets.miss']))
-                  | number: '1.0-4'
-              }}
-            </td>
-            <td class="text-end">
-              {{
-                filterNaN((100 * entry.value['cache.gets.miss']) / (entry.value['cache.gets.hit'] + entry.value['cache.gets.miss']))
-                  | number: '1.0-4'
-              }}
-            </td>
-          </tr>
-        }
-      </tbody>
-    </table>
+    @if (!updating && cacheMetrics) {
+      <div class="overflow-x-auto rounded-2xl border border-slate-200">
+        <table class="min-w-full divide-y divide-slate-200 bg-white" aria-describedby="cacheMetrics">
+          <thead class="bg-slate-50 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+            <tr>
+              <th scope="col" class="px-4 py-3" hpdTranslate="metrics.cache.cachename">Cache name</th>
+              <th scope="col" class="px-4 py-3 text-right" hpdTranslate="metrics.cache.hits">Cache Hits</th>
+              <th scope="col" class="px-4 py-3 text-right" hpdTranslate="metrics.cache.misses">Cache Misses</th>
+              <th scope="col" class="px-4 py-3 text-right" hpdTranslate="metrics.cache.gets">Cache Gets</th>
+              <th scope="col" class="px-4 py-3 text-right" hpdTranslate="metrics.cache.puts">Cache Puts</th>
+              <th scope="col" class="px-4 py-3 text-right" hpdTranslate="metrics.cache.removals">Cache Removals</th>
+              <th scope="col" class="px-4 py-3 text-right" hpdTranslate="metrics.cache.evictions">Cache Evictions</th>
+              <th scope="col" class="px-4 py-3 text-right" hpdTranslate="metrics.cache.hitPercent">Cache Hit %</th>
+              <th scope="col" class="px-4 py-3 text-right" hpdTranslate="metrics.cache.missPercent">Cache Miss %</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 text-sm text-slate-700">
+            @for (entry of cacheMetrics | keyvalue; track entry.key) {
+              <tr>
+                <td class="px-4 py-4 font-medium text-slate-900">{{ entry.key }}</td>
+                <td class="px-4 py-4 text-right">{{ entry.value['cache.gets.hit'] }}</td>
+                <td class="px-4 py-4 text-right">{{ entry.value['cache.gets.miss'] }}</td>
+                <td class="px-4 py-4 text-right">{{ entry.value['cache.gets.hit'] + entry.value['cache.gets.miss'] }}</td>
+                <td class="px-4 py-4 text-right">{{ entry.value['cache.puts'] }}</td>
+                <td class="px-4 py-4 text-right">{{ entry.value['cache.removals'] }}</td>
+                <td class="px-4 py-4 text-right">{{ entry.value['cache.evictions'] }}</td>
+                <td class="px-4 py-4 text-right">
+                  {{
+                    filterNaN((100 * entry.value['cache.gets.hit']) / (entry.value['cache.gets.hit'] + entry.value['cache.gets.miss']))
+                      | number: '1.0-4'
+                  }}
+                </td>
+                <td class="px-4 py-4 text-right">
+                  {{
+                    filterNaN((100 * entry.value['cache.gets.miss']) / (entry.value['cache.gets.hit'] + entry.value['cache.gets.miss']))
+                      | number: '1.0-4'
+                  }}
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
   </div>
-}
+</div>

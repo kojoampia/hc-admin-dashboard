@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { HttpResponse, HttpHeaders } from '@angular/common/http';
 import { combineLatest } from 'rxjs';
@@ -16,9 +19,9 @@ import { User } from '../user-management.model';
 import UserManagementDeleteDialogComponent from '../delete/user-management-delete-dialog.component';
 
 @Component({
-    selector: 'hpd-user-mgmt',
-    templateUrl: './user-management.component.html',
-  imports: [RouterModule, SharedModule, SortDirective, SortByDirective, ItemCountComponent]
+  selector: 'hpd-user-mgmt',
+  templateUrl: './user-management.component.html',
+  imports: [RouterModule, SharedModule, SortDirective, SortByDirective, ItemCountComponent, MatButtonModule, MatCardModule, MatIconModule],
 })
 export default class UserManagementComponent implements OnInit {
   currentAccount: Account | null = null;

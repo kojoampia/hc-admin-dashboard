@@ -70,6 +70,10 @@ export class DutyRosterService {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
+  post<T>(url: string, body: unknown): Observable<T> {
+    return this.http.post<T>(url, body);
+  }
+
   getDutyRosterIdentifier(dutyRoster: Pick<IDutyRoster, 'id'>): string {
     return dutyRoster.id;
   }

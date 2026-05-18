@@ -1,36 +1,42 @@
-<h3 id="requestMetrics" hpdTranslate="metrics.jvm.http.title">HTTP requests (time in millisecond)</h3>
+<div class="rounded-[2rem] border border-slate-200 bg-white/95 p-6 shadow-sm">
+  <div class="space-y-4">
+    <h3 id="requestMetrics" class="text-xl font-semibold text-slate-900" hpdTranslate="metrics.jvm.http.title">
+      HTTP requests (time in millisecond)
+    </h3>
 
-@if (!updating && requestMetrics) {
-  <table class="table table-striped" aria-describedby="requestMetrics">
-    <thead>
-      <tr>
-        <th scope="col" hpdTranslate="metrics.jvm.http.table.code">Code</th>
-        <th scope="col" hpdTranslate="metrics.jvm.http.table.count">Count</th>
-        <th scope="col" class="text-end" hpdTranslate="metrics.jvm.http.table.mean">Mean</th>
-        <th scope="col" class="text-end" hpdTranslate="metrics.jvm.http.table.max">Max</th>
-      </tr>
-    </thead>
-    <tbody>
-      @for (entry of requestMetrics['percode'] | keyvalue; track entry.key) {
-        <tr>
-          <td>{{ entry.key }}</td>
-          <td>
-            <ngb-progressbar
-              [max]="requestMetrics['all'].count"
-              [value]="entry.value.count"
-              [striped]="true"
-              [animated]="false"
-              type="success"
-            >
-              <span>{{ entry.value.count }}</span>
-            </ngb-progressbar>
-          </td>
-          <td class="text-end">
-            {{ filterNaN(entry.value.mean) | number: '1.0-2' }}
-          </td>
-          <td class="text-end">{{ entry.value.max | number: '1.0-2' }}</td>
-        </tr>
-      }
-    </tbody>
-  </table>
-}
+    @if (!updating && requestMetrics) {
+      <div class="overflow-x-auto rounded-2xl border border-slate-200">
+        <table class="min-w-full divide-y divide-slate-200 bg-white" aria-describedby="requestMetrics">
+          <thead class="bg-slate-50 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+            <tr>
+              <th scope="col" class="px-4 py-3" hpdTranslate="metrics.jvm.http.table.code">Code</th>
+              <th scope="col" class="px-4 py-3" hpdTranslate="metrics.jvm.http.table.count">Count</th>
+              <th scope="col" class="px-4 py-3 text-right" hpdTranslate="metrics.jvm.http.table.mean">Mean</th>
+              <th scope="col" class="px-4 py-3 text-right" hpdTranslate="metrics.jvm.http.table.max">Max</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 text-sm text-slate-700">
+            @for (entry of requestMetrics['percode'] | keyvalue; track entry.key) {
+              <tr>
+                <td class="px-4 py-4 font-medium text-slate-900">{{ entry.key }}</td>
+                <td class="px-4 py-4">
+                  <div class="space-y-1">
+                    <div class="h-3 overflow-hidden rounded-full bg-slate-200">
+                      <div
+                        class="h-full rounded-full bg-emerald-500"
+                        [style.width.%]="(100 * entry.value.count) / requestMetrics['all'].count"
+                      ></div>
+                    </div>
+                    <div class="text-xs font-semibold text-slate-500">{{ entry.value.count }}</div>
+                  </div>
+                </td>
+                <td class="px-4 py-4 text-right">{{ filterNaN(entry.value.mean) | number: '1.0-2' }}</td>
+                <td class="px-4 py-4 text-right">{{ entry.value.max | number: '1.0-2' }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
+</div>

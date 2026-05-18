@@ -1,42 +1,37 @@
-<div class="modal-header">
-  @if (health) {
-    <h4 class="modal-title" id="showHealthLabel">
-      {{ 'health.indicator.' + health.key | translate }}
-    </h4>
-  }
-
-  <button aria-label="Close" data-dismiss="modal" class="btn-close" type="button" (click)="dismiss()">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
-
-<div class="modal-body pad">
-  @if (health) {
-    <div>
-      <h5 hpdTranslate="health.details.properties">Properties</h5>
-
-      <div class="table-responsive">
-        <table class="table table-striped" aria-describedby="showHealthLabel">
-          <thead>
-            <tr>
-              <th scope="col" class="text-start" hpdTranslate="health.details.name">Name</th>
-              <th scope="col" class="text-start" hpdTranslate="health.details.value">Value</th>
-            </tr>
-          </thead>
-          <tbody>
-            @for (healthDetail of health.value.details! | keyvalue; track healthDetail.key) {
-              <tr>
-                <td class="text-start">{{ healthDetail.key }}</td>
-                <td class="text-start">{{ readableValue(healthDetail.value) }}</td>
-              </tr>
-            }
-          </tbody>
-        </table>
+@if (health) {
+  <div class="space-y-6 p-2">
+    <div class="flex items-start justify-between gap-4 border-b border-slate-200 pb-4">
+      <div class="space-y-1">
+        <h2 class="text-xl font-semibold text-slate-900" id="showHealthLabel">{{ 'health.indicator.' + health.key | translate }}</h2>
+        <p class="text-sm text-slate-500" hpdTranslate="health.details.properties">Properties</p>
       </div>
-    </div>
-  }
-</div>
 
-<div class="modal-footer">
-  <button data-dismiss="modal" class="btn btn-secondary float-start" type="button" (click)="dismiss()">Done</button>
-</div>
+      <button mat-icon-button type="button" aria-label="Close" (click)="dismiss()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <div class="overflow-x-auto rounded-2xl border border-slate-200">
+      <table class="min-w-full divide-y divide-slate-200 bg-white" aria-describedby="showHealthLabel">
+        <thead class="bg-slate-50 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+          <tr>
+            <th scope="col" class="px-4 py-3 text-start" hpdTranslate="health.details.name">Name</th>
+            <th scope="col" class="px-4 py-3 text-start" hpdTranslate="health.details.value">Value</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100 text-sm text-slate-700">
+          @for (healthDetail of health.value.details! | keyvalue; track healthDetail.key) {
+            <tr>
+              <td class="px-4 py-4 text-start font-medium text-slate-900">{{ healthDetail.key }}</td>
+              <td class="px-4 py-4 text-start">{{ readableValue(healthDetail.value) }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <div class="flex justify-end">
+      <button mat-button type="button" (click)="dismiss()">Done</button>
+    </div>
+  </div>
+}

@@ -1,60 +1,83 @@
-<div class="d-flex justify-content-center">
-  <div class="col-8">
-    @if (pricingPlan(); as pricingPlanRef) {
-      <div>
-        <h2 data-cy="pricingPlanDetailsHeading">
+<div class="mx-auto max-w-5xl">
+  @if (pricingPlan(); as pricingPlanRef) {
+    <div class="space-y-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div class="space-y-2">
+        <h2 data-cy="pricingPlanDetailsHeading" class="text-2xl font-semibold text-slate-900">
           <span hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.detail.title">Pricing Plan</span>
         </h2>
+        <p class="text-sm text-slate-500">Inspect plan pricing, billing cadence, feature sets, and status.</p>
+      </div>
 
-        <hr />
+      <hpd-alert-error />
 
-        <hpd-alert-error />
+      <hpd-alert />
 
-        <hpd-alert />
-
-        <dl class="row-md jh-entity-details">
-          <dt><span hpdTranslate="global.field.id">ID</span></dt>
-          <dd>
-            <span>{{ pricingPlanRef.id }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.name">Name</span></dt>
-          <dd>
-            <span>{{ pricingPlanRef.name }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.description">Description</span></dt>
-          <dd>
-            <span>{{ pricingPlanRef.description }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.price">Price</span></dt>
-          <dd>
-            <span>{{ pricingPlanRef.price }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.features">Features</span></dt>
-          <dd>
-            <span>{{ pricingPlanRef.features }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.billingCycle">Billing Cycle</span></dt>
-          <dd>
-            <span [hpdTranslate]="'adminDashboardApp.BillingType.' + (pricingPlanRef.billingCycle ?? 'null')">{{
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="global.field.id">ID</p>
+          <p class="mt-1 text-sm text-slate-900">{{ pricingPlanRef.id }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.name">Name</p>
+          <p class="mt-1 text-sm text-slate-900">{{ pricingPlanRef.name }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.price">
+            Price
+          </p>
+          <p class="mt-1 text-sm text-slate-900">{{ pricingPlanRef.price }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4 lg:col-span-3">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.description">
+            Description
+          </p>
+          <p class="mt-1 text-sm text-slate-900">{{ pricingPlanRef.description }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4 lg:col-span-2">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.features">
+            Features
+          </p>
+          <p class="mt-1 text-sm text-slate-900">{{ pricingPlanRef.features }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.billingCycle">
+            Billing Cycle
+          </p>
+          <p
+            class="mt-1 text-sm text-slate-900"
+            [hpdTranslate]="'adminDashboardApp.BillingType.' + (pricingPlanRef.billingCycle ?? 'null')"
+          >
+            {{
               { null: '', DAILY: 'DAILY', WEEKLY: 'WEEKLY', MONTHLY: 'MONTHLY', QUARTERLY: 'QUARTERLY', ANNUALLY: 'ANNUALLY' }[
                 pricingPlanRef.billingCycle ?? 'null'
               ]
-            }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.active">Active</span></dt>
-          <dd>
-            <span>{{ pricingPlanRef.active }}</span>
-          </dd>
-        </dl>
-
-        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span hpdTranslate="entity.action.back">Back</span>
-        </button>
-
-        <button type="button" [routerLink]="['/pricing-plan', pricingPlanRef.id, 'edit']" class="btn btn-primary">
-          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span hpdTranslate="entity.action.edit">Edit</span>
-        </button>
+            }}
+          </p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.active">
+            Active
+          </p>
+          <p class="mt-1 text-sm text-slate-900">{{ pricingPlanRef.active }}</p>
+        </div>
       </div>
-    }
-  </div>
+
+      <div class="flex flex-wrap justify-end gap-3">
+        <button type="button" mat-button class="!rounded-full !px-4" (click)="previousState()" data-cy="entityDetailsBackButton">
+          <mat-icon>arrow_back</mat-icon>
+          <span hpdTranslate="entity.action.back">Back</span>
+        </button>
+
+        <a
+          type="button"
+          [routerLink]="['/pricing-plan', pricingPlanRef.id, 'edit']"
+          mat-flat-button
+          class="!rounded-full !bg-slate-900 !px-4 !text-white"
+        >
+          <mat-icon>edit</mat-icon>
+          <span hpdTranslate="entity.action.edit">Edit</span>
+        </a>
+      </div>
+    </div>
+  }
 </div>

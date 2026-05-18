@@ -1,14 +1,14 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 import SharedModule from 'app/shared/shared.module';
 import { Thread, ThreadState } from 'app/admin/metrics/metrics.model';
 
 @Component({
-    selector: 'hpd-thread-modal',
-    templateUrl: './metrics-modal-threads.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [SharedModule]
+  selector: 'hpd-thread-modal',
+  templateUrl: './metrics-modal-threads.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [SharedModule, MatDialogModule],
 })
 export class MetricsModalThreadsComponent implements OnInit {
   ThreadState = ThreadState;
@@ -20,7 +20,7 @@ export class MetricsModalThreadsComponent implements OnInit {
   threadDumpTimedWaiting = 0;
   threadDumpWaiting = 0;
 
-  constructor(private activeModal: NgbActiveModal) {}
+  constructor(private dialogRef: MatDialogRef<MetricsModalThreadsComponent>) {}
 
   ngOnInit(): void {
     this.threads?.forEach(thread => {
@@ -40,13 +40,13 @@ export class MetricsModalThreadsComponent implements OnInit {
 
   getBadgeClass(threadState: ThreadState): string {
     if (threadState === ThreadState.Runnable) {
-      return 'bg-success';
+      return 'bg-emerald-50 text-emerald-700';
     } else if (threadState === ThreadState.Waiting) {
-      return 'bg-info';
+      return 'bg-sky-50 text-sky-700';
     } else if (threadState === ThreadState.TimedWaiting) {
-      return 'bg-warning';
+      return 'bg-amber-50 text-amber-700';
     } else if (threadState === ThreadState.Blocked) {
-      return 'bg-danger';
+      return 'bg-rose-50 text-rose-700';
     }
     return '';
   }
@@ -56,6 +56,6 @@ export class MetricsModalThreadsComponent implements OnInit {
   }
 
   dismiss(): void {
-    this.activeModal.dismiss();
+    this.dialogRef.close();
   }
 }

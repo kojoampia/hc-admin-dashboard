@@ -1,54 +1,97 @@
 @if (account) {
-<div class="row d-flex justify-content-center">
-  <div class="col-md-10 text-primary">
+  <div class="mx-auto w-full max-w-7xl">
     <hpd-dashboard></hpd-dashboard>
   </div>
-</div>
 } @else {
-<div class="row">
-  <div class="col-md-3 col-sm-12 d-none d-sm-block">
-    <span class="healthconnect img-fluid rounded"></span>
-  </div>
-  <div class="col-md-6 col-sm-12 text-primary">
-    <h1 class="display-4 mb-2"><span hpdTranslate="home.title">Welcome!</span></h1>
-
-    <p class="lead" hpdTranslate="home.subtitle">This is your homepage</p>
-
-    <div class="alert alert-primary mt-5">
-      <span hpdTranslate="global.messages.info.authenticated.prefix">If you want to </span>
-      <a class="alert-link" (click)="login()" hpdTranslate="global.messages.info.authenticated.link">sign
-        in</a>.
+  <div class="mx-auto grid w-full max-w-7xl gap-6 lg:grid-cols-[minmax(0,20rem)_minmax(0,1fr)]">
+    <div class="hidden items-center justify-center rounded-[2rem] bg-white/80 p-6 shadow-sm backdrop-blur lg:flex">
+      <span class="healthconnect"></span>
     </div>
 
-    <p hpdTranslate="home.question">If you have any question on JHipster:</p>
+    <mat-card class="!rounded-[2rem] !border !border-slate-200 !bg-white/90 !p-8 !shadow-sm">
+      <div class="space-y-6">
+        <div class="space-y-2">
+          <h1 class="text-4xl font-semibold tracking-tight text-slate-900">
+            <span hpdTranslate="home.title">Welcome!</span>
+          </h1>
+          <p class="text-lg text-slate-600" hpdTranslate="home.subtitle">This is your homepage</p>
+        </div>
 
-    <ul>
-      <li>
-        <a href="https://healthconnect.jojoaddison.net/" target="_blank" rel="noopener noreferrer"
-          hpdTranslate="home.link.homepage">Health Connect homepage</a>
-      </li>
-      <li>
-        <a href="https://stackoverflow.com/tags/jojoaddison/healthconnect" target="_blank" rel="noopener noreferrer"
-          hpdTranslate="home.link.stackoverflow">Health Connect on Stack Overflow</a>
-      </li>
-      <li>
-        <a href="https://github.com/jojoaddison/health-connect/issues?state=open" target="_blank"
-          rel="noopener noreferrer" hpdTranslate="home.link.bugtracker">Health Connect bug tracker</a>
-      </li>
-      <li>
-        <a href="https://gitter.im/jojoaddison/health-connect" target="_blank" rel="noopener noreferrer"
-          hpdTranslate="home.link.chat">Health Connect public chat room</a>
-      </li>
-      <li>
-        <a href="https://x.com/jojoaddison-health-connect" target="_blank" rel="noopener noreferrer"
-          hpdTranslate="home.link.follow">follow &#64;health connect on Twitter</a>
-      </li>
-      <li>
-            <span hpdTranslate="home.like">If you like Health Connect, don&apos;t forget to give us a like on</span>
-            <a href="https://facebook.com/jojoaddison" target="_blank" rel="noopener noreferrer"
-              hpdTranslate="home.facebook">Facebook</a>!
-      </li>
-    </ul>    
+        <div class="flex items-start gap-3 rounded-2xl border border-cyan-200 bg-cyan-50 p-4 text-cyan-950">
+          <mat-icon class="mt-0.5 !text-[20px]">login</mat-icon>
+          <p class="m-0 text-sm leading-6">
+            <span hpdTranslate="global.messages.info.authenticated.prefix">If you want to </span>
+            <button mat-button type="button" class="!min-w-0 !px-1 !text-cyan-700" (click)="login()">
+              <span hpdTranslate="global.messages.info.authenticated.link">sign in</span>
+            </button>
+            .
+          </p>
+        </div>
+
+        <div class="space-y-4">
+          <h2 class="text-lg font-medium text-slate-800" hpdTranslate="home.question">If you have any question on JHipster:</h2>
+          <div class="grid gap-3 sm:grid-cols-2">
+            <a
+              class="rounded-2xl bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 shadow-sm transition hover:bg-white hover:text-cyan-700"
+              href="https://healthconnect.jojoaddison.net/"
+              target="_blank"
+              rel="noopener noreferrer"
+              hpdTranslate="home.link.homepage"
+            >
+              Health Connect homepage
+            </a>
+            <a
+              class="rounded-2xl bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 shadow-sm transition hover:bg-white hover:text-cyan-700"
+              href="https://stackoverflow.com/tags/jojoaddison/healthconnect"
+              target="_blank"
+              rel="noopener noreferrer"
+              hpdTranslate="home.link.stackoverflow"
+            >
+              Health Connect on Stack Overflow
+            </a>
+            <a
+              class="rounded-2xl bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 shadow-sm transition hover:bg-white hover:text-cyan-700"
+              href="https://github.com/jojoaddison/health-connect/issues?state=open"
+              target="_blank"
+              rel="noopener noreferrer"
+              hpdTranslate="home.link.bugtracker"
+            >
+              Health Connect bug tracker
+            </a>
+            <a
+              class="rounded-2xl bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 shadow-sm transition hover:bg-white hover:text-cyan-700"
+              href="https://gitter.im/jojoaddison/health-connect"
+              target="_blank"
+              rel="noopener noreferrer"
+              hpdTranslate="home.link.chat"
+            >
+              Health Connect public chat room
+            </a>
+            <a
+              class="rounded-2xl bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 shadow-sm transition hover:bg-white hover:text-cyan-700"
+              href="https://x.com/jojoaddison-health-connect"
+              target="_blank"
+              rel="noopener noreferrer"
+              hpdTranslate="home.link.follow"
+            >
+              follow &#64;health connect on Twitter
+            </a>
+            <div class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700">
+              <span hpdTranslate="home.like">If you like Health Connect, don&apos;t forget to give us a like on</span>
+              <a
+                class="ml-1 font-semibold text-cyan-700 hover:text-cyan-600"
+                href="https://facebook.com/jojoaddison"
+                target="_blank"
+                rel="noopener noreferrer"
+                hpdTranslate="home.facebook"
+              >
+                Facebook
+              </a>
+              !
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-card>
   </div>
-</div>
 }

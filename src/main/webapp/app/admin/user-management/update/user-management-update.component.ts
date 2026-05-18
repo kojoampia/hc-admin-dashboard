@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { FormGroup, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
@@ -15,9 +21,19 @@ const newUser: IUser = {
 } as IUser;
 
 @Component({
-    selector: 'hpd-user-mgmt-update',
-    templateUrl: './user-management-update.component.html',
-    imports: [SharedModule, FormsModule, ReactiveFormsModule]
+  selector: 'hpd-user-mgmt-update',
+  templateUrl: './user-management-update.component.html',
+  imports: [
+    SharedModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+  ],
 })
 export default class UserManagementUpdateComponent implements OnInit {
   languages = LANGUAGES;

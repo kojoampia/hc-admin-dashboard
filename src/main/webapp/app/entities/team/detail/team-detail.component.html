@@ -1,66 +1,69 @@
-<div class="d-flex justify-content-center">
-  <div class="col-8">
-    @if (team(); as teamRef) {
-      <div>
-        <h2 data-cy="teamDetailsHeading"><span hpdTranslate="adminDashboardApp.team.detail.title">Team</span></h2>
-
-        <hr />
-
-        <hpd-alert-error />
-
-        <hpd-alert />
-
-        <dl class="row-md jh-entity-details">
-          <dt><span hpdTranslate="global.field.id">ID</span></dt>
-          <dd>
-            <span>{{ teamRef.id }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.team.name">Name</span></dt>
-          <dd>
-            <span>{{ teamRef.name }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.team.description">Description</span></dt>
-          <dd>
-            <span>{{ teamRef.description }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.team.members">Members</span></dt>
-          <dd>
-            <span>{{ teamRef.members }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.team.supervisorId">Supervisor Id</span></dt>
-          <dd>
-            <span>{{ teamRef.supervisorId }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.team.organisationId">Organisation Id</span></dt>
-          <dd>
-            <span>{{ teamRef.organisationId }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.team.createdBy">Created By</span></dt>
-          <dd>
-            <span>{{ teamRef.createdBy }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.team.createdDate">Created Date</span></dt>
-          <dd>
-            <span>{{ teamRef.createdDate | formatMediumDatetime }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.team.modifiedBy">Modified By</span></dt>
-          <dd>
-            <span>{{ teamRef.modifiedBy }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.team.modifiedDate">Modified Date</span></dt>
-          <dd>
-            <span>{{ teamRef.modifiedDate | formatMediumDatetime }}</span>
-          </dd>
-        </dl>
-
-        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span hpdTranslate="entity.action.back">Back</span>
-        </button>
-
-        <button type="button" [routerLink]="['/team', teamRef.id, 'edit']" class="btn btn-primary">
-          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span hpdTranslate="entity.action.edit">Edit</span>
-        </button>
+<div class="mx-auto max-w-5xl">
+  @if (team(); as teamRef) {
+    <div class="space-y-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div class="space-y-2">
+        <h2 data-cy="teamDetailsHeading" class="text-2xl font-semibold text-slate-900">
+          <span hpdTranslate="adminDashboardApp.team.detail.title">Team</span>
+        </h2>
+        <p class="text-sm text-slate-500">Inspect team structure, supervisor, and audit timestamps.</p>
       </div>
-    }
-  </div>
+
+      <hpd-alert-error />
+      <hpd-alert />
+
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="global.field.id">ID</p>
+          <p class="mt-1 text-sm text-slate-900">{{ teamRef.id }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.team.name">Name</p>
+          <p class="mt-1 text-sm text-slate-900">{{ teamRef.name }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4 lg:col-span-3">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.team.description">Description</p>
+          <p class="mt-1 text-sm text-slate-900">{{ teamRef.description }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.team.members">Members</p>
+          <p class="mt-1 text-sm text-slate-900">{{ teamRef.members }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.team.supervisorId">Supervisor Id</p>
+          <p class="mt-1 text-sm text-slate-900">{{ teamRef.supervisorId }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.team.organisationId">Organisation Id</p>
+          <p class="mt-1 text-sm text-slate-900">{{ teamRef.organisationId }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.team.createdBy">Created By</p>
+          <p class="mt-1 text-sm text-slate-900">{{ teamRef.createdBy }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.team.createdDate">Created Date</p>
+          <p class="mt-1 text-sm text-slate-900">{{ teamRef.createdDate | formatMediumDatetime }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.team.modifiedBy">Modified By</p>
+          <p class="mt-1 text-sm text-slate-900">{{ teamRef.modifiedBy }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.team.modifiedDate">Modified Date</p>
+          <p class="mt-1 text-sm text-slate-900">{{ teamRef.modifiedDate | formatMediumDatetime }}</p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap justify-end gap-3">
+        <button type="button" mat-button class="!rounded-full !px-4" (click)="previousState()" data-cy="entityDetailsBackButton">
+          <mat-icon>arrow_back</mat-icon>
+          <span hpdTranslate="entity.action.back">Back</span>
+        </button>
+        <a type="button" [routerLink]="['/team', teamRef.id, 'edit']" mat-flat-button class="!rounded-full !bg-slate-900 !px-4 !text-white">
+          <mat-icon>edit</mat-icon>
+          <span hpdTranslate="entity.action.edit">Edit</span>
+        </a>
+      </div>
+    </div>
+  }
 </div>

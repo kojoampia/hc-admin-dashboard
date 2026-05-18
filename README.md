@@ -15,6 +15,7 @@ Frontend-only Angular application generated from JHipster and customized for the
 - E2E tests: Cypress
 
 Reference source:
+
 - `.yo-rc.json` confirms `skipServer: true` and `jhiPrefix: hpd`
 
 ## Requirements
@@ -187,3 +188,4 @@ What to do:
 
 - Start the mock API: `npm run mock:api`.
 - Ensure `webpack/proxy.conf.js` target matches your intended backend/mock host and port.
+- Local development builds keep the dashboard/chat websocket disabled by default; re-enable it only when a compatible websocket backend is available.

@@ -48,6 +48,18 @@ export class PricingPlanService {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
+  get<T>(url: string): Observable<T> {
+    return this.http.get<T>(url);
+  }
+
+  post<T>(url: string, body: unknown): Observable<T> {
+    return this.http.post<T>(url, body);
+  }
+
+  put<T>(url: string, body: unknown): Observable<T> {
+    return this.http.put<T>(url, body);
+  }
+
   getPricingPlanIdentifier(pricingPlan: Pick<IPricingPlan, 'id'>): string {
     return pricingPlan.id;
   }

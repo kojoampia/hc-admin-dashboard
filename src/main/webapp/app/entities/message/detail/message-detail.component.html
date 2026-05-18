@@ -1,52 +1,70 @@
-<div class="d-flex justify-content-center">
-  <div class="col-8">
-    @if (message(); as messageRef) {
-      <div>
-        <h2 data-cy="messageDetailsHeading"><span hpdTranslate="adminDashboardApp.hcAdminServiceMessage.detail.title">Message</span></h2>
-
-        <hr />
-
-        <hpd-alert-error />
-
-        <hpd-alert />
-
-        <dl class="row-md jh-entity-details">
-          <dt><span hpdTranslate="global.field.id">ID</span></dt>
-          <dd>
-            <span>{{ messageRef.id }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceMessage.content">Content</span></dt>
-          <dd>
-            <span>{{ messageRef.content }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceMessage.timestamp">Timestamp</span></dt>
-          <dd>
-            <span>{{ messageRef.timestamp | formatMediumDatetime }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceMessage.senderId">Sender Id</span></dt>
-          <dd>
-            <span>{{ messageRef.senderId }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceMessage.recipients">Recipients</span></dt>
-          <dd>
-            <span>{{ messageRef.recipients }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceMessage.type">Type</span></dt>
-          <dd>
-            <span [hpdTranslate]="'adminDashboardApp.MessageType.' + (messageRef.type ?? 'null')">{{
-              { null: '', NOTIFICATION: 'NOTIFICATION', ALERT: 'ALERT', REMINDER: 'REMINDER' }[messageRef.type ?? 'null']
-            }}</span>
-          </dd>
-        </dl>
-
-        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span hpdTranslate="entity.action.back">Back</span>
-        </button>
-
-        <button type="button" [routerLink]="['/message', messageRef.id, 'edit']" class="btn btn-primary">
-          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span hpdTranslate="entity.action.edit">Edit</span>
-        </button>
+<div class="mx-auto max-w-5xl">
+  @if (message(); as messageRef) {
+    <div class="space-y-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div class="space-y-2">
+        <h2 data-cy="messageDetailsHeading" class="text-2xl font-semibold text-slate-900">
+          <span hpdTranslate="adminDashboardApp.hcAdminServiceMessage.detail.title">Message</span>
+        </h2>
+        <p class="text-sm text-slate-500">Inspect message body, recipients, and delivery type.</p>
       </div>
-    }
-  </div>
+
+      <hpd-alert-error />
+
+      <hpd-alert />
+
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="global.field.id">ID</p>
+          <p class="mt-1 text-sm text-slate-900">{{ messageRef.id }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4 lg:col-span-2">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceMessage.content">
+            Content
+          </p>
+          <p class="mt-1 text-sm text-slate-900">{{ messageRef.content }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceMessage.timestamp">
+            Timestamp
+          </p>
+          <p class="mt-1 text-sm text-slate-900">{{ messageRef.timestamp | formatMediumDatetime }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceMessage.senderId">
+            Sender Id
+          </p>
+          <p class="mt-1 text-sm text-slate-900">{{ messageRef.senderId }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4 lg:col-span-2">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceMessage.recipients">
+            Recipients
+          </p>
+          <p class="mt-1 text-sm text-slate-900">{{ messageRef.recipients }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceMessage.type">Type</p>
+          <p class="mt-1 text-sm text-slate-900" [hpdTranslate]="'adminDashboardApp.MessageType.' + (messageRef.type ?? 'null')">
+            {{ { null: '', NOTIFICATION: 'NOTIFICATION', ALERT: 'ALERT', REMINDER: 'REMINDER' }[messageRef.type ?? 'null'] }}
+          </p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap justify-end gap-3">
+        <button type="button" mat-button class="!rounded-full !px-4" (click)="previousState()" data-cy="entityDetailsBackButton">
+          <mat-icon>arrow_back</mat-icon>
+          <span hpdTranslate="entity.action.back">Back</span>
+        </button>
+
+        <a
+          type="button"
+          [routerLink]="['/message', messageRef.id, 'edit']"
+          mat-flat-button
+          class="!rounded-full !bg-slate-900 !px-4 !text-white"
+        >
+          <mat-icon>edit</mat-icon>
+          <span hpdTranslate="entity.action.edit">Edit</span>
+        </a>
+      </div>
+    </div>
+  }
 </div>

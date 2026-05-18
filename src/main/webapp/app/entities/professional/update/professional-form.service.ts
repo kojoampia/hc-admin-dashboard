@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
+import dayjs from 'dayjs/esm';
+import { DATE_TIME_FORMAT } from 'app/config/input.constants';
 import { IProfessional, NewProfessional } from '../professional.model';
 
 /**
@@ -14,18 +16,27 @@ type PartialWithRequiredKeyOf<T extends { id: unknown }> = Partial<Omit<T, 'id'>
  */
 type ProfessionalFormGroupInput = IProfessional | PartialWithRequiredKeyOf<NewProfessional>;
 
-type ProfessionalFormDefaults = Pick<NewProfessional, 'id'>;
+type FormValueOf<T extends IProfessional | NewProfessional> = Omit<T, 'createdDate' | 'modifiedDate'> & {
+  createdDate?: string | null;
+  modifiedDate?: string | null;
+};
+
+type ProfessionalFormRawValue = FormValueOf<IProfessional>;
+
+type NewProfessionalFormRawValue = FormValueOf<NewProfessional>;
+
+type ProfessionalFormDefaults = Pick<NewProfessional, 'id' | 'createdDate' | 'modifiedDate'>;
 
 type ProfessionalFormGroupContent = {
-  id: FormControl<IProfessional['id'] | NewProfessional['id']>;
-  name: FormControl<IProfessional['name']>;
-  organisation: FormControl<IProfessional['organisation']>;
-  roster: FormControl<IProfessional['roster']>;
-  profile: FormControl<IProfessional['profile']>;
-  createdDate: FormControl<IProfessional['createdDate']>;
-  createdBy: FormControl<IProfessional['createdBy']>;
-  modifiedDate: FormControl<IProfessional['modifiedDate']>;
-  modifiedBy: FormControl<IProfessional['modifiedBy']>;
+  id: FormControl<ProfessionalFormRawValue['id'] | NewProfessional['id']>;
+  name: FormControl<ProfessionalFormRawValue['name']>;
+  organisation: FormControl<ProfessionalFormRawValue['organisation']>;
+  roster: FormControl<ProfessionalFormRawValue['roster']>;
+  profile: FormControl<ProfessionalFormRawValue['profile']>;
+  createdDate: FormControl<ProfessionalFormRawValue['createdDate']>;
+  createdBy: FormControl<ProfessionalFormRawValue['createdBy']>;
+  modifiedDate: FormControl<ProfessionalFormRawValue['modifiedDate']>;
+  modifiedBy: FormControl<ProfessionalFormRawValue['modifiedBy']>;
 };
 
 export type ProfessionalFormGroup = FormGroup<ProfessionalFormGroupContent>;
@@ -33,10 +44,10 @@ export type ProfessionalFormGroup = FormGroup<ProfessionalFormGroupContent>;
 @Injectable({ providedIn: 'root' })
 export class ProfessionalFormService {
   createProfessionalFormGroup(professional: ProfessionalFormGroupInput = { id: null }): ProfessionalFormGroup {
-    const professionalRawValue = {
+    const professionalRawValue = this.convertProfessionalToProfessionalRawValue({
       ...this.getFormDefaults(),
       ...professional,
-    };
+    });
     return new FormGroup<ProfessionalFormGroupContent>({
       id: new FormControl(
         { value: professionalRawValue.id, disabled: true },
@@ -57,11 +68,11 @@ export class ProfessionalFormService {
   }
 
   getProfessional(form: ProfessionalFormGroup): IProfessional | NewProfessional {
-    return form.getRawValue() as IProfessional | NewProfessional;
+    return this.convertProfessionalRawValueToProfessional(form.getRawValue() as ProfessionalFormRawValue | NewProfessionalFormRawValue);
   }
 
   resetForm(form: ProfessionalFormGroup, professional: ProfessionalFormGroupInput): void {
-    const professionalRawValue = { ...this.getFormDefaults(), ...professional };
+    const professionalRawValue = this.convertProfessionalToProfessionalRawValue({ ...this.getFormDefaults(), ...professional });
     form.reset(
       {
         ...professionalRawValue,
@@ -71,8 +82,32 @@ export class ProfessionalFormService {
   }
 
   private getFormDefaults(): ProfessionalFormDefaults {
+    const currentTime = dayjs();
+
     return {
       id: null,
+      createdDate: currentTime,
+      modifiedDate: currentTime,
+    };
+  }
+
+  private convertProfessionalRawValueToProfessional(
+    rawProfessional: ProfessionalFormRawValue | NewProfessionalFormRawValue,
+  ): IProfessional | NewProfessional {
+    return {
+      ...rawProfessional,
+      createdDate: dayjs(rawProfessional.createdDate, DATE_TIME_FORMAT),
+      modifiedDate: dayjs(rawProfessional.modifiedDate, DATE_TIME_FORMAT),
+    };
+  }
+
+  private convertProfessionalToProfessionalRawValue(
+    professional: IProfessional | (Partial<NewProfessional> & ProfessionalFormDefaults),
+  ): ProfessionalFormRawValue | PartialWithRequiredKeyOf<NewProfessionalFormRawValue> {
+    return {
+      ...professional,
+      createdDate: professional.createdDate ? professional.createdDate.format(DATE_TIME_FORMAT) : undefined,
+      modifiedDate: professional.modifiedDate ? professional.modifiedDate.format(DATE_TIME_FORMAT) : undefined,
     };
   }
 }

@@ -1,189 +1,148 @@
-<div class="d-flex justify-content-center">
-  <div class="col-8">
-    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2 id="hpd-team-heading" data-cy="TeamCreateUpdateHeading" hpdTranslate="adminDashboardApp.team.home.createOrEditLabel">
+<div class="mx-auto max-w-5xl">
+  <form
+    name="editForm"
+    novalidate
+    (ngSubmit)="save()"
+    [formGroup]="editForm"
+    class="space-y-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"
+  >
+    <div class="space-y-2">
+      <h2
+        id="hpd-team-heading"
+        data-cy="TeamCreateUpdateHeading"
+        class="text-2xl font-semibold text-slate-900"
+        hpdTranslate="adminDashboardApp.team.home.createOrEditLabel"
+      >
         Create or edit a Team
       </h2>
+      <p class="text-sm text-slate-500">Update the team, its leadership, and linked organisation metadata.</p>
+    </div>
 
-      <div>
-        <hpd-alert-error />
+    <hpd-alert-error />
 
-        @if (editForm.controls.id.value !== null) {
-          <div class="mb-3">
-            <label class="form-label" for="field_id" hpdTranslate="adminDashboardApp.team.id">ID</label>
-            <input type="text" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-          </div>
-        }
+    <div class="grid gap-4 md:grid-cols-2">
+      @if (editForm.controls.id.value !== null) {
+        <mat-form-field class="md:col-span-2">
+          <mat-label hpdTranslate="adminDashboardApp.team.id">ID</mat-label>
+          <input matInput name="id" id="field_id" data-cy="id" formControlName="id" readonly />
+        </mat-form-field>
+      }
 
-        @let nameRef = editForm.get('name')!;
-        <div class="mb-3">
-          <label class="form-label" for="field_name" hpdTranslate="adminDashboardApp.team.name">Name</label>
-          <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
-          @if (nameRef.invalid && (nameRef.dirty || nameRef.touched)) {
-            <div>
-              @if (editForm.get('name')?.errors?.required) {
-                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
-              }
-            </div>
-          }
-        </div>
-
-        @let descriptionRef = editForm.get('description')!;
-        <div class="mb-3">
-          <label class="form-label" for="field_description" hpdTranslate="adminDashboardApp.team.description">Description</label>
-          <input
-            type="text"
-            class="form-control"
-            name="description"
-            id="field_description"
-            data-cy="description"
-            formControlName="description"
-          />
-          @if (descriptionRef.invalid && (descriptionRef.dirty || descriptionRef.touched)) {
-            <div>
-              @if (editForm.get('description')?.errors?.required) {
-                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
-              }
-            </div>
-          }
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label" for="field_members" hpdTranslate="adminDashboardApp.team.members">Members</label>
-          <input type="text" class="form-control" name="members" id="field_members" data-cy="members" formControlName="members" />
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label" for="field_supervisorId" hpdTranslate="adminDashboardApp.team.supervisorId">Supervisor Id</label>
-          <input
-            type="text"
-            class="form-control"
-            name="supervisorId"
-            id="field_supervisorId"
-            data-cy="supervisorId"
-            formControlName="supervisorId"
-          />
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label" for="field_organisationId" hpdTranslate="adminDashboardApp.team.organisationId">Organisation Id</label>
-          <input
-            type="text"
-            class="form-control"
-            name="organisationId"
-            id="field_organisationId"
-            data-cy="organisationId"
-            formControlName="organisationId"
-          />
-        </div>
-
-        @let createdByRef = editForm.get('createdBy')!;
-        <div class="mb-3">
-          <label class="form-label" for="field_createdBy" hpdTranslate="adminDashboardApp.team.createdBy">Created By</label>
-          <input type="text" class="form-control" name="createdBy" id="field_createdBy" data-cy="createdBy" formControlName="createdBy" />
-          @if (createdByRef.invalid && (createdByRef.dirty || createdByRef.touched)) {
-            <div>
-              @if (editForm.get('createdBy')?.errors?.required) {
-                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
-              }
-            </div>
-          }
-        </div>
-
-        @let createdDateRef = editForm.get('createdDate')!;
-        <div class="mb-3">
-          <label class="form-label" for="field_createdDate" hpdTranslate="adminDashboardApp.team.createdDate">Created Date</label>
-          <div class="d-flex">
-            <input
-              id="field_createdDate"
-              data-cy="createdDate"
-              type="datetime-local"
-              class="form-control"
-              name="createdDate"
-              formControlName="createdDate"
-              placeholder="YYYY-MM-DD HH:mm"
-            />
-          </div>
-          @if (createdDateRef.invalid && (createdDateRef.dirty || createdDateRef.touched)) {
-            <div>
-              @if (editForm.get('createdDate')?.errors?.required) {
-                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
-              }
-              <small
-                class="form-text text-danger"
-                [hidden]="!editForm.get('createdDate')?.errors?.datetimelocal"
-                hpdTranslate="entity.validation.datetimelocal"
-                >This field should be a date and time.</small
-              >
-            </div>
-          }
-        </div>
-
-        @let modifiedByRef = editForm.get('modifiedBy')!;
-        <div class="mb-3">
-          <label class="form-label" for="field_modifiedBy" hpdTranslate="adminDashboardApp.team.modifiedBy">Modified By</label>
-          <input
-            type="text"
-            class="form-control"
-            name="modifiedBy"
-            id="field_modifiedBy"
-            data-cy="modifiedBy"
-            formControlName="modifiedBy"
-          />
-          @if (modifiedByRef.invalid && (modifiedByRef.dirty || modifiedByRef.touched)) {
-            <div>
-              @if (editForm.get('modifiedBy')?.errors?.required) {
-                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
-              }
-            </div>
-          }
-        </div>
-
-        @let modifiedDateRef = editForm.get('modifiedDate')!;
-        <div class="mb-3">
-          <label class="form-label" for="field_modifiedDate" hpdTranslate="adminDashboardApp.team.modifiedDate">Modified Date</label>
-          <div class="d-flex">
-            <input
-              id="field_modifiedDate"
-              data-cy="modifiedDate"
-              type="datetime-local"
-              class="form-control"
-              name="modifiedDate"
-              formControlName="modifiedDate"
-              placeholder="YYYY-MM-DD HH:mm"
-            />
-          </div>
-          @if (modifiedDateRef.invalid && (modifiedDateRef.dirty || modifiedDateRef.touched)) {
-            <div>
-              @if (editForm.get('modifiedDate')?.errors?.required) {
-                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
-              }
-              <small
-                class="form-text text-danger"
-                [hidden]="!editForm.get('modifiedDate')?.errors?.datetimelocal"
-                hpdTranslate="entity.validation.datetimelocal"
-                >This field should be a date and time.</small
-              >
-            </div>
-          }
-        </div>
-      </div>
-
-      <div>
-        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
-          <fa-icon icon="ban"></fa-icon>&nbsp;<span hpdTranslate="entity.action.cancel">Cancel</span>
-        </button>
-
-        <button
-          type="submit"
-          id="save-entity"
-          data-cy="entityCreateSaveButton"
-          [disabled]="editForm.invalid || isSaving"
-          class="btn btn-primary"
+      <mat-form-field>
+        <mat-label hpdTranslate="adminDashboardApp.team.name">Name</mat-label>
+        <input matInput name="name" id="field_name" data-cy="name" formControlName="name" />
+        <mat-error *ngIf="editForm.get('name')?.errors?.required" hpdTranslate="entity.validation.required"
+          >This field is required.</mat-error
         >
-          <fa-icon icon="save"></fa-icon>&nbsp;<span hpdTranslate="entity.action.save">Save</span>
-        </button>
-      </div>
-    </form>
-  </div>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label hpdTranslate="adminDashboardApp.team.members">Members</mat-label>
+        <input matInput name="members" id="field_members" data-cy="members" formControlName="members" />
+      </mat-form-field>
+
+      <mat-form-field class="md:col-span-2">
+        <mat-label hpdTranslate="adminDashboardApp.team.description">Description</mat-label>
+        <textarea
+          matInput
+          name="description"
+          id="field_description"
+          data-cy="description"
+          formControlName="description"
+          rows="3"
+        ></textarea>
+        <mat-error *ngIf="editForm.get('description')?.errors?.required" hpdTranslate="entity.validation.required"
+          >This field is required.</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label hpdTranslate="adminDashboardApp.team.supervisorId">Supervisor Id</mat-label>
+        <input matInput name="supervisorId" id="field_supervisorId" data-cy="supervisorId" formControlName="supervisorId" />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label hpdTranslate="adminDashboardApp.team.organisationId">Organisation Id</mat-label>
+        <input matInput name="organisationId" id="field_organisationId" data-cy="organisationId" formControlName="organisationId" />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label hpdTranslate="adminDashboardApp.team.createdBy">Created By</mat-label>
+        <input matInput name="createdBy" id="field_createdBy" data-cy="createdBy" formControlName="createdBy" />
+        <mat-error *ngIf="editForm.get('createdBy')?.errors?.required" hpdTranslate="entity.validation.required"
+          >This field is required.</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label hpdTranslate="adminDashboardApp.team.createdDate">Created Date</mat-label>
+        <input
+          matInput
+          id="field_createdDate"
+          data-cy="createdDate"
+          type="datetime-local"
+          name="createdDate"
+          formControlName="createdDate"
+        />
+        <mat-error *ngIf="editForm.get('createdDate')?.errors?.required" hpdTranslate="entity.validation.required"
+          >This field is required.</mat-error
+        >
+        <mat-error *ngIf="editForm.get('createdDate')?.errors?.datetimelocal" hpdTranslate="entity.validation.datetimelocal"
+          >This field should be a date and time.</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label hpdTranslate="adminDashboardApp.team.modifiedBy">Modified By</mat-label>
+        <input matInput name="modifiedBy" id="field_modifiedBy" data-cy="modifiedBy" formControlName="modifiedBy" />
+        <mat-error *ngIf="editForm.get('modifiedBy')?.errors?.required" hpdTranslate="entity.validation.required"
+          >This field is required.</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label hpdTranslate="adminDashboardApp.team.modifiedDate">Modified Date</mat-label>
+        <input
+          matInput
+          id="field_modifiedDate"
+          data-cy="modifiedDate"
+          type="datetime-local"
+          name="modifiedDate"
+          formControlName="modifiedDate"
+        />
+        <mat-error *ngIf="editForm.get('modifiedDate')?.errors?.required" hpdTranslate="entity.validation.required"
+          >This field is required.</mat-error
+        >
+        <mat-error *ngIf="editForm.get('modifiedDate')?.errors?.datetimelocal" hpdTranslate="entity.validation.datetimelocal"
+          >This field should be a date and time.</mat-error
+        >
+      </mat-form-field>
+    </div>
+
+    <div class="flex flex-wrap justify-end gap-3">
+      <button
+        type="button"
+        id="cancel-save"
+        data-cy="entityCreateCancelButton"
+        mat-button
+        class="!rounded-full !px-4"
+        (click)="previousState()"
+      >
+        <mat-icon>close</mat-icon>
+        <span hpdTranslate="entity.action.cancel">Cancel</span>
+      </button>
+
+      <button
+        type="submit"
+        id="save-entity"
+        data-cy="entityCreateSaveButton"
+        [disabled]="editForm.invalid || isSaving"
+        mat-flat-button
+        class="!rounded-full !bg-slate-900 !px-4 !text-white"
+      >
+        <mat-icon>save</mat-icon>
+        <span hpdTranslate="entity.action.save">Save</span>
+      </button>
+    </div>
+  </form>
 </div>

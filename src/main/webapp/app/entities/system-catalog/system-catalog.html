@@ -1,0 +1,150 @@
+<div class="space-y-6">
+
+  <!-- ── Header ──────────────────────────────────────────────────────────── -->
+  <div class="flex items-center justify-between">
+    <div>
+      <h2 class="text-xl font-semibold text-slate-800">Content Management</h2>
+      <p class="text-slate-500 text-xs mt-1">Manage public facing content and policies.</p>
+    </div>
+    @if (state.canAccess('CATALOG', 'CREATE')) {
+      <button (click)="openAddModal()" mat-flat-button class="!bg-indigo-600 !text-white !rounded-xl !px-5 !py-5">
+        <mat-icon iconPositionEnd>add</mat-icon>
+        Add Content
+      </button>
+    }
+  </div>
+
+  <!-- ── Main Grid ────────────────────────────────────────────────────────── -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+    <!-- Left Pane: Records (lg:col-span-2) -->
+    <div class="lg:col-span-2 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col h-full">
+
+      <!-- Top Bar -->
+      <div class="px-6 py-3 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+        <span class="text-xs font-bold uppercase tracking-widest text-slate-500">Records</span>
+      </div>
+
+      <!-- Tabs -->
+      <mat-tab-group
+        (selectedTabChange)="activeTab.set(tabTypes[$event.index])"
+        class="catalog-tabs flex-1"
+        animationDuration="200ms"
+      >
+        @for (tab of tabTypes; track tab) {
+          <mat-tab [label]="tab">
+            <div class="p-4">
+              <!-- Table -->
+              @if (filteredData().length > 0) {
+                <table mat-table [dataSource]="filteredData()" class="w-full">
+
+                  <!-- Title Column -->
+                  <ng-container matColumnDef="title">
+                    <th mat-header-cell *matHeaderCellDef class="text-xs font-semibold text-slate-500 uppercase tracking-wider !pl-0">Title</th>
+                    <td mat-cell *matCellDef="let item" class="text-sm text-slate-700 !pl-0">{{ item.title }}</td>
+                  </ng-container>
+
+                  <!-- Updated At Column -->
+                  <ng-container matColumnDef="updatedAt">
+                    <th mat-header-cell *matHeaderCellDef class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Updated</th>
+                    <td mat-cell *matCellDef="let item" class="text-xs text-slate-400">{{ item.updatedAt | date:'mediumDate' }}</td>
+                  </ng-container>
+
+                  <!-- Actions Column -->
+                  <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef class="text-xs font-semibold text-slate-500 uppercase tracking-wider text-right">Actions</th>
+                    <td mat-cell *matCellDef="let item" class="text-right">
+                      @if (state.canAccess('CATALOG', 'UPDATE')) {
+                        <button mat-icon-button class="text-slate-400 hover:text-indigo-600" (click)="openEditModal(item)" title="Edit">
+                          <mat-icon class="text-base">edit</mat-icon>
+                        </button>
+                      }
+                      @if (state.canAccess('CATALOG', 'DELETE')) {
+                        <button mat-icon-button class="text-slate-400 hover:text-rose-600" (click)="deleteItem(item)" title="Delete">
+                          <mat-icon class="text-base">delete_outline</mat-icon>
+                        </button>
+                      }
+                    </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="columns"></tr>
+                  <tr
+                    mat-row
+                    *matRowDef="let row; columns: columns;"
+                    class="hover:bg-slate-50/60 transition-colors"
+                  ></tr>
+                </table>
+              } @else {
+                <!-- Empty State -->
+                <div class="flex flex-col items-center justify-center py-16 text-slate-400">
+                  <mat-icon class="!text-5xl mb-3 opacity-30">folder_open</mat-icon>
+                  <p class="text-sm font-medium">No {{ tab }} content yet</p>
+                  <p class="text-xs mt-1 opacity-70">Add new content using the button above.</p>
+                </div>
+              }
+            </div>
+          </mat-tab>
+        }
+      </mat-tab-group>
+    </div>
+
+    <!-- Right Pane: Audit Trail (lg:col-span-1) -->
+    <section class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col transition-all duration-300 h-full max-h-[800px]">
+
+      <!-- Header Toggle -->
+      <div
+        class="p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50 cursor-pointer"
+        (click)="toggleAuditTrail()"
+      >
+        <div class="flex items-center gap-3">
+          <span class="flex items-center justify-center w-8 h-8 rounded-full bg-indigo-50 text-indigo-600">
+            <mat-icon class="text-base">history</mat-icon>
+          </span>
+          <div>
+            <p class="text-sm font-bold text-slate-700 leading-none">Audit Trail</p>
+            <p class="text-xs text-slate-400 mt-0.5">Content changes</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-600">20 Latest</span>
+          <mat-icon
+            class="text-slate-400 transition-transform duration-200"
+            [class.rotate-180]="isAuditTrailOpen()"
+          >expand_more</mat-icon>
+        </div>
+      </div>
+
+      <!-- Event List -->
+      @if (isAuditTrailOpen()) {
+        <div class="flex-1 overflow-y-auto divide-y divide-slate-50">
+          @if (auditEvents().length === 0) {
+            <div class="flex flex-col items-center justify-center py-12 text-slate-400">
+              <mat-icon class="!text-4xl opacity-30 mb-2">checklist</mat-icon>
+              <p class="text-xs">No audit events yet.</p>
+            </div>
+          }
+          @for (event of auditEvents(); track event.id) {
+            <div class="group flex items-center gap-4 p-4 hover:bg-slate-50/80 transition-colors">
+              <span
+                class="flex items-center justify-center w-8 h-8 rounded-full shrink-0"
+                [ngClass]="event.colorClass"
+              >
+                <mat-icon class="text-base">{{ event.icon }}</mat-icon>
+              </span>
+              <div class="min-w-0 flex-1">
+                <p class="text-xs font-medium text-slate-700 truncate leading-snug">{{ event.message }}</p>
+                <div class="flex items-center gap-2 mt-0.5">
+                  <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">{{ event.type }}</span>
+                  <span class="text-[10px] text-slate-400">·</span>
+                  <span class="text-[10px] text-slate-400">{{ event.timestamp }}</span>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </section>
+
+  </div>
+
+</div>

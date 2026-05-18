@@ -1,135 +1,106 @@
-<div class="d-flex justify-content-center">
-  <div class="col-8">
-    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+<div class="mx-auto max-w-5xl">
+  <form
+    name="editForm"
+    novalidate
+    (ngSubmit)="save()"
+    [formGroup]="editForm"
+    class="space-y-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"
+  >
+    <div class="space-y-2">
       <h2
         id="hpd-message-heading"
         data-cy="MessageCreateUpdateHeading"
+        class="text-2xl font-semibold text-slate-900"
         hpdTranslate="adminDashboardApp.hcAdminServiceMessage.home.createOrEditLabel"
       >
         Create or edit a Message
       </h2>
+      <p class="text-sm text-slate-500">Update message content, recipients, and delivery type.</p>
+    </div>
 
-      <div>
-        <hpd-alert-error />
+    <hpd-alert-error />
 
-        @if (editForm.controls.id.value !== null) {
-          <div class="mb-3">
-            <label class="form-label" for="field_id" hpdTranslate="adminDashboardApp.hcAdminServiceMessage.id">ID</label>
-            <input type="text" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-          </div>
-        }
+    <div class="grid gap-4 md:grid-cols-2">
+      @if (editForm.controls.id.value !== null) {
+        <mat-form-field class="md:col-span-2">
+          <mat-label hpdTranslate="adminDashboardApp.hcAdminServiceMessage.id">ID</mat-label>
+          <input matInput type="text" name="id" id="field_id" data-cy="id" formControlName="id" readonly />
+        </mat-form-field>
+      }
 
-        @let contentRef = editForm.get('content')!;
-        <div class="mb-3">
-          <label class="form-label" for="field_content" hpdTranslate="adminDashboardApp.hcAdminServiceMessage.content">Content</label>
-          <input type="text" class="form-control" name="content" id="field_content" data-cy="content" formControlName="content" />
-          @if (contentRef.invalid && (contentRef.dirty || contentRef.touched)) {
-            <div>
-              @if (editForm.get('content')?.errors?.required) {
-                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
-              }
-            </div>
-          }
-        </div>
-
-        @let timestampRef = editForm.get('timestamp')!;
-        <div class="mb-3">
-          <label class="form-label" for="field_timestamp" hpdTranslate="adminDashboardApp.hcAdminServiceMessage.timestamp">Timestamp</label>
-          <div class="d-flex">
-            <input
-              id="field_timestamp"
-              data-cy="timestamp"
-              type="datetime-local"
-              class="form-control"
-              name="timestamp"
-              formControlName="timestamp"
-              placeholder="YYYY-MM-DD HH:mm"
-            />
-          </div>
-          @if (timestampRef.invalid && (timestampRef.dirty || timestampRef.touched)) {
-            <div>
-              @if (editForm.get('timestamp')?.errors?.required) {
-                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
-              }
-              <small
-                class="form-text text-danger"
-                [hidden]="!editForm.get('timestamp')?.errors?.datetimelocal"
-                hpdTranslate="entity.validation.datetimelocal"
-                >This field should be a date and time.</small
-              >
-            </div>
-          }
-        </div>
-
-        @let senderIdRef = editForm.get('senderId')!;
-        <div class="mb-3">
-          <label class="form-label" for="field_senderId" hpdTranslate="adminDashboardApp.hcAdminServiceMessage.senderId">Sender Id</label>
-          <input type="text" class="form-control" name="senderId" id="field_senderId" data-cy="senderId" formControlName="senderId" />
-          @if (senderIdRef.invalid && (senderIdRef.dirty || senderIdRef.touched)) {
-            <div>
-              @if (editForm.get('senderId')?.errors?.required) {
-                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
-              }
-            </div>
-          }
-        </div>
-
-        @let recipientsRef = editForm.get('recipients')!;
-        <div class="mb-3">
-          <label class="form-label" for="field_recipients" hpdTranslate="adminDashboardApp.hcAdminServiceMessage.recipients"
-            >Recipients</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            name="recipients"
-            id="field_recipients"
-            data-cy="recipients"
-            formControlName="recipients"
-          />
-          @if (recipientsRef.invalid && (recipientsRef.dirty || recipientsRef.touched)) {
-            <div>
-              @if (editForm.get('recipients')?.errors?.required) {
-                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
-              }
-            </div>
-          }
-        </div>
-
-        @let typeRef = editForm.get('type')!;
-        <div class="mb-3">
-          <label class="form-label" for="field_type" hpdTranslate="adminDashboardApp.hcAdminServiceMessage.type">Type</label>
-          <select class="form-control" name="type" formControlName="type" id="field_type" data-cy="type">
-            <option [ngValue]="null">{{ 'adminDashboardApp.MessageType.null' | translate }}</option>
-            @for (messageType of messageTypeValues; track $index) {
-              <option [value]="messageType">{{ 'adminDashboardApp.MessageType.' + messageType | translate }}</option>
-            }
-          </select>
-          @if (typeRef.invalid && (typeRef.dirty || typeRef.touched)) {
-            <div>
-              @if (editForm.get('type')?.errors?.required) {
-                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
-              }
-            </div>
-          }
-        </div>
-      </div>
-
-      <div>
-        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
-          <fa-icon icon="ban"></fa-icon>&nbsp;<span hpdTranslate="entity.action.cancel">Cancel</span>
-        </button>
-
-        <button
-          type="submit"
-          id="save-entity"
-          data-cy="entityCreateSaveButton"
-          [disabled]="editForm.invalid || isSaving"
-          class="btn btn-primary"
+      <mat-form-field class="md:col-span-2">
+        <mat-label hpdTranslate="adminDashboardApp.hcAdminServiceMessage.content">Content</mat-label>
+        <textarea matInput name="content" id="field_content" data-cy="content" formControlName="content" rows="3"></textarea>
+        <mat-error *ngIf="editForm.get('content')?.errors?.required" hpdTranslate="entity.validation.required"
+          >This field is required.</mat-error
         >
-          <fa-icon icon="save"></fa-icon>&nbsp;<span hpdTranslate="entity.action.save">Save</span>
-        </button>
-      </div>
-    </form>
-  </div>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label hpdTranslate="adminDashboardApp.hcAdminServiceMessage.timestamp">Timestamp</mat-label>
+        <input matInput id="field_timestamp" data-cy="timestamp" type="datetime-local" name="timestamp" formControlName="timestamp" />
+        <mat-error *ngIf="editForm.get('timestamp')?.errors?.required" hpdTranslate="entity.validation.required"
+          >This field is required.</mat-error
+        >
+        <mat-error *ngIf="editForm.get('timestamp')?.errors?.datetimelocal" hpdTranslate="entity.validation.datetimelocal">
+          This field should be a date and time.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label hpdTranslate="adminDashboardApp.hcAdminServiceMessage.senderId">Sender Id</mat-label>
+        <input matInput type="text" name="senderId" id="field_senderId" data-cy="senderId" formControlName="senderId" />
+        <mat-error *ngIf="editForm.get('senderId')?.errors?.required" hpdTranslate="entity.validation.required"
+          >This field is required.</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field class="md:col-span-2">
+        <mat-label hpdTranslate="adminDashboardApp.hcAdminServiceMessage.recipients">Recipients</mat-label>
+        <input matInput type="text" name="recipients" id="field_recipients" data-cy="recipients" formControlName="recipients" />
+        <mat-error *ngIf="editForm.get('recipients')?.errors?.required" hpdTranslate="entity.validation.required"
+          >This field is required.</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field class="md:col-span-2">
+        <mat-label hpdTranslate="adminDashboardApp.hcAdminServiceMessage.type">Type</mat-label>
+        <mat-select name="type" formControlName="type" id="field_type" data-cy="type">
+          <mat-option [value]="null">{{ 'adminDashboardApp.MessageType.null' | translate }}</mat-option>
+          @for (messageType of messageTypeValues; track messageType) {
+            <mat-option [value]="messageType">{{ 'adminDashboardApp.MessageType.' + messageType | translate }}</mat-option>
+          }
+        </mat-select>
+        <mat-error *ngIf="editForm.get('type')?.errors?.required" hpdTranslate="entity.validation.required"
+          >This field is required.</mat-error
+        >
+      </mat-form-field>
+    </div>
+
+    <div class="flex flex-wrap justify-end gap-3">
+      <button
+        type="button"
+        id="cancel-save"
+        data-cy="entityCreateCancelButton"
+        mat-button
+        class="!rounded-full !px-4"
+        (click)="previousState()"
+      >
+        <mat-icon>close</mat-icon>
+        <span hpdTranslate="entity.action.cancel">Cancel</span>
+      </button>
+
+      <button
+        type="submit"
+        id="save-entity"
+        data-cy="entityCreateSaveButton"
+        [disabled]="editForm.invalid || isSaving"
+        mat-flat-button
+        class="!rounded-full !bg-slate-900 !px-4 !text-white"
+      >
+        <mat-icon>save</mat-icon>
+        <span hpdTranslate="entity.action.save">Save</span>
+      </button>
+    </div>
+  </form>
 </div>
