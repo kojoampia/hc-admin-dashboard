@@ -4,6 +4,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 
 import SharedModule from 'app/shared/shared.module';
+import AccessControlComponent from './access-control/access-control';
+import AlertsComponent from './alerts/alerts';
+import CustomizableLayoutComponent from './customizable-layout/customizable-layout';
+import DataExportComponent from './data-export/data-export';
+import { DashboardLayoutService, DashboardWidgetId } from './dashboard-layout.service';
+import RealTimeDataComponent from './real-time-data/real-time-data';
 import SystemHealthComponent from './system-health/system-health';
 import UsageStatisticsComponent from './usage-statistics/usage-statistics';
 import UserActivityComponent from './user-activity/user-activity';
@@ -25,12 +31,18 @@ type DashboardLink = {
     SharedModule,
     MatButtonModule,
     MatIconModule,
+    AccessControlComponent,
     UserActivityComponent,
+    AlertsComponent,
+    CustomizableLayoutComponent,
+    DataExportComponent,
+    RealTimeDataComponent,
     SystemHealthComponent,
     UsageStatisticsComponent,
   ],
 })
 export default class DashboardComponent {
+  readonly layout = this.dashboardLayoutService;
   readonly adminLinks: DashboardLink[] = [
     {
       title: 'User management',
@@ -75,4 +87,10 @@ export default class DashboardComponent {
       icon: 'description',
     },
   ];
+
+  constructor(private dashboardLayoutService: DashboardLayoutService) {}
+
+  widgetSpanClass(widgetId: DashboardWidgetId): string {
+    return ['usageStatistics', 'dataExport'].includes(widgetId) ? 'xl:col-span-3' : '';
+  }
 }

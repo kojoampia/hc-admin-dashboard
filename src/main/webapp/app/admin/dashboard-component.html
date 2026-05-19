@@ -19,9 +19,23 @@
   </div>
 
   <div class="grid gap-6 xl:grid-cols-3">
-    <hpd-user-activity />
-    <hpd-system-health />
-    <hpd-usage-statistics class="xl:col-span-3" />
+    @for (widgetId of layout.visibleWidgetIds(); track widgetId) { @switch (widgetId) { @case ('userActivity') {
+    <hpd-user-activity [class]="widgetSpanClass(widgetId)" />
+    } @case ('systemHealth') {
+    <hpd-system-health [class]="widgetSpanClass(widgetId)" />
+    } @case ('alerts') {
+    <hpd-alerts [class]="widgetSpanClass(widgetId)" />
+    } @case ('usageStatistics') {
+    <hpd-usage-statistics [class]="widgetSpanClass(widgetId)" />
+    } @case ('dataExport') {
+    <hpd-data-export [class]="widgetSpanClass(widgetId)" />
+    } @case ('accessControl') {
+    <hpd-access-control [class]="widgetSpanClass(widgetId)" />
+    } @case ('customizableLayout') {
+    <hpd-customizable-layout [class]="widgetSpanClass(widgetId)" />
+    } @case ('realtimeData') {
+    <hpd-real-time-data [class]="widgetSpanClass(widgetId)" />
+    } } }
   </div>
 
   <div class="space-y-4">

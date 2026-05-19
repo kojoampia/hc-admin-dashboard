@@ -39,6 +39,15 @@ npm start
 
 - App URL: http://localhost:4200
 
+## Admin Dashboard
+
+The admin dashboard is available at `/admin/dashboard` for users with `ROLE_ADMIN`.
+
+- Dashboard widgets currently include user activity, system health, alerts, usage statistics, data export, access control, customizable layout, and real-time audit data.
+- Dashboard layout preferences are persisted locally through `ngx-webstorage`, so widget visibility and ordering survive browser refreshes.
+- Export actions produce frontend-generated JSON and CSV snapshots based on the existing admin users, health, and metrics endpoints.
+- Real-time audit widgets reuse the existing dashboard/WebSocket state and remain safe to hide or show dynamically.
+
 ### API/Backend During Local Development
 
 This repository does not include a Spring Boot backend.

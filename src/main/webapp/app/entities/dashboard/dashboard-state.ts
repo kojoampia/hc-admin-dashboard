@@ -63,6 +63,7 @@ export class DashboardStateService {
   private readonly activeMenu = signal<string>('DASHBOARD');
 
   private auditSubscription: Subscription | null = null;
+  private auditConsumers = 0;
   private logCounter = 50;
 
   setMenu(label: string): void {
@@ -99,6 +100,7 @@ export class DashboardStateService {
   }
 
   connectAuditTrail(): void {
+    this.auditConsumers++;
     if (this.auditSubscription) {
       return;
     }
@@ -109,7 +111,8 @@ export class DashboardStateService {
   }
 
   disconnectAuditTrail(): void {
-    if (this.auditSubscription) {
+    this.auditConsumers = Math.max(this.auditConsumers - 1, 0);
+    if (this.auditConsumers === 0 && this.auditSubscription) {
       this.auditSubscription.unsubscribe();
       this.auditSubscription = null;
     }
