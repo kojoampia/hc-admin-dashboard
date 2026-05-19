@@ -1,165 +1,135 @@
-<div class="d-flex justify-content-center">
-  <div class="col-8">
-    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+<div class="mx-auto max-w-5xl">
+  <form
+    name="editForm"
+    novalidate
+    (ngSubmit)="save()"
+    [formGroup]="editForm"
+    class="space-y-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"
+  >
+    <div class="space-y-2">
       <h2
         id="hpd-duty-roster-heading"
         data-cy="DutyRosterCreateUpdateHeading"
+        class="text-2xl font-semibold text-slate-900"
         hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.home.createOrEditLabel"
       >
         Create or edit a Duty Roster
       </h2>
+      <p class="text-sm text-slate-500">Update dates, duty roles, shifts, and linked professional or patient records.</p>
+    </div>
 
-      <div>
-        <hpd-alert-error />
+    <hpd-alert-error />
 
-        @if (editForm.controls.id.value !== null) {
-          <div class="mb-3">
-            <label class="form-label" for="field_id" hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.id">ID</label>
-            <input type="text" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-          </div>
-        }
+    <div class="grid gap-4 md:grid-cols-2">
+      @if (editForm.controls.id.value !== null) {
+        <mat-form-field class="md:col-span-2">
+          <mat-label hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.id">ID</mat-label>
+          <input matInput type="text" name="id" id="field_id" data-cy="id" formControlName="id" readonly />
+        </mat-form-field>
+      }
 
-        @let dateRef = editForm.get('date')!;
-        <div class="mb-3">
-          <label class="form-label" for="field_date" hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.date">Date</label>
-          <div class="input-group">
-            <input
-              id="field_date"
-              data-cy="date"
-              type="text"
-              class="form-control"
-              name="date"
-              ngbDatepicker
-              #dateDp="ngbDatepicker"
-              formControlName="date"
-            />
-            <button type="button" class="btn btn-secondary" (click)="dateDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
-          </div>
-          @if (dateRef.invalid && (dateRef.dirty || dateRef.touched)) {
-            <div>
-              @if (editForm.get('date')?.errors?.required) {
-                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
-              }
-            </div>
-          }
-        </div>
-
-        @let dutyRef = editForm.get('duty')!;
-        <div class="mb-3">
-          <label class="form-label" for="field_duty" hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.duty">Duty</label>
-          <select class="form-control" name="duty" formControlName="duty" id="field_duty" data-cy="duty">
-            <option [ngValue]="null">{{ 'adminDashboardApp.DutyRole.null' | translate }}</option>
-            @for (dutyRole of dutyRoleValues; track $index) {
-              <option [value]="dutyRole">{{ 'adminDashboardApp.DutyRole.' + dutyRole | translate }}</option>
-            }
-          </select>
-          @if (dutyRef.invalid && (dutyRef.dirty || dutyRef.touched)) {
-            <div>
-              @if (editForm.get('duty')?.errors?.required) {
-                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
-              }
-            </div>
-          }
-        </div>
-
-        @let professionalIdRef = editForm.get('professionalId')!;
-        <div class="mb-3">
-          <label class="form-label" for="field_professionalId" hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.professionalId"
-            >Professional Id</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            name="professionalId"
-            id="field_professionalId"
-            data-cy="professionalId"
-            formControlName="professionalId"
-          />
-          @if (professionalIdRef.invalid && (professionalIdRef.dirty || professionalIdRef.touched)) {
-            <div>
-              @if (editForm.get('professionalId')?.errors?.required) {
-                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
-              }
-            </div>
-          }
-        </div>
-
-        @let shiftRef = editForm.get('shift')!;
-        <div class="mb-3">
-          <label class="form-label" for="field_shift" hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.shift">Shift</label>
-          <select class="form-control" name="shift" formControlName="shift" id="field_shift" data-cy="shift">
-            <option [ngValue]="null">{{ 'adminDashboardApp.ShiftType.null' | translate }}</option>
-            @for (shiftType of shiftTypeValues; track $index) {
-              <option [value]="shiftType">{{ 'adminDashboardApp.ShiftType.' + shiftType | translate }}</option>
-            }
-          </select>
-          @if (shiftRef.invalid && (shiftRef.dirty || shiftRef.touched)) {
-            <div>
-              @if (editForm.get('shift')?.errors?.required) {
-                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
-              }
-            </div>
-          }
-        </div>
-
-        @let nameRef = editForm.get('name')!;
-        <div class="mb-3">
-          <label class="form-label" for="field_name" hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.name">Name</label>
-          <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
-          @if (nameRef.invalid && (nameRef.dirty || nameRef.touched)) {
-            <div>
-              @if (editForm.get('name')?.errors?.required) {
-                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
-              }
-            </div>
-          }
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label" for="field_description" hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.description"
-            >Description</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            name="description"
-            id="field_description"
-            data-cy="description"
-            formControlName="description"
-          />
-        </div>
-
-        @let patientIdRef = editForm.get('patientId')!;
-        <div class="mb-3">
-          <label class="form-label" for="field_patientId" hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.patientId"
-            >Patient Id</label
-          >
-          <input type="text" class="form-control" name="patientId" id="field_patientId" data-cy="patientId" formControlName="patientId" />
-          @if (patientIdRef.invalid && (patientIdRef.dirty || patientIdRef.touched)) {
-            <div>
-              @if (editForm.get('patientId')?.errors?.required) {
-                <small class="form-text text-danger" hpdTranslate="entity.validation.required">This field is required.</small>
-              }
-            </div>
-          }
-        </div>
-      </div>
-
-      <div>
-        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
-          <fa-icon icon="ban"></fa-icon>&nbsp;<span hpdTranslate="entity.action.cancel">Cancel</span>
-        </button>
-
-        <button
-          type="submit"
-          id="save-entity"
-          data-cy="entityCreateSaveButton"
-          [disabled]="editForm.invalid || isSaving"
-          class="btn btn-primary"
+      <mat-form-field>
+        <mat-label hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.date">Date</mat-label>
+        <input matInput id="field_date" data-cy="date" type="date" name="date" formControlName="date" />
+        <mat-error *ngIf="editForm.get('date')?.errors?.required" hpdTranslate="entity.validation.required"
+          >This field is required.</mat-error
         >
-          <fa-icon icon="save"></fa-icon>&nbsp;<span hpdTranslate="entity.action.save">Save</span>
-        </button>
-      </div>
-    </form>
-  </div>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.duty">Duty</mat-label>
+        <mat-select name="duty" formControlName="duty" id="field_duty" data-cy="duty">
+          <mat-option [value]="null">{{ 'adminDashboardApp.DutyRole.null' | translate }}</mat-option>
+          @for (dutyRole of dutyRoleValues; track dutyRole) {
+            <mat-option [value]="dutyRole">{{ 'adminDashboardApp.DutyRole.' + dutyRole | translate }}</mat-option>
+          }
+        </mat-select>
+        <mat-error *ngIf="editForm.get('duty')?.errors?.required" hpdTranslate="entity.validation.required"
+          >This field is required.</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.professionalId">Professional Id</mat-label>
+        <input
+          matInput
+          type="text"
+          name="professionalId"
+          id="field_professionalId"
+          data-cy="professionalId"
+          formControlName="professionalId"
+        />
+        <mat-error *ngIf="editForm.get('professionalId')?.errors?.required" hpdTranslate="entity.validation.required">
+          This field is required.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.shift">Shift</mat-label>
+        <mat-select name="shift" formControlName="shift" id="field_shift" data-cy="shift">
+          <mat-option [value]="null">{{ 'adminDashboardApp.ShiftType.null' | translate }}</mat-option>
+          @for (shiftType of shiftTypeValues; track shiftType) {
+            <mat-option [value]="shiftType">{{ 'adminDashboardApp.ShiftType.' + shiftType | translate }}</mat-option>
+          }
+        </mat-select>
+        <mat-error *ngIf="editForm.get('shift')?.errors?.required" hpdTranslate="entity.validation.required"
+          >This field is required.</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.name">Name</mat-label>
+        <input matInput type="text" name="name" id="field_name" data-cy="name" formControlName="name" />
+        <mat-error *ngIf="editForm.get('name')?.errors?.required" hpdTranslate="entity.validation.required"
+          >This field is required.</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field class="md:col-span-2">
+        <mat-label hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.description">Description</mat-label>
+        <textarea
+          matInput
+          name="description"
+          id="field_description"
+          data-cy="description"
+          formControlName="description"
+          rows="3"
+        ></textarea>
+      </mat-form-field>
+
+      <mat-form-field class="md:col-span-2">
+        <mat-label hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.patientId">Patient Id</mat-label>
+        <input matInput type="text" name="patientId" id="field_patientId" data-cy="patientId" formControlName="patientId" />
+        <mat-error *ngIf="editForm.get('patientId')?.errors?.required" hpdTranslate="entity.validation.required"
+          >This field is required.</mat-error
+        >
+      </mat-form-field>
+    </div>
+
+    <div class="flex flex-wrap justify-end gap-3">
+      <button
+        type="button"
+        id="cancel-save"
+        data-cy="entityCreateCancelButton"
+        mat-button
+        class="!rounded-full !px-4"
+        (click)="previousState()"
+      >
+        <mat-icon>close</mat-icon>
+        <span hpdTranslate="entity.action.cancel">Cancel</span>
+      </button>
+
+      <button
+        type="submit"
+        id="save-entity"
+        data-cy="entityCreateSaveButton"
+        [disabled]="editForm.invalid || isSaving"
+        mat-flat-button
+        class="!rounded-full !bg-slate-900 !px-4 !text-white"
+      >
+        <mat-icon>save</mat-icon>
+        <span hpdTranslate="entity.action.save">Save</span>
+      </button>
+    </div>
+  </form>
 </div>

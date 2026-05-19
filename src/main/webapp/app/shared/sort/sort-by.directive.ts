@@ -1,8 +1,7 @@
-import { AfterContentInit, ContentChild, Directive, Host, HostListener, Input, OnDestroy } from '@angular/core';
+import { AfterContentInit, ContentChild, Directive, ElementRef, Host, HostListener, Input, OnDestroy } from '@angular/core';
+import { MatIcon } from '@angular/material/icon';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { faSort, faSortDown, faSortUp, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 import SortDirective from './sort.directive';
 
@@ -13,12 +12,8 @@ import SortDirective from './sort.directive';
 export default class SortByDirective<T extends string = string> implements AfterContentInit, OnDestroy {
   @Input() hpdSortBy!: T;
 
-  @ContentChild(FaIconComponent, { static: false })
-  iconComponent?: FaIconComponent;
-
-  sortIcon = faSort;
-  sortAscIcon = faSortUp;
-  sortDescIcon = faSortDown;
+  @ContentChild(MatIcon, { read: ElementRef, static: false })
+  iconElement?: ElementRef<HTMLElement>;
 
   private readonly destroy$ = new Subject<void>();
 
@@ -29,7 +24,7 @@ export default class SortByDirective<T extends string = string> implements After
 
   @HostListener('click')
   onClick(): void {
-    if (this.iconComponent) {
+    if (this.iconElement) {
       this.sort.sort(this.hpdSortBy);
     }
   }
@@ -44,13 +39,12 @@ export default class SortByDirective<T extends string = string> implements After
   }
 
   private updateIconDefinition(): void {
-    if (this.iconComponent) {
-      let icon: IconDefinition = this.sortIcon;
+    if (this.iconElement) {
+      let icon = 'unfold_more';
       if (this.sort.predicate === this.hpdSortBy) {
-        icon = this.sort.ascending ? this.sortAscIcon : this.sortDescIcon;
+        icon = this.sort.ascending ? 'arrow_upward' : 'arrow_downward';
       }
-      this.iconComponent.icon = icon.iconName;
-      this.iconComponent.render();
+      this.iconElement.nativeElement.textContent = icon;
     }
   }
 }

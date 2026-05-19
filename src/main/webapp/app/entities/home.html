@@ -1,54 +1,100 @@
 @if (account) {
-<div class="row d-flex justify-content-center">
-  <div class="col-md-10 text-primary">
-    <hpd-dashboard></hpd-dashboard>
-  </div>
+<div class="mx-auto max-w-7xl">
+  <hpd-dashboard></hpd-dashboard>
 </div>
 } @else {
-<div class="row">
-  <div class="col-md-3 col-sm-12 d-none d-sm-block">
-    <span class="healthconnect img-fluid rounded"></span>
+<div class="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[minmax(0,18rem)_1fr]">
+  <div class="hidden justify-center lg:flex">
+    <span class="healthconnect rounded-3xl"></span>
   </div>
-  <div class="col-md-6 col-sm-12 text-primary">
-    <h1 class="display-4 mb-2"><span hpdTranslate="home.title">Welcome!</span></h1>
 
-    <p class="lead" hpdTranslate="home.subtitle">This is your homepage</p>
-
-    <div class="alert alert-primary mt-5">
-      <span hpdTranslate="global.messages.info.authenticated.prefix">If you want to </span>
-      <a class="alert-link" (click)="login()" hpdTranslate="global.messages.info.authenticated.link">sign
-        in</a>.
+  <div class="space-y-6 rounded-3xl border border-slate-200 bg-white p-6 text-slate-700 shadow-sm md:p-8">
+    <div class="space-y-2">
+      <h1 class="text-4xl font-semibold tracking-tight text-slate-900">
+        <span hpdTranslate="home.title">Welcome!</span>
+      </h1>
+      <p class="text-lg text-slate-500" hpdTranslate="home.subtitle">This is your homepage</p>
     </div>
 
-    <p hpdTranslate="home.question">If you have any question on JHipster:</p>
+    <div class="rounded-2xl border border-cyan-200 bg-cyan-50 px-4 py-3 text-sm text-cyan-900">
+      <span hpdTranslate="global.messages.info.authenticated.prefix">If you want to </span>
+      <button
+        type="button"
+        class="font-semibold text-cyan-700 underline decoration-cyan-300 underline-offset-4 transition hover:text-cyan-900"
+        (click)="login()"
+        hpdTranslate="global.messages.info.authenticated.link"
+      >
+        sign in
+      </button>
+      .
+    </div>
 
-    <ul>
-      <li>
-        <a href="https://healthconnect.jojoaddison.net/" target="_blank" rel="noopener noreferrer"
-          hpdTranslate="home.link.homepage">Health Connect homepage</a>
-      </li>
-      <li>
-        <a href="https://stackoverflow.com/tags/jojoaddison/healthconnect" target="_blank" rel="noopener noreferrer"
-          hpdTranslate="home.link.stackoverflow">Health Connect on Stack Overflow</a>
-      </li>
-      <li>
-        <a href="https://github.com/jojoaddison/health-connect/issues?state=open" target="_blank"
-          rel="noopener noreferrer" hpdTranslate="home.link.bugtracker">Health Connect bug tracker</a>
-      </li>
-      <li>
-        <a href="https://gitter.im/jojoaddison/health-connect" target="_blank" rel="noopener noreferrer"
-          hpdTranslate="home.link.chat">Health Connect public chat room</a>
-      </li>
-      <li>
-        <a href="https://x.com/jojoaddison-health-connect" target="_blank" rel="noopener noreferrer"
-          hpdTranslate="home.link.follow">follow &#64;health connect on Twitter</a>
-      </li>
-    </ul>
+    <div class="space-y-4">
+      <p class="text-sm font-medium uppercase tracking-wide text-slate-500" hpdTranslate="home.question">
+        If you have any question on JHipster:
+      </p>
 
-    <p>
+      <div class="grid gap-3 sm:grid-cols-2">
+        <a
+          href="https://healthconnect.jojoaddison.net/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 no-underline transition hover:border-slate-300 hover:bg-slate-100"
+          hpdTranslate="home.link.homepage"
+        >
+          Health Connect homepage
+        </a>
+        <a
+          href="https://stackoverflow.com/tags/jojoaddison/healthconnect"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 no-underline transition hover:border-slate-300 hover:bg-slate-100"
+          hpdTranslate="home.link.stackoverflow"
+        >
+          Health Connect on Stack Overflow
+        </a>
+        <a
+          href="https://github.com/jojoaddison/health-connect/issues?state=open"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 no-underline transition hover:border-slate-300 hover:bg-slate-100"
+          hpdTranslate="home.link.bugtracker"
+        >
+          Health Connect bug tracker
+        </a>
+        <a
+          href="https://gitter.im/jojoaddison/health-connect"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 no-underline transition hover:border-slate-300 hover:bg-slate-100"
+          hpdTranslate="home.link.chat"
+        >
+          Health Connect public chat room
+        </a>
+        <a
+          href="https://x.com/jojoaddison-health-connect"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 no-underline transition hover:border-slate-300 hover:bg-slate-100 sm:col-span-2"
+          hpdTranslate="home.link.follow"
+        >
+          follow &#64;health connect on Twitter
+        </a>
+      </div>
+    </div>
+
+    <p class="text-sm text-slate-600">
       <span hpdTranslate="home.like">If you like Health Connect, don&apos;t forget to give us a like on</span>
-      <a href="https://facebook.com/jojoaddison" target="_blank" rel="noopener noreferrer"
-        hpdTranslate="home.facebook">GitHub</a>!
+      <a
+        href="https://facebook.com/jojoaddison"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="font-semibold text-slate-900 underline decoration-slate-300 underline-offset-4"
+        hpdTranslate="home.facebook"
+      >
+        GitHub
+      </a>
+      !
     </p>
   </div>
 </div>

@@ -1,108 +1,120 @@
-<div>
-  <h2 id="page-heading" data-cy="FacilityCatalogHeading">
-    <span hpdTranslate="adminDashboardApp.facilityCatalog.home.title">Facility Catalogs</span>
-
-    <div class="d-flex justify-content-end">
-      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
-        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+<div class="space-y-6">
+  <div
+    class="flex flex-col gap-4 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm lg:flex-row lg:items-center lg:justify-between"
+  >
+    <div>
+      <h2 id="page-heading" data-cy="FacilityCatalogHeading" class="text-2xl font-semibold tracking-tight text-slate-900">
+        <span hpdTranslate="adminDashboardApp.facilityCatalog.home.title">Facility Catalogs</span>
+      </h2>
+      <p class="mt-1 text-sm text-slate-500">Manage facility catalog groupings, descriptions, and linked facilities.</p>
+    </div>
+    <div class="flex flex-wrap items-center gap-3">
+      <button type="button" mat-button class="!rounded-full !px-4" (click)="load()" [disabled]="isLoading">
+        <mat-icon [class.animate-spin]="isLoading">refresh</mat-icon>
         <span hpdTranslate="adminDashboardApp.facilityCatalog.home.refreshListLabel">Refresh list</span>
       </button>
-
-      <button
+      <a
         id="jh-create-entity"
         data-cy="entityCreateButton"
-        class="btn btn-primary jh-create-entity create-facility-catalog"
+        class="inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-sm font-medium text-white no-underline transition hover:bg-slate-700"
         [routerLink]="['/facility-catalog/new']"
       >
-        <fa-icon icon="plus"></fa-icon>
+        <mat-icon>add</mat-icon>
         <span hpdTranslate="adminDashboardApp.facilityCatalog.home.createLabel">Create a new Facility Catalog</span>
-      </button>
+      </a>
     </div>
-  </h2>
+  </div>
 
   <hpd-alert-error />
 
   <hpd-alert />
 
   @if (facilityCatalogs().length === 0) {
-    <div class="alert alert-warning" id="no-result">
+    <div class="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-700" id="no-result">
       <span hpdTranslate="adminDashboardApp.facilityCatalog.home.notFound">No Facility Catalogs found</span>
     </div>
   } @else {
-    <div class="table-responsive table-entities" id="entities">
-      <table class="table table-striped" aria-describedby="page-heading">
-        <thead>
-          <tr hpdSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
-            <th scope="col" hpdSortBy="id">
-              <div class="d-flex">
-                <span hpdTranslate="global.field.id">ID</span>
-
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-            <th scope="col" hpdSortBy="name">
-              <div class="d-flex">
-                <span hpdTranslate="adminDashboardApp.facilityCatalog.name">Name</span>
-
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-            <th scope="col" hpdSortBy="description">
-              <div class="d-flex">
-                <span hpdTranslate="adminDashboardApp.facilityCatalog.description">Description</span>
-
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-            <th scope="col" hpdSortBy="facilities">
-              <div class="d-flex">
-                <span hpdTranslate="adminDashboardApp.facilityCatalog.facilities">Facilities</span>
-
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-            <th scope="col"></th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (facilityCatalog of facilityCatalogs(); track trackId(facilityCatalog)) {
-            <tr data-cy="entityTable">
-              <td>
-                <a [routerLink]="['/facility-catalog', facilityCatalog.id, 'view']">{{ facilityCatalog.id }}</a>
-              </td>
-              <td>{{ facilityCatalog.name }}</td>
-              <td>{{ facilityCatalog.description }}</td>
-              <td>{{ facilityCatalog.facilities }}</td>
-              <td class="text-end">
-                <div class="btn-group">
+    <div class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm" id="entities">
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-slate-200" aria-describedby="page-heading">
+          <thead class="bg-slate-50">
+            <tr hpdSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+              @for (
+                column of [
+                  ['id', 'global.field.id'],
+                  ['name', 'adminDashboardApp.facilityCatalog.name'],
+                  ['description', 'adminDashboardApp.facilityCatalog.description'],
+                  ['facilities', 'adminDashboardApp.facilityCatalog.facilities']
+                ];
+                track column[0]
+              ) {
+                <th
+                  scope="col"
+                  [hpdSortBy]="column[0]"
+                  class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500"
+                >
+                  <div class="inline-flex items-center gap-1">
+                    <span [hpdTranslate]="column[1]">{{ column[0] }}</span>
+                    <mat-icon class="!h-4 !w-4 !text-base text-slate-400">unfold_more</mat-icon>
+                  </div>
+                </th>
+              }
+              <th scope="col" class="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-slate-500">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100">
+            @for (facilityCatalog of facilityCatalogs(); track trackId(facilityCatalog)) {
+              <tr data-cy="entityTable" class="hover:bg-slate-50/80">
+                <td class="whitespace-nowrap px-4 py-3 text-sm font-medium text-slate-900">
                   <a
                     [routerLink]="['/facility-catalog', facilityCatalog.id, 'view']"
-                    class="btn btn-info btn-sm"
-                    data-cy="entityDetailsButton"
+                    class="text-slate-900 no-underline hover:text-indigo-600"
                   >
-                    <fa-icon icon="eye"></fa-icon>
-                    <span class="d-none d-md-inline" hpdTranslate="entity.action.view">View</span>
+                    {{ facilityCatalog.id }}
                   </a>
+                </td>
+                <td class="px-4 py-3 text-sm text-slate-600">{{ facilityCatalog.name }}</td>
+                <td class="px-4 py-3 text-sm text-slate-600">{{ facilityCatalog.description }}</td>
+                <td class="px-4 py-3 text-sm text-slate-600">{{ facilityCatalog.facilities }}</td>
+                <td class="px-4 py-3">
+                  <div class="flex justify-end gap-2">
+                    <a
+                      [routerLink]="['/facility-catalog', facilityCatalog.id, 'view']"
+                      mat-button
+                      class="!rounded-full !px-3"
+                      data-cy="entityDetailsButton"
+                    >
+                      <mat-icon>visibility</mat-icon>
+                      <span hpdTranslate="entity.action.view">View</span>
+                    </a>
 
-                  <a
-                    [routerLink]="['/facility-catalog', facilityCatalog.id, 'edit']"
-                    class="btn btn-primary btn-sm"
-                    data-cy="entityEditButton"
-                  >
-                    <fa-icon icon="pencil-alt"></fa-icon>
-                    <span class="d-none d-md-inline" hpdTranslate="entity.action.edit">Edit</span>
-                  </a>
+                    <a
+                      [routerLink]="['/facility-catalog', facilityCatalog.id, 'edit']"
+                      mat-button
+                      class="!rounded-full !px-3"
+                      data-cy="entityEditButton"
+                    >
+                      <mat-icon>edit</mat-icon>
+                      <span hpdTranslate="entity.action.edit">Edit</span>
+                    </a>
 
-                  <button type="submit" (click)="delete(facilityCatalog)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
-                    <fa-icon icon="times"></fa-icon>
-                    <span class="d-none d-md-inline" hpdTranslate="entity.action.delete">Delete</span>
-                  </button>
-                </div>
-              </td>
-            </tr>
-          }
-        </tbody>
-      </table>
+                    <button
+                      type="button"
+                      mat-button
+                      class="!rounded-full !px-3 !text-rose-600"
+                      (click)="delete(facilityCatalog)"
+                      data-cy="entityDeleteButton"
+                    >
+                      <mat-icon>delete</mat-icon>
+                      <span hpdTranslate="entity.action.delete">Delete</span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
     </div>
   }
 </div>

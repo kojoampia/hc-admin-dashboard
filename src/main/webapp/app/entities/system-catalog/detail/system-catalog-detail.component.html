@@ -1,33 +1,43 @@
-<div class="d-flex justify-content-center">
-  <div class="col-8">
-    @if (systemCatalog(); as systemCatalogRef) {
-      <div>
-        <h2 data-cy="systemCatalogDetailsHeading">
+<div class="mx-auto max-w-5xl">
+  @if (systemCatalog(); as systemCatalogRef) {
+    <div class="space-y-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div class="space-y-2">
+        <h2 data-cy="systemCatalogDetailsHeading" class="text-2xl font-semibold text-slate-900">
           <span hpdTranslate="adminDashboardApp.hcAdminServiceSystemCatalog.detail.title">System Catalog</span>
         </h2>
+        <p class="text-sm text-slate-500">Inspect catalog content, classification, and audit history.</p>
+      </div>
 
-        <hr />
+      <hpd-alert-error />
 
-        <hpd-alert-error />
+      <hpd-alert />
 
-        <hpd-alert />
-
-        <dl class="row-md jh-entity-details">
-          <dt><span hpdTranslate="global.field.id">ID</span></dt>
-          <dd>
-            <span>{{ systemCatalogRef.id }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceSystemCatalog.name">Name</span></dt>
-          <dd>
-            <span>{{ systemCatalogRef.name }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceSystemCatalog.description">Description</span></dt>
-          <dd>
-            <span>{{ systemCatalogRef.description }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceSystemCatalog.type">Type</span></dt>
-          <dd>
-            <span [hpdTranslate]="'adminDashboardApp.CatalogType.' + (systemCatalogRef.type ?? 'null')">{{
+      <div class="grid gap-4 sm:grid-cols-2">
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="global.field.id">ID</p>
+          <p class="mt-1 text-sm text-slate-900">{{ systemCatalogRef.id }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceSystemCatalog.name">
+            Name
+          </p>
+          <p class="mt-1 text-sm text-slate-900">{{ systemCatalogRef.name }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4 sm:col-span-2">
+          <p
+            class="text-xs font-semibold uppercase text-slate-500"
+            hpdTranslate="adminDashboardApp.hcAdminServiceSystemCatalog.description"
+          >
+            Description
+          </p>
+          <p class="mt-1 text-sm text-slate-900">{{ systemCatalogRef.description }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceSystemCatalog.type">
+            Type
+          </p>
+          <p class="mt-1 text-sm text-slate-900" [hpdTranslate]="'adminDashboardApp.CatalogType.' + (systemCatalogRef.type ?? 'null')">
+            {{
               {
                 null: '',
                 SERVICE: 'SERVICE',
@@ -35,40 +45,65 @@
                 INFORMATION: 'INFORMATION',
                 CONTACT: 'CONTACT',
                 ABOUT: 'ABOUT',
-                LEGAL: 'LEGAL',
+                LEGAL: 'LEGAL'
               }[systemCatalogRef.type ?? 'null']
-            }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceSystemCatalog.content">Content</span></dt>
-          <dd>
-            <span>{{ systemCatalogRef.content }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceSystemCatalog.createdDate">Created Date</span></dt>
-          <dd>
-            <span>{{ systemCatalogRef.createdDate | formatMediumDatetime }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceSystemCatalog.modifiedDate">Modified Date</span></dt>
-          <dd>
-            <span>{{ systemCatalogRef.modifiedDate | formatMediumDatetime }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceSystemCatalog.createdBy">Created By</span></dt>
-          <dd>
-            <span>{{ systemCatalogRef.createdBy }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceSystemCatalog.modifiedBy">Modified By</span></dt>
-          <dd>
-            <span>{{ systemCatalogRef.modifiedBy }}</span>
-          </dd>
-        </dl>
-
-        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span hpdTranslate="entity.action.back">Back</span>
-        </button>
-
-        <button type="button" [routerLink]="['/system-catalog', systemCatalogRef.id, 'edit']" class="btn btn-primary">
-          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span hpdTranslate="entity.action.edit">Edit</span>
-        </button>
+            }}
+          </p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceSystemCatalog.createdBy">
+            Created By
+          </p>
+          <p class="mt-1 text-sm text-slate-900">{{ systemCatalogRef.createdBy }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4 sm:col-span-2">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceSystemCatalog.content">
+            Content
+          </p>
+          <p class="mt-1 whitespace-pre-wrap text-sm text-slate-900">{{ systemCatalogRef.content }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p
+            class="text-xs font-semibold uppercase text-slate-500"
+            hpdTranslate="adminDashboardApp.hcAdminServiceSystemCatalog.createdDate"
+          >
+            Created Date
+          </p>
+          <p class="mt-1 text-sm text-slate-900">{{ systemCatalogRef.createdDate | formatMediumDatetime }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p
+            class="text-xs font-semibold uppercase text-slate-500"
+            hpdTranslate="adminDashboardApp.hcAdminServiceSystemCatalog.modifiedDate"
+          >
+            Modified Date
+          </p>
+          <p class="mt-1 text-sm text-slate-900">{{ systemCatalogRef.modifiedDate | formatMediumDatetime }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceSystemCatalog.modifiedBy">
+            Modified By
+          </p>
+          <p class="mt-1 text-sm text-slate-900">{{ systemCatalogRef.modifiedBy }}</p>
+        </div>
       </div>
-    }
-  </div>
+
+      <div class="flex flex-wrap justify-end gap-3">
+        <button type="button" mat-button class="!rounded-full !px-4" (click)="previousState()" data-cy="entityDetailsBackButton">
+          <mat-icon>arrow_back</mat-icon>
+          <span hpdTranslate="entity.action.back">Back</span>
+        </button>
+
+        <a
+          type="button"
+          [routerLink]="['/system-catalog', systemCatalogRef.id, 'edit']"
+          mat-flat-button
+          class="!rounded-full !bg-slate-900 !px-4 !text-white"
+        >
+          <mat-icon>edit</mat-icon>
+          <span hpdTranslate="entity.action.edit">Edit</span>
+        </a>
+      </div>
+    </div>
+  }
 </div>

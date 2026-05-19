@@ -33,7 +33,7 @@
 
 ## Conventions
 - Prefer existing npm scripts in `package.json` over ad-hoc commands.
-- Use RxJS/Observable patterns already used in services and auth state management.
+- Use Inject and Signal patterns for services and auth state management.
 - Keep entity patterns consistent (model interface + class + identifier helper and typed service CRUD methods).
 
 ## Environment Prerequisites
@@ -41,6 +41,7 @@
 - E2E tests expect accessible backend/auth endpoints.
 
 ## Key References
+- `AGENTS.md` for agents key instructions and memory 
 - `README.md` for developer workflows and testing setup.
 - `package.json` for canonical scripts.
 - `angular.json` for build/source-root configuration.

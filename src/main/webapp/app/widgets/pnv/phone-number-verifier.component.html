@@ -1,20 +1,39 @@
-<form class="form-row text-right" name="registerForm" role="form" [formGroup]="registerForm" *ngIf="checkPhoneNumber">
-    <div class="form-group p-1">
-        <button (click)="verifyPhoneNumber()" class="btn-lg btn-primary border-0" type="button"
-            [disabled]="showCodeInput">
-            Verify number: {{destinationNumber}}
-        </button>
+@if (checkPhoneNumber) {
+  <form name="registerForm" role="form" [formGroup]="registerForm" class="flex flex-col gap-3">
+    <div class="flex flex-wrap items-start gap-3">
+      <button mat-flat-button type="button" (click)="verifyPhoneNumber()" [disabled]="showCodeInput" class="verify-button">
+        <mat-icon>verified_user</mat-icon>
+        <span>Verify number: {{ destinationNumber }}</span>
+      </button>
+
+      @if (showCodeInput) {
+        <mat-form-field appearance="outline" class="w-full max-w-56">
+          <mat-label hpdTranslate="register.form.code">Verification Code</mat-label>
+          <input
+            matInput
+            type="text"
+            maxlength="5"
+            placeholder="-----"
+            name="verificationCode"
+            id="field_code"
+            formControlName="verificationCode"
+            (keyup)="verifyCode()"
+          />
+        </mat-form-field>
+      }
     </div>
-    <div *ngIf="showCodeInput" class="form-group p-1">
-        <label class="form-control-label" hpdTranslate="register.form.code" for="field_code">Verfication Code</label>
-        <input type="text" maxlength="5" placeholder="-----" class="col-md-2" name="verificationCode" id="field_code"
-            formControlName="verificationCode" (keyup)="verifyCode()" />
-    </div>
-    <span class="badge badge-warning p-2">{{codeVerificationStatus}}</span>
-    <div class="alert alert-warning" *ngIf="isCodeNumberChecking && !isCodeNumberValid">
-        <p>
-            <strong>Number verification failed! Please correct your verification code.</strong>
-        </p>
-    </div>
+
+    @if (codeVerificationStatus) {
+      <div class="rounded-2xl border border-amber-400/40 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+        {{ codeVerificationStatus }}
+      </div>
+    }
+
+    @if (isCodeNumberChecking && !isCodeNumberValid) {
+      <div class="rounded-2xl border border-amber-400/40 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+        <strong>Number verification failed! Please correct your verification code.</strong>
+      </div>
+    }
     <!-- Provide Code Resend Button -->
-</form>
+  </form>
+}

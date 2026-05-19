@@ -5,12 +5,15 @@ import { JhiEventManager } from 'ng-jhipster';
 import { Subscription } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
 import { validatePhoneCode } from '../../shared/util/validators';
+import SharedModule from 'app/shared/shared.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'hpd-phone-number-verifier',
   standalone: true,
   templateUrl: './phone-number-verifier.component.html',
   styleUrls: ['./phone-number-verifier.component.scss'],
+  imports: [SharedModule, ReactiveFormsModule],
 })
 export class PhoneNumberVerifierComponent implements OnInit, OnDestroy {
   @Input() destinationNumber = '';

@@ -1,18 +1,23 @@
-<ngb-carousel [animation]="true" *ngIf="slides && slides.length > 0" class="w-100 text-center text-primary">
+<ngb-carousel [animation]="true" *ngIf="slides && slides.length > 0" class="block overflow-hidden rounded-3xl shadow-lg">
   <ng-template ngbSlide *ngFor="let slide of slides; trackBy: trackId">
-    <div [style]="containerStyle">
-      <img [src]="slide.url" [alt]="" (click)="onClick(slide)" class="rounded rounded-lg" [style.width.px]="imageWidth"
-        [style.height.px]="imageHeight" />
-      <div class="carousel-caption bg-primary" *ngIf="showCaption">
-        <h6 *ngIf="slide.title">
-          <span class="text-center text-white">{{ slide.title }}</span>
-        </h6>
-        <p *ngIf="slide.description">{{ slide.description }}</p>
-        <h6>
-          <button class="btn btn-md btn-info text-yellow" (click)="onClick(slide)">
-            <span hpdTranslate="global.slide.learn">Learn more...</span>
-          </button>
-        </h6>
+    <div class="relative overflow-hidden rounded-3xl bg-slate-950" [style]="containerStyle">
+      <img
+        [src]="slide.url"
+        [alt]="slide.title || ''"
+        (click)="onClick(slide)"
+        class="h-full w-full cursor-pointer object-cover"
+        [style.width.px]="imageWidth"
+        [style.height.px]="imageHeight"
+      />
+
+      <div class="slide-caption" *ngIf="showCaption">
+        <h3 *ngIf="slide.title" class="text-lg font-semibold text-white">
+          {{ slide.title }}
+        </h3>
+        <p *ngIf="slide.description" class="text-sm leading-6 text-slate-100">{{ slide.description }}</p>
+        <button mat-flat-button type="button" class="!rounded-full !bg-cyan-400 !px-4 !text-slate-950" (click)="onClick(slide)">
+          <span hpdTranslate="global.slide.learn">Learn more...</span>
+        </button>
       </div>
     </div>
   </ng-template>

@@ -1,44 +1,56 @@
-<div class="d-flex justify-content-center">
-  <div class="col-8">
-    @if (feature(); as featureRef) {
-      <div>
-        <h2 data-cy="featureDetailsHeading"><span hpdTranslate="adminDashboardApp.hcAdminServiceFeature.detail.title">Feature</span></h2>
-
-        <hr />
-
-        <hpd-alert-error />
-
-        <hpd-alert />
-
-        <dl class="row-md jh-entity-details">
-          <dt><span hpdTranslate="global.field.id">ID</span></dt>
-          <dd>
-            <span>{{ featureRef.id }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceFeature.name">Name</span></dt>
-          <dd>
-            <span>{{ featureRef.name }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceFeature.description">Description</span></dt>
-          <dd>
-            <span>{{ featureRef.description }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceFeature.type">Type</span></dt>
-          <dd>
-            <span [hpdTranslate]="'adminDashboardApp.FeatureType.' + (featureRef.type ?? 'null')">{{
-              { null: '', CORE: 'CORE', ADDON: 'ADDON', PREMIUM: 'PREMIUM' }[featureRef.type ?? 'null']
-            }}</span>
-          </dd>
-        </dl>
-
-        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span hpdTranslate="entity.action.back">Back</span>
-        </button>
-
-        <button type="button" [routerLink]="['/feature', featureRef.id, 'edit']" class="btn btn-primary">
-          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span hpdTranslate="entity.action.edit">Edit</span>
-        </button>
+<div class="mx-auto max-w-5xl">
+  @if (feature(); as featureRef) {
+    <div class="space-y-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div class="space-y-2">
+        <h2 data-cy="featureDetailsHeading" class="text-2xl font-semibold text-slate-900">
+          <span hpdTranslate="adminDashboardApp.hcAdminServiceFeature.detail.title">Feature</span>
+        </h2>
+        <p class="text-sm text-slate-500">Inspect feature metadata, description, and access tier.</p>
       </div>
-    }
-  </div>
+
+      <hpd-alert-error />
+
+      <hpd-alert />
+
+      <div class="grid gap-4 sm:grid-cols-2">
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="global.field.id">ID</p>
+          <p class="mt-1 text-sm text-slate-900">{{ featureRef.id }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceFeature.name">Name</p>
+          <p class="mt-1 text-sm text-slate-900">{{ featureRef.name }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4 sm:col-span-2">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceFeature.description">
+            Description
+          </p>
+          <p class="mt-1 text-sm text-slate-900">{{ featureRef.description }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceFeature.type">Type</p>
+          <p class="mt-1 text-sm text-slate-900" [hpdTranslate]="'adminDashboardApp.FeatureType.' + (featureRef.type ?? 'null')">
+            {{ { null: '', CORE: 'CORE', ADDON: 'ADDON', PREMIUM: 'PREMIUM' }[featureRef.type ?? 'null'] }}
+          </p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap justify-end gap-3">
+        <button type="button" mat-button class="!rounded-full !px-4" (click)="previousState()" data-cy="entityDetailsBackButton">
+          <mat-icon>arrow_back</mat-icon>
+          <span hpdTranslate="entity.action.back">Back</span>
+        </button>
+
+        <a
+          type="button"
+          [routerLink]="['/feature', featureRef.id, 'edit']"
+          mat-flat-button
+          class="!rounded-full !bg-slate-900 !px-4 !text-white"
+        >
+          <mat-icon>edit</mat-icon>
+          <span hpdTranslate="entity.action.edit">Edit</span>
+        </a>
+      </div>
+    </div>
+  }
 </div>

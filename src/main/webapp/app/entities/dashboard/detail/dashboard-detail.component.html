@@ -1,44 +1,56 @@
-<div class="d-flex justify-content-center">
-  <div class="col-8">
-    @if (dashboard(); as dashboardRef) {
-      <div>
-        <h2 data-cy="dashboardDetailsHeading">
+<div class="mx-auto max-w-5xl">
+  @if (dashboard(); as dashboardRef) {
+    <div class="space-y-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div class="space-y-2">
+        <h2 data-cy="dashboardDetailsHeading" class="text-2xl font-semibold text-slate-900">
           <span hpdTranslate="adminDashboardApp.hcAdminServiceDashboard.detail.title">Dashboard</span>
         </h2>
-
-        <hr />
-
-        <hpd-alert-error />
-
-        <hpd-alert />
-
-        <dl class="row-md jh-entity-details">
-          <dt><span hpdTranslate="global.field.id">ID</span></dt>
-          <dd>
-            <span>{{ dashboardRef.id }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceDashboard.name">Name</span></dt>
-          <dd>
-            <span>{{ dashboardRef.name }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceDashboard.description">Description</span></dt>
-          <dd>
-            <span>{{ dashboardRef.description }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceDashboard.elements">Elements</span></dt>
-          <dd>
-            <span>{{ dashboardRef.elements }}</span>
-          </dd>
-        </dl>
-
-        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span hpdTranslate="entity.action.back">Back</span>
-        </button>
-
-        <button type="button" [routerLink]="['/dashboard', dashboardRef.id, 'edit']" class="btn btn-primary">
-          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span hpdTranslate="entity.action.edit">Edit</span>
-        </button>
+        <p class="text-sm text-slate-500">Review dashboard metadata, description, and configured elements.</p>
       </div>
-    }
-  </div>
+
+      <hpd-alert-error />
+
+      <hpd-alert />
+
+      <div class="grid gap-4 sm:grid-cols-2">
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="global.field.id">ID</p>
+          <p class="mt-1 text-sm text-slate-900">{{ dashboardRef.id }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceDashboard.name">Name</p>
+          <p class="mt-1 text-sm text-slate-900">{{ dashboardRef.name }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4 sm:col-span-2">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceDashboard.description">
+            Description
+          </p>
+          <p class="mt-1 text-sm text-slate-900">{{ dashboardRef.description }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4 sm:col-span-2">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceDashboard.elements">
+            Elements
+          </p>
+          <p class="mt-1 text-sm text-slate-900">{{ dashboardRef.elements }}</p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap justify-end gap-3">
+        <button type="button" mat-button class="!rounded-full !px-4" (click)="previousState()" data-cy="entityDetailsBackButton">
+          <mat-icon>arrow_back</mat-icon>
+          <span hpdTranslate="entity.action.back">Back</span>
+        </button>
+
+        <a
+          type="button"
+          [routerLink]="['/dashboard', dashboardRef.id, 'edit']"
+          mat-flat-button
+          class="!rounded-full !bg-slate-900 !px-4 !text-white"
+        >
+          <mat-icon>edit</mat-icon>
+          <span hpdTranslate="entity.action.edit">Edit</span>
+        </a>
+      </div>
+    </div>
+  }
 </div>

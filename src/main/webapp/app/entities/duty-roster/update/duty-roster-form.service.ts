@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
+import dayjs from 'dayjs/esm';
+import { DATE_FORMAT } from 'app/config/input.constants';
 import { IDutyRoster, NewDutyRoster } from '../duty-roster.model';
 
 /**
@@ -14,17 +16,25 @@ type PartialWithRequiredKeyOf<T extends { id: unknown }> = Partial<Omit<T, 'id'>
  */
 type DutyRosterFormGroupInput = IDutyRoster | PartialWithRequiredKeyOf<NewDutyRoster>;
 
+type FormValueOf<T extends IDutyRoster | NewDutyRoster> = Omit<T, 'date'> & {
+  date?: string | null;
+};
+
+type DutyRosterFormRawValue = FormValueOf<IDutyRoster>;
+
+type NewDutyRosterFormRawValue = FormValueOf<NewDutyRoster>;
+
 type DutyRosterFormDefaults = Pick<NewDutyRoster, 'id'>;
 
 type DutyRosterFormGroupContent = {
-  id: FormControl<IDutyRoster['id'] | NewDutyRoster['id']>;
-  date: FormControl<IDutyRoster['date']>;
-  duty: FormControl<IDutyRoster['duty']>;
-  professionalId: FormControl<IDutyRoster['professionalId']>;
-  shift: FormControl<IDutyRoster['shift']>;
-  name: FormControl<IDutyRoster['name']>;
-  description: FormControl<IDutyRoster['description']>;
-  patientId: FormControl<IDutyRoster['patientId']>;
+  id: FormControl<DutyRosterFormRawValue['id'] | NewDutyRoster['id']>;
+  date: FormControl<DutyRosterFormRawValue['date']>;
+  duty: FormControl<DutyRosterFormRawValue['duty']>;
+  professionalId: FormControl<DutyRosterFormRawValue['professionalId']>;
+  shift: FormControl<DutyRosterFormRawValue['shift']>;
+  name: FormControl<DutyRosterFormRawValue['name']>;
+  description: FormControl<DutyRosterFormRawValue['description']>;
+  patientId: FormControl<DutyRosterFormRawValue['patientId']>;
 };
 
 export type DutyRosterFormGroup = FormGroup<DutyRosterFormGroupContent>;
@@ -32,10 +42,10 @@ export type DutyRosterFormGroup = FormGroup<DutyRosterFormGroupContent>;
 @Injectable({ providedIn: 'root' })
 export class DutyRosterFormService {
   createDutyRosterFormGroup(dutyRoster: DutyRosterFormGroupInput = { id: null }): DutyRosterFormGroup {
-    const dutyRosterRawValue = {
+    const dutyRosterRawValue = this.convertDutyRosterToDutyRosterRawValue({
       ...this.getFormDefaults(),
       ...dutyRoster,
-    };
+    });
     return new FormGroup<DutyRosterFormGroupContent>({
       id: new FormControl(
         { value: dutyRosterRawValue.id, disabled: true },
@@ -67,11 +77,11 @@ export class DutyRosterFormService {
   }
 
   getDutyRoster(form: DutyRosterFormGroup): IDutyRoster | NewDutyRoster {
-    return form.getRawValue() as IDutyRoster | NewDutyRoster;
+    return this.convertDutyRosterRawValueToDutyRoster(form.getRawValue() as DutyRosterFormRawValue | NewDutyRosterFormRawValue);
   }
 
   resetForm(form: DutyRosterFormGroup, dutyRoster: DutyRosterFormGroupInput): void {
-    const dutyRosterRawValue = { ...this.getFormDefaults(), ...dutyRoster };
+    const dutyRosterRawValue = this.convertDutyRosterToDutyRosterRawValue({ ...this.getFormDefaults(), ...dutyRoster });
     form.reset(
       {
         ...dutyRosterRawValue,
@@ -83,6 +93,24 @@ export class DutyRosterFormService {
   private getFormDefaults(): DutyRosterFormDefaults {
     return {
       id: null,
+    };
+  }
+
+  private convertDutyRosterRawValueToDutyRoster(
+    rawDutyRoster: DutyRosterFormRawValue | NewDutyRosterFormRawValue,
+  ): IDutyRoster | NewDutyRoster {
+    return {
+      ...rawDutyRoster,
+      date: rawDutyRoster.date ? dayjs(rawDutyRoster.date, DATE_FORMAT) : undefined,
+    };
+  }
+
+  private convertDutyRosterToDutyRosterRawValue(
+    dutyRoster: IDutyRoster | (Partial<NewDutyRoster> & DutyRosterFormDefaults),
+  ): DutyRosterFormRawValue | PartialWithRequiredKeyOf<NewDutyRosterFormRawValue> {
+    return {
+      ...dutyRoster,
+      date: dutyRoster.date ? dutyRoster.date.format(DATE_FORMAT) : undefined,
     };
   }
 }

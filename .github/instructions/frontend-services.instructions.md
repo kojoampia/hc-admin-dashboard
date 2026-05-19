@@ -113,7 +113,6 @@ Always use `@Injectable({ providedIn: 'root' })`.
 ## Imports Order
 
 1. Angular core (`@angular/core`, `@angular/common/http`)
-2. RxJS (`rxjs`, `rxjs/operators`)
-3. Third-party (`dayjs/esm`)
-4. App core utilities (`app/core/...`, `app/config/...`)
-5. Local entity model (`../entity.model`)
+2. Third-party (`dayjs/esm`)
+3. App core utilities (`app/core/...`, `app/config/...`)
+4. Local entity model (`../entity.model`)

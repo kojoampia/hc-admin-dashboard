@@ -1,18 +1,21 @@
-<form action="#" class="form-row form-inline">
-    <div class="form-group col-md-2">
-        <label for="filter" hpdTranslate='global.field.drop-down-box'>Filter:</label>
-        <select id="filter" class="form-control form-control-sm" single name="filter" [(ngModel)]="filterSelected" (change)="setFilterSelected(filterSelected)">
-            <option class="option" ng-selected="filterSelected === item.value" *ngFor="let item of itemList "
-                [value]="item.value">
-                {{ item.name | translate}}
-            </option>
-        </select>
-    </div>
-    <div class="form-group col-md-9">
-        <label hpdTranslate="global.field.searchBy">By:</label>
-        <input type="text" name="searchInput" [(ngModel)]="searchInput" class="form-control form-control-sm w-90">
-    </div>
-    <div class="form-group col-md-1">
-        <button class="btn btn-primary btn-sm" type="button" (click)="search()">search</button>
-    </div>
+<form action="#" class="grid gap-4 md:grid-cols-[minmax(0,14rem)_1fr_auto]">
+  <mat-form-field>
+    <mat-label hpdTranslate="global.field.drop-down-box">Filter:</mat-label>
+    <mat-select id="filter" name="filter" [(ngModel)]="filterSelected" (selectionChange)="setFilterSelected(filterSelected)">
+      <mat-option *ngFor="let item of itemList" [value]="item.value">
+        {{ item.name | translate }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label hpdTranslate="global.field.searchBy">By:</mat-label>
+    <input matInput type="text" name="searchInput" [(ngModel)]="searchInput" />
+  </mat-form-field>
+
+  <div class="flex items-start md:justify-end">
+    <button mat-flat-button type="button" class="search-button !rounded-full !bg-slate-900 !px-4 !text-white" (click)="search()">
+      Search
+    </button>
+  </div>
 </form>

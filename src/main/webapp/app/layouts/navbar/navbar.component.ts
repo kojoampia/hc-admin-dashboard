@@ -15,11 +15,16 @@ import { EntityNavbarItems } from 'app/entities/entity-navbar-items';
 import ActiveMenuDirective from './active-menu.directive';
 import NavbarItem from './navbar-item.model';
 
+type MenuItem = NavbarItem & {
+  icon: string;
+  dataCy?: string;
+};
+
 @Component({
-    selector: 'hpd-navbar',
-    templateUrl: './navbar.component.html',
-    styleUrl: './navbar.component.scss',
-    imports: [RouterModule, SharedModule, HasAnyAuthorityDirective, ActiveMenuDirective]
+  selector: 'hpd-navbar',
+  templateUrl: './navbar.component.html',
+  styleUrl: './navbar.component.scss',
+  imports: [RouterModule, SharedModule, HasAnyAuthorityDirective, ActiveMenuDirective],
 })
 export default class NavbarComponent implements OnInit {
   inProduction?: boolean;
@@ -29,6 +34,27 @@ export default class NavbarComponent implements OnInit {
   version = '';
   account: Account | null = null;
   entitiesNavbarItems: NavbarItem[] = [];
+  entityRoutes: string[] = [];
+  readonly adminMenuItems: MenuItem[] = [
+    { name: 'Gateway', route: '/admin/gateway', translationKey: 'global.menu.admin.gateway', icon: 'lan' },
+    {
+      name: 'User management',
+      route: '/admin/user-management',
+      translationKey: 'global.menu.admin.userManagement',
+      icon: 'groups',
+    },
+    { name: 'Metrics', route: '/admin/metrics', translationKey: 'global.menu.admin.metrics', icon: 'monitoring' },
+    { name: 'Health', route: '/admin/health', translationKey: 'global.menu.admin.health', icon: 'favorite' },
+    {
+      name: 'Configuration',
+      route: '/admin/configuration',
+      translationKey: 'global.menu.admin.configuration',
+      icon: 'settings',
+    },
+    { name: 'Logs', route: '/admin/logs', translationKey: 'global.menu.admin.logs', icon: 'receipt_long' },
+  ];
+  readonly adminRoutes = this.adminMenuItems.map(item => item.route);
+  readonly accountRoutes = ['/account/settings', '/account/password'];
 
   constructor(
     private loginService: LoginService,
@@ -45,6 +71,7 @@ export default class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.entitiesNavbarItems = EntityNavbarItems;
+    this.entityRoutes = this.entitiesNavbarItems.map(item => item.route);
     this.profileService.getProfileInfo().subscribe(profileInfo => {
       this.inProduction = profileInfo.inProduction;
       this.openAPIEnabled = profileInfo.openAPIEnabled;
@@ -56,6 +83,7 @@ export default class NavbarComponent implements OnInit {
   }
 
   changeLanguage(languageKey: string): void {
+    this.collapseNavbar();
     this.stateStorageService.storeLocale(languageKey);
     this.translateService.use(languageKey);
   }
@@ -65,6 +93,7 @@ export default class NavbarComponent implements OnInit {
   }
 
   login(): void {
+    this.collapseNavbar();
     this.router.navigate(['/login']);
   }
 
@@ -76,5 +105,14 @@ export default class NavbarComponent implements OnInit {
 
   toggleNavbar(): void {
     this.isNavbarCollapsed = !this.isNavbarCollapsed;
+  }
+
+  isRouteActive(route: string, exact = false): boolean {
+    const currentUrl = this.router.url.split('?')[0]?.split('#')[0] ?? '';
+    return exact ? currentUrl === route : currentUrl === route || currentUrl.startsWith(`${route}/`);
+  }
+
+  isAnyRouteActive(routes: readonly string[]): boolean {
+    return routes.some(route => this.isRouteActive(route));
   }
 }

@@ -1,41 +1,49 @@
-/* ==========================================================================
-Navbar
-========================================================================== */
-
 .navbar-version {
-  font-size: 0.65em;
-  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.7rem;
+  color: rgba(165, 243, 252, 0.72);
 }
 
 .profile-image {
-  height: 1.75em;
-  width: 1.75em;
+  height: 1.9rem;
+  width: 1.9rem;
 }
 
-.navbar {
-  padding: 0.2rem 1rem;
+.nav-action {
+  justify-content: flex-start;
+  border-radius: 9999px;
+  color: #a5f3fc !important;
+  font-weight: 500;
+}
 
-  a.nav-link {
-    font-weight: 400;
+.nav-action-active {
+  background-color: rgba(34, 211, 238, 0.14);
+  color: #ecfeff !important;
+}
+
+.nav-account-visual {
+  display: inline-flex;
+  align-items: center;
+}
+
+:host ::ng-deep .navbar-menu-panel {
+  .mat-mdc-menu-content {
+    padding-block: 0.35rem;
   }
-  
-  color: #29cece !important;
-  background-color: #0c3b3b !important;
-  border-bottom: #29cece 1px solid;
-  padding-bottom: 5px;
-  margin-bottom: 20px;
+
+  .mat-mdc-menu-item {
+    min-height: 2.75rem;
+    color: #0f172a;
+  }
+
+  .mat-icon {
+    color: #0891b2;
+  }
+
+  .mat-mdc-menu-item.active {
+    background-color: rgba(34, 211, 238, 0.12);
+  }
 }
 
-.nav-item {
-  color: #29cece;
-  background-color: #0c3b3b !important;
-
-}
-
-
-/* ==========================================================================
-Logo styles
-========================================================================== */
 .logo-img {
   height: 45px;
   width: 45px;

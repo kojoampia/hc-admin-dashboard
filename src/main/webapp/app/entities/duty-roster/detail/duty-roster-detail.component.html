@@ -1,29 +1,30 @@
-<div class="d-flex justify-content-center">
-  <div class="col-8">
-    @if (dutyRoster(); as dutyRosterRef) {
-      <div>
-        <h2 data-cy="dutyRosterDetailsHeading">
+<div class="mx-auto max-w-5xl">
+  @if (dutyRoster(); as dutyRosterRef) {
+    <div class="space-y-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div class="space-y-2">
+        <h2 data-cy="dutyRosterDetailsHeading" class="text-2xl font-semibold text-slate-900">
           <span hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.detail.title">Duty Roster</span>
         </h2>
+        <p class="text-sm text-slate-500">Inspect dates, duty assignments, shifts, and linked records.</p>
+      </div>
 
-        <hr />
+      <hpd-alert-error />
 
-        <hpd-alert-error />
+      <hpd-alert />
 
-        <hpd-alert />
-
-        <dl class="row-md jh-entity-details">
-          <dt><span hpdTranslate="global.field.id">ID</span></dt>
-          <dd>
-            <span>{{ dutyRosterRef.id }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.date">Date</span></dt>
-          <dd>
-            <span>{{ dutyRosterRef.date | formatMediumDate }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.duty">Duty</span></dt>
-          <dd>
-            <span [hpdTranslate]="'adminDashboardApp.DutyRole.' + (dutyRosterRef.duty ?? 'null')">{{
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="global.field.id">ID</p>
+          <p class="mt-1 text-sm text-slate-900">{{ dutyRosterRef.id }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.date">Date</p>
+          <p class="mt-1 text-sm text-slate-900">{{ dutyRosterRef.date | formatMediumDate }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.duty">Duty</p>
+          <p class="mt-1 text-sm text-slate-900" [hpdTranslate]="'adminDashboardApp.DutyRole.' + (dutyRosterRef.duty ?? 'null')">
+            {{
               {
                 null: '',
                 CARE: 'CARE',
@@ -33,42 +34,62 @@
                 MEDIC: 'MEDIC',
                 TECHNICIAN: 'TECHNICIAN',
                 ADMINISTRATOR: 'ADMINISTRATOR',
-                OTHER: 'OTHER',
+                OTHER: 'OTHER'
               }[dutyRosterRef.duty ?? 'null']
-            }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.professionalId">Professional Id</span></dt>
-          <dd>
-            <span>{{ dutyRosterRef.professionalId }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.shift">Shift</span></dt>
-          <dd>
-            <span [hpdTranslate]="'adminDashboardApp.ShiftType.' + (dutyRosterRef.shift ?? 'null')">{{
-              { null: '', MORNING: 'MORNING', AFTERNOON: 'AFTERNOON', NIGHT: 'NIGHT' }[dutyRosterRef.shift ?? 'null']
-            }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.name">Name</span></dt>
-          <dd>
-            <span>{{ dutyRosterRef.name }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.description">Description</span></dt>
-          <dd>
-            <span>{{ dutyRosterRef.description }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.patientId">Patient Id</span></dt>
-          <dd>
-            <span>{{ dutyRosterRef.patientId }}</span>
-          </dd>
-        </dl>
-
-        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span hpdTranslate="entity.action.back">Back</span>
-        </button>
-
-        <button type="button" [routerLink]="['/duty-roster', dutyRosterRef.id, 'edit']" class="btn btn-primary">
-          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span hpdTranslate="entity.action.edit">Edit</span>
-        </button>
+            }}
+          </p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p
+            class="text-xs font-semibold uppercase text-slate-500"
+            hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.professionalId"
+          >
+            Professional Id
+          </p>
+          <p class="mt-1 text-sm text-slate-900">{{ dutyRosterRef.professionalId }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.shift">
+            Shift
+          </p>
+          <p class="mt-1 text-sm text-slate-900" [hpdTranslate]="'adminDashboardApp.ShiftType.' + (dutyRosterRef.shift ?? 'null')">
+            {{ { null: '', MORNING: 'MORNING', AFTERNOON: 'AFTERNOON', NIGHT: 'NIGHT' }[dutyRosterRef.shift ?? 'null'] }}
+          </p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.name">Name</p>
+          <p class="mt-1 text-sm text-slate-900">{{ dutyRosterRef.name }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4 lg:col-span-3">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.description">
+            Description
+          </p>
+          <p class="mt-1 text-sm text-slate-900">{{ dutyRosterRef.description }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4 lg:col-span-2">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceDutyRoster.patientId">
+            Patient Id
+          </p>
+          <p class="mt-1 text-sm text-slate-900">{{ dutyRosterRef.patientId }}</p>
+        </div>
       </div>
-    }
-  </div>
+
+      <div class="flex flex-wrap justify-end gap-3">
+        <button type="button" mat-button class="!rounded-full !px-4" (click)="previousState()" data-cy="entityDetailsBackButton">
+          <mat-icon>arrow_back</mat-icon>
+          <span hpdTranslate="entity.action.back">Back</span>
+        </button>
+
+        <a
+          type="button"
+          [routerLink]="['/duty-roster', dutyRosterRef.id, 'edit']"
+          mat-flat-button
+          class="!rounded-full !bg-slate-900 !px-4 !text-white"
+        >
+          <mat-icon>edit</mat-icon>
+          <span hpdTranslate="entity.action.edit">Edit</span>
+        </a>
+      </div>
+    </div>
+  }
 </div>

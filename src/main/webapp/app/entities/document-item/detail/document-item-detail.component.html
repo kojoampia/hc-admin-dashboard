@@ -1,31 +1,41 @@
-<div class="d-flex justify-content-center">
-  <div class="col-8">
-    @if (documentItem(); as documentItemRef) {
-      <div>
-        <h2 data-cy="documentItemDetailsHeading"><span hpdTranslate="adminDashboardApp.documentItem.detail.title">Document Item</span></h2>
+<div class="mx-auto max-w-5xl">
+  @if (documentItem(); as documentItemRef) {
+    <div class="space-y-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div class="space-y-2">
+        <h2 data-cy="documentItemDetailsHeading" class="text-2xl font-semibold text-slate-900">
+          <span hpdTranslate="adminDashboardApp.documentItem.detail.title">Document Item</span>
+        </h2>
+        <p class="text-sm text-slate-500">Review document metadata, type, URL, and audit history.</p>
+      </div>
 
-        <hr />
+      <hpd-alert-error />
 
-        <hpd-alert-error />
+      <hpd-alert />
 
-        <hpd-alert />
-
-        <dl class="row-md jh-entity-details">
-          <dt><span hpdTranslate="global.field.id">ID</span></dt>
-          <dd>
-            <span>{{ documentItemRef.id }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.documentItem.name">Name</span></dt>
-          <dd>
-            <span>{{ documentItemRef.name }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.documentItem.description">Description</span></dt>
-          <dd>
-            <span>{{ documentItemRef.description }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.documentItem.documentType">Document Type</span></dt>
-          <dd>
-            <span [hpdTranslate]="'adminDashboardApp.DocumentType.' + (documentItemRef.documentType ?? 'null')">{{
+      <div class="grid gap-4 sm:grid-cols-2">
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="global.field.id">ID</p>
+          <p class="mt-1 text-sm text-slate-900">{{ documentItemRef.id }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.documentItem.name">Name</p>
+          <p class="mt-1 text-sm text-slate-900">{{ documentItemRef.name }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4 sm:col-span-2">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.documentItem.description">
+            Description
+          </p>
+          <p class="mt-1 text-sm text-slate-900">{{ documentItemRef.description }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.documentItem.documentType">
+            Document Type
+          </p>
+          <p
+            class="mt-1 text-sm text-slate-900"
+            [hpdTranslate]="'adminDashboardApp.DocumentType.' + (documentItemRef.documentType ?? 'null')"
+          >
+            {{
               {
                 null: '',
                 PASSPORT: 'PASSPORT',
@@ -34,40 +44,53 @@
                 CERTIFICATE: 'CERTIFICATE',
                 BUSINESS_LICENCE: 'BUSINESS_LICENCE',
                 PROFESSIONAL_LICENSE: 'PROFESSIONAL_LICENSE',
-                OTHER: 'OTHER',
+                OTHER: 'OTHER'
               }[documentItemRef.documentType ?? 'null']
-            }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.documentItem.url">Url</span></dt>
-          <dd>
-            <span>{{ documentItemRef.url }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.documentItem.createdDate">Created Date</span></dt>
-          <dd>
-            <span>{{ documentItemRef.createdDate | formatMediumDatetime }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.documentItem.createdBy">Created By</span></dt>
-          <dd>
-            <span>{{ documentItemRef.createdBy }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.documentItem.modifiedDate">Modified Date</span></dt>
-          <dd>
-            <span>{{ documentItemRef.modifiedDate | formatMediumDatetime }}</span>
-          </dd>
-          <dt><span hpdTranslate="adminDashboardApp.documentItem.modifiedBy">Modified By</span></dt>
-          <dd>
-            <span>{{ documentItemRef.modifiedBy }}</span>
-          </dd>
-        </dl>
-
-        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span hpdTranslate="entity.action.back">Back</span>
-        </button>
-
-        <button type="button" [routerLink]="['/document-item', documentItemRef.id, 'edit']" class="btn btn-primary">
-          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span hpdTranslate="entity.action.edit">Edit</span>
-        </button>
+            }}
+          </p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.documentItem.url">Url</p>
+          <p class="mt-1 break-all text-sm text-slate-900">{{ documentItemRef.url }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.documentItem.createdDate">
+            Created Date
+          </p>
+          <p class="mt-1 text-sm text-slate-900">{{ documentItemRef.createdDate | formatMediumDatetime }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.documentItem.createdBy">Created By</p>
+          <p class="mt-1 text-sm text-slate-900">{{ documentItemRef.createdBy }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.documentItem.modifiedDate">
+            Modified Date
+          </p>
+          <p class="mt-1 text-sm text-slate-900">{{ documentItemRef.modifiedDate | formatMediumDatetime }}</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 p-4">
+          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.documentItem.modifiedBy">Modified By</p>
+          <p class="mt-1 text-sm text-slate-900">{{ documentItemRef.modifiedBy }}</p>
+        </div>
       </div>
-    }
-  </div>
+
+      <div class="flex flex-wrap justify-end gap-3">
+        <button type="button" mat-button class="!rounded-full !px-4" (click)="previousState()" data-cy="entityDetailsBackButton">
+          <mat-icon>arrow_back</mat-icon>
+          <span hpdTranslate="entity.action.back">Back</span>
+        </button>
+
+        <a
+          type="button"
+          [routerLink]="['/document-item', documentItemRef.id, 'edit']"
+          mat-flat-button
+          class="!rounded-full !bg-slate-900 !px-4 !text-white"
+        >
+          <mat-icon>edit</mat-icon>
+          <span hpdTranslate="entity.action.edit">Edit</span>
+        </a>
+      </div>
+    </div>
+  }
 </div>
