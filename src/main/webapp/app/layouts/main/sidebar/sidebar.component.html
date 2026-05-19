@@ -19,7 +19,7 @@
   <!-- Navigation -->
   <nav class="flex-1 overflow-y-auto py-3 px-2">
     <ul class="space-y-1 list-none p-0 m-0">
-      @if (showSystemAdminLink()) {
+      @if (showSystemAdminLink) {
         <li>
           <a
             [routerLink]="systemAdminItem.path"

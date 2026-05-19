@@ -1,5 +1,5 @@
-import { Component, computed, inject } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { Component, computed, DestroyRef, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
@@ -38,18 +38,11 @@ interface MenuItem {
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
 })
-export class SidebarComponent {
-  readonly state = inject(DashboardStateService);
-  private readonly accountService = inject(AccountService);
-  private readonly authenticationState = toSignal(this.accountService.getAuthenticationState(), { initialValue: null });
-
-  readonly isExpanded = this.state.sidebarExpanded;
-
-  readonly filteredMenuItems = computed(() => this.menuItems.filter(item => this.state.canAccess(item.resource, 'READ')));
-  readonly showSystemAdminLink = computed(() => {
-    this.authenticationState();
-    return this.accountService.hasAnyAuthority(Authority.ADMIN);
-  });
+export class SidebarComponent implements OnInit {
+  readonly state: DashboardStateService;
+  readonly isExpanded;
+  readonly filteredMenuItems;
+  showSystemAdminLink = false;
 
   private readonly menuItems: MenuItem[] = [
     { label: 'DASHBOARD', icon: 'dashboard', path: '/dashboard', resource: 'DASHBOARD' },
@@ -67,6 +60,25 @@ export class SidebarComponent {
     icon: 'admin_panel_settings',
     path: '/admin/dashboard',
   };
+
+  constructor(
+    state: DashboardStateService,
+    private accountService: AccountService,
+    private destroyRef: DestroyRef,
+  ) {
+    this.state = state;
+    this.isExpanded = this.state.sidebarExpanded;
+    this.filteredMenuItems = computed(() => this.menuItems.filter(item => this.state.canAccess(item.resource, 'READ')));
+  }
+
+  ngOnInit(): void {
+    this.accountService
+      .getAuthenticationState()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => {
+        this.showSystemAdminLink = this.accountService.hasAnyAuthority(Authority.ADMIN);
+      });
+  }
 
   toggleExpanded(): void {
     this.state.toggleSidebar();

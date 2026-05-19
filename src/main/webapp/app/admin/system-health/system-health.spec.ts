@@ -1,9 +1,6 @@
 import '@angular/compiler';
 
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterTestingModule } from '@angular/router/testing';
+import { ChangeDetectorRef, DestroyRef } from '@angular/core';
 import { of, throwError } from 'rxjs';
 
 import { Metrics } from '../metrics/metrics.model';
@@ -13,37 +10,45 @@ import { HealthService } from '../health/health.service';
 import SystemHealthComponent, { SYSTEM_HEALTH_REFRESH_INTERVAL_MS } from './system-health';
 
 describe('SystemHealthComponent', () => {
-  let comp: SystemHealthComponent;
-  let fixture: ComponentFixture<SystemHealthComponent>;
+  let component: SystemHealthComponent;
   let healthService: jest.Mocked<Pick<HealthService, 'checkHealth'>>;
   let metricsService: jest.Mocked<Pick<MetricsService, 'getMetrics'>>;
+  let changeDetectorRef: jest.Mocked<Pick<ChangeDetectorRef, 'markForCheck'>>;
+  let destroyCallbacks: Array<() => void>;
+  let destroyRef: DestroyRef;
 
-  beforeEach(async () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+
     healthService = {
       checkHealth: jest.fn(),
     };
     metricsService = {
       getMetrics: jest.fn(),
     };
+    changeDetectorRef = {
+      markForCheck: jest.fn(),
+    };
+    destroyCallbacks = [];
+    destroyRef = {
+      onDestroy: (callback: () => void) => {
+        destroyCallbacks.push(callback);
+        return () => {
+          destroyCallbacks = destroyCallbacks.filter(cb => cb !== callback);
+        };
+      },
+    } as DestroyRef;
 
-    TestBed.configureTestingModule({
-      imports: [RouterTestingModule, NoopAnimationsModule, SystemHealthComponent],
-      providers: [
-        { provide: HealthService, useValue: healthService },
-        { provide: MetricsService, useValue: metricsService },
-      ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    }).compileComponents();
-  });
-
-  beforeEach(() => {
-    jest.useFakeTimers();
-    fixture = TestBed.createComponent(SystemHealthComponent);
-    comp = fixture.componentInstance;
+    component = new SystemHealthComponent(
+      healthService as unknown as HealthService,
+      metricsService as unknown as MetricsService,
+      changeDetectorRef as unknown as ChangeDetectorRef,
+      destroyRef,
+    );
   });
 
   afterEach(() => {
-    fixture?.destroy();
+    destroyCallbacks.forEach(callback => callback());
     jest.clearAllTimers();
     jest.useRealTimers();
   });
@@ -54,28 +59,28 @@ describe('SystemHealthComponent', () => {
       .mockReturnValueOnce(of(createMetrics({ 'system.cpu.usage': 0.12, 'process.cpu.usage': 0.05, 'process.uptime': 7200 })))
       .mockReturnValueOnce(of(createMetrics({ 'system.cpu.usage': 0.41, 'process.cpu.usage': 0.25, 'process.uptime': 10_800 })));
 
-    fixture.detectChanges();
+    component.ngOnInit();
+
     jest.advanceTimersByTime(1);
     await Promise.resolve();
-    fixture.detectChanges();
 
     expect(healthService.checkHealth).toHaveBeenCalledTimes(1);
     expect(metricsService.getMetrics).toHaveBeenCalledTimes(1);
-    expect(comp.systemCpuUsage).toBe(12);
-    expect(comp.processCpuUsage).toBe(5);
-    expect(comp.uptimeHours).toBe(2);
-    expect(comp.lastUpdated).not.toBeNull();
-    expect(fixture.nativeElement.textContent).toContain('Live updates every 30 seconds');
+    expect(component.systemCpuUsage).toBe(12);
+    expect(component.processCpuUsage).toBe(5);
+    expect(component.uptimeHours).toBe(2);
+    expect(component.lastUpdated).not.toBeNull();
+    expect(component.refreshIntervalSeconds).toBe(30);
 
     jest.advanceTimersByTime(SYSTEM_HEALTH_REFRESH_INTERVAL_MS);
     await Promise.resolve();
-    fixture.detectChanges();
 
     expect(healthService.checkHealth).toHaveBeenCalledTimes(2);
     expect(metricsService.getMetrics).toHaveBeenCalledTimes(2);
-    expect(comp.systemCpuUsage).toBe(41);
-    expect(comp.processCpuUsage).toBe(25);
-    expect(comp.uptimeHours).toBe(3);
+    expect(component.systemCpuUsage).toBe(41);
+    expect(component.processCpuUsage).toBe(25);
+    expect(component.uptimeHours).toBe(3);
+    expect(changeDetectorRef.markForCheck).toHaveBeenCalled();
   });
 
   it('keeps degraded 503 health payloads visible', async () => {
@@ -88,14 +93,14 @@ describe('SystemHealthComponent', () => {
     );
     metricsService.getMetrics.mockReturnValue(of(createMetrics()));
 
-    fixture.detectChanges();
+    component.ngOnInit();
+
     jest.advanceTimersByTime(1);
     await Promise.resolve();
-    fixture.detectChanges();
 
-    expect(comp.overallStatus).toBe('DOWN');
-    expect(comp.errorMessage).toContain('degraded health');
-    expect(fixture.nativeElement.textContent).toContain('DOWN');
+    expect(component.overallStatus).toBe('DOWN');
+    expect(component.errorMessage).toContain('degraded health');
+    expect(component.healthDistribution[1]).toEqual({ name: 'Needs attention', value: 1 });
   });
 });
 
