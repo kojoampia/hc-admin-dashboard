@@ -65,16 +65,12 @@
             </button>
           </div>
 
-          @if (!widget.locked) {
           <div class="flex items-center gap-2">
             <button mat-stroked-button type="button" [disabled]="!widget.visible" (click)="setVisibility(widget.id, false)">Hide</button>
             <button mat-flat-button color="primary" type="button" [disabled]="widget.visible" (click)="setVisibility(widget.id, true)">
               Show
             </button>
           </div>
-          } @else {
-          <span class="text-xs font-medium uppercase tracking-wide text-slate-400">Always available</span>
-          }
         </div>
       </div>
       }

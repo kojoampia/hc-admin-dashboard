@@ -17,7 +17,7 @@ describe('DashboardLayoutService', () => {
     service = new DashboardLayoutService(localStorageService as unknown as LocalStorageService);
   });
 
-  it('applies presets, preserves the locked layout widget, and persists updates', () => {
+  it('applies presets and persists visibility and ordering updates', () => {
     service.applyPreset('security');
 
     expect(service.activePreset()).toBe('security');
@@ -25,17 +25,23 @@ describe('DashboardLayoutService', () => {
     expect(service.visibleWidgetIds()).toContain('customizableLayout');
 
     service.setWidgetVisibility('dataExport', true);
+    service.setWidgetVisibility('customizableLayout', false);
     service.moveWidget('realtimeData', -1);
 
     expect(service.activePreset()).toBe('custom');
     expect(service.visibleWidgetIds()).toContain('dataExport');
-    expect(service.widgets().find(widget => widget.id === 'customizableLayout')?.visible).toBe(true);
+    expect(service.widgets().find(widget => widget.id === 'customizableLayout')?.visible).toBe(false);
     expect(localStorageService.store).toHaveBeenCalled();
   });
 
-  it('ignores attempts to hide the locked customizable layout widget', () => {
-    service.setWidgetVisibility('customizableLayout', false);
+  it('restores the balanced preset after custom visibility changes', () => {
+    service.setWidgetVisibility('alerts', false);
+    expect(service.visibleWidgetIds()).not.toContain('alerts');
 
+    service.reset();
+
+    expect(service.activePreset()).toBe('balanced');
     expect(service.visibleWidgetIds()).toContain('customizableLayout');
+    expect(service.visibleWidgetIds()).toContain('alerts');
   });
 });

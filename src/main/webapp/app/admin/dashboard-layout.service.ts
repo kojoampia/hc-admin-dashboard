@@ -19,7 +19,6 @@ export type DashboardWidgetDefinition = {
   description: string;
   icon: string;
   span: 'single' | 'full';
-  locked?: boolean;
 };
 
 export type DashboardWidgetLayout = DashboardWidgetDefinition & {
@@ -83,7 +82,6 @@ const DASHBOARD_WIDGETS: readonly DashboardWidgetDefinition[] = [
     description: 'Show, hide, and reorder dashboard widgets.',
     icon: 'dashboard_customize',
     span: 'single',
-    locked: true,
   },
   {
     id: 'realtimeData',
@@ -149,7 +147,7 @@ export class DashboardLayoutService {
         .sort((left, right) => (orderIndex.get(left.id) ?? Number.MAX_SAFE_INTEGER) - (orderIndex.get(right.id) ?? Number.MAX_SAFE_INTEGER))
         .map(widget => ({
           ...widget,
-          visible: widget.locked ? true : !hidden.has(widget.id),
+          visible: !hidden.has(widget.id),
         }));
     });
     this.visibleWidgetIds = computed(() =>
@@ -161,7 +159,7 @@ export class DashboardLayoutService {
 
   setWidgetVisibility(widgetId: DashboardWidgetId, visible: boolean): void {
     const widget = DASHBOARD_WIDGETS.find(item => item.id === widgetId);
-    if (!widget || widget.locked) {
+    if (!widget) {
       return;
     }
 
@@ -241,7 +239,7 @@ export class DashboardLayoutService {
       ...(stored.order ?? []).filter(this.isWidgetId),
       ...DEFAULT_ORDER.filter(id => !(stored.order ?? []).includes(id)),
     ];
-    const hidden = (stored.hidden ?? []).filter((id): id is DashboardWidgetId => this.isWidgetId(id) && !this.isLocked(id));
+    const hidden = (stored.hidden ?? []).filter((id): id is DashboardWidgetId => this.isWidgetId(id));
     const preset = stored.preset && ['balanced', 'operations', 'security', 'custom'].includes(stored.preset) ? stored.preset : 'custom';
 
     return {
@@ -258,9 +256,5 @@ export class DashboardLayoutService {
 
   private isWidgetId(value: string): value is DashboardWidgetId {
     return DASHBOARD_WIDGETS.some(widget => widget.id === value);
-  }
-
-  private isLocked(widgetId: DashboardWidgetId): boolean {
-    return DASHBOARD_WIDGETS.some(widget => widget.id === widgetId && widget.locked);
   }
 }
