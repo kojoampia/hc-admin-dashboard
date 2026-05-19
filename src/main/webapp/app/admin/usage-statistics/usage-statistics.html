@@ -4,6 +4,15 @@
       <p class="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">Usage statistics</p>
       <h2 class="text-xl font-semibold tracking-tight text-slate-900">Traffic and service utilization</h2>
       <p class="text-sm leading-6 text-slate-600">Request distribution and service activity derived from the existing metrics endpoint.</p>
+      <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-medium text-slate-500">
+        <span class="inline-flex items-center gap-2">
+          <span class="h-2 w-2 rounded-full bg-indigo-500"></span>
+          Live updates every {{ refreshIntervalSeconds }} seconds
+        </span>
+        @if (lastUpdated) {
+        <span>Last updated {{ lastUpdated | date: 'mediumTime' }}</span>
+        }
+      </div>
     </div>
 
     <a mat-stroked-button routerLink="/admin/metrics" class="!rounded-full">
@@ -22,40 +31,87 @@
       <p class="text-xs font-medium uppercase tracking-wide text-slate-500">Total requests</p>
       <p class="mt-2 text-3xl font-semibold text-slate-900">{{ totalRequests }}</p>
     </div>
+    <div class="rounded-2xl bg-emerald-50 p-4">
+      <p class="text-xs font-medium uppercase tracking-wide text-emerald-700">Success rate</p>
+      <p class="mt-2 text-3xl font-semibold text-emerald-900">{{ successRate | number: '1.0-1' }}%</p>
+    </div>
     <div class="rounded-2xl bg-indigo-50 p-4">
       <p class="text-xs font-medium uppercase tracking-wide text-indigo-700">Avg response</p>
       <p class="mt-2 text-3xl font-semibold text-indigo-900">{{ averageResponseMillis | number: '1.0-1' }} ms</p>
     </div>
-    <div class="rounded-2xl bg-emerald-50 p-4">
-      <p class="text-xs font-medium uppercase tracking-wide text-emerald-700">Tracked services</p>
-      <p class="mt-2 text-3xl font-semibold text-emerald-900">{{ trackedServices }}</p>
-    </div>
     <div class="rounded-2xl bg-amber-50 p-4">
-      <p class="text-xs font-medium uppercase tracking-wide text-amber-700">DB connections</p>
-      <p class="mt-2 text-3xl font-semibold text-amber-900">{{ activeDatabaseConnections }}</p>
+      <p class="text-xs font-medium uppercase tracking-wide text-amber-700">Busiest service</p>
+      <p class="mt-2 text-lg font-semibold text-amber-900">{{ busiestServiceName }}</p>
+      <p class="mt-1 text-sm text-amber-800">{{ busiestServiceRequests }} requests</p>
     </div>
   </div>
 
-  <div class="grid gap-4 xl:grid-cols-[20rem_minmax(0,1fr)]">
-    <div class="rounded-3xl border border-slate-100 bg-slate-50 p-3">
-      <hpd-piechart [data]="responseCodeData" [showLabels]="true" [showLegend]="true" [view]="[300, 260]" />
-    </div>
-
-    <div class="overflow-hidden rounded-3xl border border-slate-100 bg-slate-50 p-4">
-      <div class="mb-3 flex items-center justify-between gap-3">
-        <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-600">Top service traffic</h3>
-        <span class="text-xs text-slate-500">GET, POST, PUT, PATCH, DELETE</span>
+  <div class="grid gap-4 xl:grid-cols-[22rem_minmax(0,1fr)]">
+    <div class="space-y-3 rounded-3xl border border-slate-100 bg-slate-50 p-4">
+      <div class="flex items-center justify-between gap-3">
+        <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-600">Usage insights</h3>
+        <span class="text-xs text-slate-500">{{ trackedServices }} tracked services</span>
       </div>
 
-      <hpd-linechart
-        [lineData]="serviceTrafficData"
-        [showLegend]="false"
-        [showGridLines]="true"
-        [showDataLabel]="false"
-        [showYAxisLabel]="false"
-        [showXAxisLabel]="false"
-        [view]="[760, 280]"
-      />
+      <div class="grid gap-3">
+        <div class="rounded-2xl bg-white p-4">
+          <p class="text-xs font-medium uppercase tracking-wide text-slate-500">Top response code</p>
+          <p class="mt-2 text-2xl font-semibold text-slate-900">{{ topResponseCode }}</p>
+        </div>
+        <div class="rounded-2xl bg-white p-4">
+          <p class="text-xs font-medium uppercase tracking-wide text-slate-500">Peak response time</p>
+          <p class="mt-2 text-2xl font-semibold text-slate-900">{{ peakResponseMillis | number: '1.0-1' }} ms</p>
+        </div>
+        <div class="rounded-2xl bg-white p-4">
+          <p class="text-xs font-medium uppercase tracking-wide text-slate-500">System load (1m)</p>
+          <p class="mt-2 text-2xl font-semibold text-slate-900">{{ systemLoadAverage | number: '1.0-2' }}</p>
+        </div>
+        <div class="rounded-2xl bg-white p-4">
+          <p class="text-xs font-medium uppercase tracking-wide text-slate-500">Active DB connections</p>
+          <p class="mt-2 text-2xl font-semibold text-slate-900">{{ activeDatabaseConnections }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid gap-4 xl:grid-cols-[20rem_minmax(0,1fr)]">
+      <div class="rounded-3xl border border-slate-100 bg-slate-50 p-3">
+        <hpd-piechart [data]="responseCodeData" [showLabels]="true" [showLegend]="true" [view]="[300, 260]" />
+      </div>
+
+      <div class="overflow-hidden rounded-3xl border border-slate-100 bg-slate-50 p-4">
+        <div class="mb-3 flex items-center justify-between gap-3">
+          <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-600">Top service traffic</h3>
+          <span class="text-xs text-slate-500">GET, POST, PUT, PATCH, DELETE</span>
+        </div>
+
+        <hpd-linechart
+          [lineData]="serviceTrafficData"
+          [showLegend]="false"
+          [showGridLines]="true"
+          [showDataLabel]="false"
+          [showYAxisLabel]="false"
+          [showXAxisLabel]="false"
+          [view]="[760, 280]"
+        />
+      </div>
+    </div>
+
+    <div class="rounded-3xl border border-slate-100 bg-slate-50 p-4">
+      <div class="mb-3 flex items-center justify-between gap-3">
+        <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-600">Most active services</h3>
+        <span class="text-xs text-slate-500">Top 3 by request volume</span>
+      </div>
+
+      <div class="grid gap-3 md:grid-cols-3">
+        @for (service of serviceHighlights; track service.name) {
+        <div class="rounded-2xl bg-white p-4">
+          <p class="text-sm font-semibold text-slate-900">{{ service.name }}</p>
+          <p class="mt-2 text-2xl font-semibold text-slate-900">{{ service.totalRequests }}</p>
+          <p class="mt-1 text-xs uppercase tracking-wide text-slate-500">Requests</p>
+          <p class="mt-3 text-sm text-slate-600">{{ service.methods }}</p>
+        </div>
+        }
+      </div>
     </div>
   </div>
   }

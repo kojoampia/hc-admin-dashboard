@@ -1,8 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
+import { switchMap, timer } from 'rxjs';
 
 import SharedModule from 'app/shared/shared.module';
 import { LineChartComponent } from 'app/widgets/linechart/linechart.component';
@@ -20,6 +22,13 @@ type LineSeries = {
   series: Array<{ name: string; value: number }>;
 };
 
+type ServiceTrafficEntry = LineSeries & {
+  totalRequests: number;
+  methods: string[];
+};
+
+export const USAGE_STATISTICS_REFRESH_INTERVAL_MS = 30_000;
+
 @Component({
   selector: 'hpd-usage-statistics',
   templateUrl: './usage-statistics.html',
@@ -28,16 +37,30 @@ type LineSeries = {
   imports: [RouterModule, SharedModule, MatButtonModule, MatIconModule, PiechartComponent, LineChartComponent],
 })
 export default class UsageStatisticsComponent implements OnInit {
+  readonly refreshIntervalSeconds = USAGE_STATISTICS_REFRESH_INTERVAL_MS / 1000;
+
   isLoading = true;
   errorMessage = '';
+  lastUpdated: Date | null = null;
   totalRequests = 0;
+  successRate = 0;
   averageResponseMillis = 0;
   trackedServices = 0;
   activeDatabaseConnections = 0;
+  busiestServiceName = 'No traffic';
+  busiestServiceRequests = 0;
+  topResponseCode = 'No data';
+  peakResponseMillis = 0;
+  systemLoadAverage = 0;
   responseCodeData: ChartDatum[] = [];
   serviceTrafficData: LineSeries[] = [];
+  serviceHighlights: Array<{ name: string; totalRequests: number; methods: string }> = [];
 
-  constructor(private metricsService: MetricsService) {}
+  constructor(
+    private metricsService: MetricsService,
+    private changeDetectorRef: ChangeDetectorRef,
+    private destroyRef: DestroyRef,
+  ) {}
 
   ngOnInit(): void {
     this.loadUsageMetrics();
@@ -47,16 +70,23 @@ export default class UsageStatisticsComponent implements OnInit {
     this.isLoading = true;
     this.errorMessage = '';
 
-    this.metricsService.getMetrics().subscribe({
-      next: metrics => {
-        this.updateMetrics(metrics);
-        this.isLoading = false;
-      },
-      error: (error: HttpErrorResponse) => {
-        this.errorMessage = error.status === 403 ? 'You do not have access to usage statistics.' : 'Unable to load usage statistics.';
-        this.isLoading = false;
-      },
-    });
+    timer(0, USAGE_STATISTICS_REFRESH_INTERVAL_MS)
+      .pipe(
+        switchMap(() => this.metricsService.getMetrics()),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe({
+        next: metrics => {
+          this.updateMetrics(metrics);
+          this.isLoading = false;
+          this.changeDetectorRef.markForCheck();
+        },
+        error: (error: HttpErrorResponse) => {
+          this.errorMessage = error.status === 403 ? 'You do not have access to usage statistics.' : 'Unable to load usage statistics.';
+          this.isLoading = false;
+          this.changeDetectorRef.markForCheck();
+        },
+      });
   }
 
   private updateMetrics(metrics: Metrics): void {
@@ -65,13 +95,27 @@ export default class UsageStatisticsComponent implements OnInit {
       .map(([code, details]) => ({ name: code, value: details.count }))
       .sort((left, right) => right.value - left.value);
     const serviceTraffic = this.buildServiceTrafficData(metrics.services);
+    const topService = serviceTraffic[0];
 
     this.totalRequests = allRequests;
+    this.successRate = this.calculateSuccessRate(metrics['http.server.requests'].percode, allRequests);
     this.averageResponseMillis = this.calculateAverageResponseTime(metrics['http.server.requests'].percode);
     this.trackedServices = Object.keys(metrics.services).length;
     this.activeDatabaseConnections = metrics.databases.active.value;
+    this.busiestServiceName = topService?.name ?? 'No traffic';
+    this.busiestServiceRequests = topService?.totalRequests ?? 0;
+    this.topResponseCode = responseCodes[0]?.name ?? 'No data';
+    this.peakResponseMillis = this.calculatePeakResponseTime(metrics['http.server.requests'].percode);
+    this.systemLoadAverage = metrics.processMetrics['system.load.average.1m'] ?? 0;
     this.responseCodeData = responseCodes;
-    this.serviceTrafficData = serviceTraffic;
+    this.serviceTrafficData = serviceTraffic.map(({ name, series }) => ({ name, series }));
+    this.serviceHighlights = serviceTraffic.slice(0, 3).map(service => ({
+      name: service.name,
+      totalRequests: service.totalRequests,
+      methods: service.methods.join(', '),
+    }));
+    this.lastUpdated = new Date();
+    this.errorMessage = '';
   }
 
   private calculateAverageResponseTime(perCode: Record<string, MaxMeanCount>): number {
@@ -89,22 +133,42 @@ export default class UsageStatisticsComponent implements OnInit {
     return Math.round((totalWeightedMean / totalCount) * 10) / 10;
   }
 
-  private buildServiceTrafficData(services: Services): LineSeries[] {
+  private calculateSuccessRate(perCode: Record<string, MaxMeanCount>, totalRequests: number): number {
+    if (totalRequests === 0) {
+      return 0;
+    }
+
+    const successfulRequests = Object.entries(perCode)
+      .filter(([code]) => code.startsWith('2'))
+      .reduce((sum, [, metrics]) => sum + metrics.count, 0);
+
+    return Math.round((successfulRequests / totalRequests) * 1000) / 10;
+  }
+
+  private calculatePeakResponseTime(perCode: Record<string, MaxMeanCount>): number {
+    const maxValues = Object.values(perCode).map(metric => metric.max);
+    return maxValues.length ? Math.round(Math.max(...maxValues) * 10) / 10 : 0;
+  }
+
+  private buildServiceTrafficData(services: Services): ServiceTrafficEntry[] {
     return Object.entries(services)
       .map(([name, serviceMetrics]) => ({
         name,
-        total: this.sumServiceRequests(serviceMetrics),
+        totalRequests: this.sumServiceRequests(serviceMetrics),
         series: Object.entries(serviceMetrics)
           .map(([method, details]) => ({
             name: method,
             value: details?.count ?? 0,
           }))
-          .sort((left, right) => this.httpMethodRank(left.name) - this.httpMethodRank(right.name)),
+          .sort((left, right) => this.httpMethodRank(left.name) - this.httpMethodRank(right.name))
+          .filter(entry => entry.value > 0),
+        methods: Object.entries(serviceMetrics)
+          .filter(([, details]) => (details?.count ?? 0) > 0)
+          .map(([method]) => method),
       }))
-      .filter(service => service.total > 0)
-      .sort((left, right) => right.total - left.total)
-      .slice(0, 6)
-      .map(({ name, series }) => ({ name, series }));
+      .filter(service => service.totalRequests > 0)
+      .sort((left, right) => right.totalRequests - left.totalRequests)
+      .slice(0, 6);
   }
 
   private sumServiceRequests(serviceMetrics: Partial<Record<HttpMethod, MaxMeanCount>>): number {
