@@ -33,9 +33,9 @@ describe('Navbar Component', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [NavbarComponent, RouterTestingModule.withRoutes([]), TranslateModule.forRoot()],
-    providers: [LoginService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-})
+      imports: [NavbarComponent, RouterTestingModule.withRoutes([]), TranslateModule.forRoot()],
+      providers: [LoginService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
+    })
       .overrideTemplate(NavbarComponent, '')
       .compileComponents();
   }));

@@ -6,8 +6,7 @@ import TranslateDirective from './translate.directive';
 
 @Component({
   standalone: false,
-    template: ` <div hpdTranslate="test"></div> `,
-    
+  template: ` <div hpdTranslate="test"></div> `,
 })
 class TestTranslateDirectiveComponent {}
 

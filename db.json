@@ -162,9 +162,6 @@
     "email": "john.doe@example.com",
     "activated": true,
     "langKey": "en",
-    "authorities": [
-      "ROLE_USER",
-      "ROLE_ADMIN"
-    ]
+    "authorities": ["ROLE_USER", "ROLE_ADMIN"]
   }
 }

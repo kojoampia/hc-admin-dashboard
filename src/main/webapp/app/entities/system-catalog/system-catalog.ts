@@ -34,15 +34,17 @@ export interface CatalogAuditEvent {
   standalone: true,
   imports: [CommonModule, MatTabsModule, MatTableModule, MatIconModule, MatButtonModule, MatDialogModule],
   templateUrl: './system-catalog.html',
-  styles: [`
-    :host ::ng-deep .mat-mdc-tab-header {
-      padding: 0 1.5rem;
-      border-bottom: 1px solid #f4f4f5;
-    }
-    :host ::ng-deep .mat-mdc-tab-labels {
-      gap: 1.5rem;
-    }
-  `],
+  styles: [
+    `
+      :host ::ng-deep .mat-mdc-tab-header {
+        padding: 0 1.5rem;
+        border-bottom: 1px solid #f4f4f5;
+      }
+      :host ::ng-deep .mat-mdc-tab-labels {
+        gap: 1.5rem;
+      }
+    `,
+  ],
 })
 export class SystemCatalogComponent {
   api = inject(SystemCatalogService);

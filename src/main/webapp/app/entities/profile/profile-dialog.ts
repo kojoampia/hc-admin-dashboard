@@ -55,9 +55,11 @@ const ALL_ROLES: UserRole[] = ['USER', 'ADMIN', 'PATIENT', 'PROFESSIONAL', 'VEND
               <button
                 type="button"
                 class="px-3 py-1 rounded-full text-xs font-bold border transition-all uppercase tracking-wider"
-                [ngClass]="form().roles.includes(role)
-                  ? 'bg-indigo-600 text-white border-indigo-600'
-                  : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'"
+                [ngClass]="
+                  form().roles.includes(role)
+                    ? 'bg-indigo-600 text-white border-indigo-600'
+                    : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
+                "
                 (click)="toggleRole(role)"
               >
                 {{ role }}

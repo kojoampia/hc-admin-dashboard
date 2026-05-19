@@ -45,15 +45,17 @@ export interface AuditEvent {
   standalone: true,
   imports: [CommonModule, MatTabsModule, MatTableModule, MatIconModule, MatButtonModule, MatDialogModule],
   templateUrl: './facility.html',
-  styles: [`
-    :host ::ng-deep .mat-mdc-tab-header {
-      padding: 0 1.5rem;
-      border-bottom: 1px solid #f4f4f5;
-    }
-    :host ::ng-deep .mat-mdc-tab-labels {
-      gap: 1.5rem;
-    }
-  `],
+  styles: [
+    `
+      :host ::ng-deep .mat-mdc-tab-header {
+        padding: 0 1.5rem;
+        border-bottom: 1px solid #f4f4f5;
+      }
+      :host ::ng-deep .mat-mdc-tab-labels {
+        gap: 1.5rem;
+      }
+    `,
+  ],
 })
 export class FacilityComponent implements OnInit {
   api = inject(FacilityService);
@@ -65,9 +67,33 @@ export class FacilityComponent implements OnInit {
   isAuditTrailOpen = signal(false);
 
   facilities = signal<Facility[]>([
-    { id: '1', name: 'City Hospital', location: '123 Main St, Anytown', type: 'Hospital', capacity: 250, contact: '(555) 123-4567', updatedAt: '10 mins ago' },
-    { id: '2', name: 'Downtown Clinic', location: '456 Elm St, Anytown', type: 'Clinic', capacity: 50, contact: '(555) 987-6543', updatedAt: '2 hours ago' },
-    { id: '3', name: 'Health Lab', location: '789 Oak St, Anytown', type: 'Laboratory', capacity: 100, contact: '(555) 555-1212', updatedAt: '1 day ago' },
+    {
+      id: '1',
+      name: 'City Hospital',
+      location: '123 Main St, Anytown',
+      type: 'Hospital',
+      capacity: 250,
+      contact: '(555) 123-4567',
+      updatedAt: '10 mins ago',
+    },
+    {
+      id: '2',
+      name: 'Downtown Clinic',
+      location: '456 Elm St, Anytown',
+      type: 'Clinic',
+      capacity: 50,
+      contact: '(555) 987-6543',
+      updatedAt: '2 hours ago',
+    },
+    {
+      id: '3',
+      name: 'Health Lab',
+      location: '789 Oak St, Anytown',
+      type: 'Laboratory',
+      capacity: 100,
+      contact: '(555) 555-1212',
+      updatedAt: '1 day ago',
+    },
   ]);
 
   personnel = signal<Personnel[]>([
@@ -77,10 +103,38 @@ export class FacilityComponent implements OnInit {
   ]);
 
   auditEvents = signal<AuditEvent[]>([
-    { id: '1', type: 'UPDATE', message: 'Updated facility "City Hospital" capacity from 200 to 250', timestamp: '10 mins ago', icon: 'edit_document', colorClass: 'bg-amber-100 text-amber-600' },
-    { id: '2', type: 'CREATE', message: 'Added new facility "Health Lab"', timestamp: '2 hours ago', icon: 'post_add', colorClass: 'bg-emerald-100 text-emerald-600' },
-    { id: '3', type: 'DELETE', message: 'Removed personnel "Nurse Lisa Johnson" from "Downtown Clinic"', timestamp: '1 day ago', icon: 'delete', colorClass: 'bg-rose-100 text-rose-600' },
-    { id: '4', type: 'UPDATE', message: 'Updated contact info for "Dr. Alice Smith"', timestamp: 'Just now', icon: 'edit_document', colorClass: 'bg-amber-100 text-amber-600' },
+    {
+      id: '1',
+      type: 'UPDATE',
+      message: 'Updated facility "City Hospital" capacity from 200 to 250',
+      timestamp: '10 mins ago',
+      icon: 'edit_document',
+      colorClass: 'bg-amber-100 text-amber-600',
+    },
+    {
+      id: '2',
+      type: 'CREATE',
+      message: 'Added new facility "Health Lab"',
+      timestamp: '2 hours ago',
+      icon: 'post_add',
+      colorClass: 'bg-emerald-100 text-emerald-600',
+    },
+    {
+      id: '3',
+      type: 'DELETE',
+      message: 'Removed personnel "Nurse Lisa Johnson" from "Downtown Clinic"',
+      timestamp: '1 day ago',
+      icon: 'delete',
+      colorClass: 'bg-rose-100 text-rose-600',
+    },
+    {
+      id: '4',
+      type: 'UPDATE',
+      message: 'Updated contact info for "Dr. Alice Smith"',
+      timestamp: 'Just now',
+      icon: 'edit_document',
+      colorClass: 'bg-amber-100 text-amber-600',
+    },
   ]);
 
   readonly filteredFacilities = computed(() => this.facilities().filter(f => f.type === this.activeTab()));

@@ -9,10 +9,10 @@ import { Account } from 'app/core/auth/account.model';
 import { DashboardComponent } from 'app/entities/dashboard/list/dashboard.component';
 
 @Component({
-    selector: 'hpd-home',
-    templateUrl: './home.component.html',
-    styleUrl: './home.component.scss',
-    imports: [SharedModule, RouterModule, DashboardComponent]
+  selector: 'hpd-home',
+  templateUrl: './home.component.html',
+  styleUrl: './home.component.scss',
+  imports: [SharedModule, RouterModule, DashboardComponent],
 })
 export default class HomeComponent implements OnInit, OnDestroy {
   account: Account | null = null;

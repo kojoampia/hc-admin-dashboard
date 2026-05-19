@@ -2,11 +2,11 @@ import { Component, Input, Output, EventEmitter, CUSTOM_ELEMENTS_SCHEMA } from '
 import SharedModule from 'app/shared/shared.module';
 
 @Component({
-    selector: 'hpd-slider',
-    imports: [SharedModule],
-    templateUrl: './slides.component.html',
-    styleUrls: ['./slides.component.scss'],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  selector: 'hpd-slider',
+  imports: [SharedModule],
+  templateUrl: './slides.component.html',
+  styleUrls: ['./slides.component.scss'],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class SlidesComponent {
   @Input() slides: any[] = [];

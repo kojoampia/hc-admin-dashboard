@@ -3,10 +3,7 @@
   [class]="isExpanded() ? 'w-64' : 'w-20'"
 >
   <!-- Header / Logo -->
-  <div
-    class="flex items-center p-4 border-b border-slate-100 shrink-0"
-    [class.justify-center]="!isExpanded()"
-  >
+  <div class="flex items-center p-4 border-b border-slate-100 shrink-0" [class.justify-center]="!isExpanded()">
     <button
       class="flex items-center justify-center w-10 h-10 rounded-xl bg-indigo-600 text-white font-bold text-sm cursor-pointer hover:scale-105 active:scale-95 transition-transform duration-200 shrink-0"
       (click)="toggleExpanded()"
@@ -22,6 +19,24 @@
   <!-- Navigation -->
   <nav class="flex-1 overflow-y-auto py-3 px-2">
     <ul class="space-y-1 list-none p-0 m-0">
+      @if (showSystemAdminLink()) {
+        <li>
+          <a
+            [routerLink]="systemAdminItem.path"
+            routerLinkActive="bg-slate-50 !text-indigo-600 shadow-sm"
+            [routerLinkActiveOptions]="{ exact: true }"
+            (click)="state.setMenu(systemAdminItem.label)"
+            class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-500 hover:bg-slate-50 hover:text-slate-800 hover:scale-[1.03] active:scale-95 transition-all duration-200 no-underline"
+            [class.justify-center]="!isExpanded()"
+          >
+            <mat-icon class="shrink-0 text-[20px] w-5 h-5">{{ systemAdminItem.icon }}</mat-icon>
+            @if (isExpanded()) {
+              <span class="text-sm font-medium">{{ systemAdminItem.label }}</span>
+            }
+          </a>
+        </li>
+      }
+
       @for (item of filteredMenuItems(); track item.path) {
         <li>
           <a
@@ -43,14 +58,8 @@
   </nav>
 
   <!-- User Profile Footer -->
-  <div
-    class="mt-auto border-t border-slate-100 shrink-0"
-    [class]="isExpanded() ? 'p-4' : 'p-2 flex justify-center'"
-  >
-    <div
-      class="flex items-center gap-3"
-      [class.justify-center]="!isExpanded()"
-    >
+  <div class="mt-auto border-t border-slate-100 shrink-0" [class]="isExpanded() ? 'p-4' : 'p-2 flex justify-center'">
+    <div class="flex items-center gap-3" [class.justify-center]="!isExpanded()">
       <!-- Avatar — opens profile dropdown -->
       <button
         [matMenuTriggerFor]="profileMenu"
@@ -73,19 +82,13 @@
     <!-- Profile dropdown menu -->
     <mat-menu #profileMenu="matMenu" class="profile-dropdown">
       <div class="px-2 py-1" (click)="$event.stopPropagation()">
-        <div class="flex items-center gap-2 px-2 py-1 text-xs font-semibold text-slate-400 uppercase tracking-wider">
-          Chat
-        </div>
+        <div class="flex items-center gap-2 px-2 py-1 text-xs font-semibold text-slate-400 uppercase tracking-wider">Chat</div>
         <hpd-chat-menu></hpd-chat-menu>
         <mat-divider></mat-divider>
-        <div class="flex items-center gap-2 px-2 py-1 text-xs font-semibold text-slate-400 uppercase tracking-wider">
-          Language
-        </div>
+        <div class="flex items-center gap-2 px-2 py-1 text-xs font-semibold text-slate-400 uppercase tracking-wider">Language</div>
         <hpd-language-menu></hpd-language-menu>
         <mat-divider></mat-divider>
-        <div class="flex items-center gap-2 px-2 py-1 text-xs font-semibold text-slate-400 uppercase tracking-wider">
-          Settings
-        </div>
+        <div class="flex items-center gap-2 px-2 py-1 text-xs font-semibold text-slate-400 uppercase tracking-wider">Settings</div>
         <hpd-setting-menu></hpd-setting-menu>
       </div>
     </mat-menu>

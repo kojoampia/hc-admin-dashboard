@@ -96,17 +96,20 @@ export class MessageComponent {
     {
       id: 'tpl-2',
       name: 'Request More Info',
-      content: 'Thank you for reaching out. To process your request, we require additional information. Could you please provide further details regarding your inquiry?',
+      content:
+        'Thank you for reaching out. To process your request, we require additional information. Could you please provide further details regarding your inquiry?',
     },
     {
       id: 'tpl-3',
       name: 'Issue Resolved',
-      content: 'We are pleased to inform you that the issue you reported has been resolved. Please do not hesitate to contact us if you experience any further difficulties.',
+      content:
+        'We are pleased to inform you that the issue you reported has been resolved. Please do not hesitate to contact us if you experience any further difficulties.',
     },
     {
       id: 'tpl-4',
       name: 'Follow Up',
-      content: 'We are following up on our previous correspondence. Please let us know if you require any further assistance or if there are any updates on your end.',
+      content:
+        'We are following up on our previous correspondence. Please let us know if you require any further assistance or if there are any updates on your end.',
     },
   ]);
 
@@ -124,10 +127,7 @@ export class MessageComponent {
     return this.messages().filter(msg => {
       const matchesCategory = cat === 'All' || msg.category === cat;
       const matchesQuery =
-        !q ||
-        msg.sender.toLowerCase().includes(q) ||
-        msg.subject.toLowerCase().includes(q) ||
-        msg.content.toLowerCase().includes(q);
+        !q || msg.sender.toLowerCase().includes(q) || msg.subject.toLowerCase().includes(q) || msg.content.toLowerCase().includes(q);
       return matchesCategory && matchesQuery;
     });
   });
@@ -174,7 +174,9 @@ export class MessageComponent {
     this.templates.update(list =>
       list.map(t => (t.id === tpl.id ? { ...t, name: this.editorState.name, content: this.editorState.content } : t)),
     );
-    this.editingTemplate.update(current => (current ? { ...current, name: this.editorState.name, content: this.editorState.content } : null));
+    this.editingTemplate.update(current =>
+      current ? { ...current, name: this.editorState.name, content: this.editorState.content } : null,
+    );
   }
 
   applyTemplate(content: string): void {

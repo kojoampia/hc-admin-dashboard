@@ -15,7 +15,6 @@ import { ProfileService } from 'app/entities/profile/service/profile.service';
   imports: [CommonModule, MatIconModule, MatTableModule, MatButtonModule, MatDialogModule],
   template: `
     <div class="space-y-6">
-
       <!-- ── Header ──────────────────────────────────────────────────────── -->
       <div class="flex items-center justify-between flex-wrap gap-3">
         <div>
@@ -36,9 +35,11 @@ import { ProfileService } from 'app/entities/profile/service/profile.service';
           <button
             (click)="selectedType.set(type)"
             class="px-4 py-2 rounded-xl text-xs font-bold border transition-all uppercase tracking-wider"
-            [ngClass]="selectedType() === type
-              ? 'bg-indigo-600 text-white border-indigo-600 shadow-sm'
-              : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'"
+            [ngClass]="
+              selectedType() === type
+                ? 'bg-indigo-600 text-white border-indigo-600 shadow-sm'
+                : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
+            "
           >
             {{ type }}s
           </button>
@@ -48,13 +49,14 @@ import { ProfileService } from 'app/entities/profile/service/profile.service';
       <!-- ── Data Table ──────────────────────────────────────────────────── -->
       <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden p-6">
         <table mat-table [dataSource]="filteredProfiles()" class="w-full">
-
           <!-- Name Column -->
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef class="!text-[10px] !uppercase !tracking-wider !text-slate-400 !font-semibold">Name</th>
             <td mat-cell *matCellDef="let profile" class="!py-4 !text-sm !font-medium !text-slate-700">
               <div class="flex items-center gap-3">
-                <span class="flex items-center justify-center w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 font-bold text-sm shrink-0">
+                <span
+                  class="flex items-center justify-center w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 font-bold text-sm shrink-0"
+                >
                   {{ profile.name.charAt(0) }}
                 </span>
                 {{ profile.name }}
@@ -77,7 +79,8 @@ import { ProfileService } from 'app/entities/profile/service/profile.service';
                       'bg-rose-50 text-rose-600': role === 'ADMIN',
                       'bg-blue-50 text-blue-600': role === 'PROFESSIONAL'
                     }"
-                  >{{ role }}</span>
+                    >{{ role }}</span
+                  >
                 }
               </div>
             </td>
@@ -95,14 +98,12 @@ import { ProfileService } from 'app/entities/profile/service/profile.service';
 
           <!-- Actions Column -->
           <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef class="!text-[10px] !uppercase !tracking-wider !text-slate-400 !font-semibold text-right">Actions</th>
+            <th mat-header-cell *matHeaderCellDef class="!text-[10px] !uppercase !tracking-wider !text-slate-400 !font-semibold text-right">
+              Actions
+            </th>
             <td mat-cell *matCellDef="let profile" class="!py-4 text-right">
               @if (state.canAccess('PROFILES', 'UPDATE') && canEditProfile(profile)) {
-                <button
-                  mat-icon-button
-                  (click)="openEditModal(profile)"
-                  class="text-slate-400 hover:text-indigo-600 transition-colors"
-                >
+                <button mat-icon-button (click)="openEditModal(profile)" class="text-slate-400 hover:text-indigo-600 transition-colors">
                   <mat-icon class="!text-lg">edit</mat-icon>
                 </button>
               }
@@ -112,7 +113,7 @@ import { ProfileService } from 'app/entities/profile/service/profile.service';
           <tr mat-header-row *matHeaderRowDef="displayedColumns" class="!h-10"></tr>
           <tr
             mat-row
-            *matRowDef="let row; columns: displayedColumns;"
+            *matRowDef="let row; columns: displayedColumns"
             class="hover:bg-slate-50 transition-colors border-b border-slate-50"
           ></tr>
         </table>
@@ -125,7 +126,6 @@ import { ProfileService } from 'app/entities/profile/service/profile.service';
           </div>
         }
       </div>
-
     </div>
   `,
 })

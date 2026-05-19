@@ -11,7 +11,7 @@ import { AccountService } from 'app/core/auth/account.service';
 import { AppPageTitleStrategy } from 'app/app-page-title-strategy';
 import { DashboardStateService } from 'app/entities/dashboard/dashboard-state';
 import { SidebarComponent } from './sidebar/sidebar.component';
-import FooterComponent from "../footer/footer.component";
+import FooterComponent from '../footer/footer.component';
 
 @Component({
   selector: 'hpd-main',
@@ -48,5 +48,4 @@ export default class MainComponent implements OnInit {
       this.renderer.setAttribute(document.querySelector('html'), 'lang', event.lang);
     });
   }
-
 }

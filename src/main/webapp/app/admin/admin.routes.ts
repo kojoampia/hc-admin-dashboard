@@ -3,6 +3,16 @@ import { Routes } from '@angular/router';
 
 const routes: Routes = [
   {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'dashboard',
+  },
+  {
+    path: 'dashboard',
+    loadComponent: () => import('./dashboard-component'),
+    title: 'global.menu.admin.dashboard',
+  },
+  {
     path: 'user-management',
     loadChildren: () => import('./user-management/user-management.route'),
     title: 'userManagement.home.title',

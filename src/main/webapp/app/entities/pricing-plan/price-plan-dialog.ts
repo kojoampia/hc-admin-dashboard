@@ -16,7 +16,9 @@ import { PricePlan } from './pricing-plan';
       <div class="flex items-center justify-between mb-6">
         <div>
           <h2 class="text-lg font-bold text-slate-800">{{ data ? 'Edit Plan' : 'Add New Plan' }}</h2>
-          <p class="text-xs text-slate-400 mt-0.5">{{ data ? 'Update the pricing plan details.' : 'Configure a new subscription tier.' }}</p>
+          <p class="text-xs text-slate-400 mt-0.5">
+            {{ data ? 'Update the pricing plan details.' : 'Configure a new subscription tier.' }}
+          </p>
         </div>
         <button mat-icon-button class="text-slate-400 hover:text-slate-700" (click)="close()">
           <mat-icon>close</mat-icon>

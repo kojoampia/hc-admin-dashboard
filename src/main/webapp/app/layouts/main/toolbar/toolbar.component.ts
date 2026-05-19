@@ -14,7 +14,15 @@ import { SettingMenuComponent } from '../setting-menu/setting-menu.component';
   // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'hdb-toolbar',
   standalone: true,
-  imports: [MatToolbarModule, MatIconModule, MatButtonModule, AdminMenuComponent, ChatMenuComponent, LanguageMenuComponent, SettingMenuComponent],
+  imports: [
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
+    AdminMenuComponent,
+    ChatMenuComponent,
+    LanguageMenuComponent,
+    SettingMenuComponent,
+  ],
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.scss'],
 })

@@ -23,7 +23,10 @@ export default class SortDirective<T extends string = string> {
     return this.sortState().order ? this.sortState().order === 'asc' : undefined;
   }
   set ascending(ascending: boolean | undefined) {
-    this.updateSortState({ predicate: this.sortState().predicate, order: ascending === undefined ? undefined : ascending ? 'asc' : 'desc' });
+    this.updateSortState({
+      predicate: this.sortState().predicate,
+      order: ascending === undefined ? undefined : ascending ? 'asc' : 'desc',
+    });
     this.ascendingChange.emit(ascending);
   }
 

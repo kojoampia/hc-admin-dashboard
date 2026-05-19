@@ -1,5 +1,4 @@
 <div class="space-y-6">
-
   <!-- ── Header ──────────────────────────────────────────────────────────── -->
   <div class="flex items-center justify-between flex-wrap gap-3">
     <div>
@@ -11,138 +10,133 @@
         <mat-icon>history</mat-icon>
       </button>
       @if (state.canAccess('FACILITIES', 'CREATE')) {
-        <button (click)="openAddModal()" mat-flat-button class="!bg-indigo-600 !text-white !rounded-xl !px-5 !py-5">
-          <mat-icon iconPositionEnd>add</mat-icon>
-          Add Facility
-        </button>
+      <button (click)="openAddModal()" mat-flat-button class="!bg-indigo-600 !text-white !rounded-xl !px-5 !py-5">
+        <mat-icon iconPositionEnd>add</mat-icon>
+        Add Facility
+      </button>
       }
     </div>
   </div>
 
   <!-- ── Main Content Grid ────────────────────────────────────────────────── -->
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-
     <!-- ── Left Pane: Facilities (lg:col-span-2) ─────────────────────────── -->
     <div class="lg:col-span-2 space-y-6">
-
       <!-- Facilities Card -->
       <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
-
         <!-- Top Bar -->
         <div class="px-6 py-3 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
           <span class="text-xs font-bold uppercase tracking-widest text-slate-500">Facilities</span>
         </div>
 
         <!-- Type Filter Tabs -->
-        <mat-tab-group
-          (selectedTabChange)="activeTab.set(tabTypes[$event.index])"
-          class="facility-tabs"
-          animationDuration="200ms"
-        >
+        <mat-tab-group (selectedTabChange)="activeTab.set(tabTypes[$event.index])" class="facility-tabs" animationDuration="200ms">
           @for (tab of tabTypes; track tab) {
-            <mat-tab [label]="tab">
-              <div class="p-4">
-                @if (filteredFacilities().length > 0) {
-                  <div class="overflow-x-auto">
-                    <table mat-table [dataSource]="filteredFacilities()" class="w-full min-w-[600px]">
+          <mat-tab [label]="tab">
+            <div class="p-4">
+              @if (filteredFacilities().length > 0) {
+              <div class="overflow-x-auto">
+                <table mat-table [dataSource]="filteredFacilities()" class="w-full min-w-[600px]">
+                  <!-- Name -->
+                  <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef class="text-xs font-semibold text-slate-500 uppercase tracking-wider !pl-0">
+                      Name
+                    </th>
+                    <td mat-cell *matCellDef="let f" class="!pl-0">
+                      <p class="text-sm font-semibold text-slate-800">{{ f.name }}</p>
+                      <p class="text-xs text-slate-400">{{ f.location }}</p>
+                    </td>
+                  </ng-container>
 
-                      <!-- Name -->
-                      <ng-container matColumnDef="name">
-                        <th mat-header-cell *matHeaderCellDef class="text-xs font-semibold text-slate-500 uppercase tracking-wider !pl-0">Name</th>
-                        <td mat-cell *matCellDef="let f" class="!pl-0">
-                          <p class="text-sm font-semibold text-slate-800">{{ f.name }}</p>
-                          <p class="text-xs text-slate-400">{{ f.location }}</p>
-                        </td>
-                      </ng-container>
+                  <!-- Type -->
+                  <ng-container matColumnDef="type">
+                    <th mat-header-cell *matHeaderCellDef class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Type</th>
+                    <td mat-cell *matCellDef="let f">
+                      <span class="text-xs font-bold px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-600">{{ f.type }}</span>
+                    </td>
+                  </ng-container>
 
-                      <!-- Type -->
-                      <ng-container matColumnDef="type">
-                        <th mat-header-cell *matHeaderCellDef class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Type</th>
-                        <td mat-cell *matCellDef="let f">
-                          <span class="text-xs font-bold px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-600">{{ f.type }}</span>
-                        </td>
-                      </ng-container>
+                  <!-- Capacity -->
+                  <ng-container matColumnDef="capacity">
+                    <th mat-header-cell *matHeaderCellDef class="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                      Capacity
+                    </th>
+                    <td mat-cell *matCellDef="let f" class="text-sm text-slate-600">{{ f.capacity }}</td>
+                  </ng-container>
 
-                      <!-- Capacity -->
-                      <ng-container matColumnDef="capacity">
-                        <th mat-header-cell *matHeaderCellDef class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Capacity</th>
-                        <td mat-cell *matCellDef="let f" class="text-sm text-slate-600">{{ f.capacity }}</td>
-                      </ng-container>
+                  <!-- Contact -->
+                  <ng-container matColumnDef="contact">
+                    <th mat-header-cell *matHeaderCellDef class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Contact</th>
+                    <td mat-cell *matCellDef="let f" class="text-sm text-slate-600">{{ f.contact }}</td>
+                  </ng-container>
 
-                      <!-- Contact -->
-                      <ng-container matColumnDef="contact">
-                        <th mat-header-cell *matHeaderCellDef class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Contact</th>
-                        <td mat-cell *matCellDef="let f" class="text-sm text-slate-600">{{ f.contact }}</td>
-                      </ng-container>
+                  <!-- Updated -->
+                  <ng-container matColumnDef="updatedAt">
+                    <th mat-header-cell *matHeaderCellDef class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Updated</th>
+                    <td mat-cell *matCellDef="let f" class="text-xs text-slate-400">{{ f.updatedAt }}</td>
+                  </ng-container>
 
-                      <!-- Updated -->
-                      <ng-container matColumnDef="updatedAt">
-                        <th mat-header-cell *matHeaderCellDef class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Updated</th>
-                        <td mat-cell *matCellDef="let f" class="text-xs text-slate-400">{{ f.updatedAt }}</td>
-                      </ng-container>
+                  <!-- Actions -->
+                  <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef class="text-xs font-semibold text-slate-500 uppercase tracking-wider text-right">
+                      Actions
+                    </th>
+                    <td mat-cell *matCellDef="let f" class="text-right">
+                      @if (state.canAccess('FACILITIES', 'UPDATE')) {
+                      <button mat-icon-button class="text-slate-400 hover:text-indigo-600" (click)="openEditModal(f)" title="Edit">
+                        <mat-icon class="text-base">edit</mat-icon>
+                      </button>
+                      } @if (state.canAccess('FACILITIES', 'DELETE')) {
+                      <button mat-icon-button class="text-slate-400 hover:text-rose-600" (click)="deleteFacility(f)" title="Delete">
+                        <mat-icon class="text-base">delete_outline</mat-icon>
+                      </button>
+                      }
+                    </td>
+                  </ng-container>
 
-                      <!-- Actions -->
-                      <ng-container matColumnDef="actions">
-                        <th mat-header-cell *matHeaderCellDef class="text-xs font-semibold text-slate-500 uppercase tracking-wider text-right">Actions</th>
-                        <td mat-cell *matCellDef="let f" class="text-right">
-                          @if (state.canAccess('FACILITIES', 'UPDATE')) {
-                            <button mat-icon-button class="text-slate-400 hover:text-indigo-600" (click)="openEditModal(f)" title="Edit">
-                              <mat-icon class="text-base">edit</mat-icon>
-                            </button>
-                          }
-                          @if (state.canAccess('FACILITIES', 'DELETE')) {
-                            <button mat-icon-button class="text-slate-400 hover:text-rose-600" (click)="deleteFacility(f)" title="Delete">
-                              <mat-icon class="text-base">delete_outline</mat-icon>
-                            </button>
-                          }
-                        </td>
-                      </ng-container>
+                  <tr mat-header-row *matHeaderRowDef="['name','type','capacity','contact','updatedAt','actions']"></tr>
+                  <tr
+                    mat-row
+                    *matRowDef="let row; columns: ['name','type','capacity','contact','updatedAt','actions'];"
+                    class="hover:bg-slate-50/60 transition-colors"
+                  ></tr>
+                </table>
+              </div>
+              } @else {
+              <div class="flex flex-col items-center justify-center py-16 text-slate-400">
+                <mat-icon class="!text-5xl mb-3 opacity-30">location_city</mat-icon>
+                <p class="text-sm font-medium">No {{ tab }} facilities</p>
+                <p class="text-xs mt-1 opacity-70">Add a new facility using the button above.</p>
+              </div>
+              }
 
-                      <tr mat-header-row *matHeaderRowDef="['name','type','capacity','contact','updatedAt','actions']"></tr>
-                      <tr
-                        mat-row
-                        *matRowDef="let row; columns: ['name','type','capacity','contact','updatedAt','actions'];"
-                        class="hover:bg-slate-50/60 transition-colors"
-                      ></tr>
-                    </table>
-                  </div>
-                } @else {
-                  <div class="flex flex-col items-center justify-center py-16 text-slate-400">
-                    <mat-icon class="!text-5xl mb-3 opacity-30">location_city</mat-icon>
-                    <p class="text-sm font-medium">No {{ tab }} facilities</p>
-                    <p class="text-xs mt-1 opacity-70">Add a new facility using the button above.</p>
-                  </div>
-                }
-
-                <!-- Personnel sub-section for this tab's facilities -->
-                @for (facility of filteredFacilities(); track facility.id) {
-                  @if (personnelByFacility(facility.id).length > 0) {
-                    <div class="mt-4 border-t border-slate-100 pt-4">
-                      <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">
-                        <mat-icon class="text-sm align-middle text-indigo-400 mr-1">people</mat-icon>
-                        {{ facility.name }} — Staff
-                      </p>
-                      <div class="space-y-2">
-                        @for (person of personnelByFacility(facility.id); track person.id) {
-                          <div class="flex items-center justify-between rounded-xl bg-slate-50 px-4 py-2.5">
-                            <div class="flex items-center gap-3">
-                              <span class="flex items-center justify-center w-7 h-7 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold">
-                                {{ person.name.charAt(0) }}
-                              </span>
-                              <div>
-                                <p class="text-xs font-semibold text-slate-700">{{ person.name }}</p>
-                                <p class="text-[10px] text-slate-400">{{ person.role }} · {{ person.contact }}</p>
-                              </div>
-                            </div>
-                            <p class="text-[10px] text-slate-400">{{ person.updatedAt }}</p>
-                          </div>
-                        }
+              <!-- Personnel sub-section for this tab's facilities -->
+              @for (facility of filteredFacilities(); track facility.id) { @if (personnelByFacility(facility.id).length > 0) {
+              <div class="mt-4 border-t border-slate-100 pt-4">
+                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">
+                  <mat-icon class="text-sm align-middle text-indigo-400 mr-1">people</mat-icon>
+                  {{ facility.name }} — Staff
+                </p>
+                <div class="space-y-2">
+                  @for (person of personnelByFacility(facility.id); track person.id) {
+                  <div class="flex items-center justify-between rounded-xl bg-slate-50 px-4 py-2.5">
+                    <div class="flex items-center gap-3">
+                      <span class="flex items-center justify-center w-7 h-7 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold">
+                        {{ person.name.charAt(0) }}
+                      </span>
+                      <div>
+                        <p class="text-xs font-semibold text-slate-700">{{ person.name }}</p>
+                        <p class="text-[10px] text-slate-400">{{ person.role }} · {{ person.contact }}</p>
                       </div>
                     </div>
+                    <p class="text-[10px] text-slate-400">{{ person.updatedAt }}</p>
+                  </div>
                   }
-                }
+                </div>
               </div>
-            </mat-tab>
+              } }
+            </div>
+          </mat-tab>
           }
         </mat-tab-group>
       </div>
@@ -150,7 +144,6 @@
 
     <!-- ── Right Pane: Personnel by Facility (lg:col-span-1) ──────────────── -->
     <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col h-fit">
-
       <!-- Header -->
       <div class="px-5 py-3 border-b border-slate-100 flex items-center gap-3 bg-slate-50/50">
         <span class="flex items-center justify-center w-7 h-7 rounded-full bg-indigo-50 text-indigo-600">
@@ -164,45 +157,42 @@
 
       <!-- Grouped list -->
       <div class="flex-1 overflow-y-auto divide-y divide-slate-50 max-h-[600px]">
-        @for (facility of facilities(); track facility.id) {
-          @if (personnelByFacility(facility.id).length > 0) {
-            <div class="p-4">
-              <!-- Facility label -->
-              <div class="flex items-center gap-2 mb-2">
-                <mat-icon class="text-sm text-indigo-400">location_city</mat-icon>
-                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500">{{ facility.name }}</span>
-                <span class="text-[10px] text-slate-300">{{ facility.type }}</span>
-              </div>
-              <div class="space-y-2 pl-1">
-                @for (person of personnelByFacility(facility.id); track person.id) {
-                  <div class="group flex items-center justify-between rounded-lg hover:bg-slate-50 px-2 py-1.5 transition-colors">
-                    <div class="flex items-center gap-2.5">
-                      <span class="flex items-center justify-center w-7 h-7 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold shrink-0">
-                        {{ person.name.charAt(0) }}
-                      </span>
-                      <div>
-                        <p class="text-xs font-semibold text-slate-700">{{ person.name }}</p>
-                        <p class="text-[10px] text-slate-400">{{ person.role }} · {{ person.contact }}</p>
-                        <p class="text-[10px] text-slate-300">{{ person.updatedAt }}</p>
-                      </div>
-                    </div>
-                  </div>
-                }
+        @for (facility of facilities(); track facility.id) { @if (personnelByFacility(facility.id).length > 0) {
+        <div class="p-4">
+          <!-- Facility label -->
+          <div class="flex items-center gap-2 mb-2">
+            <mat-icon class="text-sm text-indigo-400">location_city</mat-icon>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500">{{ facility.name }}</span>
+            <span class="text-[10px] text-slate-300">{{ facility.type }}</span>
+          </div>
+          <div class="space-y-2 pl-1">
+            @for (person of personnelByFacility(facility.id); track person.id) {
+            <div class="group flex items-center justify-between rounded-lg hover:bg-slate-50 px-2 py-1.5 transition-colors">
+              <div class="flex items-center gap-2.5">
+                <span
+                  class="flex items-center justify-center w-7 h-7 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold shrink-0"
+                >
+                  {{ person.name.charAt(0) }}
+                </span>
+                <div>
+                  <p class="text-xs font-semibold text-slate-700">{{ person.name }}</p>
+                  <p class="text-[10px] text-slate-400">{{ person.role }} · {{ person.contact }}</p>
+                  <p class="text-[10px] text-slate-300">{{ person.updatedAt }}</p>
+                </div>
               </div>
             </div>
-          }
-        }
-        @if (personnel().length === 0) {
-          <div class="flex flex-col items-center justify-center py-12 text-slate-400">
-            <mat-icon class="!text-4xl opacity-30 mb-2">person_off</mat-icon>
-            <p class="text-xs">No personnel assigned.</p>
+            }
           </div>
+        </div>
+        } } @if (personnel().length === 0) {
+        <div class="flex flex-col items-center justify-center py-12 text-slate-400">
+          <mat-icon class="!text-4xl opacity-30 mb-2">person_off</mat-icon>
+          <p class="text-xs">No personnel assigned.</p>
+        </div>
         }
       </div>
     </div>
-
   </div>
-
 </div>
 
 <!-- ── Audit Trail Sliding Panel ──────────────────────────────────────────── -->
@@ -233,36 +223,29 @@
   <!-- Events -->
   <div class="flex-1 overflow-y-auto divide-y divide-slate-50">
     @if (auditEvents().length === 0) {
-      <div class="flex flex-col items-center justify-center py-12 text-slate-400">
-        <mat-icon class="!text-4xl opacity-30 mb-2">checklist</mat-icon>
-        <p class="text-xs">No audit events yet.</p>
-      </div>
-    }
-    @for (event of auditEvents(); track event.id) {
-      <div class="group flex items-start gap-3 p-4 hover:bg-slate-50/80 transition-colors">
-        <span
-          class="flex items-center justify-center w-8 h-8 rounded-full shrink-0 mt-0.5"
-          [ngClass]="event.colorClass"
-        >
-          <mat-icon class="text-base">{{ event.icon }}</mat-icon>
-        </span>
-        <div class="min-w-0 flex-1">
-          <p class="text-xs font-medium text-slate-700 leading-snug">{{ event.message }}</p>
-          <div class="flex items-center gap-2 mt-1">
-            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">{{ event.type }}</span>
-            <span class="text-[10px] text-slate-300">·</span>
-            <span class="text-[10px] text-slate-400">{{ event.timestamp }}</span>
-          </div>
+    <div class="flex flex-col items-center justify-center py-12 text-slate-400">
+      <mat-icon class="!text-4xl opacity-30 mb-2">checklist</mat-icon>
+      <p class="text-xs">No audit events yet.</p>
+    </div>
+    } @for (event of auditEvents(); track event.id) {
+    <div class="group flex items-start gap-3 p-4 hover:bg-slate-50/80 transition-colors">
+      <span class="flex items-center justify-center w-8 h-8 rounded-full shrink-0 mt-0.5" [ngClass]="event.colorClass">
+        <mat-icon class="text-base">{{ event.icon }}</mat-icon>
+      </span>
+      <div class="min-w-0 flex-1">
+        <p class="text-xs font-medium text-slate-700 leading-snug">{{ event.message }}</p>
+        <div class="flex items-center gap-2 mt-1">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">{{ event.type }}</span>
+          <span class="text-[10px] text-slate-300">·</span>
+          <span class="text-[10px] text-slate-400">{{ event.timestamp }}</span>
         </div>
       </div>
+    </div>
     }
   </div>
 </div>
 
 <!-- Backdrop -->
 @if (isAuditTrailOpen()) {
-  <div
-    class="fixed inset-0 z-30 bg-slate-900/20 backdrop-blur-sm transition-opacity duration-300"
-    (click)="toggleAuditTrail()"
-  ></div>
+<div class="fixed inset-0 z-30 bg-slate-900/20 backdrop-blur-sm transition-opacity duration-300" (click)="toggleAuditTrail()"></div>
 }

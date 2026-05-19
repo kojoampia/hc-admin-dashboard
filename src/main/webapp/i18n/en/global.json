@@ -40,6 +40,7 @@
       },
       "admin": {
         "main": "Administration",
+        "dashboard": "Dashboard",
         "userManagement": "User management",
         "tracker": "User tracker",
         "metrics": "Metrics",
@@ -166,5 +167,4 @@
   "footer": {
     "copyright": "This is your footer"
   }
-
 }

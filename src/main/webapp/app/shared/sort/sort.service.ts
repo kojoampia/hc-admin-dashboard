@@ -43,9 +43,7 @@ export class SortService {
   startSort(property: string, order: number): (a: unknown, b: unknown) => number;
   startSort(sortOrProperty: SortState | string, order = 1): (a: unknown, b: unknown) => number {
     const sortState =
-      typeof sortOrProperty === 'string'
-        ? { predicate: sortOrProperty, order: order === -1 ? 'desc' : 'asc' }
-        : sortOrProperty;
+      typeof sortOrProperty === 'string' ? { predicate: sortOrProperty, order: order === -1 ? 'desc' : 'asc' } : sortOrProperty;
 
     if (!sortState.predicate || !sortState.order) {
       return () => 0;

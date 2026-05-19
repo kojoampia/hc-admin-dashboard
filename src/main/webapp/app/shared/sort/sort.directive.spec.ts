@@ -6,14 +6,13 @@ import SortDirective from './sort.directive';
 
 @Component({
   standalone: false,
-    template: `
+  template: `
     <table>
       <thead>
         <tr hpdSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="transition($event)"></tr>
       </thead>
     </table>
   `,
-    
 })
 class TestSortDirectiveComponent {
   predicate?: string;

@@ -1,5 +1,4 @@
 <div class="space-y-8">
-
   <!-- ── Header ──────────────────────────────────────────────────────────── -->
   <div class="flex items-center justify-between">
     <div>
@@ -8,19 +7,16 @@
     </div>
     <div class="flex gap-4">
       @if (state.canAccess('DUTY_ROSTER', 'CREATE') || state.canAccess('DUTY_ROSTER', 'UPDATE')) {
-        <button
-          mat-flat-button
-          class="!bg-indigo-600 !text-white !rounded-xl !px-5 h-10 shadow-md !text-[10px] !font-bold !uppercase !tracking-tighter"
-          (click)="autoSchedule()"
-          [disabled]="isScheduling()"
-        >
-          @if (isScheduling()) {
-            <mat-spinner diameter="16" class="mr-2 inline-block" />
-            Scheduling...
-          } @else {
-            Auto-Schedule
-          }
-        </button>
+      <button
+        mat-flat-button
+        class="!bg-indigo-600 !text-white !rounded-xl !px-5 h-10 shadow-md !text-[10px] !font-bold !uppercase !tracking-tighter"
+        (click)="autoSchedule()"
+        [disabled]="isScheduling()"
+      >
+        @if (isScheduling()) {
+        <mat-spinner diameter="16" class="mr-2 inline-block" />
+        Scheduling... } @else { Auto-Schedule }
+      </button>
       }
     </div>
   </div>
@@ -28,62 +24,54 @@
   <!-- ── Main Content ─────────────────────────────────────────────────────── -->
   <div class="space-y-12">
     @for (day of rosterGroups(); track day.date) {
-      <div class="space-y-4">
+    <div class="space-y-4">
+      <!-- Date header -->
+      <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{{ day.date | date: 'EEEE, MMM d' }}</p>
 
-        <!-- Date header -->
-        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-          {{ day.date | date: 'EEEE, MMM d' }}
-        </p>
-
-        <!-- Shifts grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          @for (shift of day.shifts; track shift.id) {
-            <div
-              class="p-4 rounded-xl border flex flex-col justify-between group transition-all cursor-pointer"
-              [ngClass]="{
+      <!-- Shifts grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        @for (shift of day.shifts; track shift.id) {
+        <div
+          class="p-4 rounded-xl border flex flex-col justify-between group transition-all cursor-pointer"
+          [ngClass]="{
                 'bg-emerald-50 border-emerald-100': shift.status === 'ASSIGNED',
                 'bg-rose-50/30 border-rose-300 border-dashed': shift.status === 'UNASSIGNED'
               }"
-            >
-              <!-- Shift header row -->
-              <div class="flex items-center justify-between mb-3">
-                <span
-                  class="text-[10px] font-bold leading-none"
-                  [ngClass]="{
+        >
+          <!-- Shift header row -->
+          <div class="flex items-center justify-between mb-3">
+            <span
+              class="text-[10px] font-bold leading-none"
+              [ngClass]="{
                     'text-emerald-600': shift.status === 'ASSIGNED',
                     'text-rose-400': shift.status === 'UNASSIGNED'
                   }"
-                >{{ shift.shiftName }}</span>
-                @if (shift.status === 'ASSIGNED') {
-                  <span class="px-2 py-0.5 bg-white/50 text-emerald-600 rounded-full font-bold uppercase text-[8px]">Assigned</span>
-                } @else {
-                  <span class="px-2 py-0.5 bg-rose-100 text-rose-500 rounded-full font-bold uppercase text-[8px]">Vacant</span>
-                }
-              </div>
+              >{{ shift.shiftName }}</span
+            >
+            @if (shift.status === 'ASSIGNED') {
+            <span class="px-2 py-0.5 bg-white/50 text-emerald-600 rounded-full font-bold uppercase text-[8px]">Assigned</span>
+            } @else {
+            <span class="px-2 py-0.5 bg-rose-100 text-rose-500 rounded-full font-bold uppercase text-[8px]">Vacant</span>
+            }
+          </div>
 
-              <!-- Role -->
-              <h4 class="text-xs font-bold text-slate-800">{{ shift.requiredRole }}</h4>
+          <!-- Role -->
+          <h4 class="text-xs font-bold text-slate-800">{{ shift.requiredRole }}</h4>
 
-              <!-- Assignee info -->
-              <div
-                class="mt-3 text-[9px]"
-                [ngClass]="{
+          <!-- Assignee info -->
+          <div
+            class="mt-3 text-[9px]"
+            [ngClass]="{
                   'text-emerald-600': shift.status === 'ASSIGNED',
                   'text-rose-400': shift.status === 'UNASSIGNED'
                 }"
-              >
-                @if (shift.assignedUser) {
-                  {{ shift.assignedUser }} &bull; Verified
-                } @else {
-                  Needs Staff Assignment
-                }
-              </div>
-            </div>
-          }
+          >
+            @if (shift.assignedUser) { {{ shift.assignedUser }} &bull; Verified } @else { Needs Staff Assignment }
+          </div>
         </div>
-
+        }
       </div>
+    </div>
     }
   </div>
-
 </div>

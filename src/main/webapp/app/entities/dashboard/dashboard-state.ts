@@ -2,15 +2,7 @@ import { Injectable, signal, computed, inject } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { WebsocketAuthService } from 'app/widgets/chatbot/websocket-auth.service';
 
-export type AppResource =
-  | 'DASHBOARD'
-  | 'MESSAGES'
-  | 'DUTY_ROSTER'
-  | 'PRICE_PLANS'
-  | 'CATALOG'
-  | 'FACILITIES'
-  | 'TEAMS'
-  | 'PROFILES';
+export type AppResource = 'DASHBOARD' | 'MESSAGES' | 'DUTY_ROSTER' | 'PRICE_PLANS' | 'CATALOG' | 'FACILITIES' | 'TEAMS' | 'PROFILES';
 
 export type Permission = 'READ' | 'WRITE' | 'DELETE' | 'CREATE' | 'UPDATE';
 
@@ -138,7 +130,17 @@ export class DashboardStateService {
 }
 
 function buildInitialLogs(): ActivityEvent[] {
-  const types = ['Audit Log', 'Security', 'Role Change', 'Vendor Mgt', 'Patient Mgt', 'Professional', 'Message', 'Permission', 'System Configuration'];
+  const types = [
+    'Audit Log',
+    'Security',
+    'Role Change',
+    'Vendor Mgt',
+    'Patient Mgt',
+    'Professional',
+    'Message',
+    'Permission',
+    'System Configuration',
+  ];
   const messages = [
     'User login detected from new IP address.',
     'Shift successfully reassigned to active personnel.',
@@ -156,7 +158,18 @@ function buildInitialLogs(): ActivityEvent[] {
     'Notification sent to all active professionals.',
     'Pricing plan adjusted for new billing cycle.',
   ];
-  const icons = ['security', 'manage_accounts', 'storefront', 'chat', 'person', 'assignment', 'notifications', 'lock', 'settings', 'receipt_long'];
+  const icons = [
+    'security',
+    'manage_accounts',
+    'storefront',
+    'chat',
+    'person',
+    'assignment',
+    'notifications',
+    'lock',
+    'settings',
+    'receipt_long',
+  ];
   const colorClasses = [
     'bg-indigo-100 text-indigo-600',
     'bg-rose-100 text-rose-600',

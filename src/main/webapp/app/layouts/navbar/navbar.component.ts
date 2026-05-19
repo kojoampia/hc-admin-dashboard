@@ -36,6 +36,7 @@ export default class NavbarComponent implements OnInit {
   entitiesNavbarItems: NavbarItem[] = [];
   entityRoutes: string[] = [];
   readonly adminMenuItems: MenuItem[] = [
+    { name: 'Dashboard', route: '/admin/dashboard', translationKey: 'global.menu.admin.dashboard', icon: 'dashboard' },
     { name: 'Gateway', route: '/admin/gateway', translationKey: 'global.menu.admin.gateway', icon: 'lan' },
     {
       name: 'User management',

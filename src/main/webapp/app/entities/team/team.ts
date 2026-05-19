@@ -42,7 +42,6 @@ export interface AuditEvent {
   imports: [CommonModule, MatTabsModule, MatTableModule, MatIconModule, MatButtonModule, MatDialogModule],
   template: `
     <div class="space-y-6">
-
       <!-- ── Header ────────────────────────────────────────────────────── -->
       <div class="flex items-center justify-between flex-wrap gap-3">
         <div>
@@ -69,16 +68,17 @@ export interface AuditEvent {
 
       <!-- ── Main Grid: Table + Audit Sidebar ─────────────────────────── -->
       <div class="grid gap-6" [class]="isAuditTrailOpen() ? 'grid-cols-1 lg:grid-cols-3' : 'grid-cols-1'">
-
         <!-- Teams Table -->
-        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden p-6" [class]="isAuditTrailOpen() ? 'lg:col-span-2' : ''">
+        <div
+          class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden p-6"
+          [class]="isAuditTrailOpen() ? 'lg:col-span-2' : ''"
+        >
           <div class="flex items-center justify-between mb-4">
             <h3 class="text-sm font-semibold text-slate-700">All Teams</h3>
             <span class="text-xs text-slate-400">{{ teams().length }} teams</span>
           </div>
 
           <table mat-table [dataSource]="teams()" class="w-full">
-
             <!-- Name Column -->
             <ng-container matColumnDef="name">
               <th mat-header-cell *matHeaderCellDef class="!text-[10px] !uppercase !tracking-wider !text-slate-400 !font-semibold">Name</th>
@@ -94,7 +94,9 @@ export interface AuditEvent {
 
             <!-- Description Column -->
             <ng-container matColumnDef="description">
-              <th mat-header-cell *matHeaderCellDef class="!text-[10px] !uppercase !tracking-wider !text-slate-400 !font-semibold">Description</th>
+              <th mat-header-cell *matHeaderCellDef class="!text-[10px] !uppercase !tracking-wider !text-slate-400 !font-semibold">
+                Description
+              </th>
               <td mat-cell *matCellDef="let team" class="!py-4 !text-sm !text-slate-500 max-w-[200px]">
                 <span class="line-clamp-2">{{ team.description }}</span>
               </td>
@@ -102,10 +104,12 @@ export interface AuditEvent {
 
             <!-- Members Column -->
             <ng-container matColumnDef="members">
-              <th mat-header-cell *matHeaderCellDef class="!text-[10px] !uppercase !tracking-wider !text-slate-400 !font-semibold">Members</th>
+              <th mat-header-cell *matHeaderCellDef class="!text-[10px] !uppercase !tracking-wider !text-slate-400 !font-semibold">
+                Members
+              </th>
               <td mat-cell *matCellDef="let team" class="!py-4">
                 <div class="flex flex-wrap gap-1">
-                  @for (name of (teamMembersMap()[team.id] || []); track name; let i = $index) {
+                  @for (name of teamMembersMap()[team.id] || []; track name; let i = $index) {
                     @if (i < 3) {
                       <span class="px-2 py-0.5 bg-slate-100 text-slate-600 rounded-full text-[10px] font-medium">{{ name }}</span>
                     }
@@ -124,16 +128,29 @@ export interface AuditEvent {
 
             <!-- Updated Column -->
             <ng-container matColumnDef="updatedAt">
-              <th mat-header-cell *matHeaderCellDef class="!text-[10px] !uppercase !tracking-wider !text-slate-400 !font-semibold">Last Updated</th>
+              <th mat-header-cell *matHeaderCellDef class="!text-[10px] !uppercase !tracking-wider !text-slate-400 !font-semibold">
+                Last Updated
+              </th>
               <td mat-cell *matCellDef="let team" class="!py-4 !text-xs !text-slate-400">{{ team.updatedAt }}</td>
             </ng-container>
 
             <!-- Actions Column -->
             <ng-container matColumnDef="actions">
-              <th mat-header-cell *matHeaderCellDef class="!text-[10px] !uppercase !tracking-wider !text-slate-400 !font-semibold text-right">Actions</th>
+              <th
+                mat-header-cell
+                *matHeaderCellDef
+                class="!text-[10px] !uppercase !tracking-wider !text-slate-400 !font-semibold text-right"
+              >
+                Actions
+              </th>
               <td mat-cell *matCellDef="let team" class="!py-4 text-right">
                 <div class="flex items-center justify-end gap-1">
-                  <button mat-icon-button (click)="openManageMembersModal(team)" title="Manage Members" class="!text-slate-400 hover:!text-indigo-600">
+                  <button
+                    mat-icon-button
+                    (click)="openManageMembersModal(team)"
+                    title="Manage Members"
+                    class="!text-slate-400 hover:!text-indigo-600"
+                  >
                     <mat-icon class="!text-lg">manage_accounts</mat-icon>
                   </button>
                   @if (state.canAccess('TEAMS', 'UPDATE')) {
@@ -151,7 +168,7 @@ export interface AuditEvent {
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="columns" class="!h-10"></tr>
-            <tr mat-row *matRowDef="let row; columns: columns;" class="hover:bg-slate-50 transition-colors border-b border-slate-50"></tr>
+            <tr mat-row *matRowDef="let row; columns: columns" class="hover:bg-slate-50 transition-colors border-b border-slate-50"></tr>
           </table>
 
           @if (teams().length === 0) {
@@ -196,7 +213,6 @@ export interface AuditEvent {
             </div>
           </div>
         }
-
       </div>
     </div>
   `,
@@ -209,10 +225,34 @@ export class TeamComponent {
   columns = ['name', 'description', 'members', 'updatedAt', 'actions'];
 
   teams = signal<Team[]>([
-    { id: '1', name: 'Cardiology Unit', description: 'Specialises in heart disease diagnosis and treatment.', members: ['m1', 'm2', 'm3'], updatedAt: '2 hours ago' },
-    { id: '2', name: 'Pediatrics', description: 'Focused on medical care for infants, children, and adolescents.', members: ['m4', 'm5'], updatedAt: '1 day ago' },
-    { id: '3', name: 'Oncology', description: 'Cancer prevention, diagnosis, and treatment team.', members: ['m2', 'm5'], updatedAt: '3 days ago' },
-    { id: '4', name: 'Emergency Response', description: 'First-response team handling critical emergency cases.', members: ['m1', 'm3', 'm4'], updatedAt: '5 days ago' },
+    {
+      id: '1',
+      name: 'Cardiology Unit',
+      description: 'Specialises in heart disease diagnosis and treatment.',
+      members: ['m1', 'm2', 'm3'],
+      updatedAt: '2 hours ago',
+    },
+    {
+      id: '2',
+      name: 'Pediatrics',
+      description: 'Focused on medical care for infants, children, and adolescents.',
+      members: ['m4', 'm5'],
+      updatedAt: '1 day ago',
+    },
+    {
+      id: '3',
+      name: 'Oncology',
+      description: 'Cancer prevention, diagnosis, and treatment team.',
+      members: ['m2', 'm5'],
+      updatedAt: '3 days ago',
+    },
+    {
+      id: '4',
+      name: 'Emergency Response',
+      description: 'First-response team handling critical emergency cases.',
+      members: ['m1', 'm3', 'm4'],
+      updatedAt: '5 days ago',
+    },
   ]);
 
   members = signal<Member[]>([
@@ -226,9 +266,30 @@ export class TeamComponent {
   isAuditTrailOpen = signal(true);
 
   auditEvents = signal<AuditEvent[]>([
-    { id: '1', type: 'UPDATE', message: 'Updated Team "Cardiology" description', timestamp: '10 mins ago', icon: 'edit_document', colorClass: 'bg-amber-100 text-amber-600' },
-    { id: '2', type: 'CREATE', message: 'Added new Team "Pediatrics"', timestamp: '2 hours ago', icon: 'post_add', colorClass: 'bg-emerald-100 text-emerald-600' },
-    { id: '3', type: 'DELETE', message: 'Removed Team "Oncology"', timestamp: '1 day ago', icon: 'delete', colorClass: 'bg-rose-100 text-rose-600' },
+    {
+      id: '1',
+      type: 'UPDATE',
+      message: 'Updated Team "Cardiology" description',
+      timestamp: '10 mins ago',
+      icon: 'edit_document',
+      colorClass: 'bg-amber-100 text-amber-600',
+    },
+    {
+      id: '2',
+      type: 'CREATE',
+      message: 'Added new Team "Pediatrics"',
+      timestamp: '2 hours ago',
+      icon: 'post_add',
+      colorClass: 'bg-emerald-100 text-emerald-600',
+    },
+    {
+      id: '3',
+      type: 'DELETE',
+      message: 'Removed Team "Oncology"',
+      timestamp: '1 day ago',
+      icon: 'delete',
+      colorClass: 'bg-rose-100 text-rose-600',
+    },
   ]);
 
   readonly teamMembersMap = computed<Record<string, string[]>>(() => {
