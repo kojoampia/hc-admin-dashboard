@@ -21,60 +21,68 @@
         <mat-form-field appearance="outline" class="w-full">
           <mat-label hpdTranslate="userManagement.login">Login</mat-label>
           <input matInput type="text" name="login" formControlName="login" />
-          @if (editForm.get('login')?.errors?.required) {
-            <mat-error hpdTranslate="entity.validation.required">This field is required.</mat-error>
-          }
-          @if (editForm.get('login')?.errors?.maxlength) {
-            <mat-error hpdTranslate="entity.validation.maxlength" [translateValues]="{ max: 50 }"
-              >This field cannot be longer than 50 characters.</mat-error
-            >
-          }
-          @if (editForm.get('login')?.errors?.pattern) {
-            <mat-error hpdTranslate="entity.validation.patternLogin"
-              >This field can only contain letters, digits and e-mail addresses.</mat-error
-            >
-          }
+          <mat-error [hidden]="!editForm.get('login')?.errors?.required" hpdTranslate="entity.validation.required"
+            >This field is required.</mat-error
+          >
+          <mat-error
+            [hidden]="!editForm.get('login')?.errors?.maxlength"
+            hpdTranslate="entity.validation.maxlength"
+            [translateValues]="{ max: 50 }"
+          >
+            This field cannot be longer than 50 characters.
+          </mat-error>
+          <mat-error [hidden]="!editForm.get('login')?.errors?.pattern" hpdTranslate="entity.validation.patternLogin">
+            This field can only contain letters, digits and e-mail addresses.
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="w-full">
           <mat-label hpdTranslate="userManagement.email">Email</mat-label>
           <input matInput type="email" name="email" formControlName="email" />
-          @if (editForm.get('email')?.errors?.required) {
-            <mat-error hpdTranslate="entity.validation.required">This field is required.</mat-error>
-          }
-          @if (editForm.get('email')?.errors?.maxlength) {
-            <mat-error hpdTranslate="entity.validation.maxlength" [translateValues]="{ max: 100 }"
-              >This field cannot be longer than 100 characters.</mat-error
-            >
-          }
-          @if (editForm.get('email')?.errors?.minlength) {
-            <mat-error hpdTranslate="entity.validation.minlength" [translateValues]="{ min: 5 }"
-              >This field is required to be at least 5 characters.</mat-error
-            >
-          }
-          @if (editForm.get('email')?.errors?.email) {
-            <mat-error hpdTranslate="global.messages.validate.email.invalid">Your email is invalid.</mat-error>
-          }
+          <mat-error [hidden]="!editForm.get('email')?.errors?.required" hpdTranslate="entity.validation.required"
+            >This field is required.</mat-error
+          >
+          <mat-error
+            [hidden]="!editForm.get('email')?.errors?.maxlength"
+            hpdTranslate="entity.validation.maxlength"
+            [translateValues]="{ max: 254 }"
+          >
+            This field cannot be longer than 254 characters.
+          </mat-error>
+          <mat-error
+            [hidden]="!editForm.get('email')?.errors?.minlength"
+            hpdTranslate="entity.validation.minlength"
+            [translateValues]="{ min: 5 }"
+          >
+            This field is required to be at least 5 characters.
+          </mat-error>
+          <mat-error [hidden]="!editForm.get('email')?.errors?.email" hpdTranslate="global.messages.validate.email.invalid"
+            >Your email is invalid.</mat-error
+          >
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="w-full">
           <mat-label hpdTranslate="userManagement.firstName">First name</mat-label>
           <input matInput type="text" name="firstName" formControlName="firstName" />
-          @if (editForm.get('firstName')?.errors?.maxlength) {
-            <mat-error hpdTranslate="entity.validation.maxlength" [translateValues]="{ max: 50 }"
-              >This field cannot be longer than 50 characters.</mat-error
-            >
-          }
+          <mat-error
+            [hidden]="!editForm.get('firstName')?.errors?.maxlength"
+            hpdTranslate="entity.validation.maxlength"
+            [translateValues]="{ max: 50 }"
+          >
+            This field cannot be longer than 50 characters.
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="w-full">
           <mat-label hpdTranslate="userManagement.lastName">Last name</mat-label>
           <input matInput type="text" name="lastName" formControlName="lastName" />
-          @if (editForm.get('lastName')?.errors?.maxlength) {
-            <mat-error hpdTranslate="entity.validation.maxlength" [translateValues]="{ max: 50 }"
-              >This field cannot be longer than 50 characters.</mat-error
-            >
-          }
+          <mat-error
+            [hidden]="!editForm.get('lastName')?.errors?.maxlength"
+            hpdTranslate="entity.validation.maxlength"
+            [translateValues]="{ max: 50 }"
+          >
+            This field cannot be longer than 50 characters.
+          </mat-error>
         </mat-form-field>
       </div>
 

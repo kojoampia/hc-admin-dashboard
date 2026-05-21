@@ -60,6 +60,7 @@ A `<section>` using a 4-column responsive grid (`grid grid-cols-1 sm:grid-cols-2
 Each of the four cards should be styled with `bg-white p-4 rounded-2xl border border-slate-200 shadow-sm`.
 Inside each card, provide an uppercase subheading for the title (`text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1`) and a flex container for the main value (left) and the change indicator badge (right).
 1. Title: "Patient Profiles" | Value: `1,284` (`text-slate-900`) | Badge: `+4% ↑` (`text-emerald-500`).
+1. Title: "Professional Profiles" | Value: `1,284` (`text-slate-900`) | Badge: `+4% ↑` (`text-emerald-500`).
 2. Title: "Vendor Profiles" | Value: `42` (`text-slate-900`) | Badge: `-0%` (`text-slate-400`).
 3. Title: "Active Shifts" | Value: `88` (`text-emerald-600`) | Badge: `Today`.
 4. Title: "Unassigned" | Value: `07` (`text-rose-500`) | Badge: `Critical` (add `animate-pulse` here).

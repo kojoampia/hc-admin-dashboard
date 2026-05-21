@@ -1,0 +1,84 @@
+:host {
+  display: block;
+}
+
+.dashboard-shell.dashboard-light {
+  background: radial-gradient(circle at top right, rgba(191, 219, 254, 0.55), transparent 24%),
+    linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);
+  color: #0f172a;
+}
+
+.dashboard-shell.dashboard-light .widget-header {
+  background-image: linear-gradient(90deg, rgba(248, 250, 252, 0.98), rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.96));
+}
+
+.dashboard-shell.dashboard-light ::ng-deep .text-white {
+  color: #0f172a !important;
+}
+
+.dashboard-shell.dashboard-light ::ng-deep .text-slate-300 {
+  color: #475569 !important;
+}
+
+.dashboard-shell.dashboard-light ::ng-deep .text-slate-400 {
+  color: #64748b !important;
+}
+
+.dashboard-shell.dashboard-light ::ng-deep .bg-white\/5 {
+  background-color: rgba(255, 255, 255, 0.88) !important;
+}
+
+.dashboard-shell.dashboard-light ::ng-deep .bg-white\/10 {
+  background-color: rgba(226, 232, 240, 0.9) !important;
+}
+
+.dashboard-shell.dashboard-light ::ng-deep .border-white\/10 {
+  border-color: #cbd5e1 !important;
+}
+
+.dashboard-shell.dashboard-light ::ng-deep .bg-slate-900,
+.dashboard-shell.dashboard-light ::ng-deep .bg-slate-900\/80,
+.dashboard-shell.dashboard-light ::ng-deep .bg-slate-950\/60 {
+  background-color: #f8fafc !important;
+}
+
+.dashboard-shell.dashboard-light ::ng-deep .bg-slate-800 {
+  background-color: #e2e8f0 !important;
+}
+
+.dashboard-shell.dashboard-light ::ng-deep .shadow-slate-950\/20,
+.dashboard-shell.dashboard-light ::ng-deep .shadow-indigo-950\/20 {
+  --tw-shadow-color: rgba(148, 163, 184, 0.25) !important;
+}
+
+.dashboard-shell.dashboard-light ::ng-deep .bg-indigo-400\/10 {
+  background-color: rgba(224, 231, 255, 0.95) !important;
+}
+
+.dashboard-shell.dashboard-light ::ng-deep .text-indigo-200 {
+  color: #4338ca !important;
+}
+
+.dashboard-shell.dashboard-light ::ng-deep .bg-emerald-500\/15,
+.dashboard-shell.dashboard-light ::ng-deep .bg-cyan-500\/15,
+.dashboard-shell.dashboard-light ::ng-deep .bg-amber-500\/15,
+.dashboard-shell.dashboard-light ::ng-deep .bg-fuchsia-500\/15,
+.dashboard-shell.dashboard-light ::ng-deep .bg-teal-500\/15,
+.dashboard-shell.dashboard-light ::ng-deep .bg-rose-500\/15,
+.dashboard-shell.dashboard-light ::ng-deep .bg-indigo-500\/15 {
+  filter: saturate(0.8);
+}
+
+:host ::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+
+:host ::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.45);
+  border-radius: 9999px;
+}
+
+:host ::-webkit-scrollbar-track {
+  background: transparent;
+}

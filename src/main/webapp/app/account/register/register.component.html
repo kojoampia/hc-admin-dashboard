@@ -61,22 +61,18 @@
               data-cy="username"
               #login
             />
-            @if (registerForm.get('login')?.errors?.required) {
-              <mat-error hpdTranslate="register.messages.validate.login.required">Your username is required.</mat-error>
-            }
-            @if (registerForm.get('login')?.errors?.minlength) {
-              <mat-error hpdTranslate="register.messages.validate.login.minlength"
-                >Your username is required to be at least 1 character.</mat-error
-              >
-            }
-            @if (registerForm.get('login')?.errors?.maxlength) {
-              <mat-error hpdTranslate="register.messages.validate.login.maxlength"
-                >Your username cannot be longer than 50 characters.</mat-error
-              >
-            }
-            @if (registerForm.get('login')?.errors?.pattern) {
-              <mat-error hpdTranslate="register.messages.validate.login.pattern">Your username is invalid.</mat-error>
-            }
+            <mat-error [hidden]="!registerForm.get('login')?.errors?.required" hpdTranslate="register.messages.validate.login.required">
+              Your username is required.
+            </mat-error>
+            <mat-error [hidden]="!registerForm.get('login')?.errors?.minlength" hpdTranslate="register.messages.validate.login.minlength">
+              Your username is required to be at least 1 character.
+            </mat-error>
+            <mat-error [hidden]="!registerForm.get('login')?.errors?.maxlength" hpdTranslate="register.messages.validate.login.maxlength">
+              Your username cannot be longer than 50 characters.
+            </mat-error>
+            <mat-error [hidden]="!registerForm.get('login')?.errors?.pattern" hpdTranslate="register.messages.validate.login.pattern">
+              Your username is invalid.
+            </mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="outline" class="w-full">
@@ -90,20 +86,18 @@
               formControlName="email"
               data-cy="email"
             />
-            @if (registerForm.get('email')?.errors?.required) {
-              <mat-error hpdTranslate="global.messages.validate.email.required">Your email is required.</mat-error>
-            }
-            @if (registerForm.get('email')?.errors?.email) {
-              <mat-error hpdTranslate="global.messages.validate.email.invalid">Your email is invalid.</mat-error>
-            }
-            @if (registerForm.get('email')?.errors?.minlength) {
-              <mat-error hpdTranslate="global.messages.validate.email.minlength"
-                >Your email is required to be at least 5 characters.</mat-error
-              >
-            }
-            @if (registerForm.get('email')?.errors?.maxlength) {
-              <mat-error hpdTranslate="global.messages.validate.email.maxlength">Your email cannot be longer than 50 characters.</mat-error>
-            }
+            <mat-error [hidden]="!registerForm.get('email')?.errors?.required" hpdTranslate="global.messages.validate.email.required">
+              Your email is required.
+            </mat-error>
+            <mat-error [hidden]="!registerForm.get('email')?.errors?.email" hpdTranslate="global.messages.validate.email.invalid">
+              Your email is invalid.
+            </mat-error>
+            <mat-error [hidden]="!registerForm.get('email')?.errors?.minlength" hpdTranslate="global.messages.validate.email.minlength">
+              Your email is required to be at least 5 characters.
+            </mat-error>
+            <mat-error [hidden]="!registerForm.get('email')?.errors?.maxlength" hpdTranslate="global.messages.validate.email.maxlength">
+              Your email cannot be longer than 254 characters.
+            </mat-error>
           </mat-form-field>
 
           <div class="space-y-3">
@@ -119,19 +113,24 @@
                 formControlName="password"
                 data-cy="firstPassword"
               />
-              @if (registerForm.get('password')?.errors?.required) {
-                <mat-error hpdTranslate="global.messages.validate.newpassword.required">Your password is required.</mat-error>
-              }
-              @if (registerForm.get('password')?.errors?.minlength) {
-                <mat-error hpdTranslate="global.messages.validate.newpassword.minlength"
-                  >Your password is required to be at least 4 characters.</mat-error
-                >
-              }
-              @if (registerForm.get('password')?.errors?.maxlength) {
-                <mat-error hpdTranslate="global.messages.validate.newpassword.maxlength"
-                  >Your password cannot be longer than 50 characters.</mat-error
-                >
-              }
+              <mat-error
+                [hidden]="!registerForm.get('password')?.errors?.required"
+                hpdTranslate="global.messages.validate.newpassword.required"
+              >
+                Your password is required.
+              </mat-error>
+              <mat-error
+                [hidden]="!registerForm.get('password')?.errors?.minlength"
+                hpdTranslate="global.messages.validate.newpassword.minlength"
+              >
+                Your password is required to be at least 4 characters.
+              </mat-error>
+              <mat-error
+                [hidden]="!registerForm.get('password')?.errors?.maxlength"
+                hpdTranslate="global.messages.validate.newpassword.maxlength"
+              >
+                Your password cannot be longer than 50 characters.
+              </mat-error>
             </mat-form-field>
             <hpd-password-strength-bar [passwordToCheck]="registerForm.get('password')!.value"></hpd-password-strength-bar>
           </div>
@@ -148,21 +147,24 @@
               formControlName="confirmPassword"
               data-cy="secondPassword"
             />
-            @if (registerForm.get('confirmPassword')?.errors?.required) {
-              <mat-error hpdTranslate="global.messages.validate.confirmpassword.required"
-                >Your confirmation password is required.</mat-error
-              >
-            }
-            @if (registerForm.get('confirmPassword')?.errors?.minlength) {
-              <mat-error hpdTranslate="global.messages.validate.confirmpassword.minlength">
-                Your confirmation password is required to be at least 4 characters.
-              </mat-error>
-            }
-            @if (registerForm.get('confirmPassword')?.errors?.maxlength) {
-              <mat-error hpdTranslate="global.messages.validate.confirmpassword.maxlength">
-                Your confirmation password cannot be longer than 50 characters.
-              </mat-error>
-            }
+            <mat-error
+              [hidden]="!registerForm.get('confirmPassword')?.errors?.required"
+              hpdTranslate="global.messages.validate.confirmpassword.required"
+            >
+              Your confirmation password is required.
+            </mat-error>
+            <mat-error
+              [hidden]="!registerForm.get('confirmPassword')?.errors?.minlength"
+              hpdTranslate="global.messages.validate.confirmpassword.minlength"
+            >
+              Your confirmation password is required to be at least 4 characters.
+            </mat-error>
+            <mat-error
+              [hidden]="!registerForm.get('confirmPassword')?.errors?.maxlength"
+              hpdTranslate="global.messages.validate.confirmpassword.maxlength"
+            >
+              Your confirmation password cannot be longer than 50 characters.
+            </mat-error>
           </mat-form-field>
 
           <button mat-flat-button color="primary" type="submit" [disabled]="registerForm.invalid" data-cy="submit">

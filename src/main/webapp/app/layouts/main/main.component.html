@@ -1,5 +1,5 @@
 <div class="h-100 w-100">
-  <mat-sidenav-container class="sidebar-container">
+  <mat-sidenav-container class="sidebar-container" [autosize]="!isHandset()">
     <mat-sidenav
       class="sidenav light-bg"
       [style.width]="state.sidebarExpanded() ? '256px' : '80px'"

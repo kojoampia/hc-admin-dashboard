@@ -6,7 +6,7 @@ export type AppResource = 'DASHBOARD' | 'MESSAGES' | 'DUTY_ROSTER' | 'PRICE_PLAN
 
 export type Permission = 'READ' | 'WRITE' | 'DELETE' | 'CREATE' | 'UPDATE';
 
-export type UserRole = 'USER' | 'ADMIN' | 'PATIENT' | 'PROFESSIONAL' | 'VENDOR' | 'EDITOR';
+export type UserRole = 'USER' | 'ADMIN' | 'PATIENT' | 'PROFESSIONAL' | 'VENDOR' | 'EDITOR' | 'OPERATOR';
 
 export interface AppUser {
   name: string;
@@ -52,7 +52,7 @@ const TYPE_COLOR_MAP: Record<string, string> = {
 export class DashboardStateService {
   private readonly wsService = inject(WebsocketAuthService);
 
-  readonly currentUser = signal<AppUser>({ name: 'Admin User', role: 'ADMIN' });
+  readonly currentUser = signal<AppUser>({ name: 'Operations Lead', role: 'OPERATOR' });
 
   readonly menu = computed(() => this.activeMenu());
 
@@ -60,7 +60,7 @@ export class DashboardStateService {
 
   readonly operationLogs = signal<ActivityEvent[]>(buildInitialLogs());
 
-  private readonly activeMenu = signal<string>('DASHBOARD');
+  private readonly activeMenu = signal<string>('OPERATIONS');
 
   private auditSubscription: Subscription | null = null;
   private auditConsumers = 0;

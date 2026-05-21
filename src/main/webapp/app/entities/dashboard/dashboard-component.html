@@ -1,173 +1,331 @@
-<div class="space-y-6">
-  <!-- Header -->
-  <div class="flex items-center justify-between">
-    <h2 class="text-xl font-semibold text-slate-800">Command Center</h2>
-  </div>
-
-  <!-- Top Statistic Cards -->
-  <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-    <!-- Patient Profiles -->
-    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
-      <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Patient Profiles</p>
-      <div class="flex items-center justify-between">
-        <span class="text-2xl font-bold text-slate-900">1,284</span>
-        <span class="text-sm font-semibold text-emerald-500">+4% ↑</span>
-      </div>
-    </div>
-    <!-- Vendor Profiles -->
-    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
-      <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Vendor Profiles</p>
-      <div class="flex items-center justify-between">
-        <span class="text-2xl font-bold text-slate-900">42</span>
-        <span class="text-sm font-semibold text-slate-400">-0%</span>
-      </div>
-    </div>
-    <!-- Active Shifts -->
-    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
-      <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Active Shifts</p>
-      <div class="flex items-center justify-between">
-        <span class="text-2xl font-bold text-emerald-600">88</span>
-        <span class="text-sm font-semibold text-slate-500">Today</span>
-      </div>
-    </div>
-    <!-- Unassigned -->
-    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
-      <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Unassigned</p>
-      <div class="flex items-center justify-between">
-        <span class="text-2xl font-bold text-rose-500">07</span>
-        <span class="text-sm font-semibold text-rose-500 animate-pulse">Critical</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- Middle Grid: Charts -->
-  <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-    <!-- Card A: Weekly Output -->
-    <div class="lg:col-span-2 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col h-full min-h-[350px]">
-      <!-- Header -->
-      <div class="p-6 border-b border-slate-100 flex justify-between bg-slate-50/50">
-        <div>
-          <h3 class="text-base font-semibold text-slate-800">Weekly Output</h3>
-          <p class="text-xs text-slate-400 mt-0.5">Total activities completed over the last 7 days</p>
-        </div>
-        <span class="text-xs font-semibold bg-indigo-50 text-indigo-600 px-3 py-1 rounded-full self-start">This Week</span>
-      </div>
-      <!-- Chart Area -->
-      <div class="p-4 sm:p-6 flex-1 flex items-end justify-between gap-1 sm:gap-2 relative pt-12">
-        <!-- Background Lines -->
-        <div class="absolute inset-x-6 inset-y-6 mt-12 mb-6 pointer-events-none flex flex-col justify-between">
-          <div class="border-t border-slate-100 w-full"></div>
-          <div class="border-t border-slate-100 w-full"></div>
-          <div class="border-t border-slate-100 w-full"></div>
-          <div class="border-t border-slate-100 w-full"></div>
-          <div class="border-t border-slate-100 w-full"></div>
-        </div>
-        <!-- Bars -->
-        @for (stat of weeklyStats; track stat.day) {
-        <div class="relative flex flex-col justify-end group z-10 w-full sm:max-w-[48px] h-full">
-          <!-- Tooltip -->
-          <div
-            class="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 bg-slate-800 text-white rounded px-2 py-1 z-20 text-xs whitespace-nowrap transition-opacity duration-200"
+<section
+  class="dashboard-shell min-h-screen transition-colors duration-300"
+  [class.dashboard-light]="isLightMode()"
+  [class.bg-slate-950]="!isLightMode()"
+  [class.text-slate-100]="!isLightMode()"
+>
+  <header
+    class="dashboard-header sticky top-0 z-30 border-b backdrop-blur transition-colors duration-300"
+    [ngClass]="isLightMode() ? ['border-slate-200', 'bg-white/90'] : ['border-white/10', 'bg-slate-950/90']"
+  >
+    <div class="mx-auto flex max-w-screen-2xl flex-col gap-4 px-4 py-4 lg:px-6">
+      <div class="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
+        <div class="flex items-center gap-4">
+          <span
+            class="inline-flex h-12 w-12 items-center justify-center rounded-2xl ring-1 ring-inset transition-colors duration-300"
+            [ngClass]="isLightMode() ? ['bg-indigo-100', 'text-indigo-600', 'ring-indigo-200'] : ['bg-indigo-500/15', 'text-indigo-300', 'ring-indigo-400/30']"
           >
-            {{ stat.value }} events
-          </div>
-          <!-- Bar container -->
-          <div class="w-full bg-slate-50 rounded-t-md relative group-hover:bg-slate-100 h-full flex flex-col justify-end">
-            <div
-              class="w-full bg-indigo-500 rounded-t-md group-hover:bg-indigo-600 transition-all duration-500"
-              [style.height.%]="stat.percentage"
-            ></div>
-          </div>
-          <!-- Day label -->
-          <p class="mt-3 text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-wider text-center">{{ stat.day }}</p>
-        </div>
-        }
-      </div>
-    </div>
-
-    <!-- Card B: System Health -->
-    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col h-full min-h-[350px]">
-      <!-- Header -->
-      <div class="p-6 border-b border-slate-100 flex justify-between bg-slate-50/50">
-        <div>
-          <h3 class="text-base font-semibold text-slate-800">System Health</h3>
-          <p class="text-xs text-slate-400 mt-0.5">Live infrastructure metrics</p>
-        </div>
-        <mat-icon class="text-emerald-500 text-xl">check_circle</mat-icon>
-      </div>
-      <!-- Content Area -->
-      <div class="p-6 flex-1 flex flex-col justify-between gap-6 relative">
-        <div class="flex flex-col gap-4">
-          @for (metric of healthMetrics; track metric.name) {
+            <mat-icon>space_dashboard</mat-icon>
+          </span>
           <div>
-            <div class="flex justify-between mb-1">
-              <span class="text-xs font-medium text-slate-600">{{ metric.name }}</span>
-              <span class="text-xs font-semibold text-slate-800">{{ metric.value }}%</span>
-            </div>
-            <div class="h-2.5 bg-slate-50 rounded-full border border-slate-100 overflow-hidden">
-              <div class="h-full rounded-full transition-all duration-500" [class]="metric.colorClass" [style.width.%]="metric.value"></div>
-            </div>
-          </div>
-          }
-        </div>
-        <!-- Footer -->
-        <div class="mt-auto pt-4 border-t border-slate-100 flex items-center justify-between">
-          <div>
-            <p class="text-xs font-semibold text-slate-700">Server Status</p>
-            <p class="text-xs text-slate-400">All systems operational</p>
-          </div>
-          <div class="w-10 h-10 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center">
-            <span class="w-3 h-3 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.8)]"></span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Bottom Section: Audit Trail -->
-  <section class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col transition-all duration-300">
-    <!-- Header toggle -->
-    <div class="p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50 cursor-pointer" (click)="toggleAuditTrail()">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-full bg-indigo-50 text-indigo-600 flex items-center justify-center">
-          <mat-icon>receipt_long</mat-icon>
-        </div>
-        <div>
-          <p class="text-sm font-semibold text-slate-800">Audit Trail</p>
-          <p class="text-xs text-slate-400">System events and user activity</p>
-        </div>
-      </div>
-      <div class="flex items-center gap-3">
-        <span class="text-xs font-semibold bg-indigo-50 text-indigo-600 px-3 py-1 rounded-full"
-          >{{ state.operationLogs().length }} Latest Events</span
-        >
-        <mat-icon class="text-slate-400 transition-transform duration-300" [class.rotate-180]="isAuditTrailOpen()">expand_more</mat-icon>
-      </div>
-    </div>
-    <!-- Collapsible Body -->
-    @if (isAuditTrailOpen()) {
-    <div class="p-0 overflow-y-auto max-h-[600px] animate-in slide-in-from-top-4 fade-in duration-300">
-      <div class="divide-y divide-slate-100">
-        @for (event of state.operationLogs(); track event.id) {
-        <div class="flex items-center gap-4 p-4 hover:bg-slate-50/80 transition-colors group">
-          <!-- Icon -->
-          <div class="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0" [class]="event.colorClass">
-            <mat-icon class="text-base">{{ event.icon }}</mat-icon>
-          </div>
-          <!-- Content -->
-          <div class="flex-1 flex items-center gap-2 min-w-0">
-            <div class="flex-1 min-w-0">
-              <p class="text-sm text-slate-700 truncate group-hover:text-indigo-600 transition-colors">{{ event.message }}</p>
-              <p class="text-xs font-medium text-slate-500 uppercase tracking-widest mt-0.5">{{ event.type }}</p>
-            </div>
-            <span class="text-xs bg-slate-100 text-slate-400 font-medium px-2 py-0.5 rounded-md whitespace-nowrap flex-shrink-0"
-              >{{ event.timestamp }}</span
+            <p
+              class="text-xs font-semibold uppercase tracking-[0.32em]"
+              [class.text-indigo-200]="!isLightMode()"
+              [class.text-indigo-600]="isLightMode()"
             >
+              Health Connect
+            </p>
+            <h1
+              id="page-heading"
+              class="text-2xl font-semibold tracking-tight"
+              [class.text-white]="!isLightMode()"
+              [class.text-slate-900]="isLightMode()"
+            >
+              Operator command center
+            </h1>
+            <p class="text-sm" [class.text-slate-400]="!isLightMode()" [class.text-slate-600]="isLightMode()">
+              Operational metrics, live activity, and quick-action widgets for day-to-day monitoring.
+            </p>
           </div>
         </div>
+
+        <div class="flex flex-wrap items-center gap-3">
+          <button
+            mat-stroked-button
+            type="button"
+            class="!rounded-full !px-4"
+            [ngClass]="isLightMode() ? ['!border-slate-300', '!bg-white', '!text-slate-700'] : ['!border-white/15', '!bg-white/5', '!text-slate-100']"
+            (click)="toggleTheme()"
+          >
+            <mat-icon>{{ isLightMode() ? 'dark_mode' : 'light_mode' }}</mat-icon>
+            {{ isLightMode() ? 'Dark mode' : 'Light mode' }}
+          </button>
+
+          <div
+            class="flex items-center gap-3 rounded-2xl border px-3 py-2 transition-colors duration-300"
+            [ngClass]="isLightMode() ? ['border-slate-200', 'bg-white'] : ['border-white/10', 'bg-white/5']"
+          >
+            <span
+              class="inline-flex h-11 w-11 items-center justify-center rounded-2xl text-sm font-semibold transition-colors duration-300"
+              [ngClass]="isLightMode() ? ['bg-slate-100', 'text-slate-800'] : ['bg-white/10', 'text-white']"
+            >
+              {{ currentUserInitials() }}
+            </span>
+            <div>
+              <p class="text-sm font-semibold" [class.text-white]="!isLightMode()" [class.text-slate-900]="isLightMode()">
+                {{ currentUserName() }}
+              </p>
+              <p class="text-xs uppercase tracking-[0.28em]" [class.text-slate-400]="!isLightMode()" [class.text-slate-500]="isLightMode()">
+                {{ currentUserRole() }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap justify-end gap-2 overflow-x-auto pb-1">
+        @for (widget of widgets(); track widget.id) {
+        <button
+          mat-stroked-button
+          type="button"
+          class="quick-access-button !min-w-max !rounded-full"
+          [ngClass]="isLightMode() ? ['!border-slate-300', '!bg-white', '!text-slate-700'] : ['!border-white/15', '!bg-white/5', '!text-slate-100']"
+          [class.opacity-70]="!widget.visible"
+          (click)="openWidget(widget.id)"
+        >
+          <mat-icon>{{ widget.visible ? widget.icon : 'add_circle' }}</mat-icon>
+          {{ widget.title }}
+        </button>
         }
       </div>
     </div>
-    }
-  </section>
-</div>
+  </header>
+
+  <div class="mx-auto max-w-screen-2xl px-4 py-6 lg:px-6">
+    <div class="grid gap-6" [ngClass]="!maximizedWidgetId() ? ['xl:grid-cols-[18rem_minmax(0,1fr)]'] : []">
+      @if (!maximizedWidgetId()) {
+      <aside class="space-y-5 xl:sticky xl:top-28 xl:self-start">
+        <div
+          class="dashboard-panel rounded-3xl border p-2 shadow-lg transition-colors duration-300"
+          [ngClass]="isLightMode() ? ['border-slate-200', 'bg-white', 'shadow-slate-300/40'] : ['border-white/10', 'bg-white/5', 'shadow-slate-950/20']"
+        >
+          <div class="flex items-center justify-between gap-3">
+            <p
+              class="text-xs font-semibold uppercase tracking-[0.28em]"
+              [class.text-slate-400]="!isLightMode()"
+              [class.text-slate-500]="isLightMode()"
+            >
+              Navigation
+            </p>
+            <span
+              class="rounded-full px-3 py-1 text-xs font-medium"
+              [ngClass]="isLightMode() ? ['bg-slate-100', 'text-slate-600'] : ['bg-white/10', 'text-slate-300']"
+            >
+              {{ visibleWidgetCount() }} widgets live
+            </span>
+          </div>
+          <div class="mt-4 space-y-2">
+            @for (section of sections; track section.id) {
+            <button
+              mat-button
+              type="button"
+              class="!flex !w-full !justify-start !rounded-2xl !px-4 !py-3 !text-left"
+              [class]="sectionButtonClasses(section.id)"
+              (click)="navigateToSection(section.id)"
+            >
+              <mat-icon>{{ section.icon }}</mat-icon>
+              {{ section.title }}
+            </button>
+            }
+          </div>
+        </div>
+
+        <div
+          class="dashboard-panel rounded-3xl border p-5 shadow-lg transition-colors duration-300"
+          [ngClass]="isLightMode() ? ['border-slate-200', 'bg-white', 'shadow-slate-300/40'] : ['border-white/10', 'bg-white/5', 'shadow-slate-950/20']"
+        >
+          <p
+            class="text-xs font-semibold uppercase tracking-[0.28em]"
+            [class.text-slate-400]="!isLightMode()"
+            [class.text-slate-500]="isLightMode()"
+          >
+            Dashboard status
+          </p>
+          <div class="mt-4 grid gap-3">
+            <div class="rounded-2xl p-4 transition-colors duration-300" [ngClass]="isLightMode() ? ['bg-slate-50'] : ['bg-white/5']">
+              <p
+                class="text-xs font-medium uppercase tracking-wide"
+                [class.text-slate-400]="!isLightMode()"
+                [class.text-slate-500]="isLightMode()"
+              >
+                Visible widgets
+              </p>
+              <p class="mt-2 text-3xl font-semibold" [class.text-white]="!isLightMode()" [class.text-slate-900]="isLightMode()">
+                {{ visibleWidgetCount() }}
+              </p>
+            </div>
+            <div class="rounded-2xl p-4 transition-colors duration-300" [ngClass]="isLightMode() ? ['bg-slate-50'] : ['bg-white/5']">
+              <p
+                class="text-xs font-medium uppercase tracking-wide"
+                [class.text-slate-400]="!isLightMode()"
+                [class.text-slate-500]="isLightMode()"
+              >
+                Closed widgets
+              </p>
+              <p class="mt-2 text-3xl font-semibold" [class.text-white]="!isLightMode()" [class.text-slate-900]="isLightMode()">
+                {{ hiddenWidgetCount() }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </aside>
+      }
+
+      <main class="space-y-8">
+        @for (section of visibleSections(); track section.id) {
+        <section [id]="sectionElementId(section.id)" class="space-y-5 scroll-mt-28">
+          <div
+            class="dashboard-panel rounded-3xl border p-5 shadow-lg transition-colors duration-300"
+            [ngClass]="isLightMode() ? ['border-slate-200', 'bg-white', 'shadow-slate-300/40'] : ['border-white/10', 'bg-white/5', 'shadow-slate-950/20']"
+          >
+            <div class="flex items-center gap-3">
+              <span
+                class="inline-flex h-11 w-11 items-center justify-center rounded-2xl transition-colors duration-300"
+                [ngClass]="isLightMode() ? ['bg-indigo-100', 'text-indigo-600'] : ['bg-indigo-400/10', 'text-indigo-200']"
+              >
+                <mat-icon>{{ section.icon }}</mat-icon>
+              </span>
+              <div>
+                <h2 class="text-xl font-semibold" [class.text-white]="!isLightMode()" [class.text-slate-900]="isLightMode()">
+                  {{ section.title }}
+                </h2>
+                <p class="text-sm" [class.text-slate-300]="!isLightMode()" [class.text-slate-600]="isLightMode()">
+                  {{ section.description }}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid gap-5" [ngClass]="section.widgets.length === 1 ? ['xl:grid-cols-1'] : ['xl:grid-cols-2']">
+            @for (widget of section.widgets; track widget.id) {
+            <article
+              [id]="widgetElementId(widget.id)"
+              class="widget-card scroll-mt-28 overflow-hidden rounded-3xl border transition-colors duration-300"
+              [class.bg-slate-900]="!isLightMode()"
+              [class.bg-white]="isLightMode()"
+              [ngClass]="widgetContainerClasses(widget.id)"
+            >
+              <div
+                class="widget-header bg-gradient-to-r px-5 py-5 transition-colors duration-300"
+                [class]="widget.accentClass"
+                [class.from-slate-100]="isLightMode()"
+                [class.via-white]="isLightMode()"
+                [class.to-white]="isLightMode()"
+              >
+                <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+                  <div class="space-y-2">
+                    <div class="flex items-center gap-3">
+                      <span
+                        class="inline-flex h-10 w-10 items-center justify-center rounded-2xl transition-colors duration-300"
+                        [ngClass]="isLightMode() ? ['bg-indigo-100', 'text-indigo-600'] : ['bg-white/10', 'text-indigo-200']"
+                      >
+                        <mat-icon>{{ widget.icon }}</mat-icon>
+                      </span>
+                      <div>
+                        <h3 class="text-lg font-semibold" [class.text-white]="!isLightMode()" [class.text-slate-900]="isLightMode()">
+                          {{ widget.title }}
+                        </h3>
+                        <p class="text-sm" [class.text-slate-300]="!isLightMode()" [class.text-slate-600]="isLightMode()">
+                          {{ widget.description }}
+                        </p>
+                      </div>
+                    </div>
+                    <div
+                      class="flex flex-wrap gap-2 text-xs font-medium uppercase tracking-wide"
+                      [class.text-slate-300]="!isLightMode()"
+                      [class.text-slate-600]="isLightMode()"
+                    >
+                      <span
+                        class="rounded-full px-3 py-1 transition-colors duration-300"
+                        [ngClass]="isLightMode() ? ['bg-slate-100'] : ['bg-white/10']"
+                      >
+                        {{ section.title }}
+                      </span>
+                      @if (isWidgetMaximized(widget.id)) {
+                      <span
+                        class="rounded-full px-3 py-1 transition-colors duration-300"
+                        [ngClass]="isLightMode() ? ['bg-indigo-100', 'text-indigo-700'] : ['bg-indigo-400/20', 'text-indigo-100']"
+                      >
+                        Focused view
+                      </span>
+                      } @if (isWidgetMinimized(widget.id)) {
+                      <span
+                        class="rounded-full px-3 py-1 transition-colors duration-300"
+                        [ngClass]="isLightMode() ? ['bg-amber-100', 'text-amber-700'] : ['bg-amber-400/20', 'text-amber-100']"
+                      >
+                        Collapsed
+                      </span>
+                      }
+                    </div>
+                  </div>
+
+                  <div class="flex flex-wrap items-center gap-2">
+                    <button
+                      mat-icon-button
+                      type="button"
+                      [ngClass]="isLightMode() ? ['!text-slate-600'] : ['!text-slate-200']"
+                      [attr.aria-label]="isWidgetMinimized(widget.id) ? 'Expand widget' : 'Minimize widget'"
+                      (click)="toggleMinimizeWidget(widget.id)"
+                    >
+                      <mat-icon>{{ isWidgetMinimized(widget.id) ? 'expand_more' : 'remove' }}</mat-icon>
+                    </button>
+                    <button
+                      mat-icon-button
+                      type="button"
+                      [ngClass]="isLightMode() ? ['!text-slate-600'] : ['!text-slate-200']"
+                      [attr.aria-label]="isWidgetMaximized(widget.id) ? 'Restore widget' : 'Maximize widget'"
+                      (click)="toggleMaximizeWidget(widget.id)"
+                    >
+                      <mat-icon>{{ isWidgetMaximized(widget.id) ? 'close_fullscreen' : 'open_in_full' }}</mat-icon>
+                    </button>
+                    <button
+                      mat-icon-button
+                      type="button"
+                      [ngClass]="isLightMode() ? ['!text-rose-500'] : ['!text-rose-200']"
+                      aria-label="Close widget"
+                      (click)="closeWidget(widget.id)"
+                    >
+                      <mat-icon>close</mat-icon>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              @if (isWidgetMinimized(widget.id) && !isWidgetMaximized(widget.id)) {
+              <div
+                class="border-t px-5 py-4 text-sm transition-colors duration-300"
+                [ngClass]="isLightMode() ? ['border-slate-200', 'bg-slate-50', 'text-slate-600'] : ['border-white/10', 'bg-slate-900/80', 'text-slate-400']"
+              >
+                Widget minimized. Use the header controls or quick-access bar to reopen the full view.
+              </div>
+              } @else {
+              <div
+                class="widget-body p-4 transition-colors duration-300"
+                [ngClass]="[isLightMode() ? 'bg-slate-50' : 'bg-slate-950/60', isWidgetMaximized(widget.id) ? 'min-h-[calc(100vh-20rem)]' : '']"
+              >
+                @switch (widget.id) { @case ('operationsOverview') {
+                <hpd-operations-overview />
+                } @case ('liveActivity') {
+                <hpd-live-activity-feed />
+                } @case ('shiftPerformance') {
+                <hpd-shift-performance />
+                } @case ('shiftCoverage') {
+                <hpd-shift-coverage />
+                } @case ('customerSignals') {
+                <hpd-customer-signals />
+                } @case ('financePulse') {
+                <hpd-finance-pulse />
+                } @case ('revenueBreakdown') {
+                <hpd-revenue-breakdown />
+                } }
+              </div>
+              }
+            </article>
+            }
+          </div>
+        </section>
+        }
+      </main>
+    </div>
+  </div>
+</section>

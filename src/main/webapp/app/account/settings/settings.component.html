@@ -36,19 +36,24 @@
               formControlName="firstName"
               data-cy="firstname"
             />
-            @if (settingsForm.get('firstName')?.errors?.required) {
-              <mat-error hpdTranslate="settings.messages.validate.firstname.required">Your first name is required.</mat-error>
-            }
-            @if (settingsForm.get('firstName')?.errors?.minlength) {
-              <mat-error hpdTranslate="settings.messages.validate.firstname.minlength">
-                Your first name is required to be at least 1 character
-              </mat-error>
-            }
-            @if (settingsForm.get('firstName')?.errors?.maxlength) {
-              <mat-error hpdTranslate="settings.messages.validate.firstname.maxlength">
-                Your first name cannot be longer than 50 characters
-              </mat-error>
-            }
+            <mat-error
+              [hidden]="!settingsForm.get('firstName')?.errors?.required"
+              hpdTranslate="settings.messages.validate.firstname.required"
+            >
+              Your first name is required.
+            </mat-error>
+            <mat-error
+              [hidden]="!settingsForm.get('firstName')?.errors?.minlength"
+              hpdTranslate="settings.messages.validate.firstname.minlength"
+            >
+              Your first name is required to be at least 1 character
+            </mat-error>
+            <mat-error
+              [hidden]="!settingsForm.get('firstName')?.errors?.maxlength"
+              hpdTranslate="settings.messages.validate.firstname.maxlength"
+            >
+              Your first name cannot be longer than 50 characters
+            </mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="outline" class="w-full">
@@ -62,19 +67,24 @@
               formControlName="lastName"
               data-cy="lastname"
             />
-            @if (settingsForm.get('lastName')?.errors?.required) {
-              <mat-error hpdTranslate="settings.messages.validate.lastname.required">Your last name is required.</mat-error>
-            }
-            @if (settingsForm.get('lastName')?.errors?.minlength) {
-              <mat-error hpdTranslate="settings.messages.validate.lastname.minlength">
-                Your last name is required to be at least 1 character
-              </mat-error>
-            }
-            @if (settingsForm.get('lastName')?.errors?.maxlength) {
-              <mat-error hpdTranslate="settings.messages.validate.lastname.maxlength">
-                Your last name cannot be longer than 50 characters
-              </mat-error>
-            }
+            <mat-error
+              [hidden]="!settingsForm.get('lastName')?.errors?.required"
+              hpdTranslate="settings.messages.validate.lastname.required"
+            >
+              Your last name is required.
+            </mat-error>
+            <mat-error
+              [hidden]="!settingsForm.get('lastName')?.errors?.minlength"
+              hpdTranslate="settings.messages.validate.lastname.minlength"
+            >
+              Your last name is required to be at least 1 character
+            </mat-error>
+            <mat-error
+              [hidden]="!settingsForm.get('lastName')?.errors?.maxlength"
+              hpdTranslate="settings.messages.validate.lastname.maxlength"
+            >
+              Your last name cannot be longer than 50 characters
+            </mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="outline" class="w-full">
@@ -88,20 +98,18 @@
               formControlName="email"
               data-cy="email"
             />
-            @if (settingsForm.get('email')?.errors?.required) {
-              <mat-error hpdTranslate="global.messages.validate.email.required">Your email is required.</mat-error>
-            }
-            @if (settingsForm.get('email')?.errors?.email) {
-              <mat-error hpdTranslate="global.messages.validate.email.invalid">Your email is invalid.</mat-error>
-            }
-            @if (settingsForm.get('email')?.errors?.minlength) {
-              <mat-error hpdTranslate="global.messages.validate.email.minlength"
-                >Your email is required to be at least 5 characters.</mat-error
-              >
-            }
-            @if (settingsForm.get('email')?.errors?.maxlength) {
-              <mat-error hpdTranslate="global.messages.validate.email.maxlength">Your email cannot be longer than 50 characters.</mat-error>
-            }
+            <mat-error [hidden]="!settingsForm.get('email')?.errors?.required" hpdTranslate="global.messages.validate.email.required">
+              Your email is required.
+            </mat-error>
+            <mat-error [hidden]="!settingsForm.get('email')?.errors?.email" hpdTranslate="global.messages.validate.email.invalid">
+              Your email is invalid.
+            </mat-error>
+            <mat-error [hidden]="!settingsForm.get('email')?.errors?.minlength" hpdTranslate="global.messages.validate.email.minlength">
+              Your email is required to be at least 5 characters.
+            </mat-error>
+            <mat-error [hidden]="!settingsForm.get('email')?.errors?.maxlength" hpdTranslate="global.messages.validate.email.maxlength">
+              Your email cannot be longer than 254 characters.
+            </mat-error>
           </mat-form-field>
 
           @if (languages && languages.length > 0) {

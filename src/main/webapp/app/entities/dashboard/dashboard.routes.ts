@@ -6,6 +6,12 @@ import DashboardResolve from './route/dashboard-routing-resolve.service';
 const dashboardRoute: Routes = [
   {
     path: '',
+    loadComponent: () => import('./dashboard-component').then(m => m.DashboardComponent),
+    data: {},
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: 'manage',
     loadComponent: () => import('./list/dashboard.component').then(m => m.DashboardComponent),
     data: {},
     canActivate: [UserRouteAccessService],
