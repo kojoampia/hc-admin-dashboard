@@ -6,7 +6,7 @@ import ProfileResolve from './route/profile-routing-resolve.service';
 const profileRoute: Routes = [
   {
     path: '',
-    loadComponent: () => import('./list/profile.component').then(m => m.ProfileComponent),
+    loadComponent: () => import('./list/profile.component').then(m => m.ProfileListComponent),
     data: {},
     canActivate: [UserRouteAccessService],
   },

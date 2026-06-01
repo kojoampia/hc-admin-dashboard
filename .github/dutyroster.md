@@ -10,8 +10,9 @@ This component will serve as a staff scheduling interface within a healthcare ma
 The route /duty-roster should render this component from the sidebar links, so ensure it is self-contained and does not rely on external services or state. Use dummy data for all shifts to demonstrate the layout and functionality.
 
 ## General Component Config
+
 - **File**: `/src/webapp/app/entities/duty-roster/duty-roster.ts`
-- **Imports**: 
+- **Imports**:
   - `Component`, `inject`, `signal`, `computed` from `'@angular/core'`
   - `CommonModule` from `'@angular/common'`
   - `MatIconModule` from `'@angular/material/icon'`
@@ -24,7 +25,9 @@ The route /duty-roster should render this component from the sidebar links, so e
 - **Standalone**: `true`
 
 ## Interfaces and Data Types
+
 At the top of the file, define interfaces and types:
+
 ```typescript
 export interface Shift {
   id: string;
@@ -37,25 +40,31 @@ export interface Shift {
 ```
 
 ## Component Class Definition
+
 The component class `DutyRosterComponent` must implement the following properties and methods:
 
 ### 1. Injected Services
+
 - `private api = inject(DutyRosterService)`
 - `state = inject(DashboardStateService)`
 
 ### 2. State & Properties
+
 - `shifts`: `signal<Shift[]>([])`
 - `isScheduling`: `signal(false)`
 
 ### 3. Computed Properties
+
 - `rosterGroups`: `computed(() => { ... })`
   - Groups the `shifts()` array by `date`.
   - Returns an array in the shape `{ date: string, shifts: Shift[] }[]` sorted alphabetically by date.
 
 ### 4. Constructor
+
 - Call `this.createMockShifts()`.
 
 ### 5. Methods
+
 - `createMockShifts()`:
   - Generates 4 days of mock data starting from today.
   - Roles: `'DOCTOR', 'NURSE', 'PHARMACIST', 'FRONT_DESK'`
@@ -73,9 +82,11 @@ The component class `DutyRosterComponent` must implement the following propertie
     - On error: Add a fallback that maps all elements into status 'ASSIGNED', using 'Smart Scheduled Staff' as the default `assignedUser`.
 
 ## Template Structure
+
 Ensure the layout is wrapped in `<div class="space-y-8">`.
 
 ### 1. Header Area
+
 - Contains an items-center justify-between flex row.
 - Left side: Title "Duty Roster" (`text-xl font-semibold text-slate-800`), with subtext "Manage staff shifts and auto-assignment schedules." (`text-slate-500 text-xs mt-1`).
 - Right side: Auto Schedule wrapper `div.flex.gap-4`.
@@ -85,6 +96,7 @@ Ensure the layout is wrapped in `<div class="space-y-8">`.
   - Button content: Conditionally display a `<mat-spinner diameter="16" class="mr-2 inline-block"></mat-spinner> Scheduling...` if `isScheduling()` is true, otherwise "Auto-Schedule".
 
 ### 2. Main Content
+
 - Wrapper: `<div class="space-y-12">`
 - Inner loop: `@for (day of rosterGroups(); track day.date)` wrapped in `<div class="space-y-4">`.
 - Display date header: `<p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{{day.date | date:'EEEE, MMM d'}}</p>`

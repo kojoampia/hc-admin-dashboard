@@ -50,8 +50,6 @@ const TYPE_COLOR_MAP: Record<string, string> = {
 
 @Injectable({ providedIn: 'root' })
 export class DashboardStateService {
-  private readonly wsService = inject(WebsocketAuthService);
-
   readonly currentUser = signal<AppUser>({ name: 'Operations Lead', role: 'OPERATOR' });
 
   readonly menu = computed(() => this.activeMenu());
@@ -60,6 +58,7 @@ export class DashboardStateService {
 
   readonly operationLogs = signal<ActivityEvent[]>(buildInitialLogs());
 
+  private readonly wsService = inject(WebsocketAuthService);
   private readonly activeMenu = signal<string>('OPERATIONS');
 
   private auditSubscription: Subscription | null = null;

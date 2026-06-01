@@ -103,10 +103,10 @@ Ensure the layout is wrapped in `<div class="space-y-6">`.
 - Cell: Uses `<div class="flex flex-wrap gap-1">` looping over `profile.roles` via `@for`. Render role inside pill tags using `px-2 py-0.5 rounded-full font-bold uppercase text-[9px]`.
 - Map roles dynamically via `ngClass`:
   - `PATIENT` -> `'bg-indigo-50 text-indigo-600'`
-  - `USER` or `EDITOR` -> `'bg-emerald-50 text-emerald-600'`
-  - `VENDOR` -> `'bg-amber-50 text-amber-600'`
-  - `ADMIN` -> `'bg-rose-50 text-rose-600'`
   - `PROFESSIONAL` -> `'bg-blue-50 text-blue-600'`
+  - `VENDOR` -> `'bg-amber-50 text-amber-600'`
+  - `USER` or `EDITOR` -> `'bg-emerald-50 text-emerald-600'`
+  - `ADMIN` -> `'bg-rose-50 text-rose-600'`
 
 #### Column: Status
 - Header: Status. Styled same as above.

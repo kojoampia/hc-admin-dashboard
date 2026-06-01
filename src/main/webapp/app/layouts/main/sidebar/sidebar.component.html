@@ -90,6 +90,12 @@
         <mat-divider></mat-divider>
         <div class="flex items-center gap-2 px-2 py-1 text-xs font-semibold text-slate-400 uppercase tracking-wider">Settings</div>
         <hpd-setting-menu></hpd-setting-menu>
+        <mat-divider></mat-divider>
+        <div class="flex items-center gap-2 px-2 py-1 text-xs font-semibold text-slate-400 uppercase tracking-wider">Logout</div>
+        <button mat-menu-item (click)="logout()" id="logout" data-cy="logout">
+          <mat-icon>logout</mat-icon>
+          <span>Logout</span>
+        </button>
       </div>
     </mat-menu>
   </div>

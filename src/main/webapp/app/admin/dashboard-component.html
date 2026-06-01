@@ -12,7 +12,7 @@
             <p class="text-xs font-semibold uppercase tracking-[0.32em] text-indigo-200">Administration</p>
             <h1 class="text-2xl font-semibold tracking-tight" hpdTranslate="global.menu.admin.dashboard">Dashboard</h1>
           </div>
-        </div>        
+        </div>
       </div>
 
       <div class="flex gap-2 overflow-none justify-end pb-1">
@@ -73,8 +73,7 @@
       </aside>
       }
 
-      <main class="space-y-8">       
-
+      <main class="space-y-8">
         @for (section of visibleSections(); track section.id) {
         <section [id]="sectionElementId(section.id)" class="space-y-4 scroll-mt-28">
           @if (section.id !== 'settings') {

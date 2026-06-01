@@ -104,16 +104,14 @@ const ALL_ROLES: UserRole[] = ['USER', 'ADMIN', 'PATIENT', 'PROFESSIONAL', 'VEND
   `,
 })
 export class ProfileDialogComponent {
-  private readonly dialogRef = inject(MatDialogRef<ProfileDialogComponent>);
   data: ProfileData | null = inject(MAT_DIALOG_DATA, { optional: true });
-
-  readonly allRoles: UserRole[] = ALL_ROLES;
-
   form = signal<ProfileData>({
     name: this.data?.name ?? '',
     roles: this.data?.roles ?? [],
     status: this.data?.status ?? 'ACTIVE',
   });
+  readonly allRoles: UserRole[] = ALL_ROLES;
+  private readonly dialogRef = inject(MatDialogRef<ProfileDialogComponent>);
 
   patch<K extends keyof ProfileData>(key: K, value: ProfileData[K]): void {
     this.form.update(f => ({ ...f, [key]: value }));

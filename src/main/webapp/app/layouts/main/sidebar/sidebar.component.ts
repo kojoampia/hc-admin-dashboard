@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/member-ordering */
 import { Component, computed, DestroyRef, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -12,6 +13,7 @@ import { DashboardStateService, AppResource } from '../../../entities/dashboard/
 import { ChatMenuComponent } from '../chat-menu/chat-menu.component';
 import { LanguageMenuComponent } from '../language-menu/language-menu.component';
 import { SettingMenuComponent } from '../setting-menu/setting-menu.component';
+import { LoginService } from 'app/login/login.service';
 
 interface MenuItem {
   label: string;
@@ -65,6 +67,8 @@ export class SidebarComponent implements OnInit {
     state: DashboardStateService,
     private accountService: AccountService,
     private destroyRef: DestroyRef,
+    private loginService: LoginService,
+    private router: Router,
   ) {
     this.state = state;
     this.isExpanded = this.state.sidebarExpanded;
@@ -87,5 +91,10 @@ export class SidebarComponent implements OnInit {
   userInitials(): string {
     const name = this.state.currentUser().name;
     return name.slice(0, 2).toUpperCase();
+  }
+
+  logout(): void {
+    this.loginService.logout();
+    this.router.navigate(['']);
   }
 }

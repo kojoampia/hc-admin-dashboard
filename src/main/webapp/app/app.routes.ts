@@ -70,19 +70,19 @@ const routes: Routes = [
     path: 'facilities',
     loadComponent: () => import('./entities/facility/facility').then(m => m.FacilityComponent),
     canActivate: [UserRouteAccessService],
-    title: 'Facilities',
+    title: 'adminDashboardApp.facility.home.title',
   },
   {
     path: 'teams',
     loadComponent: () => import('./entities/team/team').then(m => m.TeamComponent),
     canActivate: [UserRouteAccessService],
-    title: 'Teams',
+    title: 'adminDashboardApp.team.home.title',
   },
   {
     path: 'profiles',
-    loadComponent: () => import('./entities/profile/profile').then(m => m.ProfileComponent),
+    loadComponent: () => import('./entities/profile/profile-component').then(m => m.ProfileComponent),
     canActivate: [UserRouteAccessService],
-    title: 'Profiles',
+    title: 'adminDashboardApp.profile.home.title',
   },
   {
     path: '',

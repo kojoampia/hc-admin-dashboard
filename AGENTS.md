@@ -99,4 +99,3 @@ The following domain entities are scaffolded and routed under `/entities`:
 - Mock API: `npm run mock:api`
 - Format check: `npm run prettier:check`
 - Format write: `npm run prettier:format`
-
