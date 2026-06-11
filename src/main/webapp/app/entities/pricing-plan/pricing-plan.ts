@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -7,6 +7,7 @@ import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { PricingPlanService } from './service/pricing-plan.service';
 import { DashboardStateService } from '../dashboard/dashboard-state';
 import { PricePlanDialogComponent } from './price-plan-dialog';
+import { IPricingPlan } from './pricing-plan.model';
 
 export interface PricePlan {
   id: string;
@@ -22,69 +23,18 @@ export interface PricePlan {
   imports: [CommonModule, MatIconModule, MatButtonModule, MatDialogModule],
   templateUrl: './pricing-plan.html',
 })
-export class PricingPlanComponent {
+export class PricingPlanComponent implements OnInit {
   private api = inject(PricingPlanService);
   private dialog = inject(MatDialog);
   state = inject(DashboardStateService);
 
-  plans = signal<PricePlan[]>([
-    {
-      id: '1',
-      name: 'PEAR',
-      price: 1000,
-      billingCycle: 'MONTHLY',
-      features: [
-        'Basic health tracking',
-        '5 Weekly visits',
-        'Basic support',
-        'Nursing support',
-        'Hospital transportation',
-        'Grooming assistance',
-        'Cooking assistance',
-        'Cleaning assistance',
-        'Washing assistance',
-        'Grocery shopping assistance',
-      ],
-    },
-    {
-      id: '2',
-      name: 'MELON',
-      price: 3000,
-      billingCycle: 'MONTHLY',
-      features: [
-        'Standard health tracking',
-        '7 Weekly visits',
-        'Standard support',
-        'Nursing support',
-        'Hospital transportation',
-        'Grooming assistance',
-        'Cooking assistance',
-        'Cleaning assistance',
-        'Washing assistance',
-        'Grocery shopping assistance',
-      ],
-    },
-    {
-      id: '3',
-      name: 'PAWPAW',
-      price: 5000,
-      billingCycle: 'MONTHLY',
-      features: [
-        'VIP health tracking',
-        '24/7',
-        'VIP support',
-        'Nursing support',
-        'Hospital transportation',
-        'Grooming assistance',
-        'Cooking assistance',
-        'Cleaning assistance',
-        'Washing assistance',
-        'Grocery shopping assistance',
-      ],
-    },
-  ]);
+  plans = signal<IPricingPlan[]>([]);
 
-  openAddEditModal(plan?: PricePlan): void {
+  ngOnInit(): void {
+    this.loadPlans();
+  }
+
+  openAddEditModal(plan?: IPricingPlan): void {
     if (plan && !this.state.canAccess('PRICE_PLANS', 'UPDATE')) return;
     if (!plan && !this.state.canAccess('PRICE_PLANS', 'CREATE')) return;
 
@@ -93,21 +43,21 @@ export class PricingPlanComponent {
       data: plan ?? null,
     });
 
-    dialogRef.afterClosed().subscribe((result: PricePlan | undefined) => {
+    dialogRef.afterClosed().subscribe((result: IPricingPlan | undefined) => {
       if (result) {
-        if (plan) {
-          this.api.put(`/plans/${plan.id}`, result).subscribe(() => this.loadPlans());
+        if (plan && plan.id) {
+          this.api.update(result).subscribe(() => this.loadPlans());
         } else {
-          this.api.post('/plans', result).subscribe(() => this.loadPlans());
+          this.api.create(result).subscribe(() => this.loadPlans());
         }
       }
     });
   }
 
   loadPlans(): void {
-    this.api.get<PricePlan[]>('/plans').subscribe((data: PricePlan[]) => {
-      if (data && data.length > 0) {
-        this.plans.set(data);
+    this.api.query().subscribe(res => {
+      if (res.body) {
+        this.plans.set(res.body);
       }
     });
   }

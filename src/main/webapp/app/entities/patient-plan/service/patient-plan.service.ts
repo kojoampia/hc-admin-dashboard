@@ -32,7 +32,7 @@ export class PatientPlanService {
   protected readonly http = inject(HttpClient);
   protected readonly applicationConfigService = inject(ApplicationConfigService);
 
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/patient-plans');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/patient-plans', 'hc-admin-ms');
 
   create(patientPlan: NewPatientPlan): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(patientPlan);

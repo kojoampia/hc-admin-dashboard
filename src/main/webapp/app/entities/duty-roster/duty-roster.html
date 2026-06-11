@@ -34,7 +34,7 @@
             [ngModel]="selectedPatientId()"
             (ngModelChange)="selectPatient($event)"
           >
-            @for (patient of patients; track patient.id) {
+            @for (patient of patients(); track patient.id) {
             <option [ngValue]="patient.id">{{ patient.name }} - {{ patient.ward }}</option>
             }
           </select>

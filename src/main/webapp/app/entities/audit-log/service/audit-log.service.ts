@@ -30,7 +30,7 @@ export class AuditLogService {
   protected readonly http = inject(HttpClient);
   protected readonly applicationConfigService = inject(ApplicationConfigService);
 
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/audit-logs');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/audit-logs', 'hc-admin-ms');
 
   create(auditLog: NewAuditLog): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(auditLog);

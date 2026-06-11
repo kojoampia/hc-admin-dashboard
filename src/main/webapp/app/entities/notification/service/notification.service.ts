@@ -30,7 +30,7 @@ export class NotificationService {
   protected readonly http = inject(HttpClient);
   protected readonly applicationConfigService = inject(ApplicationConfigService);
 
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/notifications');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/notifications', 'hc-admin-ms');
 
   create(notification: NewNotification): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(notification);

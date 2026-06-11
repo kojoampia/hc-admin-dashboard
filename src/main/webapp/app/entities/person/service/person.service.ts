@@ -32,7 +32,7 @@ export class PersonService {
   protected readonly http = inject(HttpClient);
   protected readonly applicationConfigService = inject(ApplicationConfigService);
 
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/people');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/people', 'hc-admin-ms');
 
   create(person: NewPerson): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(person);

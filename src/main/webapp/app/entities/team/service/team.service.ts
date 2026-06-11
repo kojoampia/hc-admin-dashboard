@@ -30,7 +30,7 @@ export class TeamService {
   protected readonly http = inject(HttpClient);
   protected readonly applicationConfigService = inject(ApplicationConfigService);
 
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/teams');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/teams', 'hc-admin-ms');
 
   create(team: NewTeam): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(team);

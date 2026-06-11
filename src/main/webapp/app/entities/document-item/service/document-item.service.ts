@@ -30,7 +30,7 @@ export class DocumentItemService {
   protected readonly http = inject(HttpClient);
   protected readonly applicationConfigService = inject(ApplicationConfigService);
 
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/document-items');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/document-items', 'hc-admin-ms');
 
   create(documentItem: NewDocumentItem): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(documentItem);

@@ -31,7 +31,7 @@ export class OrganisationService {
   protected readonly http = inject(HttpClient);
   protected readonly applicationConfigService = inject(ApplicationConfigService);
 
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/organisations');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/organisations', 'hc-admin-ms');
 
   create(organisation: NewOrganisation): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(organisation);

@@ -30,7 +30,7 @@ export class DutyRosterService {
   protected readonly http = inject(HttpClient);
   protected readonly applicationConfigService = inject(ApplicationConfigService);
 
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/duty-rosters');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/duty-rosters', 'hc-admin-ms');
 
   create(dutyRoster: NewDutyRoster): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(dutyRoster);

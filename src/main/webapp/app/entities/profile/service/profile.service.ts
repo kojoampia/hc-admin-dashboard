@@ -30,7 +30,7 @@ export class ProfileService {
   protected readonly http = inject(HttpClient);
   protected readonly applicationConfigService = inject(ApplicationConfigService);
 
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/profiles');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/profiles', 'hc-admin-ms');
 
   create(profile: NewProfile): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(profile);

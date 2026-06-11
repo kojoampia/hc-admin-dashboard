@@ -1,6 +1,10 @@
-import { Injectable, signal, computed, inject } from '@angular/core';
+import { Injectable, signal, computed, inject, DestroyRef } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { WebsocketAuthService } from 'app/widgets/chatbot/websocket-auth.service';
+import { AuditLogService } from 'app/entities/audit-log/service/audit-log.service';
+import { AccountService } from 'app/core/auth/account.service';
+import { IAuditLog } from 'app/entities/audit-log/audit-log.model';
 
 export type AppResource = 'DASHBOARD' | 'MESSAGES' | 'DUTY_ROSTER' | 'PRICE_PLANS' | 'CATALOG' | 'FACILITIES' | 'TEAMS' | 'PROFILES';
 
@@ -50,20 +54,49 @@ const TYPE_COLOR_MAP: Record<string, string> = {
 
 @Injectable({ providedIn: 'root' })
 export class DashboardStateService {
-  readonly currentUser = signal<AppUser>({ name: 'Operations Lead', role: 'OPERATOR' });
+  readonly currentUser = signal<AppUser>({ name: 'Loading...', role: 'USER' });
 
   readonly menu = computed(() => this.activeMenu());
 
   readonly sidebarExpanded = signal(true);
 
-  readonly operationLogs = signal<ActivityEvent[]>(buildInitialLogs());
+  readonly operationLogs = signal<ActivityEvent[]>([]);
 
   private readonly wsService = inject(WebsocketAuthService);
+  private readonly auditLogService = inject(AuditLogService);
+  private readonly accountService = inject(AccountService);
+  private readonly destroyRef = inject(DestroyRef);
   private readonly activeMenu = signal<string>('OPERATIONS');
 
   private auditSubscription: Subscription | null = null;
   private auditConsumers = 0;
-  private logCounter = 50;
+  private logCounter = 0;
+
+  constructor() {
+    this.init();
+  }
+
+  private init(): void {
+    this.accountService
+      .identity()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(account => {
+        if (account) {
+          const name = [account.firstName, account.lastName].filter(Boolean).join(' ') || account.login;
+          const role = account.authorities.includes('ROLE_ADMIN') ? 'ADMIN' : 'USER';
+          this.currentUser.set({ name, role });
+        }
+      });
+
+    this.auditLogService
+      .query({ sort: ['createdDate,desc'], size: 50 })
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(res => {
+        if (res.body) {
+          this.operationLogs.set(res.body.map(log => this.mapAuditLogToActivityEvent(log)));
+        }
+      });
+  }
 
   setMenu(label: string): void {
     this.activeMenu.set(label);
@@ -117,6 +150,18 @@ export class DashboardStateService {
     }
   }
 
+  private mapAuditLogToActivityEvent(log: IAuditLog): ActivityEvent {
+    const type = log.actionType ?? 'Audit Log';
+    return {
+      id: log.id,
+      type,
+      message: log.metadata ?? 'System event recorded.',
+      timestamp: log.createdDate ? log.createdDate.fromNow() : 'unknown',
+      icon: TYPE_ICON_MAP[type] ?? 'receipt_long',
+      colorClass: TYPE_COLOR_MAP[type] ?? 'bg-indigo-100 text-indigo-600',
+    };
+  }
+
   private mapToActivityEvent(raw: any): ActivityEvent {
     this.logCounter++;
     const type: string = raw.type ?? 'Audit Log';
@@ -131,62 +176,3 @@ export class DashboardStateService {
   }
 }
 
-function buildInitialLogs(): ActivityEvent[] {
-  const types = [
-    'Audit Log',
-    'Security',
-    'Role Change',
-    'Vendor Mgt',
-    'Patient Mgt',
-    'Professional',
-    'Message',
-    'Permission',
-    'System Configuration',
-  ];
-  const messages = [
-    'User login detected from new IP address.',
-    'Shift successfully reassigned to active personnel.',
-    'Vendor profile updated with new credentials.',
-    'Patient record accessed by administrative user.',
-    'Role permissions modified for support team.',
-    'System configuration change applied to scheduler.',
-    'New professional onboarded to platform.',
-    'Message flagged for compliance review.',
-    'Permission granted for document export.',
-    'Audit log reviewed and cleared by admin.',
-    'Security alert triggered by failed login attempts.',
-    'Patient plan updated to premium tier.',
-    'Duty roster conflict resolved automatically.',
-    'Notification sent to all active professionals.',
-    'Pricing plan adjusted for new billing cycle.',
-  ];
-  const icons = [
-    'security',
-    'manage_accounts',
-    'storefront',
-    'chat',
-    'person',
-    'assignment',
-    'notifications',
-    'lock',
-    'settings',
-    'receipt_long',
-  ];
-  const colorClasses = [
-    'bg-indigo-100 text-indigo-600',
-    'bg-rose-100 text-rose-600',
-    'bg-emerald-100 text-emerald-600',
-    'bg-amber-100 text-amber-600',
-    'bg-blue-100 text-blue-600',
-    'bg-purple-100 text-purple-600',
-    'bg-slate-100 text-slate-600',
-  ];
-  return Array.from({ length: 50 }).map((_, i) => ({
-    id: `evt-${i}`,
-    type: types[i % types.length],
-    message: messages[i % messages.length],
-    timestamp: `${(i * 3 + 1) % 60} minutes ago`,
-    icon: icons[i % icons.length],
-    colorClass: colorClasses[i % colorClasses.length],
-  }));
-}

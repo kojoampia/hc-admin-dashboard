@@ -30,7 +30,7 @@ export class FacilityService {
   protected readonly http = inject(HttpClient);
   protected readonly applicationConfigService = inject(ApplicationConfigService);
 
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/facilities');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/facilities', 'hc-admin-ms');
 
   create(facility: NewFacility): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(facility);

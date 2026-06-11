@@ -29,7 +29,7 @@ export class MessageService {
   protected readonly http = inject(HttpClient);
   protected readonly applicationConfigService = inject(ApplicationConfigService);
 
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/messages');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/messages', 'hc-admin-ms');
 
   create(message: NewMessage): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(message);

@@ -17,7 +17,7 @@ export class PricingPlanService {
   protected readonly http = inject(HttpClient);
   protected readonly applicationConfigService = inject(ApplicationConfigService);
 
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/pricing-plans');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/pricing-plans', 'hc-admin-ms');
 
   create(pricingPlan: NewPricingPlan): Observable<EntityResponseType> {
     return this.http.post<IPricingPlan>(this.resourceUrl, pricingPlan, { observe: 'response' });

@@ -17,7 +17,7 @@ export class FeatureService {
   protected readonly http = inject(HttpClient);
   protected readonly applicationConfigService = inject(ApplicationConfigService);
 
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/features');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/features', 'hc-admin-ms');
 
   create(feature: NewFeature): Observable<EntityResponseType> {
     return this.http.post<IFeature>(this.resourceUrl, feature, { observe: 'response' });

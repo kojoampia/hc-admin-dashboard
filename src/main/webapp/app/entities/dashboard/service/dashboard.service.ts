@@ -17,7 +17,7 @@ export class DashboardService {
   protected readonly http = inject(HttpClient);
   protected readonly applicationConfigService = inject(ApplicationConfigService);
 
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/dashboards');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/dashboards', 'hc-admin-ms');
 
   create(dashboard: NewDashboard): Observable<EntityResponseType> {
     return this.http.post<IDashboard>(this.resourceUrl, dashboard, { observe: 'response' });

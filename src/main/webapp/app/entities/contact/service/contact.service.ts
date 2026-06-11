@@ -17,7 +17,7 @@ export class ContactService {
   protected readonly http = inject(HttpClient);
   protected readonly applicationConfigService = inject(ApplicationConfigService);
 
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/contacts');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/contacts', 'hc-admin-ms');
 
   create(contact: NewContact): Observable<EntityResponseType> {
     return this.http.post<IContact>(this.resourceUrl, contact, { observe: 'response' });
