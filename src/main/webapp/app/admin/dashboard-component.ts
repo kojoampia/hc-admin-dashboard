@@ -230,7 +230,7 @@ export default class DashboardComponent implements OnInit {
 
   currentUserRole(): string {
     const authorities = this.account()?.authorities ?? [];
-    return authorities.includes('ROLE_ADMIN') ? 'Administrator' : 'Operator';
+    return authorities.includes({name: 'ROLE_ADMIN'}) ? 'Administrator' : 'Operator';
   }
 
   currentUserInitials(): string {

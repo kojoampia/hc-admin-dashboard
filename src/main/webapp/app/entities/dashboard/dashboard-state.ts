@@ -83,7 +83,7 @@ export class DashboardStateService {
       .subscribe(account => {
         if (account) {
           const name = [account.firstName, account.lastName].filter(Boolean).join(' ') || account.login;
-          const role = account.authorities.includes('ROLE_ADMIN') ? 'ADMIN' : 'USER';
+          const role = account.authorities.includes({name: 'ROLE_ADMIN'}) ? 'ADMIN' : 'USER';
           this.currentUser.set({ name, role });
         }
       });

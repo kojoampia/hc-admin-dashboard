@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import SharedModule from 'app/shared/shared.module';
 import { LANGUAGES } from 'app/config/language.constants';
-import { IUser } from '../user-management.model';
+import { IAuthority, IUser } from '../user-management.model';
 import { UserManagementService } from '../service/user-management.service';
 
 const userTemplate = {} as IUser;
@@ -37,7 +37,7 @@ const newUser: IUser = {
 })
 export default class UserManagementUpdateComponent implements OnInit {
   languages = LANGUAGES;
-  authorities: string[] = [];
+  authorities: IAuthority[] = [];
   isSaving = false;
 
   editForm = new FormGroup({

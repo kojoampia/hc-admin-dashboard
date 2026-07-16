@@ -91,4 +91,4 @@ This will start `json-server`, and you'll see it running on `http://localhost:20
 ```bash
 npm start
 ```
-This will start the Angular application (usually on `http://localhost:9000`). It is now configured to send its API requests to your mock server.
+This will start the Angular application (usually on `http://localhost:9098`). It is now configured to send its API requests to your mock server.

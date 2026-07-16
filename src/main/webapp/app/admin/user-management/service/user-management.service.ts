@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { Pagination } from 'app/core/request/request.model';
-import { IUser } from '../user-management.model';
+import { IAuthority, IUser } from '../user-management.model';
 
 @Injectable({ providedIn: 'root' })
 export class UserManagementService {
@@ -37,7 +37,7 @@ export class UserManagementService {
     return this.http.delete(`${this.resourceUrl}/${login}`);
   }
 
-  authorities(): Observable<string[]> {
-    return this.http.get<string[]>(this.applicationConfigService.getEndpointFor('api/authorities'));
+  authorities(): Observable<IAuthority[]> {
+    return this.http.get<IAuthority[]>(this.applicationConfigService.getEndpointFor('api/authorities'));
   }
 }

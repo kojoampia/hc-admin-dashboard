@@ -10,11 +10,11 @@ import { PricePlanDialogComponent } from './price-plan-dialog';
 import { IPricingPlan } from './pricing-plan.model';
 
 export interface PricePlan {
-  id: string;
+  id: string | null;
   name: string;
   price: number;
-  billingCycle: 'MONTHLY' | 'YEARLY';
-  features: string[];
+  billingCycle: 'MONTHLY' | 'ANNUALLY';
+  features: string;
 }
 
 @Component({
@@ -48,7 +48,8 @@ export class PricingPlanComponent implements OnInit {
         if (plan && plan.id) {
           this.api.update(result).subscribe(() => this.loadPlans());
         } else {
-          this.api.create(result).subscribe(() => this.loadPlans());
+          const newPlan = { ...result, id: null };
+          this.api.create(newPlan as any).subscribe(() => this.loadPlans());
         }
       }
     });

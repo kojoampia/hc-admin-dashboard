@@ -29,3 +29,11 @@ export class User implements IUser {
     public lastModifiedDate?: Date,
   ) {}
 }
+
+export interface IAuthority {
+  name: string;
+}
+
+export class Authority implements IAuthority {
+  constructor(public name: string) {}
+}

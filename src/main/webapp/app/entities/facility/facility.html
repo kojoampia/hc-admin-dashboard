@@ -44,7 +44,7 @@
                     </th>
                     <td mat-cell *matCellDef="let f" class="!pl-0">
                       <p class="text-sm font-semibold text-slate-800">{{ f.name }}</p>
-                      <p class="text-xs text-slate-400">{{ f.location }}</p>
+                      <p class="text-xs text-slate-400">{{ f.addressId }}</p>
                     </td>
                   </ng-container>
 
@@ -56,24 +56,16 @@
                     </td>
                   </ng-container>
 
-                  <!-- Capacity -->
-                  <ng-container matColumnDef="capacity">
-                    <th mat-header-cell *matHeaderCellDef class="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                      Capacity
-                    </th>
-                    <td mat-cell *matCellDef="let f" class="text-sm text-slate-600">{{ f.capacity }}</td>
-                  </ng-container>
-
                   <!-- Contact -->
                   <ng-container matColumnDef="contact">
                     <th mat-header-cell *matHeaderCellDef class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Contact</th>
-                    <td mat-cell *matCellDef="let f" class="text-sm text-slate-600">{{ f.contact }}</td>
+                    <td mat-cell *matCellDef="let f" class="text-sm text-slate-600">{{ f.contactId }}</td>
                   </ng-container>
 
                   <!-- Updated -->
                   <ng-container matColumnDef="updatedAt">
                     <th mat-header-cell *matHeaderCellDef class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Updated</th>
-                    <td mat-cell *matCellDef="let f" class="text-xs text-slate-400">{{ f.updatedAt }}</td>
+                    <td mat-cell *matCellDef="let f" class="text-xs text-slate-400">{{ f.modifiedDate | formatMediumDatetime }}</td>
                   </ng-container>
 
                   <!-- Actions -->
@@ -94,10 +86,10 @@
                     </td>
                   </ng-container>
 
-                  <tr mat-header-row *matHeaderRowDef="['name','type','capacity','contact','updatedAt','actions']"></tr>
+                  <tr mat-header-row *matHeaderRowDef="['name','type','contact','updatedAt','actions']"></tr>
                   <tr
                     mat-row
-                    *matRowDef="let row; columns: ['name','type','capacity','contact','updatedAt','actions'];"
+                    *matRowDef="let row; columns: ['name','type','contact','updatedAt','actions'];"
                     class="hover:bg-slate-50/60 transition-colors"
                   ></tr>
                 </table>
@@ -122,14 +114,14 @@
                   <div class="flex items-center justify-between rounded-xl bg-slate-50 px-4 py-2.5">
                     <div class="flex items-center gap-3">
                       <span class="flex items-center justify-center w-7 h-7 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold">
-                        {{ person.name.charAt(0) }}
+                        {{ (person.name || 'P').charAt(0) }}
                       </span>
                       <div>
                         <p class="text-xs font-semibold text-slate-700">{{ person.name }}</p>
-                        <p class="text-[10px] text-slate-400">{{ person.role }} · {{ person.contact }}</p>
+                        <p class="text-[10px] text-slate-400">{{ person.profile }} · {{ person.organisation }}</p>
                       </div>
                     </div>
-                    <p class="text-[10px] text-slate-400">{{ person.updatedAt }}</p>
+                    <p class="text-[10px] text-slate-400">{{ person.modifiedDate | formatMediumDatetime }}</p>
                   </div>
                   }
                 </div>
@@ -172,12 +164,12 @@
                 <span
                   class="flex items-center justify-center w-7 h-7 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold shrink-0"
                 >
-                  {{ person.name.charAt(0) }}
+                  {{ (person.name || 'P').charAt(0) }}
                 </span>
                 <div>
                   <p class="text-xs font-semibold text-slate-700">{{ person.name }}</p>
-                  <p class="text-[10px] text-slate-400">{{ person.role }} · {{ person.contact }}</p>
-                  <p class="text-[10px] text-slate-300">{{ person.updatedAt }}</p>
+                  <p class="text-[10px] text-slate-400">{{ person.profile }} · {{ person.organisation }}</p>
+                  <p class="text-[10px] text-slate-300">{{ person.modifiedDate | formatMediumDatetime }}</p>
                 </div>
               </div>
             </div>
@@ -229,15 +221,15 @@
     </div>
     } @for (event of auditEvents(); track event.id) {
     <div class="group flex items-start gap-3 p-4 hover:bg-slate-50/80 transition-colors">
-      <span class="flex items-center justify-center w-8 h-8 rounded-full shrink-0 mt-0.5" [ngClass]="event.colorClass">
-        <mat-icon class="text-base">{{ event.icon }}</mat-icon>
+      <span class="flex items-center justify-center w-8 h-8 rounded-full shrink-0 mt-0.5" [ngClass]="getAuditColor(event)">
+        <mat-icon class="text-base">{{ getAuditIcon(event) }}</mat-icon>
       </span>
       <div class="min-w-0 flex-1">
-        <p class="text-xs font-medium text-slate-700 leading-snug">{{ event.message }}</p>
+        <p class="text-xs font-medium text-slate-700 leading-snug">{{ event.actionType }}</p>
         <div class="flex items-center gap-2 mt-1">
-          <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">{{ event.type }}</span>
+          <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">{{ event.actionType }}</span>
           <span class="text-[10px] text-slate-300">·</span>
-          <span class="text-[10px] text-slate-400">{{ event.timestamp }}</span>
+          <span class="text-[10px] text-slate-400">{{ event.createdDate | formatMediumDatetime }}</span>
         </div>
       </div>
     </div>

@@ -4,7 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { PricePlan } from './pricing-plan';
+import { IPricingPlan } from './pricing-plan.model';
+import { BillingType } from 'app/entities/enumerations/billing-type.model';
 
 @Component({
   selector: 'hpd-price-plan-dialog',
@@ -64,7 +65,7 @@ import { PricePlan } from './pricing-plan';
             (ngModelChange)="patch('billingCycle', $event)"
           >
             <option value="MONTHLY">Monthly</option>
-            <option value="YEARLY">Yearly</option>
+            <option value="ANNUALLY">Annually</option>
           </select>
         </div>
 
@@ -72,7 +73,7 @@ import { PricePlan } from './pricing-plan';
         <div>
           <label class="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">Features</label>
           <div class="space-y-2 max-h-44 overflow-y-auto pr-1">
-            @for (feature of form().features; track $index) {
+            @for (feature of features(); track $index) {
               <div class="flex items-center gap-2">
                 <input
                   type="text"
@@ -106,7 +107,7 @@ import { PricePlan } from './pricing-plan';
         </button>
         <button
           class="px-5 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-xl hover:bg-indigo-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-          [disabled]="!form().name.trim()"
+          [disabled]="!form().name?.trim()"
           (click)="save()"
         >
           {{ data ? 'Save Changes' : 'Create Plan' }}
@@ -117,38 +118,41 @@ import { PricePlan } from './pricing-plan';
 })
 export class PricePlanDialogComponent {
   private dialogRef = inject(MatDialogRef<PricePlanDialogComponent>);
-  data: PricePlan | null = inject(MAT_DIALOG_DATA, { optional: true });
+  data: IPricingPlan | null = inject(MAT_DIALOG_DATA, { optional: true });
 
-  form = signal<PricePlan>({
+  features = signal<string[]>(this.data?.features ? this.data.features.split(',') : []);
+
+  form = signal<IPricingPlan>({
     id: this.data?.id ?? '',
     name: this.data?.name ?? '',
     price: this.data?.price ?? 0,
-    billingCycle: this.data?.billingCycle ?? 'MONTHLY',
-    features: this.data?.features ? [...this.data.features] : [],
+    billingCycle: this.data?.billingCycle ?? BillingType.MONTHLY,
+    features: this.data?.features ?? '',
   });
 
-  patch<K extends keyof PricePlan>(key: K, value: PricePlan[K]): void {
+  patch<K extends keyof IPricingPlan>(key: K, value: IPricingPlan[K]): void {
     this.form.update(f => ({ ...f, [key]: value }));
   }
 
   addFeature(): void {
-    this.form.update(f => ({ ...f, features: [...f.features, ''] }));
+    this.features.update(fs => [...fs, '']);
   }
 
   removeFeature(index: number): void {
-    this.form.update(f => ({ ...f, features: f.features.filter((_, i) => i !== index) }));
+    this.features.update(fs => fs.filter((_, i) => i !== index));
   }
 
   updateFeature(index: number, value: string): void {
-    this.form.update(f => {
-      const features = [...f.features];
-      features[index] = value;
-      return { ...f, features };
+    this.features.update(fs => {
+      const copy = [...fs];
+      copy[index] = value;
+      return copy;
     });
   }
 
   save(): void {
-    this.dialogRef.close(this.form());
+    const result = { ...this.form(), features: this.features().join(',') };
+    this.dialogRef.close(result);
   }
 
   close(): void {

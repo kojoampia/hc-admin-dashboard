@@ -100,7 +100,7 @@
           <mat-label hpdTranslate="userManagement.profiles">Profiles</mat-label>
           <mat-select multiple name="authority" formControlName="authorities">
             @for (authority of authorities; track $index) {
-              <mat-option [value]="authority">{{ authority }}</mat-option>
+              <mat-option [value]="authority">{{ authority.name | titlecase}}</mat-option>
             }
           </mat-select>
         </mat-form-field>

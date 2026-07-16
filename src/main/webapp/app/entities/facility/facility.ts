@@ -14,13 +14,13 @@ import { ProfessionalService } from '../professional/service/professional.servic
 import { IProfessional } from '../professional/professional.model';
 import { AuditLogService } from '../audit-log/service/audit-log.service';
 import { IAuditLog } from '../audit-log/audit-log.model';
-
-export type FacilityType = 'Hospital' | 'Clinic' | 'Laboratory' | 'Pharmacy';
+import { FacilityType } from 'app/entities/enumerations/facility-type.model';
+import { FormatMediumDatetimePipe } from 'app/shared/date';
 
 @Component({
   selector: 'hpd-facility',
   standalone: true,
-  imports: [CommonModule, MatTabsModule, MatTableModule, MatIconModule, MatButtonModule, MatDialogModule],
+  imports: [CommonModule, MatTabsModule, MatTableModule, MatIconModule, MatButtonModule, MatDialogModule, FormatMediumDatetimePipe],
   templateUrl: './facility.html',
   styles: [
     `
@@ -41,8 +41,8 @@ export class FacilityComponent implements OnInit {
   dialog = inject(MatDialog);
   state = inject(DashboardStateService);
 
-  readonly tabTypes: FacilityType[] = ['Hospital', 'Clinic', 'Laboratory', 'Pharmacy'];
-  activeTab = signal<FacilityType>('Hospital');
+  readonly tabTypes = [FacilityType.HOSPITAL, FacilityType.CLINIC, FacilityType.LAB, FacilityType.PHARMACY];
+  activeTab = signal<FacilityType>(FacilityType.HOSPITAL);
   isAuditTrailOpen = signal(false);
 
   facilities = signal<IFacility[]>([]);
@@ -52,7 +52,9 @@ export class FacilityComponent implements OnInit {
   readonly filteredFacilities = computed(() => this.facilities().filter(f => f.type === this.activeTab()));
 
   personnelByFacility(facilityId: string): IProfessional[] {
-    return this.personnel().filter(p => p.facility?.id === facilityId);
+    // JDL models don't currently have a direct relationship between Professional and Facility.
+    // This is a placeholder for future implementation.
+    return [];
   }
 
   ngOnInit(): void {
@@ -99,7 +101,8 @@ export class FacilityComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: IFacility | undefined) => {
       if (result) {
-        this.api.create(result).subscribe(() => {
+        const newFacility = { ...result, id: null };
+        this.api.create(newFacility as any).subscribe(() => {
           this.loadFacilities();
           this.loadAuditEvents();
         });
@@ -136,7 +139,7 @@ export class FacilityComponent implements OnInit {
     });
   }
 
-  // Map IAuditLog properties for use in template if necessary
+  // Map IAuditLog properties for use in template
   getAuditIcon(log: IAuditLog): string {
     const type = log.actionType;
     if (type === 'CREATE') return 'post_add';

@@ -8,6 +8,7 @@ import { shareReplay, tap, catchError } from 'rxjs/operators';
 import { StateStorageService } from 'app/core/auth/state-storage.service';
 import { Account } from 'app/core/auth/account.model';
 import { ApplicationConfigService } from '../config/application-config.service';
+import { IAuthority } from 'app/admin/user-management/user-management.model';
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {
@@ -43,7 +44,7 @@ export class AccountService {
     if (!Array.isArray(authorities)) {
       authorities = [authorities];
     }
-    return this.userIdentity.authorities.some((authority: string) => authorities.includes(authority));
+    return this.userIdentity.authorities.some((authority: IAuthority) => authorities.includes(authority.name));
   }
 
   identity(force?: boolean): Observable<Account | null> {

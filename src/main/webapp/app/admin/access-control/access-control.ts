@@ -10,7 +10,7 @@ import { Account } from 'app/core/auth/account.model';
 import { AccountService } from 'app/core/auth/account.service';
 import SharedModule from 'app/shared/shared.module';
 import { UserManagementService } from '../user-management/service/user-management.service';
-import { IUser } from '../user-management/user-management.model';
+import { IAuthority, IUser } from '../user-management/user-management.model';
 
 type ProtectedRoute = {
   label: string;
@@ -44,8 +44,8 @@ export default class AccessControlComponent implements OnInit {
   errorMessage = '';
   currentLogin = '';
   currentStatus = 'Unknown';
-  currentAuthorities: string[] = [];
-  availableAuthorities: string[] = [];
+  currentAuthorities: IAuthority[] = [];
+  availableAuthorities: IAuthority[] = [];
   currentHasAdminAccess = false;
   adminUserCount = 0;
   activeAdminUserCount = 0;
@@ -113,7 +113,7 @@ export default class AccessControlComponent implements OnInit {
     this.currentLogin = account?.login ?? account?.email ?? 'Unknown';
     this.currentStatus = account?.activated ? 'Active' : 'Inactive';
     this.currentAuthorities = account?.authorities ?? [];
-    this.currentHasAdminAccess = this.currentAuthorities.includes(Authority.ADMIN);
+    this.currentHasAdminAccess = this.currentAuthorities.includes({name: Authority.ADMIN});
   }
 
   private updateUserCoverage(response: HttpResponse<IUser[]>): void {

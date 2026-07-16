@@ -4,9 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { Facility } from './facility';
-
-type FacilityType = 'Hospital' | 'Clinic' | 'Laboratory' | 'Pharmacy';
+import { IFacility } from './facility.model';
+import { FacilityType } from 'app/entities/enumerations/facility-type.model';
 
 @Component({
   selector: 'hpd-facility-dialog',
@@ -40,59 +39,58 @@ type FacilityType = 'Hospital' | 'Clinic' | 'Laboratory' | 'Pharmacy';
           />
         </div>
 
-        <!-- Location -->
+        <!-- Address ID -->
         <div>
-          <label for="fc-location" class="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">Location</label>
+          <label for="fc-address" class="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">Address ID</label>
           <input
-            id="fc-location"
+            id="fc-address"
             type="text"
             class="w-full text-sm border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-300 text-slate-800"
-            placeholder="123 Main St, City"
-            [ngModel]="form().location"
-            (ngModelChange)="patch('location', $event)"
+            placeholder="Address identifier"
+            [ngModel]="form().addressId"
+            (ngModelChange)="patch('addressId', $event)"
           />
         </div>
 
-        <!-- Type & Capacity row -->
-        <div class="grid grid-cols-2 gap-4">
-          <div>
-            <label for="fc-type" class="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">Type</label>
-            <select
-              id="fc-type"
-              class="w-full text-sm border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-300 text-slate-800 bg-white"
-              [ngModel]="form().type"
-              (ngModelChange)="patch('type', $event)"
-            >
-              @for (t of facilityTypes; track t) {
-                <option [value]="t">{{ t }}</option>
-              }
-            </select>
-          </div>
-          <div>
-            <label for="fc-capacity" class="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">Capacity</label>
-            <input
-              id="fc-capacity"
-              type="number"
-              min="1"
-              class="w-full text-sm border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-300 text-slate-800"
-              placeholder="0"
-              [ngModel]="form().capacity"
-              (ngModelChange)="patch('capacity', +$event)"
-            />
-          </div>
+        <!-- Type -->
+        <div>
+          <label for="fc-type" class="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">Type</label>
+          <select
+            id="fc-type"
+            class="w-full text-sm border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-300 text-slate-800 bg-white"
+            [ngModel]="form().type"
+            (ngModelChange)="patch('type', $event)"
+          >
+            @for (t of facilityTypes; track t) {
+              <option [value]="t">{{ t }}</option>
+            }
+          </select>
         </div>
 
-        <!-- Contact -->
+        <!-- Contact ID -->
         <div>
-          <label for="fc-contact" class="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">Contact</label>
+          <label for="fc-contact" class="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">Contact ID</label>
           <input
             id="fc-contact"
             type="text"
             class="w-full text-sm border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-300 text-slate-800"
-            placeholder="(555) 000-0000"
-            [ngModel]="form().contact"
-            (ngModelChange)="patch('contact', $event)"
+            placeholder="Contact identifier"
+            [ngModel]="form().contactId"
+            (ngModelChange)="patch('contactId', $event)"
           />
+        </div>
+
+        <!-- Description -->
+        <div>
+          <label for="fc-description" class="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">Description</label>
+          <textarea
+            id="fc-description"
+            class="w-full text-sm border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-300 text-slate-800"
+            rows="3"
+            placeholder="Facility description..."
+            [ngModel]="form().description"
+            (ngModelChange)="patch('description', $event)"
+          ></textarea>
         </div>
       </div>
 
@@ -106,7 +104,7 @@ type FacilityType = 'Hospital' | 'Clinic' | 'Laboratory' | 'Pharmacy';
         </button>
         <button
           class="px-5 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-xl hover:bg-indigo-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-          [disabled]="!form().name.trim() || !form().location.trim()"
+          [disabled]="!form().name?.trim() || !form().addressId?.trim()"
           (click)="save()"
         >
           {{ data ? 'Save Changes' : 'Add Facility' }}
@@ -117,21 +115,20 @@ type FacilityType = 'Hospital' | 'Clinic' | 'Laboratory' | 'Pharmacy';
 })
 export class FacilityDialogComponent {
   private dialogRef = inject(MatDialogRef<FacilityDialogComponent>);
-  data: Facility | null = inject(MAT_DIALOG_DATA, { optional: true });
+  data: IFacility | null = inject(MAT_DIALOG_DATA, { optional: true });
 
-  readonly facilityTypes: FacilityType[] = ['Hospital', 'Clinic', 'Laboratory', 'Pharmacy'];
+  readonly facilityTypes = Object.values(FacilityType);
 
-  form = signal<Facility>({
+  form = signal<IFacility>({
     id: this.data?.id ?? '',
     name: this.data?.name ?? '',
-    location: this.data?.location ?? '',
-    type: this.data?.type ?? 'Hospital',
-    capacity: this.data?.capacity ?? 0,
-    contact: this.data?.contact ?? '',
-    updatedAt: this.data?.updatedAt ?? new Date().toISOString(),
+    description: this.data?.description ?? '',
+    type: this.data?.type ?? FacilityType.HOSPITAL,
+    addressId: this.data?.addressId ?? '',
+    contactId: this.data?.contactId ?? '',
   });
 
-  patch<K extends keyof Facility>(key: K, value: Facility[K]): void {
+  patch<K extends keyof IFacility>(key: K, value: IFacility[K]): void {
     this.form.update(f => ({ ...f, [key]: value }));
   }
 
