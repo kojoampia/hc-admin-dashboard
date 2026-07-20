@@ -22,11 +22,6 @@ const routes: Routes = [
     loadChildren: () => import('./message/message.routes'),
   },
   {
-    path: 'duty-roster',
-    data: { pageTitle: 'adminDashboardApp.hcAdminServiceDutyRoster.home.title' },
-    loadChildren: () => import('./duty-roster/duty-roster.routes'),
-  },
-  {
     path: 'system-catalog',
     data: { pageTitle: 'adminDashboardApp.hcAdminServiceSystemCatalog.home.title' },
     loadChildren: () => import('./system-catalog/system-catalog.routes'),

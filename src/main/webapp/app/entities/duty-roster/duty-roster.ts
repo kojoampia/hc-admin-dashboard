@@ -1,15 +1,6 @@
-import { ChangeDetectionStrategy, Component, computed, signal, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { forkJoin } from 'rxjs';
-import dayjs from 'dayjs/esm';
-
-import { PersonService } from 'app/entities/person/service/person.service';
-import { ProfessionalService } from 'app/entities/professional/service/professional.service';
-import { DutyRosterService } from 'app/entities/duty-roster/service/duty-roster.service';
-import { IPerson } from 'app/entities/person/person.model';
-import { IProfessional } from 'app/entities/professional/professional.model';
-import { IDutyRoster } from 'app/entities/duty-roster/duty-roster.model';
 
 type TeamId = 'TEAM_BLUE' | 'TEAM_GOLD' | 'TEAM_GREEN';
 type RoleId = 'DOCTOR' | 'NURSE' | 'PHYSIOTHERAPIST' | 'SOCIAL_WORKER';
@@ -116,6 +107,161 @@ const STATUS_STYLES: Record<AssignmentStatus, string> = {
 
 const availableDates = [0, 1, 2].map(offset => buildIsoDate(offset));
 
+const MOCK_PROFESSIONALS: ProfessionalProfile[] = [
+  {
+    id: 'PROF-001',
+    name: 'Efua Lamptey',
+    role: 'NURSE',
+    teamId: 'TEAM_BLUE',
+    primaryZone: 'Accra Central',
+    coverageZones: ['Accra Central', 'Labone'],
+    availability: availableDates.map(date => ({ date, start: '07:00', end: '17:00' })),
+  },
+  {
+    id: 'PROF-002',
+    name: 'Dr. Kojo Bediako',
+    role: 'DOCTOR',
+    teamId: 'TEAM_BLUE',
+    primaryZone: 'Accra Central',
+    coverageZones: ['Accra Central', 'Osu'],
+    availability: availableDates.map(date => ({ date, start: '08:00', end: '16:00' })),
+  },
+  {
+    id: 'PROF-003',
+    name: 'Kofi Agyeman',
+    role: 'PHYSIOTHERAPIST',
+    teamId: 'TEAM_BLUE',
+    primaryZone: 'Accra Central',
+    coverageZones: ['Accra Central', 'Osu'],
+    availability: availableDates.map(date => ({ date, start: '09:00', end: '17:00' })),
+  },
+  {
+    id: 'PROF-004',
+    name: 'Abena Mensah',
+    role: 'NURSE',
+    teamId: 'TEAM_GOLD',
+    primaryZone: 'Labone',
+    coverageZones: ['Labone', 'Osu'],
+    availability: availableDates.map(date => ({ date, start: '07:00', end: '15:00' })),
+  },
+];
+
+const MOCK_PATIENTS: PatientProfile[] = [
+  {
+    id: 'PAT-001',
+    name: 'Nana Kwa Otu',
+    age: 68,
+    ward: 'Cardiac Stepdown',
+    zone: 'Accra Central',
+    teamId: 'TEAM_BLUE',
+    careLevel: 'Post-operative monitoring',
+    focusAreas: ['Medication adherence', 'Blood pressure', 'Mobility support'],
+    alerts: ['Fall risk', 'Low sodium diet'],
+  },
+  {
+    id: 'PAT-002',
+    name: 'Kwame Ofori',
+    age: 54,
+    ward: 'Neurology',
+    zone: 'Accra Central',
+    teamId: 'TEAM_BLUE',
+    careLevel: 'Routine monitoring',
+    focusAreas: ['Neuro checks', 'Hydration'],
+    alerts: [],
+  },
+  {
+    id: 'PAT-003',
+    name: 'Esi Boateng',
+    age: 44,
+    ward: 'Orthopedics',
+    zone: 'Accra Central',
+    teamId: 'TEAM_BLUE',
+    careLevel: 'Recovery',
+    focusAreas: ['Physiotherapy', 'Pain management'],
+    alerts: ['Post-surgery'],
+  },
+  {
+    id: 'PAT-004',
+    name: 'Ama Serwaa',
+    age: 72,
+    ward: 'Cardiology',
+    zone: 'Accra Central',
+    teamId: 'TEAM_BLUE',
+    careLevel: 'Intensive monitoring',
+    focusAreas: ['Heart rhythm', 'Fluid balance'],
+    alerts: ['Pacemaker', 'Diuretic therapy'],
+  },
+];
+
+function buildMockVisits(): ServiceVisit[] {
+  const today = buildIsoDate(0);
+  return [
+    {
+      id: 'VIS-001', patientId: 'PAT-001', date: today,
+      title: 'Morning medication round', start: '07:30', end: '08:15', durationMinutes: 45,
+      requiredRole: 'NURSE', zone: 'Accra Central', teamId: 'TEAM_BLUE', priority: 'CRITICAL',
+      notes: 'Confirm anticoagulant dosage and hydration prompts.',
+      assignmentStatus: 'UNASSIGNED', assignmentReason: 'Awaiting auto-scheduling.',
+    },
+    {
+      id: 'VIS-002', patientId: 'PAT-001', date: today,
+      title: 'Consultant ward round', start: '09:00', end: '09:45', durationMinutes: 45,
+      requiredRole: 'DOCTOR', zone: 'Accra Central', teamId: 'TEAM_BLUE', priority: 'CRITICAL',
+      notes: 'Review overnight ECG and adjust medication plan.',
+      assignmentStatus: 'UNASSIGNED', assignmentReason: 'Awaiting auto-scheduling.',
+    },
+    {
+      id: 'VIS-003', patientId: 'PAT-001', date: today,
+      title: 'Physiotherapy session', start: '10:00', end: '10:30', durationMinutes: 30,
+      requiredRole: 'PHYSIOTHERAPIST', zone: 'Accra Central', teamId: 'TEAM_BLUE', priority: 'CRITICAL',
+      notes: 'Passive range of motion exercises.',
+      assignmentStatus: 'UNASSIGNED', assignmentReason: 'Awaiting auto-scheduling.',
+    },
+    {
+      id: 'VIS-004', patientId: 'PAT-001', date: today,
+      title: 'Afternoon nursing check', start: '14:00', end: '14:30', durationMinutes: 30,
+      requiredRole: 'NURSE', zone: 'Accra Central', teamId: 'TEAM_BLUE', priority: 'STANDARD',
+      notes: 'Vital signs and wound dressing.',
+      assignmentStatus: 'UNASSIGNED', assignmentReason: 'Awaiting auto-scheduling.',
+    },
+    {
+      id: 'VIS-005', patientId: 'PAT-002', date: today,
+      title: 'Morning neuro assessment', start: '08:30', end: '09:15', durationMinutes: 45,
+      requiredRole: 'NURSE', zone: 'Accra Central', teamId: 'TEAM_BLUE', priority: 'STANDARD',
+      notes: 'Pupil response and grip strength baseline.',
+      assignmentStatus: 'UNASSIGNED', assignmentReason: 'Awaiting auto-scheduling.',
+    },
+    {
+      id: 'VIS-006', patientId: 'PAT-002', date: today,
+      title: 'Doctor review', start: '11:00', end: '11:30', durationMinutes: 30,
+      requiredRole: 'DOCTOR', zone: 'Accra Central', teamId: 'TEAM_BLUE', priority: 'STANDARD',
+      notes: 'Review MRI results.',
+      assignmentStatus: 'UNASSIGNED', assignmentReason: 'Awaiting auto-scheduling.',
+    },
+    {
+      id: 'VIS-007', patientId: 'PAT-003', date: today,
+      title: 'Physiotherapy rehabilitation', start: '14:30', end: '15:15', durationMinutes: 45,
+      requiredRole: 'PHYSIOTHERAPIST', zone: 'Accra Central', teamId: 'TEAM_BLUE', priority: 'ROUTINE',
+      notes: 'Post-surgery gait training.',
+      assignmentStatus: 'UNASSIGNED', assignmentReason: 'Awaiting auto-scheduling.',
+    },
+    {
+      id: 'VIS-008', patientId: 'PAT-004', date: today,
+      title: 'Cardiac monitoring round', start: '10:45', end: '11:15', durationMinutes: 30,
+      requiredRole: 'NURSE', zone: 'Accra Central', teamId: 'TEAM_BLUE', priority: 'CRITICAL',
+      notes: 'Record pacemaker readings and fluid intake.',
+      assignmentStatus: 'UNASSIGNED', assignmentReason: 'Awaiting auto-scheduling.',
+    },
+    {
+      id: 'VIS-009', patientId: 'PAT-004', date: today,
+      title: 'Social care assessment', start: '15:00', end: '15:30', durationMinutes: 30,
+      requiredRole: 'SOCIAL_WORKER', zone: 'Accra Central', teamId: 'TEAM_BLUE', priority: 'ROUTINE',
+      notes: 'Discharge planning and family support coordination.',
+      assignmentStatus: 'UNASSIGNED', assignmentReason: 'Awaiting auto-scheduling.',
+    },
+  ];
+}
+
 function buildIsoDate(offsetDays: number): string {
   const value = new Date();
   value.setHours(0, 0, 0, 0);
@@ -165,10 +311,6 @@ function describeAvailability(professional: ProfessionalProfile, date: string): 
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DutyRosterComponent implements OnInit {
-  private personService = inject(PersonService);
-  private professionalService = inject(ProfessionalService);
-  private dutyRosterService = inject(DutyRosterService);
-
   readonly patients = signal<PatientProfile[]>([]);
   readonly professionals = signal<ProfessionalProfile[]>([]);
   readonly dates = availableDates;
@@ -258,23 +400,10 @@ export class DutyRosterComponent implements OnInit {
   readonly statusStyles = STATUS_STYLES;
 
   ngOnInit(): void {
-    forkJoin({
-      people: this.personService.query(),
-      professionals: this.professionalService.query(),
-      dutyRosters: this.dutyRosterService.query(),
-    }).subscribe(({ people, professionals, dutyRosters }) => {
-      const mappedPatients = (people.body ?? []).map(p => this.mapPersonToPatient(p));
-      const mappedProfessionals = (professionals.body ?? []).map(p => this.mapProfessionalToProfile(p));
-      const mappedVisits = (dutyRosters.body ?? []).map(dr => this.mapDutyRosterToVisit(dr, mappedProfessionals));
-
-      this.patients.set(mappedPatients);
-      this.professionals.set(mappedProfessionals);
-      this.visits.set(mappedVisits);
-
-      if (mappedPatients.length > 0) {
-        this.selectedPatientId.set(mappedPatients[0].id);
-      }
-    });
+    this.patients.set(MOCK_PATIENTS);
+    this.professionals.set(MOCK_PROFESSIONALS);
+    this.visits.set(buildMockVisits());
+    this.selectedPatientId.set(MOCK_PATIENTS[0].id);
   }
 
   selectPatient(patientId: string): void {
@@ -289,63 +418,6 @@ export class DutyRosterComponent implements OnInit {
     const result = this.assignVisits(this.visits());
     this.visits.set(result.visits);
     this.lastRunSummary.set(result.summary);
-  }
-
-  private mapPersonToPatient(person: IPerson): PatientProfile {
-    return {
-      id: person.id,
-      name: `${person.firstName ?? ''} ${person.lastName ?? ''}`.trim() || 'Unknown Patient',
-      age: person.birthDate ? dayjs().diff(person.birthDate, 'year') : 0,
-      ward: 'Cardiac Stepdown',
-      zone: 'Accra Central',
-      teamId: 'TEAM_BLUE',
-      careLevel: 'Post-operative monitoring',
-      focusAreas: ['Medication adherence', 'Blood pressure checks', 'Mobility support'],
-      alerts: ['Fall risk', 'Low sodium diet'],
-    };
-  }
-
-  private mapProfessionalToProfile(prof: IProfessional): ProfessionalProfile {
-    return {
-      id: prof.id,
-      name: prof.name ?? 'Unknown Professional',
-      role: 'NURSE',
-      teamId: 'TEAM_BLUE',
-      primaryZone: 'Accra Central',
-      coverageZones: ['Accra Central', 'Osu'],
-      availability: this.dates.map(date => ({ date, start: '07:00', end: '15:00' })),
-    };
-  }
-
-  private mapDutyRosterToVisit(dr: IDutyRoster, professionals: ProfessionalProfile[]): ServiceVisit {
-    const roleMap: Record<string, RoleId> = {
-      DOCTOR: 'DOCTOR',
-      NURSE: 'NURSE',
-      CARE: 'NURSE',
-      MEDIC: 'DOCTOR',
-    };
-
-    const assignedProf = professionals.find(p => p.id === dr.professionalId);
-
-    return {
-      id: dr.id,
-      patientId: dr.patientId ?? '',
-      date: dr.date?.format('YYYY-MM-DD') ?? this.dates[0],
-      title: dr.name ?? dr.description ?? 'Morning medication round',
-      start: '07:30',
-      end: '08:15',
-      durationMinutes: 45,
-      requiredRole: (dr.duty && roleMap[dr.duty]) || 'NURSE',
-      zone: 'Accra Central',
-      teamId: 'TEAM_BLUE',
-      priority: 'CRITICAL',
-      notes: dr.description ?? 'Confirm anticoagulant dosage and hydration prompts.',
-      preferredProfessionalId: dr.professionalId ?? undefined,
-      assignedProfessionalId: dr.professionalId ?? undefined,
-      assignedProfessionalName: assignedProf?.name,
-      assignmentStatus: dr.professionalId ? 'ASSIGNED' : 'UNASSIGNED',
-      assignmentReason: dr.professionalId ? 'Seeded continuity assignment.' : 'Awaiting auto-scheduling.',
-    };
   }
 
   private assignVisits(visits: ServiceVisit[]): { visits: ServiceVisit[]; summary: SchedulingRunSummary } {

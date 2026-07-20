@@ -13,11 +13,12 @@ The component is located at `/src/webapp/app/entities/duty-roster/duty-roster.ts
 Adhere to Angular 19+ control flow (`@if`, `@for`) and Signals for state management.
 For all styling and layouts, strictly use Tailwind CSS utility classes.
 
-## **Frontend Implementation: Angular 19 Component (patient-duty-roster.component.ts)**
+## Frontend Implementation: 
+**Angular 19 Component (patient-duty-roster.component.ts)**
 
 The frontend is refactored to focus on the **Patient's Daily Service Plan**. An Admin can select a patient (simulated via an input) to view their specific schedule for the day, seeing exactly who is assigned to care for them.
 
-```typescript
+```ts
 import { Component, inject, signal, OnInit, computed } from '@angular/core';  
 import { CommonModule } from '@angular/common';  
 import { FormsModule } from '@angular/forms';  
@@ -33,8 +34,55 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   selector: 'app-patient-duty-roster',  
   standalone: true,  
   imports: [CommonModule, FormsModule, MatButtonModule, MatIconModule, MatTableModule, MatSelectModule, MatFormFieldModule],  
-  template: `  
-    <div class="flex flex-col gap-4 p-6 w-full h-full bg-gray-50 dark:bg-gray-900">  
+  templateUrl: './patient-duty-roster.component.html',  
+  styleUrls: ['./patient-duty-roster.component.css'],
+})  
+export class PatientDutyRosterComponent implements OnInit {  
+  private rosterService = inject(RosterService);  
+  private snackBar = inject(MatSnackBar);  
+  // State management using Angular Signals  
+  patientPlanSignal = signal<Shift[]>([]);  
+  isScheduling = signal<boolean>(false);  
+  targetDate = signal<string>(new Date().toISOString().split('T')[0]);
+  selectedPatientId = signal<string>('PATIENT_123'); // Default mock patient
+
+  ngOnInit() {  
+    this.refreshPatientPlan();  
+  }
+
+  onPatientChange(patientId: string) {  
+    this.selectedPatientId.set(patientId);  
+    this.refreshPatientPlan();  
+  }
+
+  triggerAutoSchedule() {  
+    this.isScheduling.set(true);  
+    // Auto-schedule runs globally for the day, filling ALL patient plans  
+    this.rosterService.autoSchedule(this.targetDate()).subscribe({  
+      next: () => {  
+        this.snackBar.open('All daily service plans auto-scheduled successfully', 'Close', { duration: 3000 });  
+        this.refreshPatientPlan(); // Refresh the currently viewed patient's plan  
+        this.isScheduling.set(false);  
+      },  
+      error: (err) => {  
+        this.snackBar.open('Error during auto-scheduling', 'Close', { duration: 3000 });  
+        console.error('Scheduling failed', err);  
+        this.isScheduling.set(false);  
+      }  
+    });  
+  }
+
+  refreshPatientPlan() {  
+    if (!this.selectedPatientId()) return;  
+    this.rosterService.getPatientDailyPlan(this.selectedPatientId(), this.targetDate()).subscribe(shifts => {  
+      this.patientPlanSignal.set(shifts);
+    });  
+  }  
+}
+```  
+* **patient-duty-roster.component.html**
+```html
+<div class="flex flex-col gap-4 p-6 w-full h-full bg-gray-50 dark:bg-gray-900">  
       <!-- Header & Global Actions -->  
       <div class="flex justify-between items-center mb-2">  
         <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Daily Service Plans</h2>  
@@ -103,52 +151,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
         No service plan scheduled for this patient on this date.  
       </div>  
     </div>  
-  `  
-})  
-export class PatientDutyRosterComponent implements OnInit {  
-  private rosterService = inject(RosterService);  
-  private snackBar = inject(MatSnackBar);  
-  // State management using Angular Signals  
-  patientPlanSignal = signal<Shift[]>([]);  
-  isScheduling = signal<boolean>(false);  
-  targetDate = signal<string>(new Date().toISOString().split('T')[0]);
-  selectedPatientId = signal<string>('PATIENT_123'); // Default mock patient
-
-  ngOnInit() {  
-    this.refreshPatientPlan();  
-  }
-
-  onPatientChange(patientId: string) {  
-    this.selectedPatientId.set(patientId);  
-    this.refreshPatientPlan();  
-  }
-
-  triggerAutoSchedule() {  
-    this.isScheduling.set(true);  
-    // Auto-schedule runs globally for the day, filling ALL patient plans  
-    this.rosterService.autoSchedule(this.targetDate()).subscribe({  
-      next: () => {  
-        this.snackBar.open('All daily service plans auto-scheduled successfully', 'Close', { duration: 3000 });  
-        this.refreshPatientPlan(); // Refresh the currently viewed patient's plan  
-        this.isScheduling.set(false);  
-      },  
-      error: (err) => {  
-        this.snackBar.open('Error during auto-scheduling', 'Close', { duration: 3000 });  
-        console.error('Scheduling failed', err);  
-        this.isScheduling.set(false);  
-      }  
-    });  
-  }
-
-  refreshPatientPlan() {  
-    if (!this.selectedPatientId()) return;  
-    this.rosterService.getPatientDailyPlan(this.selectedPatientId(), this.targetDate()).subscribe(shifts => {  
-      this.patientPlanSignal.set(shifts);
-    });  
-  }  
-}  
 ```
 
-# ** Conclusion **
+### **Conclusion**
 
 This implementation transforms the duty roster into a patient-centric scheduling system, where each shift represents a specific service or visit in a patient's daily care plan. The frontend allows admins to view and manage these plans with real-time feedback on scheduling status, while the backend ensures that all constraints are respected during the auto-scheduling process.
