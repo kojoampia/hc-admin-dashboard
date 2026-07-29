@@ -4,19 +4,31 @@ Frontend-only Angular application generated from JHipster and customized for the
 
 ## What Is Actually Implemented
 
-- Project type: JHipster Angular app with server skipped (`skipServer: true`)
-- Framework: Angular 19
-- UI: Bootstrap, ng-bootstrap, ngx-charts, TailwindCSS (configured)
+- Project type: JHipster 8.11.0 Angular app with server skipped (`skipServer: true`)
+- Framework: Angular 19.2.21, standalone components + lazy-loaded routes
+- UI: Bootstrap 5.3.2 + ng-bootstrap 18 (used in ~39 files), Angular Material 19 + CDK, `@swimlane/ngx-charts` 20 + D3 7, TailwindCSS 3.4
+- Font Awesome packages are installed but **unused** — zero references to `@fortawesome` or `fa-icon` remain in `src/main/webapp/app`. They are removal candidates.
+- I18n: `@ngx-translate` — English, French, German
 - State/storage: ngx-webstorage
 - Realtime/chat widgets: SockJS + webstomp-client
 - Linting: ESLint + angular-eslint
-- Formatting: Prettier
-- Unit tests: Jest
-- E2E tests: Cypress
+- Formatting: Prettier (husky + lint-staged pre-commit)
+- Unit tests: Jest 30 via `@angular-builders/jest`
+- E2E tests: **not runnable** — a Cypress folder exists but Cypress is not installed and no `e2e` script is defined
 
 Reference source:
 
 - `.yo-rc.json` confirms `skipServer: true` and `jhiPrefix: hpd`
+
+### Related repositories
+
+This SPA is one of three projects in the admin stack:
+
+| Repo                            | Role                                         | Dev port |
+| ------------------------------- | -------------------------------------------- | -------- |
+| `hc-admin-dashboard` (this one) | Angular SPA                                  | 4200     |
+| `hc-admin-gateway`              | Spring Cloud Gateway, auth + user management | 5504     |
+| `hc-admin-service`              | Admin domain microservice (MongoDB)          | 5507     |
 
 ## Requirements
 
@@ -52,16 +64,22 @@ The admin dashboard is available at `/admin/dashboard` for users with `ROLE_ADMI
 
 This repository does not include a Spring Boot backend.
 
-Current proxy setup points API calls to the local mock server at port 5508:
+Current proxy setup points API calls at **port 5504**, which is the `hc-admin-gateway` dev port:
 
 - Proxy config: `webpack/proxy.conf.js`
-- Proxied paths: `/api`, `/services`, `/management`, `/v3/api-docs`, `/h2-console`, `/auth`, `/health`
+- Proxy target: `http://localhost:5504`
+- Proxied paths: `/api`, `/services`, `/management`, `/v3/api-docs`, `/h2-console`, `/auth`, `/health`, `/websocket`
 
-Start mock API server:
+Two options for a local backend:
+
+1. **Run the real stack** — start `hc-admin-gateway` (dev profile, port 5504) and `hc-admin-service` (dev profile, port 5507), both of which also need Consul on 8500. No proxy change needed.
+2. **Run the mock server** — `npm run mock:api` starts `json-server` on **port 5508** using `db.json` and `routes.json`. This does _not_ match the proxy target, so you must also change `target` in `webpack/proxy.conf.js` to `http://localhost:5508`.
 
 ```bash
 npm run mock:api
 ```
+
+When adding endpoints, update `db.json` and `routes.json` so the mock path keeps working.
 
 ## Build
 
@@ -99,21 +117,25 @@ Auto-fix lint:
 npm run lint:fix
 ```
 
-Run unit tests (configured Jest path):
-
-```bash
-npx jest --runInBand --config jest.conf.js --passWithNoTests
-```
-
-Alternative test command via Angular builder:
+Run unit tests:
 
 ```bash
 npm test
 ```
 
-Note:
+`npm test` runs `ng test`, which `angular.json` binds to the `@angular-builders/jest:run` builder using `jest.conf.js` — so this is **Jest, not Karma**. Note that the `pretest` hook runs `npm run lint` first, so a lint failure blocks the test run.
 
-- `npm test` uses Angular's Karma builder and does not accept Jest CLI flags such as `--runInBand` or `--passWithNoTests`.
+Run a single suite:
+
+```bash
+npm test -- --testPathPattern dashboard-component
+```
+
+Invoke Jest directly (bypasses the Angular builder and the lint hook):
+
+```bash
+npx jest --runInBand --config jest.conf.js --passWithNoTests
+```
 
 Watch mode:
 
@@ -121,19 +143,21 @@ Watch mode:
 npm run test:watch
 ```
 
+E2E: `src/test/javascript/cypress/` exists from JHipster generation, but Cypress is **not** an installed dependency and there is no `e2e` script. E2E tests cannot currently be run; install Cypress and add a script first.
+
 ## Code Style And Conventions
 
-- Angular selectors/directives use the `hpd` prefix
+- Angular selectors use the `hpd-` prefix (kebab-case); directive selectors use `hpd` (camelCase)
 - Main frontend source root: `src/main/webapp`
-- Keep feature boundaries aligned with existing app folders:
-  - `core`
-  - `shared`
-  - `entities`
-  - `layouts`
-  - `dashboard`
-  - `admin`
-  - `features`
-  - `widgets`
+- Routes are standalone-component route arrays (`app.routes.ts`, `admin/admin.routes.ts`, `entities/entity.routes.ts`, one `*.routes.ts` per entity) — there is no `app-routing.module.ts`
+- Keep feature boundaries aligned with the actual app folders under `src/main/webapp/app`:
+  - `core` — auth, interceptors, `ApplicationConfigService`, low-level utilities
+  - `shared` — reusable pipes, directives, alert/filter/sort/pagination helpers, legacy `shared.module.ts`
+  - `entities` — one folder per domain entity (model, service, list/detail/update/delete, routes)
+  - `layouts` — navbar, footer, error pages
+  - `admin` — dashboard shell and admin widgets, user management, health, metrics, logs, configuration
+  - `widgets` — reusable display/chart widgets
+  - `account`, `config`, `home`, `login`
 
 ## Useful Scripts
 
@@ -147,8 +171,18 @@ npm run webapp:dev-verbose
 
 ## Notes
 
-- Legacy JHipster backend-related commands may still exist in `package.json`, but this repository currently runs as a frontend-only application.
-- If a real backend is needed locally, run a compatible external service and update proxy targets in `webpack/proxy.conf.js`.
+- `package.json` still carries JHipster backend scripts (`app:start`, `backend:*`, `java:*`, `ci:e2e:*`) and the repo has an `mvnw` wrapper, but there is **no `pom.xml`** — every one of those scripts fails. Ignore them; this is a frontend-only project.
+- If a real backend is needed locally, run `hc-admin-gateway` and `hc-admin-service`, or point `webpack/proxy.conf.js` at whatever host you are using.
+- Build API URLs through `ApplicationConfigService.getEndpointFor(api, microservice?)` rather than hardcoding paths.
+
+### Known issue: microservice path mismatch
+
+Entity services call `getEndpointFor('api/...', 'hc-admin-ms')`, producing `/services/hc-admin-ms/api/...`. Nothing serves that path today:
+
+- `hc-admin-service` registers in Consul as `hcadminservice`, so the gateway's discovery locator publishes `/services/hcadminservice/**`
+- the gateway's static dev route matches `/services/admin-service/**`
+
+The path that actually resolves is `/services/hcadminservice/...`, which is also what the gateway's own data blueprint documents as the intended contract — so this frontend is the outlier. Fixing it means changing the `'hc-admin-ms'` microservice argument in the `getEndpointFor(...)` calls under `app/entities/`. Until then, expect 404s on entity endpoints through the real gateway.
 
 ## Troubleshooting
 

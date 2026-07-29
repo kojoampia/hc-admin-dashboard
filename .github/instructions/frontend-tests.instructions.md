@@ -1,18 +1,19 @@
 ---
-applyTo: "src/main/webapp/app/**/*.spec.ts"
+applyTo: 'src/main/webapp/app/**/*.spec.ts'
 ---
 
 # Angular Test Conventions
 
 ## Module Setup
 
-Every spec uses `TestBed.configureTestingModule`. Import `HttpClientTestingModule` instead of `HttpClientModule` in all specs — never inject a real `HttpClient`.
+Every spec uses `TestBed.configureTestingModule`. Components in this project are **standalone**, so they go in `imports`, never in `declarations`. Provide HTTP through the function providers `provideHttpClient()` + `provideHttpClientTesting()` — the `HttpClientTestingModule` / `RouterTestingModule` NgModules are deprecated in Angular 19 and are not used anywhere in this codebase.
 
 **Service spec:**
+
 ```typescript
 beforeEach(() => {
   TestBed.configureTestingModule({
-    imports: [HttpClientTestingModule],
+    providers: [provideHttpClient(), provideHttpClientTesting()],
   });
   service = TestBed.inject(MyEntityService);
   httpMock = TestBed.inject(HttpTestingController);
@@ -20,13 +21,22 @@ beforeEach(() => {
 ```
 
 **Component spec:**
+
 ```typescript
 beforeEach(() => {
   TestBed.configureTestingModule({
-    imports: [RouterTestingModule.withRoutes([{ path: 'my-entity', component: MyEntityComponent }]), HttpClientTestingModule],
-    declarations: [MyEntityComponent],
+    imports: [MyEntityComponent],
     providers: [
-      { provide: ActivatedRoute, useValue: { snapshot: { queryParams: {} } } },
+      provideHttpClient(),
+      provideHttpClientTesting(),
+      {
+        provide: ActivatedRoute,
+        useValue: {
+          data: of({ defaultSort: 'id,asc' }),
+          queryParamMap: of(new Map()),
+          snapshot: { queryParams: {} },
+        },
+      },
     ],
   })
     .overrideTemplate(MyEntityComponent, '')
@@ -37,6 +47,8 @@ beforeEach(() => {
   service = TestBed.inject(MyEntityService);
 });
 ```
+
+Follow the existing entity specs (e.g. `app/entities/team/list/team.component.spec.ts`) rather than this snippet if the two ever diverge — 49 specs currently use the function-provider style above.
 
 Always call `.overrideTemplate(Component, '')` on list/detail components to avoid resolving template dependencies. Do not use `overrideTemplate` for components under active template development.
 
@@ -54,7 +66,7 @@ it('should find an element', () => {
 });
 
 afterEach(() => {
-  httpMock.verify();  // add this to afterEach when testing multiple requests
+  httpMock.verify(); // add this to afterEach when testing multiple requests
 });
 ```
 
@@ -77,14 +89,13 @@ beforeEach(() => {
 ```
 
 When building `returnedFromService`, serialize dates with `DATE_FORMAT`:
+
 ```typescript
-const returnedFromService = Object.assign(
-  { someDate: currentDate.format(DATE_FORMAT) },
-  elemDefault
-);
+const returnedFromService = Object.assign({ someDate: currentDate.format(DATE_FORMAT) }, elemDefault);
 ```
 
 When building the `expected` comparison object, keep dates as `dayjs`:
+
 ```typescript
 const expected = Object.assign({ someDate: currentDate }, returnedFromService);
 expect(expectedResult).toMatchObject(expected);
@@ -95,12 +106,11 @@ expect(expectedResult).toMatchObject(expected);
 Use `jest.spyOn` — never use a hand-rolled stub class for services the component calls:
 
 ```typescript
-jest.spyOn(service, 'query').mockReturnValue(
-  of(new HttpResponse({ body: [{ id: 'ABC' }], headers: new HttpHeaders() }))
-);
+jest.spyOn(service, 'query').mockReturnValue(of(new HttpResponse({ body: [{ id: 'ABC' }], headers: new HttpHeaders() })));
 ```
 
 For router navigation:
+
 ```typescript
 jest.spyOn(mockRouter, 'navigate').mockImplementation(() => Promise.resolve(true));
 ```
@@ -114,6 +124,7 @@ Inject `Router`, `ActivatedRoute`, the resolve service, and the entity service. 
 3. **Not found (404)** — `mockReturnValue(of(new HttpResponse({ body: null })))` → router navigates to `['404']`.
 
 Pattern for providing `ActivatedRoute` with snapshot params:
+
 ```typescript
 providers: [
   {
@@ -125,12 +136,12 @@ providers: [
 
 ## File Structure
 
-| File                                  | What to test                             |
-|---------------------------------------|------------------------------------------|
-| `service/entity.service.spec.ts`      | All CRUD methods, date conversions, `addToCollectionIfMissing` |
-| `list/entity.component.spec.ts`       | `ngOnInit` loads, pagination, delete modal |
-| `detail/entity-detail.component.spec.ts` | Component creation, data binding      |
-| `route/entity-routing-resolve.service.spec.ts` | Three resolve cases             |
+| File                                           | What to test                                                   |
+| ---------------------------------------------- | -------------------------------------------------------------- |
+| `service/entity.service.spec.ts`               | All CRUD methods, date conversions, `addToCollectionIfMissing` |
+| `list/entity.component.spec.ts`                | `ngOnInit` loads, pagination, delete modal                     |
+| `detail/entity-detail.component.spec.ts`       | Component creation, data binding                               |
+| `route/entity-routing-resolve.service.spec.ts` | Three resolve cases                                            |
 
 ## Assertion Style
 
@@ -140,12 +151,12 @@ Prefer `toMatchObject` over `toEqual` when comparing partial shapes. Use `expect
 
 ```typescript
 import { TestBed } from '@angular/core/testing';
-import { ComponentFixture } from '@angular/core/testing';      // component specs only
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { RouterTestingModule } from '@angular/router/testing'; // component/resolve specs
-import { HttpHeaders, HttpResponse } from '@angular/common/http';
+import { ComponentFixture } from '@angular/core/testing'; // component specs only
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { HttpHeaders, HttpResponse, provideHttpClient } from '@angular/common/http';
+import { provideRouter } from '@angular/router'; // component/resolve specs needing real routing
 import { ActivatedRoute, Router, convertToParamMap } from '@angular/router'; // resolve specs
 import { of } from 'rxjs';
 import dayjs from 'dayjs/esm';
-import { DATE_FORMAT } from 'app/config/input.constants';       // service specs with dates
+import { DATE_FORMAT } from 'app/config/input.constants'; // service specs with dates
 ```

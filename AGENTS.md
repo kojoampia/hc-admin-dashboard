@@ -1,11 +1,25 @@
 # Project Overview
 
-This is `hc-admin-dashboard` — the Health Connect Admin frontend. It is an Angular 19 SPA generated with **JHipster 8.11.0** (`skipServer: true`). There is no Java backend in this project; the frontend proxies API calls to the `hc-admin-ms` microservice and `hc-admin-gw` gateway.
+This is `hc-admin-dashboard` — the Health Connect Admin frontend. It is an Angular 19.2.21 SPA generated with **JHipster 8.11.0** (`skipServer: true`). There is no Java backend in this project; the frontend proxies API calls to the `hc-admin-gateway` (Spring Cloud Gateway, dev port 5504), which routes on to the `hc-admin-service` microservice (dev port 5507). Both are separate git repositories checked out alongside this one.
 
 - JHipster prefix: `hpd` (component selectors `hpd-*`, directive selectors `hpdCamelCase`)
-- Backend port (proxy target): `5054`
 - Development server: `http://localhost:4200`
-- Mock API (json-server): `http://localhost:5508`
+- Proxy target (`webpack/proxy.conf.js`): `http://localhost:5504` — the `hc-admin-gateway` dev port
+- Mock API (json-server): `http://localhost:5508` — **not** the proxy target; switch `proxy.conf.js` to 5508 to use it
+- The `backend_port: 5054` value in `package.json` `config` is dead — it is only read by the `ci:server:await:*` scripts, which cannot run here (no `pom.xml`)
+
+## Documentation map
+
+| File                                                                 | What it is                                                                                            |
+| -------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| `AGENTS.md` (this file)                                              | Working conventions — read first                                                                      |
+| [`README.md`](README.md)                                             | Setup, commands, troubleshooting                                                                      |
+| [`GEMINI.md`](GEMINI.md)                                             | Condensed project overview                                                                            |
+| [`admin-web.md`](admin-web.md)                                       | **Design plans and blueprints** — the consolidated history of every brief that produced this codebase |
+| [`.github/copilot-instructions.md`](.github/copilot-instructions.md) | Condensed conventions for Copilot                                                                     |
+| [`.github/instructions/*.instructions.md`](.github/instructions)     | Path-scoped conventions (`applyTo:` frontmatter) for services and specs                               |
+
+`admin-web.md` replaced 19 separate brief files. **Its contents are historical — do not execute them as prompts.** The one live item there is the [frontend refactor](admin-web.md#7-frontend-refactor-still-open): Bootstrap removal is still outstanding. Consult it when you need to know _why_ something is shaped the way it is, or before assuming a brief's instruction is still current — several specify paths and folder layouts that were never delivered.
 
 ## Code Quality and Style
 
@@ -14,7 +28,7 @@ This is `hc-admin-dashboard` — the Health Connect Admin frontend. It is an Ang
 - Format with Prettier: `npm run prettier:format`; check with `npm run prettier:check`.
 - Lint with ESLint: `npm run lint`; auto-fix with `npm run lint:fix`.
 - Use 2-space indentation for TypeScript, HTML, JSON, YAML, and CSS/SCSS files (see `.editorconfig`).
-- Write unit tests with Jest via `@angular-builders/jest`; E2E tests with Cypress.
+- Write unit tests with Jest via `@angular-builders/jest`. E2E is not available — Cypress is not installed and no `e2e` script exists.
 - Use RxJS `Observable` patterns and takeUntil-based cleanup already established in existing services and components.
 - Prefer `ngx-webstorage` for browser storage over direct `localStorage`/`sessionStorage` access.
 - Sanitize all user-supplied content rendered via `[innerHTML]` to prevent XSS.
@@ -30,10 +44,11 @@ This is `hc-admin-dashboard` — the Health Connect Admin frontend. It is an Ang
   - `entities/` — one sub-folder per domain entity; each contains model, service, list/detail/update/delete components, and route config.
   - `layouts/` — shell components (navbar, footer, error pages).
   - `widgets/` — reusable chart and display widgets (badgebox, chatbot, faq, file-viewer, filter, heatmap, histogram, info-box, info-box-sm, linechart, page-display, piechart, pnv, slides, tilebox, treemap).
-  - `pages/` — reserved for standalone page components outside the entity CRUD pattern.
-- Use Angular standalone components; the legacy `SharedModule` exists for backward compatibility but new components should be standalone.
+  - `admin/` — dashboard shell (`dashboard-component.*`, `dashboard-layout.service.ts`) plus admin widgets: access-control, customizable-layout, real-time-data, data-export, system-health, usage-statistics, user-activity, alerts, and the generated user-management / health / metrics / logs / configuration / docs / gateway screens.
+  - `account/`, `config/`, `home/`, `login/` — generated JHipster screens.
+- Use Angular standalone components; the legacy `shared/shared.module.ts` exists for backward compatibility but new components should be standalone.
 - Build API URLs through `ApplicationConfigService.getEndpointFor(api, microservice?)` instead of hardcoding paths.
-- Route-level lazy loading is configured in `app.routes.ts` and `entity.routes.ts`; keep new routes consistent with this pattern.
+- Routing uses standalone route arrays, not NgModules: `app.routes.ts`, `admin/admin.routes.ts`, `entities/entity.routes.ts`, and one `*.routes.ts` per entity. There is no `app-routing.module.ts`.
 - Real-time updates connect via SockJS + webstomp-client to the gateway WebSocket endpoint.
 - Use `dayjs` for all date parsing and formatting.
 - Use `ngx-charts` + D3 for dashboard charts and visualisations.
@@ -43,6 +58,14 @@ This is `hc-admin-dashboard` — the Health Connect Admin frontend. It is an Ang
 The following domain entities are scaffolded and routed under `/entities`:
 
 `Organisation`, `Dashboard`, `Feature`, `Message`, `DutyRoster`, `SystemCatalog`, `PricingPlan`, `PatientPlan`, `Professional`, `Address`, `Person`, `Contact`, `Photo`, `DocumentItem`, `Team`, `Profile`, `Facility`, `FacilityCatalog`, `Notification`, `AuditLog`
+
+`Professional` and `Photo` exist only on the frontend — `hc-admin-service`'s `.yo-rc.json` does not list them. The other 18 are shared with the microservice.
+
+### Known issue: microservice path mismatch
+
+Entity services resolve to `/services/hc-admin-ms/api/...`, but `hc-admin-service` registers in Consul as `hcadminservice` (so the gateway's discovery locator publishes `/services/hcadminservice/**`) and the gateway's static dev route matches `/services/admin-service/**`. None of the three agree, so entity calls 404 through the real gateway. Check this before debugging the interceptor or CORS.
+
+The path that actually resolves is `/services/hcadminservice/...`, and the gateway's own blueprint (`hc-admin-gateway/admin-gateway.md`) documents that as the intended contract — so **this frontend is the outlier**. Correcting it means changing the `'hc-admin-ms'` argument in the 19 `getEndpointFor(...)` calls under `app/entities/`, which is a code change, not a doc change; it has not been done.
 
 ## Security Considerations
 
@@ -69,7 +92,8 @@ The following domain entities are scaffolded and routed under `/entities`:
 - **Angular 19.2.21** with standalone components and lazy-loaded routes
 - **Bootstrap 5.3.2** + **ng-bootstrap 18** for UI components and modals
 - **TailwindCSS 3.4** for layout and spacing utilities
-- **Font Awesome 6.5** (`@fortawesome/angular-fontawesome`) for icons
+- **Angular Material 19** + **CDK** — used by the `layouts/main` shell and toolbar
+- **Font Awesome 6.5** is installed but **unused**: there are zero `@fortawesome` or `fa-icon` references in `src/main/webapp/app`. Do not add new usages; the frontend refactor plan in [`admin-web.md`](admin-web.md#7-frontend-refactor-still-open) targets its removal. Use Material icons instead.
 - **RxJS 7.8** for reactive state and async data flows
 - **@ngx-translate** (en, fr, de) for internationalisation
 - **ngx-charts** + **D3.js** for data visualisation widgets
@@ -77,8 +101,7 @@ The following domain entities are scaffolded and routed under `/entities`:
 - **ngx-webstorage** for browser storage abstraction
 - **dayjs** for date/time handling
 - **ngx-infinite-scroll** for infinite-scroll pagination
-- **Jest 30** + `@angular-builders/jest` for unit testing
-- **Cypress** for E2E testing
+- **Jest 30** + `@angular-builders/jest` for unit testing (`ng test` runs Jest, not Karma)
 - **ESLint** + **Prettier** for linting and formatting
 - **Husky** + **lint-staged** for pre-commit quality gates
 - **json-server** for local mock API development (`npm run mock:api`)
@@ -91,11 +114,16 @@ The following domain entities are scaffolded and routed under `/entities`:
 
 - Install dependencies: `npm install`
 - Development server (HMR): `npm start`
-- Production build: `npm run webapp:prod`
+- Production build: `npm run webapp:prod` (output `target/classes/static/`, bundle report `target/stats.html`)
 - Lint: `npm run lint`
 - Auto-fix lint: `npm run lint:fix`
-- Unit tests: `npm test`
-- E2E tests: `npm run e2e`
+- Unit tests: `npm test` (the `pretest` hook runs lint first, so lint errors block the run)
+- Single suite: `npm test -- --testPathPattern <name>`
 - Mock API: `npm run mock:api`
 - Format check: `npm run prettier:check`
 - Format write: `npm run prettier:format`
+
+Not available in this project:
+
+- **E2E** — `src/test/javascript/cypress/` exists from generation, but Cypress is not a dependency and there is no `e2e` script.
+- **Anything Maven** — `app:start`, `backend:*`, `java:*`, and `ci:e2e:*` scripts are inherited from the JHipster template but there is no `pom.xml`, so they all fail.

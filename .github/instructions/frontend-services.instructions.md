@@ -1,5 +1,5 @@
 ---
-applyTo: "src/main/webapp/app/**/service/*.ts"
+applyTo: 'src/main/webapp/app/**/service/*.ts'
 ---
 
 # Angular Service Conventions
@@ -13,7 +13,9 @@ protected resourceUrl = this.applicationConfigService.getEndpointFor('api/entiti
 protected resourceSearchUrl = this.applicationConfigService.getEndpointFor('api/_search/entities', 'microservicename');
 ```
 
-Never hardcode service paths. The second argument is the lowercase microservice registry name (e.g., `'generalservice'`, `'adminservice'`).
+Never hardcode service paths. The second argument is the microservice name the gateway routes on.
+
+**Caveat:** entity services in this repo currently pass `'hc-admin-ms'`, which nothing serves. The gateway's discovery locator publishes `/services/{consul-service-name-lowercased}/**`, and `hc-admin-service` registers as `hcadminservice` — so `'hcadminservice'` is the value that actually resolves, and it is what `hc-admin-gateway`'s own data blueprint documents. Do not copy `'hc-admin-ms'` into new services; see the "Known issue" section in `../../README.md`.
 
 ## Response Type Aliases
 
@@ -30,15 +32,15 @@ These aliases must be exported so components and specs can reference them.
 
 All methods return `Observable`s — never `Promise`s.
 
-| Method         | Return type                  | HTTP verb |
-|----------------|------------------------------|-----------|
-| `create`       | `Observable<EntityResponseType>` | POST |
-| `update`       | `Observable<EntityResponseType>` | PUT with id segment |
-| `partialUpdate`| `Observable<EntityResponseType>` | PATCH with id segment |
-| `find`         | `Observable<EntityResponseType>` | GET with id segment |
-| `query`        | `Observable<EntityArrayResponseType>` | GET with params |
-| `delete`       | `Observable<HttpResponse<{}>>` | DELETE with id segment |
-| `search`       | `Observable<EntityArrayResponseType>` | GET search URL with params |
+| Method          | Return type                           | HTTP verb                  |
+| --------------- | ------------------------------------- | -------------------------- |
+| `create`        | `Observable<EntityResponseType>`      | POST                       |
+| `update`        | `Observable<EntityResponseType>`      | PUT with id segment        |
+| `partialUpdate` | `Observable<EntityResponseType>`      | PATCH with id segment      |
+| `find`          | `Observable<EntityResponseType>`      | GET with id segment        |
+| `query`         | `Observable<EntityArrayResponseType>` | GET with params            |
+| `delete`        | `Observable<HttpResponse<{}>>`        | DELETE with id segment     |
+| `search`        | `Observable<EntityArrayResponseType>` | GET search URL with params |
 
 ID segment pattern: `` `${this.resourceUrl}/${getEntityIdentifier(entity) as string}` ``
 
@@ -58,6 +60,7 @@ query(req?: any): Observable<EntityArrayResponseType> {
 Entities with `dayjs.Dayjs` date fields require bidirectional conversion:
 
 **Client → server** (`convertDateFromClient`): serialize valid dayjs values with `DATE_FORMAT`:
+
 ```typescript
 protected convertDateFromClient(entity: IMyEntity): IMyEntity {
   return Object.assign({}, entity, {
@@ -67,6 +70,7 @@ protected convertDateFromClient(entity: IMyEntity): IMyEntity {
 ```
 
 **Server → client** (`convertDateFromServer`): deserialize ISO strings back to dayjs:
+
 ```typescript
 protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
   if (res.body) {
