@@ -130,4 +130,4 @@ generated Cypress specs under `src/test/javascript/cypress/` already assume that
 Not available in this project:
 
 - **E2E** — `src/test/javascript/cypress/` exists from generation, but Cypress is not a dependency and there is no `e2e` script.
-- **Anything Maven** — `app:start`, `backend:*`, `java:*`, and `ci:e2e:*` scripts are inherited from the JHipster template but there is no `pom.xml`, so they all fail.
+- **Anything Maven** — removed. The inherited `app:start`, `backend:*`, `java:*` and `ci:e2e:*` scripts and the `mvnw` wrapper were deleted; this project has no `pom.xml`, so they could never run.

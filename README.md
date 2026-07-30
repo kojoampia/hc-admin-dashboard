@@ -171,7 +171,7 @@ npm run webapp:dev-verbose
 
 ## Notes
 
-- `package.json` still carries JHipster backend scripts (`app:start`, `backend:*`, `java:*`, `ci:e2e:*`) and the repo has an `mvnw` wrapper, but there is **no `pom.xml`** — every one of those scripts fails. Ignore them; this is a frontend-only project.
+- The JHipster backend scripts (`app:start`, `backend:*`, `java:*`, `ci:e2e:*`, `docker:*`) and the `mvnw` wrapper have been removed: this project has no `pom.xml` and no `src/main/docker`, so none of them could ever run. What remains in `package.json` all works.
 - If a real backend is needed locally, run `hc-admin-gateway` and `hc-admin-service`, or point `webpack/proxy.conf.js` at whatever host you are using.
 - Build API URLs through `ApplicationConfigService.getEndpointFor(api, microservice?)` rather than hardcoding paths.
 

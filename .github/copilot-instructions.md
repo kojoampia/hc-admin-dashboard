@@ -34,7 +34,7 @@
 - Unit tests: `npm test` (runs Jest through `@angular-builders/jest`; `pretest` runs lint first)
 - Single suite: `npm test -- --testPathPattern <name>`
 - E2E: not runnable — `src/test/javascript/cypress/` exists but Cypress is not installed and no `e2e` script is defined
-- Maven scripts (`app:start`, `backend:*`, `java:*`) are inherited from the JHipster template but there is no `pom.xml`, so they fail
+- Maven scripts and the `mvnw` wrapper have been removed — this project has no `pom.xml`. Every script left in `package.json` works.
 
 ## Conventions
 

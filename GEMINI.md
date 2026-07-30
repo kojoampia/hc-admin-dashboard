@@ -5,7 +5,7 @@ This project is a dedicated administrative interface for the Health Connect plat
 ## Project Architecture & Core Technologies
 
 - **Framework:** Angular 19.2.21 (Standalone Components, Lazy Loading).
-- **Generation:** JHipster 8.11.0 (configured with `skipServer: true`). There is no `pom.xml`, so the inherited `backend:*` / `java:*` npm scripts do not work.
+- **Generation:** JHipster 8.11.0 (configured with `skipServer: true`). There is no `pom.xml`; the inherited `backend:*` / `java:*` scripts and the `mvnw` wrapper have been removed, since they could never run here.
 - **UI & Styling:**
   - **Bootstrap 5 & ng-bootstrap:** Primary UI framework.
   - **Tailwind CSS:** Integrated for utility-first styling (configured in `tailwind.config.js`).
