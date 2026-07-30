@@ -30,7 +30,7 @@ export class SystemCatalogService {
   protected readonly http = inject(HttpClient);
   protected readonly applicationConfigService = inject(ApplicationConfigService);
 
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/system-catalogs', 'hc-admin-ms');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/system-catalogs', 'hcadminservice');
 
   create(systemCatalog: NewSystemCatalog): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(systemCatalog);

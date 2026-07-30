@@ -30,7 +30,7 @@ export class AddressService {
   protected readonly http = inject(HttpClient);
   protected readonly applicationConfigService = inject(ApplicationConfigService);
 
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/addresses', 'hc-admin-ms');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/addresses', 'hcadminservice');
 
   create(address: NewAddress): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(address);

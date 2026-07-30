@@ -46,7 +46,7 @@
 
 - Local API traffic is proxied by `webpack/proxy.conf.js` to `http://localhost:5504` (the `hc-admin-gateway` dev port); verify backend targets before debugging API issues.
 - `npm run mock:api` starts json-server on port 5508, which does **not** match the proxy target — repoint `proxy.conf.js` to 5508 to use the mock.
-- Known issue: entity services call `/services/hc-admin-ms/...`, but the microservice registers in Consul as `hcadminservice` and the gateway's static dev route is `/services/admin-service/**`. Entity endpoints 404 through the real gateway until these are reconciled.
+- Known issue: entity services call `/services/hcadminservice/...`, but the microservice registers in Consul as `hcadminservice` and the gateway's static dev route is `/services/admin-service/**`. Entity endpoints 404 through the real gateway until these are reconciled.
 
 ## Key References
 

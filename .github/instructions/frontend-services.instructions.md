@@ -15,7 +15,7 @@ protected resourceSearchUrl = this.applicationConfigService.getEndpointFor('api/
 
 Never hardcode service paths. The second argument is the microservice name the gateway routes on.
 
-**Caveat:** entity services in this repo currently pass `'hc-admin-ms'`, which nothing serves. The gateway's discovery locator publishes `/services/{consul-service-name-lowercased}/**`, and `hc-admin-service` registers as `hcadminservice` — so `'hcadminservice'` is the value that actually resolves, and it is what `hc-admin-gateway`'s own data blueprint documents. Do not copy `'hc-admin-ms'` into new services; see the "Known issue" section in `../../README.md`.
+**Caveat:** entity services in this repo currently pass `'hcadminservice'`, which nothing serves. The gateway's discovery locator publishes `/services/{consul-service-name-lowercased}/**`, and `hc-admin-service` registers as `hcadminservice` — so `'hcadminservice'` is the value that actually resolves, and it is what `hc-admin-gateway`'s own data blueprint documents. Do not copy `'hcadminservice'` into new services; see the "Known issue" section in `../../README.md`.
 
 ## Response Type Aliases
 

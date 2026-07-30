@@ -177,7 +177,7 @@ The umbrella brief: a web interface for administrators to manage duty rosters, s
 
 Two corrections to that brief:
 
-- API calls must use **`hcadminservice`**, not `hc-admin-ms` — see the "Known issue" in [`README.md`](README.md).
+- API calls must use **`hcadminservice`**, not `hcadminservice` — see the "Known issue" in [`README.md`](README.md).
 - Authentication is `jwt` in `.yo-rc.json`, issued by `hc-admin-gateway`, not a full OAuth2/SSO provider flow.
 
 ### Widget plan — iterations 1–10, completed

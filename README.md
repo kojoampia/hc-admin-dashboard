@@ -175,14 +175,14 @@ npm run webapp:dev-verbose
 - If a real backend is needed locally, run `hc-admin-gateway` and `hc-admin-service`, or point `webpack/proxy.conf.js` at whatever host you are using.
 - Build API URLs through `ApplicationConfigService.getEndpointFor(api, microservice?)` rather than hardcoding paths.
 
-### Known issue: microservice path mismatch
+### Service naming
 
-Entity services call `getEndpointFor('api/...', 'hc-admin-ms')`, producing `/services/hc-admin-ms/api/...`. Nothing serves that path today:
+Entity services resolve to `/services/hcadminservice/api/...` — the Consul registration of
+`hc-admin-service`, and therefore the path the gateway's discovery locator publishes. This was
+previously `'hc-admin-ms'`, which nothing served: every entity screen 404ed through the gateway
+while the login page still worked.
 
-- `hc-admin-service` registers in Consul as `hcadminservice`, so the gateway's discovery locator publishes `/services/hcadminservice/**`
-- the gateway's static dev route matches `/services/admin-service/**`
-
-The path that actually resolves is `/services/hcadminservice/...`, which is also what the gateway's own data blueprint documents as the intended contract — so this frontend is the outlier. Fixing it means changing the `'hc-admin-ms'` microservice argument in the `getEndpointFor(...)` calls under `app/entities/`. Until then, expect 404s on entity endpoints through the real gateway.
+Pass `'hcadminservice'` as the second argument to `getEndpointFor` in any new service.
 
 ## Troubleshooting
 

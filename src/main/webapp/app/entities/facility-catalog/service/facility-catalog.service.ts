@@ -17,7 +17,7 @@ export class FacilityCatalogService {
   protected readonly http = inject(HttpClient);
   protected readonly applicationConfigService = inject(ApplicationConfigService);
 
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/facility-catalogs', 'hc-admin-ms');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/facility-catalogs', 'hcadminservice');
 
   create(facilityCatalog: NewFacilityCatalog): Observable<EntityResponseType> {
     return this.http.post<IFacilityCatalog>(this.resourceUrl, facilityCatalog, { observe: 'response' });

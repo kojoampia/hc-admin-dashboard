@@ -30,7 +30,7 @@ export class PhotoService {
   protected readonly http = inject(HttpClient);
   protected readonly applicationConfigService = inject(ApplicationConfigService);
 
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/photos', 'hc-admin-ms');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/photos', 'hcadminservice');
 
   create(photo: NewPhoto): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(photo);

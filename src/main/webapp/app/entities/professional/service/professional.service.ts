@@ -31,7 +31,7 @@ export class ProfessionalService {
   protected readonly http = inject(HttpClient);
   protected readonly applicationConfigService = inject(ApplicationConfigService);
 
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/professionals', 'hc-admin-ms');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/professionals', 'hcadminservice');
 
   create(professional: NewProfessional): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(professional);

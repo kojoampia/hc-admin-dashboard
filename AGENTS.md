@@ -61,11 +61,15 @@ The following domain entities are scaffolded and routed under `/entities`:
 
 `Professional` and `Photo` exist only on the frontend — `hc-admin-service`'s `.yo-rc.json` does not list them. The other 18 are shared with the microservice.
 
-### Known issue: microservice path mismatch
+### Service naming
 
-Entity services resolve to `/services/hc-admin-ms/api/...`, but `hc-admin-service` registers in Consul as `hcadminservice` (so the gateway's discovery locator publishes `/services/hcadminservice/**`) and the gateway's static dev route matches `/services/admin-service/**`. None of the three agree, so entity calls 404 through the real gateway. Check this before debugging the interceptor or CORS.
+Entity services resolve to `/services/hcadminservice/api/...`, which matches the Consul
+registration of `hc-admin-service` and therefore the route the gateway's discovery locator
+publishes. This was previously `'hc-admin-ms'`, which nothing served — every entity screen 404ed
+through the gateway while login still worked, because that goes straight to the gateway.
 
-The path that actually resolves is `/services/hcadminservice/...`, and the gateway's own blueprint (`hc-admin-gateway/admin-gateway.md`) documents that as the intended contract — so **this frontend is the outlier**. Correcting it means changing the `'hc-admin-ms'` argument in the 19 `getEndpointFor(...)` calls under `app/entities/`, which is a code change, not a doc change; it has not been done.
+When adding a service, pass `'hcadminservice'` as the second argument to `getEndpointFor`. The
+generated Cypress specs under `src/test/javascript/cypress/` already assume that path.
 
 ## Security Considerations
 
