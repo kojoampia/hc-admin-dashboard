@@ -102,7 +102,7 @@ export class FilterOptions implements IFilterOptions {
       .forEach(matchingParam => {
         const matches = filterRegex.exec(matchingParam);
         if (matches && matches.length > 1) {
-          this.getFilterOptionByName(matches[1], true).addValue(...params.getAll(matchingParam));
+          this.getFilterOptionByName(matches[1]!, true).addValue(...params.getAll(matchingParam));
         }
       });
 

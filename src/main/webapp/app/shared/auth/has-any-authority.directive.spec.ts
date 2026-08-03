@@ -104,7 +104,7 @@ describe('HasAnyAuthorityDirective tests', () => {
       // GIVEN
       mockAccountService.hasAnyAuthority = jest.fn(() => true);
       const fixture = TestBed.createComponent(TestHasAnyAuthorityDirectiveComponent);
-      const div = fixture.debugElement.queryAllNodes(By.directive(HasAnyAuthorityDirective))[0];
+      const div = fixture.debugElement.queryAllNodes(By.directive(HasAnyAuthorityDirective))[0]!;
       const hasAnyAuthorityDirective = div.injector.get(HasAnyAuthorityDirective);
 
       // WHEN

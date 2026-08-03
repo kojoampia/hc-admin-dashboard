@@ -89,14 +89,14 @@ export enum HttpMethod {
 }
 
 export interface ProcessMetrics {
-  'system.cpu.usage': number;
+  'system.cpu.usage'?: number;
   'system.cpu.count': number;
   'system.load.average.1m'?: number;
-  'process.cpu.usage': number;
+  'process.cpu.usage'?: number;
   'process.files.max'?: number;
   'process.files.open'?: number;
   'process.start.time': number;
-  'process.uptime': number;
+  'process.uptime'?: number;
 }
 
 export interface ThreadDump {

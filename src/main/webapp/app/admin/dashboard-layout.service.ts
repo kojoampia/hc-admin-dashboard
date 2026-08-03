@@ -129,11 +129,11 @@ const PRESET_STATES: Record<Exclude<DashboardLayoutPreset, 'custom'>, Omit<Store
 
 @Injectable({ providedIn: 'root' })
 export class DashboardLayoutService {
-  private readonly layoutState: WritableSignal<StoredDashboardLayout>;
-
   readonly activePreset: Signal<DashboardLayoutPreset>;
   readonly widgets: Signal<DashboardWidgetLayout[]>;
   readonly visibleWidgetIds: Signal<DashboardWidgetId[]>;
+
+  private readonly layoutState: WritableSignal<StoredDashboardLayout>;
 
   constructor(private localStorageService: LocalStorageService) {
     this.layoutState = signal<StoredDashboardLayout>(this.loadState());
@@ -191,7 +191,8 @@ export class DashboardLayoutService {
       return;
     }
 
-    [order[index], order[targetIndex]] = [order[targetIndex], order[index]];
+    // Both indices are in range: `index` was found in `order`, `targetIndex` is bounds-checked above.
+    [order[index], order[targetIndex]] = [order[targetIndex]!, order[index]!];
     this.persist({
       ...state,
       preset: 'custom',

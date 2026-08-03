@@ -54,7 +54,9 @@ export default class PasswordStrengthBarComponent {
         idx = 4;
       }
     }
-    return { idx: idx + 1, color: this.colors[idx] };
+    // idx is clamped to 0..4 above and `colors` has exactly five entries, so this cannot be
+    // undefined — asserted rather than guarded so a real out-of-range idx would surface, not hide.
+    return { idx: idx + 1, color: this.colors[idx]! };
   }
 
   @Input()

@@ -312,8 +312,10 @@ export class TeamComponent {
   }
 
   logEvent(type: 'CREATE' | 'UPDATE' | 'DELETE', message: string): void {
-    const iconMap: Record<string, string> = { CREATE: 'post_add', UPDATE: 'edit_document', DELETE: 'delete' };
-    const colorMap: Record<string, string> = {
+    // Keyed by the union rather than `string`, so every key is present by construction and the
+    // lookups below are definite instead of `string | undefined`.
+    const iconMap: Record<AuditEvent['type'], string> = { CREATE: 'post_add', UPDATE: 'edit_document', DELETE: 'delete' };
+    const colorMap: Record<AuditEvent['type'], string> = {
       CREATE: 'bg-emerald-100 text-emerald-600',
       UPDATE: 'bg-amber-100 text-amber-600',
       DELETE: 'bg-rose-100 text-rose-600',
@@ -330,10 +332,12 @@ export class TeamComponent {
   }
 
   openAddModal(): void {
-    if (!this.state.canAccess('TEAMS', 'CREATE')) return;
+    if (!this.state.canAccess('TEAMS', 'CREATE')) {
+      return;
+    }
 
     const dialogRef = this.dialog.open(TeamDialogComponent, { width: '560px', data: null });
-    dialogRef.afterClosed().subscribe((result: TeamDialogData) => {
+    dialogRef.afterClosed().subscribe((result: TeamDialogData | undefined) => {
       if (result) {
         const newTeam: Team = {
           id: Date.now().toString(),
@@ -349,13 +353,15 @@ export class TeamComponent {
   }
 
   openEditModal(team: Team): void {
-    if (!this.state.canAccess('TEAMS', 'UPDATE')) return;
+    if (!this.state.canAccess('TEAMS', 'UPDATE')) {
+      return;
+    }
 
     const dialogRef = this.dialog.open(TeamDialogComponent, {
       width: '560px',
       data: { name: team.name, description: team.description } satisfies TeamDialogData,
     });
-    dialogRef.afterClosed().subscribe((result: TeamDialogData) => {
+    dialogRef.afterClosed().subscribe((result: TeamDialogData | undefined) => {
       if (result) {
         this.teams.update(list =>
           list.map(t => (t.id === team.id ? { ...t, name: result.name, description: result.description, updatedAt: 'just now' } : t)),
@@ -366,8 +372,12 @@ export class TeamComponent {
   }
 
   deleteTeam(team: Team): void {
-    if (!this.state.canAccess('TEAMS', 'DELETE')) return;
-    if (!confirm(`Delete team "${team.name}"? This action cannot be undone.`)) return;
+    if (!this.state.canAccess('TEAMS', 'DELETE')) {
+      return;
+    }
+    if (!confirm(`Delete team "${team.name}"? This action cannot be undone.`)) {
+      return;
+    }
 
     this.teams.update(list => list.filter(t => t.id !== team.id));
     this.logEvent('DELETE', `Removed Team "${team.name}"`);

@@ -87,7 +87,6 @@ import { CatalogItem, CatalogType } from './system-catalog';
   `,
 })
 export class SystemCatalogDialogComponent {
-  private dialogRef = inject(MatDialogRef<SystemCatalogDialogComponent>);
   data: CatalogItem | null = inject(MAT_DIALOG_DATA, { optional: true });
 
   readonly catalogTypes: CatalogType[] = ['ABOUT', 'TERMS', 'PRIVACY', 'PRODUCTS', 'FAQ'];
@@ -99,6 +98,8 @@ export class SystemCatalogDialogComponent {
     content: this.data?.content ?? '',
     updatedAt: this.data?.updatedAt ?? new Date().toISOString(),
   });
+
+  private dialogRef = inject(MatDialogRef<SystemCatalogDialogComponent>);
 
   patch<K extends keyof CatalogItem>(key: K, value: CatalogItem[K]): void {
     this.form.update(f => ({ ...f, [key]: value }));

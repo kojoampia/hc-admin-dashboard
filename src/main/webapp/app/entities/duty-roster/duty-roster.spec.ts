@@ -31,7 +31,7 @@ describe('DutyRosterComponent', () => {
 
     it('defaults to the first patient (PAT-001 – Nana Kwa Otu)', () => {
       expect(comp.selectedPatientId()).toBe('PAT-001');
-      expect(comp.selectedPatient().name).toBe('Nana Kwa Otu');
+      expect(comp.selectedPatient()!.name).toBe('Nana Kwa Otu');
     });
 
     it('defaults selectedDate to today', () => {
@@ -85,7 +85,7 @@ describe('DutyRosterComponent', () => {
       comp.selectPatient('PAT-004');
       fixture.detectChanges();
 
-      expect(comp.selectedPatient().name).toBe('Ama Serwaa');
+      expect(comp.selectedPatient()!.name).toBe('Ama Serwaa');
       expect(comp.selectedPatientPlan().map(visit => visit.id)).toEqual(['VIS-008', 'VIS-009']);
     });
 
@@ -94,7 +94,7 @@ describe('DutyRosterComponent', () => {
       comp.selectPatient('PAT-001');
       fixture.detectChanges();
 
-      expect(comp.selectedPatient().id).toBe('PAT-001');
+      expect(comp.selectedPatient()!.id).toBe('PAT-001');
       expect(comp.selectedPatientPlan().length).toBe(4);
     });
 

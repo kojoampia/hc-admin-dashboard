@@ -55,9 +55,14 @@ export class ProfileComponent {
       return;
     }
     const dialogRef = this.dialog.open(ProfileDialogComponent, { width: '600px', data: null });
-    dialogRef.afterClosed().subscribe((result: ProfileData) => {
+    dialogRef.afterClosed().subscribe((result: ProfileData | undefined) => {
+      // Dismissing the dialog (ESC or backdrop) emits undefined — without this guard that was
+      // pushed into the list and then dereferenced.
+      if (!result) {
+        return;
+      }
       if (result.roles.length > 0) {
-        this.selectedType.set(result.roles[0]);
+        this.selectedType.set(result.roles[0]!);
       }
       this.profiles.update(list => [result, ...list]);
     });
@@ -68,10 +73,15 @@ export class ProfileComponent {
       return;
     }
     const dialogRef = this.dialog.open(ProfileDialogComponent, { width: '600px', data: profile });
-    dialogRef.afterClosed().subscribe((result: ProfileData) => {
+    dialogRef.afterClosed().subscribe((result: ProfileData | undefined) => {
+      // Dismissing the dialog emits undefined — without this guard the edited profile was
+      // replaced by it.
+      if (!result) {
+        return;
+      }
       this.profiles.update(list => list.map(p => (p === profile ? result : p)));
       if (result.roles.length > 0 && !result.roles.includes(this.selectedType())) {
-        this.selectedType.set(result.roles[0]);
+        this.selectedType.set(result.roles[0]!);
       }
     });
   }

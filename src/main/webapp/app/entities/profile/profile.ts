@@ -132,8 +132,6 @@ import { ProfileService } from 'app/entities/profile/service/profile.service';
 export class ProfileComponent {
   api = inject(ProfileService);
   state = inject(DashboardStateService);
-  private readonly dialog = inject(MatDialog);
-
   displayedColumns = ['name', 'type', 'status', 'actions'];
   readonly profileTypes: UserRole[] = ['USER', 'ADMIN', 'PATIENT', 'PROFESSIONAL', 'VENDOR'];
   selectedType = signal<UserRole>('USER');
@@ -153,6 +151,8 @@ export class ProfileComponent {
     return this.profiles().filter(p => p.roles.includes(type));
   });
 
+  private readonly dialog = inject(MatDialog);
+
   constructor() {
     if (!this.state.canAccess('PROFILES', 'UPDATE')) {
       this.displayedColumns = ['name', 'type', 'status'];
@@ -164,13 +164,15 @@ export class ProfileComponent {
   }
 
   openAddModal(): void {
-    if (!this.state.canAccess('PROFILES', 'CREATE')) return;
+    if (!this.state.canAccess('PROFILES', 'CREATE')) {
+      return;
+    }
 
     const dialogRef = this.dialog.open(ProfileDialogComponent, { width: '600px', data: null });
-    dialogRef.afterClosed().subscribe((result: ProfileData) => {
+    dialogRef.afterClosed().subscribe((result: ProfileData | undefined) => {
       if (result) {
         if (result.roles.length > 0) {
-          this.selectedType.set(result.roles[0]);
+          this.selectedType.set(result.roles[0]!);
         }
         this.profiles.update(list => [result, ...list]);
       }
@@ -178,14 +180,16 @@ export class ProfileComponent {
   }
 
   openEditModal(profile: ProfileData): void {
-    if (!this.state.canAccess('PROFILES', 'UPDATE') || !this.canEditProfile(profile)) return;
+    if (!this.state.canAccess('PROFILES', 'UPDATE') || !this.canEditProfile(profile)) {
+      return;
+    }
 
     const dialogRef = this.dialog.open(ProfileDialogComponent, { width: '600px', data: profile });
-    dialogRef.afterClosed().subscribe((result: ProfileData) => {
+    dialogRef.afterClosed().subscribe((result: ProfileData | undefined) => {
       if (result) {
         this.profiles.update(list => list.map(p => (p === profile ? result : p)));
         if (result.roles.length > 0 && !result.roles.includes(this.selectedType())) {
-          this.selectedType.set(result.roles[0]);
+          this.selectedType.set(result.roles[0]!);
         }
       }
     });

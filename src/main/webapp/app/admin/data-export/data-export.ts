@@ -123,12 +123,12 @@ export default class DataExportComponent {
     const activeUsers = users.filter(user => user.activated).length;
     const adminUsers = users.filter(user => user.authorities?.includes('ROLE_ADMIN')).length;
     const recentUsers = users.filter(user => this.isRecentlyCreated(user.createdDate)).length;
-    const degradedComponents = Object.values(health.components ?? {}).filter(component => component?.status !== 'UP').length;
+    const degradedComponents = Object.values(health.components ?? {}).filter(component => component.status !== 'UP').length;
     const responseCodes = Object.entries(metrics['http.server.requests'].percode).sort((left, right) => right[1].count - left[1].count);
     const busiestService = Object.entries(metrics.services)
       .map(([name, serviceMetrics]) => ({
         name,
-        totalRequests: Object.values(serviceMetrics).reduce((sum, value) => sum + (value?.count ?? 0), 0),
+        totalRequests: Object.values(serviceMetrics).reduce((sum, value) => sum + value.count, 0),
       }))
       .sort((left, right) => right.totalRequests - left.totalRequests)[0];
 
@@ -144,7 +144,7 @@ export default class DataExportComponent {
       health: {
         status: health.status,
         degradedComponents,
-        openFiles: metrics.processMetrics['process.files.open'] ?? metrics.databases.connections.value ?? 0,
+        openFiles: metrics.processMetrics['process.files.open'] ?? metrics.databases.connections.value,
         systemCpuUsage: this.toPercentage(metrics.processMetrics['system.cpu.usage']),
         processCpuUsage: this.toPercentage(metrics.processMetrics['process.cpu.usage']),
         uptimeHours: Math.round(((metrics.processMetrics['process.uptime'] ?? 0) / 3600) * 10) / 10,

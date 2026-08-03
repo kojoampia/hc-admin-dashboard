@@ -158,12 +158,12 @@ export default class UsageStatisticsComponent implements OnInit {
         series: Object.entries(serviceMetrics)
           .map(([method, details]) => ({
             name: method,
-            value: details?.count ?? 0,
+            value: details.count,
           }))
           .sort((left, right) => this.httpMethodRank(left.name) - this.httpMethodRank(right.name))
           .filter(entry => entry.value > 0),
         methods: Object.entries(serviceMetrics)
-          .filter(([, details]) => (details?.count ?? 0) > 0)
+          .filter(([, details]) => details.count > 0)
           .map(([method]) => method),
       }))
       .filter(service => service.totalRequests > 0)
@@ -172,7 +172,7 @@ export default class UsageStatisticsComponent implements OnInit {
   }
 
   private sumServiceRequests(serviceMetrics: Partial<Record<HttpMethod, MaxMeanCount>>): number {
-    return Object.values(serviceMetrics).reduce((sum, metric) => sum + (metric?.count ?? 0), 0);
+    return Object.values(serviceMetrics).reduce((sum, metric) => sum + metric.count, 0);
   }
 
   private httpMethodRank(method: string): number {

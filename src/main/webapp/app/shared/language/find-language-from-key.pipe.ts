@@ -13,6 +13,8 @@ export default class FindLanguageFromKeyPipe implements PipeTransform {
   };
 
   transform(lang: string): string {
-    return this.languages[lang].name;
+    // An unknown key is possible — the needle above is edited by the generator, and callers pass
+    // whatever is in the account. Fall back to the key rather than throwing on `.name` of undefined.
+    return this.languages[lang]?.name ?? lang;
   }
 }

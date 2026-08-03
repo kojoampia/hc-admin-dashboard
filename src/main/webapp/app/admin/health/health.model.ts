@@ -15,7 +15,7 @@ export type HealthKey =
 
 export interface Health {
   status: HealthStatus;
-  components: {
+  components?: {
     [key in HealthKey]?: HealthDetails;
   };
 }

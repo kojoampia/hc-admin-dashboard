@@ -225,12 +225,17 @@ export default class DashboardComponent implements OnInit {
   currentUserName(): string {
     const account = this.account();
     const fullName = [account?.firstName, account?.lastName].filter(Boolean).join(' ').trim();
+    // `||` is deliberate, not a missed `??`: an account with no names joins to the empty string,
+    // and an empty login should fall through too. `??` would return '' for both.
+    // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
     return fullName || account?.login || 'Administrator';
   }
 
   currentUserRole(): string {
     const authorities = this.account()?.authorities ?? [];
-    return authorities.includes({name: 'ROLE_ADMIN'}) ? 'Administrator' : 'Operator';
+    // `.some` on the name, not `.includes` of a literal: authorities are IAuthority objects, and
+    // includes() compares by reference, so a fresh literal never matches.
+    return authorities.some(authority => authority.name === 'ROLE_ADMIN') ? 'Administrator' : 'Operator';
   }
 
   currentUserInitials(): string {

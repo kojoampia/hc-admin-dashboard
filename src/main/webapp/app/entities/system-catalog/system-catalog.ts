@@ -124,7 +124,9 @@ export class SystemCatalogComponent {
   }
 
   openAddModal(): void {
-    if (!this.state.canAccess('CATALOG', 'CREATE')) return;
+    if (!this.state.canAccess('CATALOG', 'CREATE')) {
+      return;
+    }
 
     const dialogRef = this.dialog.open(SystemCatalogDialogComponent, {
       width: '600px',
@@ -142,7 +144,9 @@ export class SystemCatalogComponent {
   }
 
   openEditModal(item: CatalogItem): void {
-    if (!this.state.canAccess('CATALOG', 'UPDATE')) return;
+    if (!this.state.canAccess('CATALOG', 'UPDATE')) {
+      return;
+    }
 
     const dialogRef = this.dialog.open(SystemCatalogDialogComponent, {
       width: '600px',
@@ -160,8 +164,12 @@ export class SystemCatalogComponent {
   }
 
   deleteItem(item: CatalogItem): void {
-    if (!this.state.canAccess('CATALOG', 'DELETE')) return;
-    if (!confirm('Are you sure you want to delete this content?')) return;
+    if (!this.state.canAccess('CATALOG', 'DELETE')) {
+      return;
+    }
+    if (!confirm('Are you sure you want to delete this content?')) {
+      return;
+    }
 
     this.api.delete(item.id).subscribe(() => {
       this.loadData();

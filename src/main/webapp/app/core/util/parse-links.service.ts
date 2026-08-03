@@ -51,7 +51,8 @@ export class ParseLinks {
         throw new Error('section could not be split on ";"');
       }
 
-      const url: string = section[0].replace(/<(.*)>/, '$1').trim(); // NOSONAR
+      // Both indices exist: the length check above throws otherwise.
+      const url: string = section[0]!.replace(/<(.*)>/, '$1').trim(); // NOSONAR
       const queryString: Record<string, string | undefined> = {};
 
       url.replace(/([^?=&]+)(=([^&]*))?/g, (_$0: string, $1: string | undefined, _$2: string | undefined, $3: string | undefined) => {
@@ -61,7 +62,7 @@ export class ParseLinks {
         return $3 ?? '';
       });
 
-      const name: string = section[1].replace(/rel="(.*)"/, '$1').trim();
+      const name: string = section[1]!.replace(/rel="(.*)"/, '$1').trim();
       sections.push({ name, queryString });
     });
 

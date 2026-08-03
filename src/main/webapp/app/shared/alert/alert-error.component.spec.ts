@@ -41,7 +41,7 @@ describe('Alert Error Component', () => {
       eventManager.broadcast({ name: 'adminGatewayApp.httpError', content: { status: 0 } });
       // THEN
       expect(comp.alerts.length).toBe(1);
-      expect(comp.alerts[0].translationKey).toBe('error.server.not.reachable');
+      expect(comp.alerts[0]!.translationKey).toBe('error.server.not.reachable');
     });
 
     it('Should display an alert on status 404', () => {
@@ -49,7 +49,7 @@ describe('Alert Error Component', () => {
       eventManager.broadcast({ name: 'adminGatewayApp.httpError', content: { status: 404 } });
       // THEN
       expect(comp.alerts.length).toBe(1);
-      expect(comp.alerts[0].translationKey).toBe('error.url.not.found');
+      expect(comp.alerts[0]!.translationKey).toBe('error.url.not.found');
     });
 
     it('Should display an alert on generic error', () => {
@@ -58,8 +58,8 @@ describe('Alert Error Component', () => {
       eventManager.broadcast({ name: 'adminGatewayApp.httpError', content: { error: 'Second Error Message' } });
       // THEN
       expect(comp.alerts.length).toBe(2);
-      expect(comp.alerts[0].translationKey).toBe('Error Message');
-      expect(comp.alerts[1].translationKey).toBe('Second Error Message');
+      expect(comp.alerts[0]!.translationKey).toBe('Error Message');
+      expect(comp.alerts[1]!.translationKey).toBe('Second Error Message');
     });
 
     it('Should display an alert on status 400 for generic error', () => {
@@ -80,7 +80,7 @@ describe('Alert Error Component', () => {
       eventManager.broadcast({ name: 'adminGatewayApp.httpError', content: response });
       // THEN
       expect(comp.alerts.length).toBe(1);
-      expect(comp.alerts[0].translationKey).toBe('error.validation');
+      expect(comp.alerts[0]!.translationKey).toBe('error.validation');
     });
 
     it('Should display an alert on status 400 for generic error without message', () => {
@@ -94,7 +94,7 @@ describe('Alert Error Component', () => {
       eventManager.broadcast({ name: 'adminGatewayApp.httpError', content: response });
       // THEN
       expect(comp.alerts.length).toBe(1);
-      expect(comp.alerts[0].translationKey).toBe('Bad Request');
+      expect(comp.alerts[0]!.translationKey).toBe('Bad Request');
     });
 
     it('Should display an alert on status 400 for invalid parameters', () => {
@@ -116,7 +116,7 @@ describe('Alert Error Component', () => {
       eventManager.broadcast({ name: 'adminGatewayApp.httpError', content: response });
       // THEN
       expect(comp.alerts.length).toBe(1);
-      expect(comp.alerts[0].translationKey).toBe('error.Size');
+      expect(comp.alerts[0]!.translationKey).toBe('error.Size');
     });
 
     it('Should display an alert on status 400 for error headers', () => {
@@ -134,7 +134,7 @@ describe('Alert Error Component', () => {
       eventManager.broadcast({ name: 'adminGatewayApp.httpError', content: response });
       // THEN
       expect(comp.alerts.length).toBe(1);
-      expect(comp.alerts[0].translationKey).toBe('Error Message');
+      expect(comp.alerts[0]!.translationKey).toBe('Error Message');
     });
 
     it('Should display an alert on status 500 with detail', () => {
@@ -153,7 +153,7 @@ describe('Alert Error Component', () => {
       eventManager.broadcast({ name: 'adminGatewayApp.httpError', content: response });
       // THEN
       expect(comp.alerts.length).toBe(1);
-      expect(comp.alerts[0].translationKey).toBe('error.http.500');
+      expect(comp.alerts[0]!.translationKey).toBe('error.http.500');
     });
   });
 });

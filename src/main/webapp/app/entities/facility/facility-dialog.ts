@@ -114,7 +114,6 @@ import { FacilityType } from 'app/entities/enumerations/facility-type.model';
   `,
 })
 export class FacilityDialogComponent {
-  private dialogRef = inject(MatDialogRef<FacilityDialogComponent>);
   data: IFacility | null = inject(MAT_DIALOG_DATA, { optional: true });
 
   readonly facilityTypes = Object.values(FacilityType);
@@ -127,6 +126,8 @@ export class FacilityDialogComponent {
     addressId: this.data?.addressId ?? '',
     contactId: this.data?.contactId ?? '',
   });
+
+  private dialogRef = inject(MatDialogRef<FacilityDialogComponent>);
 
   patch<K extends keyof IFacility>(key: K, value: IFacility[K]): void {
     this.form.update(f => ({ ...f, [key]: value }));

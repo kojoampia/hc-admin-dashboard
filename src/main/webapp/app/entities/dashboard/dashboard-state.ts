@@ -76,28 +76,6 @@ export class DashboardStateService {
     this.init();
   }
 
-  private init(): void {
-    this.accountService
-      .identity()
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(account => {
-        if (account) {
-          const name = [account.firstName, account.lastName].filter(Boolean).join(' ') || account.login;
-          const role = account.authorities.includes({name: 'ROLE_ADMIN'}) ? 'ADMIN' : 'USER';
-          this.currentUser.set({ name, role });
-        }
-      });
-
-    this.auditLogService
-      .query({ sort: ['createdDate,desc'], size: 50 })
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(res => {
-        if (res.body) {
-          this.operationLogs.set(res.body.map(log => this.mapAuditLogToActivityEvent(log)));
-        }
-      });
-  }
-
   setMenu(label: string): void {
     this.activeMenu.set(label);
   }
@@ -150,6 +128,30 @@ export class DashboardStateService {
     }
   }
 
+  private init(): void {
+    this.accountService
+      .identity()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(account => {
+        if (account) {
+          const name = [account.firstName, account.lastName].filter(Boolean).join(' ') || account.login;
+          // `.some` on the name, not `.includes` of a literal: authorities are IAuthority objects,
+          // and includes() compares by reference, so a fresh literal never matches.
+          const role = account.authorities.some(authority => authority.name === 'ROLE_ADMIN') ? 'ADMIN' : 'USER';
+          this.currentUser.set({ name, role });
+        }
+      });
+
+    this.auditLogService
+      .query({ sort: ['createdDate,desc'], size: 50 })
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(res => {
+        if (res.body) {
+          this.operationLogs.set(res.body.map(log => this.mapAuditLogToActivityEvent(log)));
+        }
+      });
+  }
+
   private mapAuditLogToActivityEvent(log: IAuditLog): ActivityEvent {
     const type = log.actionType ?? 'Audit Log';
     return {
@@ -175,4 +177,3 @@ export class DashboardStateService {
     };
   }
 }
-

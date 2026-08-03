@@ -113,7 +113,10 @@ export default class AccessControlComponent implements OnInit {
     this.currentLogin = account?.login ?? account?.email ?? 'Unknown';
     this.currentStatus = account?.activated ? 'Active' : 'Inactive';
     this.currentAuthorities = account?.authorities ?? [];
-    this.currentHasAdminAccess = this.currentAuthorities.includes({name: Authority.ADMIN});
+    // `.some` on the name, not `.includes` of a literal: authorities are IAuthority objects, and
+    // includes() compares by reference, so a fresh literal never matches.
+    // The cast is needed because IAuthority.name is a plain string, not the Authority enum.
+    this.currentHasAdminAccess = this.currentAuthorities.some(authority => authority.name === (Authority.ADMIN as string));
   }
 
   private updateUserCoverage(response: HttpResponse<IUser[]>): void {

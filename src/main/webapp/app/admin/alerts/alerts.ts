@@ -206,7 +206,7 @@ export default class AlertsComponent implements OnInit, OnDestroy {
   private upsertThresholdAlerts(health: Health, metrics: Metrics): void {
     const thresholdAlerts: DashboardAlert[] = [];
     const systemCpuUsage = Math.round((metrics.processMetrics['system.cpu.usage'] ?? 0) * 1000) / 10;
-    const unhealthyComponents = Object.values(health.components ?? {}).filter(component => component?.status !== 'UP').length;
+    const unhealthyComponents = Object.values(health.components ?? {}).filter(component => component.status !== 'UP').length;
     const errorResponses = Object.entries(metrics['http.server.requests'].percode)
       .filter(([code]) => code.startsWith('5'))
       .reduce((sum, [, details]) => sum + details.count, 0);

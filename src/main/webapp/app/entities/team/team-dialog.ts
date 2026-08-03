@@ -76,13 +76,14 @@ export interface TeamDialogData {
   `,
 })
 export class TeamDialogComponent {
-  private readonly dialogRef = inject(MatDialogRef<TeamDialogComponent>);
   data: TeamDialogData | null = inject(MAT_DIALOG_DATA, { optional: true });
 
   form = signal<TeamDialogData>({
     name: this.data?.name ?? '',
     description: this.data?.description ?? '',
   });
+
+  private readonly dialogRef = inject(MatDialogRef<TeamDialogComponent>);
 
   patch<K extends keyof TeamDialogData>(key: K, value: TeamDialogData[K]): void {
     this.form.update(f => ({ ...f, [key]: value }));

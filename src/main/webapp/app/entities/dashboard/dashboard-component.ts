@@ -63,8 +63,6 @@ type DashboardSectionView = DashboardSection & {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-  private readonly document = inject(DOCUMENT);
-
   readonly state = inject(DashboardStateService);
   readonly isLightMode = signal(false);
   readonly maximizedWidgetId = signal<DashboardWidgetId | null>(null);
@@ -183,6 +181,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
       .filter(section => section.widgets.length > 0);
   });
 
+  private readonly document = inject(DOCUMENT);
+
   ngOnInit(): void {
     this.state.setMenu('OPERATIONS');
     this.state.connectAuditTrail();
@@ -298,7 +298,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   private scrollToElement(elementId: string): void {
     setTimeout(() => {
-      this.document.getElementById(elementId)?.scrollIntoView?.({ behavior: 'smooth', block: 'start' });
+      this.document.getElementById(elementId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   }
 }

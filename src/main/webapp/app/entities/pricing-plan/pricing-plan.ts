@@ -24,19 +24,24 @@ export interface PricePlan {
   templateUrl: './pricing-plan.html',
 })
 export class PricingPlanComponent implements OnInit {
-  private api = inject(PricingPlanService);
-  private dialog = inject(MatDialog);
   state = inject(DashboardStateService);
 
   plans = signal<IPricingPlan[]>([]);
+
+  private api = inject(PricingPlanService);
+  private dialog = inject(MatDialog);
 
   ngOnInit(): void {
     this.loadPlans();
   }
 
   openAddEditModal(plan?: IPricingPlan): void {
-    if (plan && !this.state.canAccess('PRICE_PLANS', 'UPDATE')) return;
-    if (!plan && !this.state.canAccess('PRICE_PLANS', 'CREATE')) return;
+    if (plan && !this.state.canAccess('PRICE_PLANS', 'UPDATE')) {
+      return;
+    }
+    if (!plan && !this.state.canAccess('PRICE_PLANS', 'CREATE')) {
+      return;
+    }
 
     const dialogRef = this.dialog.open(PricePlanDialogComponent, {
       width: '600px',
@@ -45,7 +50,7 @@ export class PricingPlanComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: IPricingPlan | undefined) => {
       if (result) {
-        if (plan && plan.id) {
+        if (plan?.id) {
           this.api.update(result).subscribe(() => this.loadPlans());
         } else {
           const newPlan = { ...result, id: null };

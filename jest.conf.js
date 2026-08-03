@@ -15,6 +15,10 @@ module.exports = {
   roots: ['<rootDir>', `<rootDir>/${baseUrl}`],
   modulePaths: [`<rootDir>/${baseUrl}`],
   setupFiles: ['jest-date-mock'],
+  // Initialises TestBed and pulls in @angular/compiler. Without it every spec that touches an
+  // Angular injectable dies with "needs to be compiled using the JIT compiler" — the app is
+  // zone-based (`polyfills: ["zone.js"]` in angular.json), hence the zone entrypoint.
+  setupFilesAfterEnv: ['jest-preset-angular/setup-env/zone'],
   cacheDirectory: '<rootDir>/target/jest-cache',
   coverageDirectory: '<rootDir>/target/test-results/',
   moduleNameMapper: pathsToModuleNameMapper(paths, { prefix: `<rootDir>/${baseUrl}/` }),

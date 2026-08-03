@@ -135,9 +135,10 @@ export class MessageComponent {
   // ── Template CRUD ──────────────────────────────────────────────────────────
 
   openTemplateManager(): void {
-    this.editingTemplate.set(this.templates()[0] ?? null);
-    if (this.templates()[0]) {
-      this.editorState = { name: this.templates()[0].name, content: this.templates()[0].content };
+    const first = this.templates()[0] ?? null;
+    this.editingTemplate.set(first);
+    if (first) {
+      this.editorState = { name: first.name, content: first.content };
     }
     this.showTemplateManager.set(true);
   }
@@ -170,7 +171,9 @@ export class MessageComponent {
 
   saveTemplate(): void {
     const tpl = this.editingTemplate();
-    if (!tpl || !this.editorState.name.trim()) return;
+    if (!tpl || !this.editorState.name.trim()) {
+      return;
+    }
     this.templates.update(list =>
       list.map(t => (t.id === tpl.id ? { ...t, name: this.editorState.name, content: this.editorState.content } : t)),
     );
@@ -216,14 +219,18 @@ export class MessageComponent {
 
   markAsUnread(): void {
     const msg = this.selectedMessage();
-    if (!msg) return;
+    if (!msg) {
+      return;
+    }
     this.messages.update(list => list.map(m => (m.id === msg.id ? { ...m, isRead: false } : m)));
     this.selectedMessage.update(current => (current ? { ...current, isRead: false } : null));
   }
 
   deleteMessage(): void {
     const msg = this.selectedMessage();
-    if (!msg) return;
+    if (!msg) {
+      return;
+    }
     this.messages.update(list => list.filter(m => m.id !== msg.id));
     this.selectedMessage.set(null);
   }

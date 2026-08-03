@@ -92,7 +92,9 @@ export class FacilityComponent implements OnInit {
   }
 
   openAddModal(): void {
-    if (!this.state.canAccess('FACILITIES', 'CREATE')) return;
+    if (!this.state.canAccess('FACILITIES', 'CREATE')) {
+      return;
+    }
 
     const dialogRef = this.dialog.open(FacilityDialogComponent, {
       width: '600px',
@@ -111,7 +113,9 @@ export class FacilityComponent implements OnInit {
   }
 
   openEditModal(facility: IFacility): void {
-    if (!this.state.canAccess('FACILITIES', 'UPDATE')) return;
+    if (!this.state.canAccess('FACILITIES', 'UPDATE')) {
+      return;
+    }
 
     const dialogRef = this.dialog.open(FacilityDialogComponent, {
       width: '600px',
@@ -129,9 +133,15 @@ export class FacilityComponent implements OnInit {
   }
 
   deleteFacility(facility: IFacility): void {
-    if (!this.state.canAccess('FACILITIES', 'DELETE')) return;
-    if (!facility.id) return;
-    if (!confirm('Are you sure you want to delete this facility?')) return;
+    if (!this.state.canAccess('FACILITIES', 'DELETE')) {
+      return;
+    }
+    if (!facility.id) {
+      return;
+    }
+    if (!confirm('Are you sure you want to delete this facility?')) {
+      return;
+    }
 
     this.api.delete(facility.id).subscribe(() => {
       this.loadFacilities();
@@ -142,17 +152,29 @@ export class FacilityComponent implements OnInit {
   // Map IAuditLog properties for use in template
   getAuditIcon(log: IAuditLog): string {
     const type = log.actionType;
-    if (type === 'CREATE') return 'post_add';
-    if (type === 'UPDATE') return 'edit_document';
-    if (type === 'DELETE') return 'delete';
+    if (type === 'CREATE') {
+      return 'post_add';
+    }
+    if (type === 'UPDATE') {
+      return 'edit_document';
+    }
+    if (type === 'DELETE') {
+      return 'delete';
+    }
     return 'receipt_long';
   }
 
   getAuditColor(log: IAuditLog): string {
     const type = log.actionType;
-    if (type === 'CREATE') return 'bg-emerald-100 text-emerald-600';
-    if (type === 'UPDATE') return 'bg-amber-100 text-amber-600';
-    if (type === 'DELETE') return 'bg-rose-100 text-rose-600';
+    if (type === 'CREATE') {
+      return 'bg-emerald-100 text-emerald-600';
+    }
+    if (type === 'UPDATE') {
+      return 'bg-amber-100 text-amber-600';
+    }
+    if (type === 'DELETE') {
+      return 'bg-rose-100 text-rose-600';
+    }
     return 'bg-indigo-100 text-indigo-600';
   }
 }

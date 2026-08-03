@@ -36,7 +36,7 @@ describe('AuthInterceptor', () => {
     interceptor.intercept(new HttpRequest('GET', 'api/account'), next as HttpHandler).subscribe();
 
     expect(next.handle).toHaveBeenCalledTimes(1);
-    const forwardedRequest = next.handle.mock.calls[0][0];
+    const forwardedRequest = next.handle.mock.calls[0]![0];
     expect(forwardedRequest.headers.get('Authorization')).toBe('Bearer token-123');
   });
 
@@ -46,7 +46,7 @@ describe('AuthInterceptor', () => {
     interceptor.intercept(new HttpRequest('POST', 'api/authenticate', {}), next as HttpHandler).subscribe();
 
     expect(next.handle).toHaveBeenCalledTimes(1);
-    const forwardedRequest = next.handle.mock.calls[0][0];
+    const forwardedRequest = next.handle.mock.calls[0]![0];
     expect(forwardedRequest.headers.has('Authorization')).toBe(false);
   });
 });

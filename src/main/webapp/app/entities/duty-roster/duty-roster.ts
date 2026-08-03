@@ -105,7 +105,9 @@ const STATUS_STYLES: Record<AssignmentStatus, string> = {
   UNASSIGNED: 'bg-amber-50 text-amber-700 ring-1 ring-amber-200',
 };
 
-const availableDates = [0, 1, 2].map(offset => buildIsoDate(offset));
+// A tuple, not a mapped array: the fixed length is what makes `availableDates[0]` a definite string
+// for `selectedDate`'s initial value.
+const availableDates: [string, string, string] = [buildIsoDate(0), buildIsoDate(1), buildIsoDate(2)];
 
 const MOCK_PROFESSIONALS: ProfessionalProfile[] = [
   {
@@ -197,67 +199,148 @@ function buildMockVisits(): ServiceVisit[] {
   const today = buildIsoDate(0);
   return [
     {
-      id: 'VIS-001', patientId: 'PAT-001', date: today,
-      title: 'Morning medication round', start: '07:30', end: '08:15', durationMinutes: 45,
-      requiredRole: 'NURSE', zone: 'Accra Central', teamId: 'TEAM_BLUE', priority: 'CRITICAL',
+      id: 'VIS-001',
+      patientId: 'PAT-001',
+      date: today,
+      title: 'Morning medication round',
+      start: '07:30',
+      end: '08:15',
+      durationMinutes: 45,
+      requiredRole: 'NURSE',
+      zone: 'Accra Central',
+      teamId: 'TEAM_BLUE',
+      priority: 'CRITICAL',
       notes: 'Confirm anticoagulant dosage and hydration prompts.',
-      assignmentStatus: 'UNASSIGNED', assignmentReason: 'Awaiting auto-scheduling.',
+      assignmentStatus: 'UNASSIGNED',
+      assignmentReason: 'Awaiting auto-scheduling.',
     },
     {
-      id: 'VIS-002', patientId: 'PAT-001', date: today,
-      title: 'Consultant ward round', start: '09:00', end: '09:45', durationMinutes: 45,
-      requiredRole: 'DOCTOR', zone: 'Accra Central', teamId: 'TEAM_BLUE', priority: 'CRITICAL',
+      id: 'VIS-002',
+      patientId: 'PAT-001',
+      date: today,
+      title: 'Consultant ward round',
+      start: '09:00',
+      end: '09:45',
+      durationMinutes: 45,
+      requiredRole: 'DOCTOR',
+      zone: 'Accra Central',
+      teamId: 'TEAM_BLUE',
+      priority: 'CRITICAL',
       notes: 'Review overnight ECG and adjust medication plan.',
-      assignmentStatus: 'UNASSIGNED', assignmentReason: 'Awaiting auto-scheduling.',
+      assignmentStatus: 'UNASSIGNED',
+      assignmentReason: 'Awaiting auto-scheduling.',
     },
     {
-      id: 'VIS-003', patientId: 'PAT-001', date: today,
-      title: 'Physiotherapy session', start: '10:00', end: '10:30', durationMinutes: 30,
-      requiredRole: 'PHYSIOTHERAPIST', zone: 'Accra Central', teamId: 'TEAM_BLUE', priority: 'CRITICAL',
+      id: 'VIS-003',
+      patientId: 'PAT-001',
+      date: today,
+      title: 'Physiotherapy session',
+      start: '10:00',
+      end: '10:30',
+      durationMinutes: 30,
+      requiredRole: 'PHYSIOTHERAPIST',
+      zone: 'Accra Central',
+      teamId: 'TEAM_BLUE',
+      priority: 'CRITICAL',
       notes: 'Passive range of motion exercises.',
-      assignmentStatus: 'UNASSIGNED', assignmentReason: 'Awaiting auto-scheduling.',
+      assignmentStatus: 'UNASSIGNED',
+      assignmentReason: 'Awaiting auto-scheduling.',
     },
     {
-      id: 'VIS-004', patientId: 'PAT-001', date: today,
-      title: 'Afternoon nursing check', start: '14:00', end: '14:30', durationMinutes: 30,
-      requiredRole: 'NURSE', zone: 'Accra Central', teamId: 'TEAM_BLUE', priority: 'STANDARD',
+      id: 'VIS-004',
+      patientId: 'PAT-001',
+      date: today,
+      title: 'Afternoon nursing check',
+      start: '14:00',
+      end: '14:30',
+      durationMinutes: 30,
+      requiredRole: 'NURSE',
+      zone: 'Accra Central',
+      teamId: 'TEAM_BLUE',
+      priority: 'STANDARD',
       notes: 'Vital signs and wound dressing.',
-      assignmentStatus: 'UNASSIGNED', assignmentReason: 'Awaiting auto-scheduling.',
+      assignmentStatus: 'UNASSIGNED',
+      assignmentReason: 'Awaiting auto-scheduling.',
     },
     {
-      id: 'VIS-005', patientId: 'PAT-002', date: today,
-      title: 'Morning neuro assessment', start: '08:30', end: '09:15', durationMinutes: 45,
-      requiredRole: 'NURSE', zone: 'Accra Central', teamId: 'TEAM_BLUE', priority: 'STANDARD',
+      id: 'VIS-005',
+      patientId: 'PAT-002',
+      date: today,
+      title: 'Morning neuro assessment',
+      start: '08:30',
+      end: '09:15',
+      durationMinutes: 45,
+      requiredRole: 'NURSE',
+      zone: 'Accra Central',
+      teamId: 'TEAM_BLUE',
+      priority: 'STANDARD',
       notes: 'Pupil response and grip strength baseline.',
-      assignmentStatus: 'UNASSIGNED', assignmentReason: 'Awaiting auto-scheduling.',
+      assignmentStatus: 'UNASSIGNED',
+      assignmentReason: 'Awaiting auto-scheduling.',
     },
     {
-      id: 'VIS-006', patientId: 'PAT-002', date: today,
-      title: 'Doctor review', start: '11:00', end: '11:30', durationMinutes: 30,
-      requiredRole: 'DOCTOR', zone: 'Accra Central', teamId: 'TEAM_BLUE', priority: 'STANDARD',
+      id: 'VIS-006',
+      patientId: 'PAT-002',
+      date: today,
+      title: 'Doctor review',
+      start: '11:00',
+      end: '11:30',
+      durationMinutes: 30,
+      requiredRole: 'DOCTOR',
+      zone: 'Accra Central',
+      teamId: 'TEAM_BLUE',
+      priority: 'STANDARD',
       notes: 'Review MRI results.',
-      assignmentStatus: 'UNASSIGNED', assignmentReason: 'Awaiting auto-scheduling.',
+      assignmentStatus: 'UNASSIGNED',
+      assignmentReason: 'Awaiting auto-scheduling.',
     },
     {
-      id: 'VIS-007', patientId: 'PAT-003', date: today,
-      title: 'Physiotherapy rehabilitation', start: '14:30', end: '15:15', durationMinutes: 45,
-      requiredRole: 'PHYSIOTHERAPIST', zone: 'Accra Central', teamId: 'TEAM_BLUE', priority: 'ROUTINE',
+      id: 'VIS-007',
+      patientId: 'PAT-003',
+      date: today,
+      title: 'Physiotherapy rehabilitation',
+      start: '14:30',
+      end: '15:15',
+      durationMinutes: 45,
+      requiredRole: 'PHYSIOTHERAPIST',
+      zone: 'Accra Central',
+      teamId: 'TEAM_BLUE',
+      priority: 'ROUTINE',
       notes: 'Post-surgery gait training.',
-      assignmentStatus: 'UNASSIGNED', assignmentReason: 'Awaiting auto-scheduling.',
+      assignmentStatus: 'UNASSIGNED',
+      assignmentReason: 'Awaiting auto-scheduling.',
     },
     {
-      id: 'VIS-008', patientId: 'PAT-004', date: today,
-      title: 'Cardiac monitoring round', start: '10:45', end: '11:15', durationMinutes: 30,
-      requiredRole: 'NURSE', zone: 'Accra Central', teamId: 'TEAM_BLUE', priority: 'CRITICAL',
+      id: 'VIS-008',
+      patientId: 'PAT-004',
+      date: today,
+      title: 'Cardiac monitoring round',
+      start: '10:45',
+      end: '11:15',
+      durationMinutes: 30,
+      requiredRole: 'NURSE',
+      zone: 'Accra Central',
+      teamId: 'TEAM_BLUE',
+      priority: 'CRITICAL',
       notes: 'Record pacemaker readings and fluid intake.',
-      assignmentStatus: 'UNASSIGNED', assignmentReason: 'Awaiting auto-scheduling.',
+      assignmentStatus: 'UNASSIGNED',
+      assignmentReason: 'Awaiting auto-scheduling.',
     },
     {
-      id: 'VIS-009', patientId: 'PAT-004', date: today,
-      title: 'Social care assessment', start: '15:00', end: '15:30', durationMinutes: 30,
-      requiredRole: 'SOCIAL_WORKER', zone: 'Accra Central', teamId: 'TEAM_BLUE', priority: 'ROUTINE',
+      id: 'VIS-009',
+      patientId: 'PAT-004',
+      date: today,
+      title: 'Social care assessment',
+      start: '15:00',
+      end: '15:30',
+      durationMinutes: 30,
+      requiredRole: 'SOCIAL_WORKER',
+      zone: 'Accra Central',
+      teamId: 'TEAM_BLUE',
+      priority: 'ROUTINE',
       notes: 'Discharge planning and family support coordination.',
-      assignmentStatus: 'UNASSIGNED', assignmentReason: 'Awaiting auto-scheduling.',
+      assignmentStatus: 'UNASSIGNED',
+      assignmentReason: 'Awaiting auto-scheduling.',
     },
   ];
 }
@@ -270,7 +353,9 @@ function buildIsoDate(offsetDays: number): string {
 }
 
 function timeToMinutes(value: string): number {
-  const [hours, minutes] = value.split(':').map(Number);
+  // Defaults cover a malformed value: without them a missing part yields NaN, which then silently
+  // poisons every comparison that uses this.
+  const [hours = 0, minutes = 0] = value.split(':').map(Number);
   return hours * 60 + minutes;
 }
 
@@ -319,9 +404,7 @@ export class DutyRosterComponent implements OnInit {
   readonly visits = signal<ServiceVisit[]>([]);
   readonly lastRunSummary = signal<SchedulingRunSummary | null>(null);
 
-  readonly selectedPatient = computed(
-    () => this.patients().find(patient => patient.id === this.selectedPatientId()) ?? this.patients()[0],
-  );
+  readonly selectedPatient = computed(() => this.patients().find(patient => patient.id === this.selectedPatientId()) ?? this.patients()[0]);
   readonly selectedPatientPlan = computed(() =>
     this.visits()
       .filter(visit => visit.patientId === this.selectedPatientId() && visit.date === this.selectedDate())
@@ -365,7 +448,9 @@ export class DutyRosterComponent implements OnInit {
   });
   readonly teamWorkload = computed<ProfessionalWorkload[]>(() => {
     const patient = this.selectedPatient();
-    if (!patient) return [];
+    if (!patient) {
+      return [];
+    }
 
     const visitsForDate = this.visits().filter(visit => visit.date === this.selectedDate());
 
@@ -403,7 +488,7 @@ export class DutyRosterComponent implements OnInit {
     this.patients.set(MOCK_PATIENTS);
     this.professionals.set(MOCK_PROFESSIONALS);
     this.visits.set(buildMockVisits());
-    this.selectedPatientId.set(MOCK_PATIENTS[0].id);
+    this.selectedPatientId.set(MOCK_PATIENTS[0]!.id);
   }
 
   selectPatient(patientId: string): void {
@@ -442,9 +527,7 @@ export class DutyRosterComponent implements OnInit {
         .filter(professional => professional.teamId === visit.teamId)
         .filter(professional => professional.coverageZones.includes(visit.zone))
         .filter(professional =>
-          professional.availability.some(
-            slot => slot.date === visit.date && slot.start <= visit.start && slot.end >= visit.end,
-          ),
+          professional.availability.some(slot => slot.date === visit.date && slot.start <= visit.start && slot.end >= visit.end),
         )
         .filter(professional =>
           (scheduledByProfessional.get(professional.id) ?? []).every(existingVisit => !overlaps(existingVisit, visit)),
@@ -483,7 +566,8 @@ export class DutyRosterComponent implements OnInit {
         return pendingVisit;
       }
 
-      const selectedProfessional = eligibleProfessionals[0].professional;
+      // Non-empty: the length check above returns early.
+      const selectedProfessional = eligibleProfessionals[0]!.professional;
 
       const scheduledVisit: ServiceVisit = {
         ...visit,

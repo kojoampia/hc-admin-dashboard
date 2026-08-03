@@ -36,7 +36,7 @@ describe('DashboardComponent', () => {
     };
     destroyCallbacks = [];
     destroyRef = {
-      onDestroy: (callback: () => void) => {
+      onDestroy(callback: () => void) {
         destroyCallbacks.push(callback);
         return () => {
           destroyCallbacks = destroyCallbacks.filter(cb => cb !== callback);

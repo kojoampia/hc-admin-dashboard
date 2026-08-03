@@ -117,7 +117,6 @@ import { BillingType } from 'app/entities/enumerations/billing-type.model';
   `,
 })
 export class PricePlanDialogComponent {
-  private dialogRef = inject(MatDialogRef<PricePlanDialogComponent>);
   data: IPricingPlan | null = inject(MAT_DIALOG_DATA, { optional: true });
 
   features = signal<string[]>(this.data?.features ? this.data.features.split(',') : []);
@@ -129,6 +128,8 @@ export class PricePlanDialogComponent {
     billingCycle: this.data?.billingCycle ?? BillingType.MONTHLY,
     features: this.data?.features ?? '',
   });
+
+  private dialogRef = inject(MatDialogRef<PricePlanDialogComponent>);
 
   patch<K extends keyof IPricingPlan>(key: K, value: IPricingPlan[K]): void {
     this.form.update(f => ({ ...f, [key]: value }));

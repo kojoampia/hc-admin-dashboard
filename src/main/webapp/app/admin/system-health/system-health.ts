@@ -56,6 +56,10 @@ export default class SystemHealthComponent implements OnInit {
     this.loadHealthData();
   }
 
+  healthBadgeClasses(status: string): string {
+    return status === 'UP' ? 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200' : 'bg-rose-50 text-rose-700 ring-1 ring-rose-200';
+  }
+
   private loadHealthData(): void {
     this.isLoading = true;
     this.errorMessage = '';
@@ -89,10 +93,10 @@ export default class SystemHealthComponent implements OnInit {
           const downCount = components.length - upCount;
 
           this.overallStatus = health.status;
-          this.uptimeHours = Math.round((processMetrics['process.uptime'] / 3600) * 10) / 10;
+          this.uptimeHours = Math.round(((processMetrics['process.uptime'] ?? 0) / 3600) * 10) / 10;
           this.systemCpuUsage = this.toPercentage(processMetrics['system.cpu.usage']);
           this.processCpuUsage = this.toPercentage(processMetrics['process.cpu.usage']);
-          this.openFiles = processMetrics['process.files.open'] ?? databaseMetrics.connections.value ?? 0;
+          this.openFiles = processMetrics['process.files.open'] ?? databaseMetrics.connections.value;
           this.componentStatuses = components;
           this.healthDistribution = [
             { name: 'Healthy', value: upCount },
@@ -110,10 +114,6 @@ export default class SystemHealthComponent implements OnInit {
           this.changeDetectorRef.markForCheck();
         },
       });
-  }
-
-  healthBadgeClasses(status: string): string {
-    return status === 'UP' ? 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200' : 'bg-rose-50 text-rose-700 ring-1 ring-rose-200';
   }
 
   private getHealthStatus(details?: HealthDetails): string {
