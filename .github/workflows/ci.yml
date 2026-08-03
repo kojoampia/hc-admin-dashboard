@@ -49,8 +49,13 @@ jobs:
 
       # `ci`, not `install`: the lockfile is the input, and a gate that silently resolves different
       # versions than the release build is not a gate.
+      #
+      # --legacy-peer-deps for the same reason, and it is not optional: this tree pins jest 30 while
+      # @angular-devkit/build-angular 19 declares peerOptional jest ^29.5.0, which npm 7+ treats as
+      # fatal. deploy/docker/web.Dockerfile installs with the identical flag, so this gate and the
+      # image it gates resolve the same dependency graph. Drop it here and CI fails at install.
       - name: Install
-        run: npm ci
+        run: npm ci --legacy-peer-deps
 
       # Type-checks the specs and everything only they reach. Runs first: a compile error here shows
       # up in Jest as an opaque "Test suite failed to run", so surfacing it plainly is cheaper.
