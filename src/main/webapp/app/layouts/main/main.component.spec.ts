@@ -9,6 +9,9 @@ import { Component } from '@angular/core';
 import { of } from 'rxjs';
 import { TranslateModule, TranslateService, LangChangeEvent } from '@ngx-translate/core';
 
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+
 import { AccountService } from 'app/core/auth/account.service';
 
 import { AppPageTitleStrategy } from 'app/app-page-title-strategy';
@@ -27,20 +30,32 @@ describe('MainComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot(), RouterTestingModule, MainComponent],
-      providers: [Title, AccountService, { provide: TitleStrategy, useClass: AppPageTitleStrategy }],
+      providers: [
+        Title,
+        AccountService,
+        { provide: TitleStrategy, useClass: AppPageTitleStrategy },
+        // MainComponent -> DashboardStateService -> WebsocketAuthService -> AuthServerProvider
+        // all resolve for real here, and that chain bottoms out in HttpClient.
+        provideHttpClient(),
+        provideHttpClientTesting(),
+      ],
     })
       .overrideTemplate(MainComponent, '')
       .compileComponents();
   }));
 
   beforeEach(() => {
+    // Stubbed before createComponent, not after: DashboardStateService calls identity() from its
+    // own constructor, so a stub installed later arrives once the auto-mock has already returned
+    // undefined and init() has thrown on `.pipe`.
+    mockAccountService = TestBed.inject(AccountService);
+    mockAccountService.identity = jest.fn(() => of(null));
+    mockAccountService.getAuthenticationState = jest.fn(() => of(null));
+
     fixture = TestBed.createComponent(MainComponent);
     comp = fixture.componentInstance;
     titleService = TestBed.inject(Title);
     translateService = TestBed.inject(TranslateService);
-    mockAccountService = TestBed.inject(AccountService);
-    mockAccountService.identity = jest.fn(() => of(null));
-    mockAccountService.getAuthenticationState = jest.fn(() => of(null));
     router = TestBed.inject(Router);
     document = TestBed.inject(DOCUMENT);
   });

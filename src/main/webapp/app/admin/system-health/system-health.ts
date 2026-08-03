@@ -7,7 +7,7 @@ import { RouterModule } from '@angular/router';
 import { catchError, forkJoin, of, switchMap, throwError, timer } from 'rxjs';
 
 import SharedModule from 'app/shared/shared.module';
-import { PiechartComponent } from 'app/widgets/piechart/piechart.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { Health, HealthDetails } from '../health/health.model';
 import { HealthService } from '../health/health.service';
 import { MetricsService } from '../metrics/metrics.service';
@@ -29,7 +29,7 @@ export const SYSTEM_HEALTH_REFRESH_INTERVAL_MS = 30_000;
   templateUrl: './system-health.html',
   styleUrl: './system-health.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterModule, SharedModule, MatButtonModule, MatIconModule, PiechartComponent],
+  imports: [RouterModule, SharedModule, MatButtonModule, MatIconModule, NgxChartsModule],
 })
 export default class SystemHealthComponent implements OnInit {
   readonly refreshIntervalSeconds = SYSTEM_HEALTH_REFRESH_INTERVAL_MS / 1000;

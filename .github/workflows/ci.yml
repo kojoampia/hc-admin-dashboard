@@ -1,0 +1,75 @@
+# The quality gate. Lints, type-checks and runs the Jest suite, then proves the production bundle
+# still builds.
+#
+# --- Why this is not part of release.yml -----------------------------------------------------------
+#
+# release.yml builds the production image and pushes it to GHCR. Folding this job into it would mean
+# a failing test leaves the registry with no image for a commit that is already on main — the
+# deployment would silently be pinned to an older SHA with no way to deploy the current one. Keeping
+# them separate means a red gate is loud and the image still exists.
+#
+# --- What `npm test` covers, and what it does not --------------------------------------------------
+#
+# `pretest` runs eslint, so `npm test` is lint + Jest in one step. That is deliberate here: this
+# suite was red for a long time precisely because lint failed first and nobody saw that Jest had
+# therefore never run at all. If lint and tests are ever split, keep both blocking.
+#
+# `tsc -p tsconfig.spec.json` is NOT redundant with either. tsconfig.app.json only type-checks what
+# is reachable from main.ts, so files reached only from specs — and the specs themselves — went
+# unchecked for a long time and rotted. This is the step that catches that.
+#
+# There are no E2E tests: src/test/javascript/cypress/ exists but cypress is not a dependency and
+# there is no e2e script. Do not add a cypress job here expecting it to work.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  # Supersede an in-flight run for the same ref: only the newest commit's result is interesting.
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Lint, type-check and test
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # `ci`, not `install`: the lockfile is the input, and a gate that silently resolves different
+      # versions than the release build is not a gate.
+      - name: Install
+        run: npm ci
+
+      # Type-checks the specs and everything only they reach. Runs first: a compile error here shows
+      # up in Jest as an opaque "Test suite failed to run", so surfacing it plainly is cheaper.
+      - name: Type-check
+        run: npx tsc -p tsconfig.spec.json --noEmit --composite false
+
+      # eslint via pretest, then Jest.
+      - name: Lint and test
+        run: npm test
+
+      # The suite passing does not prove the production bundle builds — different tsconfig, different
+      # optimiser, and templates are only fully checked here.
+      - name: Production build
+        run: npm run webapp:build:prod
+
+      - name: Upload test results
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: target/test-results/
+          retention-days: 7

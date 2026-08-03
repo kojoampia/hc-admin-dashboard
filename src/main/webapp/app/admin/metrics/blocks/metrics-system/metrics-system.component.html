@@ -6,7 +6,7 @@
       <div class="space-y-3 text-sm text-slate-700">
         <div class="grid grid-cols-[minmax(0,1fr)_auto] gap-3">
           <div>Uptime</div>
-          <div class="text-right">{{ convertMillisecondsToDuration(systemMetrics['process.uptime']) }}</div>
+          <div class="text-right">{{ convertMillisecondsToDuration(systemMetrics['process.uptime'] ?? 0) }}</div>
         </div>
         <div class="grid grid-cols-[minmax(0,1fr)_auto] gap-3">
           <div>Start time</div>
@@ -16,20 +16,20 @@
         <div class="space-y-2 rounded-2xl bg-slate-50 p-4">
           <div class="grid grid-cols-[minmax(0,1fr)_auto] gap-3">
             <div>Process CPU usage</div>
-            <div class="text-right">{{ 100 * systemMetrics['process.cpu.usage'] | number: '1.0-2' }} %</div>
+            <div class="text-right">{{ 100 * (systemMetrics['process.cpu.usage'] ?? 0) | number: '1.0-2' }} %</div>
           </div>
           <div class="h-3 overflow-hidden rounded-full bg-slate-200">
-            <div class="h-full rounded-full bg-emerald-500" [style.width.%]="100 * systemMetrics['process.cpu.usage']"></div>
+            <div class="h-full rounded-full bg-emerald-500" [style.width.%]="100 * (systemMetrics['process.cpu.usage'] ?? 0)"></div>
           </div>
         </div>
 
         <div class="space-y-2 rounded-2xl bg-slate-50 p-4">
           <div class="grid grid-cols-[minmax(0,1fr)_auto] gap-3">
             <div>System CPU usage</div>
-            <div class="text-right">{{ 100 * systemMetrics['system.cpu.usage'] | number: '1.0-2' }} %</div>
+            <div class="text-right">{{ 100 * (systemMetrics['system.cpu.usage'] ?? 0) | number: '1.0-2' }} %</div>
           </div>
           <div class="h-3 overflow-hidden rounded-full bg-slate-200">
-            <div class="h-full rounded-full bg-sky-500" [style.width.%]="100 * systemMetrics['system.cpu.usage']"></div>
+            <div class="h-full rounded-full bg-sky-500" [style.width.%]="100 * (systemMetrics['system.cpu.usage'] ?? 0)"></div>
           </div>
         </div>
 

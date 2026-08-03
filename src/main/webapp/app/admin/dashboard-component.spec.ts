@@ -24,7 +24,7 @@ describe('DashboardComponent', () => {
 
   beforeEach(() => {
     accountService = {
-      identity: jest.fn(() => of(new Account(true, ['ROLE_ADMIN'], 'admin@example.com', 'Admin', 'en', 'User', 'admin', null))),
+      identity: jest.fn(() => of(new Account(true, [{ name: 'ROLE_ADMIN' }], 'admin@example.com', 'Admin', 'en', 'User', 'admin', null))),
     };
     dashboardLayoutService = {
       widgets: jest.fn(() => [

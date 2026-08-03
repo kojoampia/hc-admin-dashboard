@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 
-import { PiechartComponent } from 'app/widgets/piechart/piechart.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 import SharedModule from 'app/shared/shared.module';
 import { IUser } from '../user-management/user-management.model';
 import { UserManagementService } from '../user-management/service/user-management.service';
@@ -19,7 +19,7 @@ type ChartDatum = {
   templateUrl: './user-activity.html',
   styleUrl: './user-activity.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterModule, SharedModule, MatButtonModule, MatIconModule, PiechartComponent],
+  imports: [RouterModule, SharedModule, MatButtonModule, MatIconModule, NgxChartsModule],
 })
 export default class UserActivityComponent implements OnInit {
   isLoading = true;

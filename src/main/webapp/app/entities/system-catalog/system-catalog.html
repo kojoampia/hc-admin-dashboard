@@ -23,7 +23,7 @@
       </div>
 
       <!-- Tabs -->
-      <mat-tab-group (selectedTabChange)="activeTab.set(tabTypes[$event.index])" class="catalog-tabs flex-1" animationDuration="200ms">
+      <mat-tab-group (selectedTabChange)="activeTab.set(tabTypes[$event.index]!)" class="catalog-tabs flex-1" animationDuration="200ms">
         @for (tab of tabTypes; track tab) {
         <mat-tab [label]="tab">
           <div class="p-4">

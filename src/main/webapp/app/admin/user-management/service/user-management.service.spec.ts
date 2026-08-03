@@ -3,7 +3,7 @@ import { HttpErrorResponse, provideHttpClient, withInterceptorsFromDi } from '@a
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 
 import { Authority } from 'app/config/authority.constants';
-import { User } from '../user-management.model';
+import { IAuthority, User } from '../user-management.model';
 
 import { UserManagementService } from './user-management.service';
 
@@ -39,15 +39,15 @@ describe('User Service', () => {
     });
 
     it('should return Authorities', () => {
-      let expectedResult: string[] = [];
+      let expectedResult: IAuthority[] = [];
 
       service.authorities().subscribe(authorities => {
         expectedResult = authorities;
       });
       const req = httpMock.expectOne({ method: 'GET' });
 
-      req.flush([Authority.USER, Authority.ADMIN]);
-      expect(expectedResult).toEqual([Authority.USER, Authority.ADMIN]);
+      req.flush([{ name: Authority.USER }, { name: Authority.ADMIN }]);
+      expect(expectedResult).toEqual([{ name: Authority.USER }, { name: Authority.ADMIN }]);
     });
 
     it('should propagate not found response', () => {

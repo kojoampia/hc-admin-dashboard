@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialogRef } from '@angular/material/dialog';
 
 import HealthModalComponent from './health-modal.component';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
@@ -8,12 +8,20 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 describe('HealthModalComponent', () => {
   let comp: HealthModalComponent;
   let fixture: ComponentFixture<HealthModalComponent>;
-  let mockActiveModal: NgbActiveModal;
+  let mockDialogRef: { close: jest.Mock };
 
   beforeEach(waitForAsync(() => {
+    mockDialogRef = { close: jest.fn() };
+
     TestBed.configureTestingModule({
       imports: [HealthModalComponent],
-      providers: [NgbActiveModal, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
+      providers: [
+        // The component injects MatDialogRef, not NgbActiveModal — it moved to Angular Material
+        // and this spec was left behind, so every test here failed on a NullInjectorError.
+        { provide: MatDialogRef, useFactory: () => mockDialogRef },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+      ],
     })
       .overrideTemplate(HealthModalComponent, '')
       .compileComponents();
@@ -22,7 +30,7 @@ describe('HealthModalComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(HealthModalComponent);
     comp = fixture.componentInstance;
-    mockActiveModal = TestBed.inject(NgbActiveModal);
+
   });
 
   describe('readableValue', () => {
@@ -100,13 +108,10 @@ describe('HealthModalComponent', () => {
   describe('dismiss', () => {
     it('should call dismiss when dismiss modal is called', () => {
       // GIVEN
-      const spy = jest.spyOn(mockActiveModal, 'dismiss');
-
-      // WHEN
       comp.dismiss();
 
       // THEN
-      expect(spy).toHaveBeenCalled();
+      expect(mockDialogRef.close).toHaveBeenCalled();
     });
   });
 });

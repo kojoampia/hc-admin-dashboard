@@ -7,8 +7,7 @@ import { RouterModule } from '@angular/router';
 import { switchMap, timer } from 'rxjs';
 
 import SharedModule from 'app/shared/shared.module';
-import { LineChartComponent } from 'app/widgets/linechart/linechart.component';
-import { PiechartComponent } from 'app/widgets/piechart/piechart.component';
+import { NgxChartsModule, ScaleType } from '@swimlane/ngx-charts';
 import { HttpMethod, MaxMeanCount, Metrics, Services } from '../metrics/metrics.model';
 import { MetricsService } from '../metrics/metrics.service';
 
@@ -34,9 +33,42 @@ export const USAGE_STATISTICS_REFRESH_INTERVAL_MS = 30_000;
   templateUrl: './usage-statistics.html',
   styleUrl: './usage-statistics.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterModule, SharedModule, MatButtonModule, MatIconModule, PiechartComponent, LineChartComponent],
+  imports: [RouterModule, SharedModule, MatButtonModule, MatIconModule, NgxChartsModule],
 })
 export default class UsageStatisticsComponent implements OnInit {
+  // Carried over verbatim from the deleted linechart wrapper, which was the only thing that ever
+  // supplied a scheme to this chart. ngx-charts falls back to its own palette without it.
+  readonly serviceTrafficScheme = {
+    name: 'serviceTraffic',
+    selectable: true,
+    group: ScaleType.Linear,
+    domain: [
+      '#A9E8DC',
+      '#5ABEA9',
+      '#0284A8',
+      '#050C44',
+      '#5ADF99',
+      '#E1F7E7',
+      '#A9E8DC',
+      '#66C4FF',
+      '#5CB1E6',
+      '#4D93BF',
+      '#356685',
+      '#224154',
+      '#CC673D',
+      '#3D4ACC',
+      '#7A7D99',
+      '#E1F7E7',
+      '#2497E8',
+      '#FFCDA6',
+      '#B3B13E',
+      '#02BEC4',
+      '#FF8080',
+      '#286EFF',
+      '#CCCA3D',
+    ],
+  };
+
   readonly refreshIntervalSeconds = USAGE_STATISTICS_REFRESH_INTERVAL_MS / 1000;
 
   isLoading = true;

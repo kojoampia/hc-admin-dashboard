@@ -75,7 +75,7 @@
 
     <div class="grid gap-4 xl:grid-cols-[20rem_minmax(0,1fr)]">
       <div class="rounded-3xl border border-slate-100 bg-slate-50 p-3">
-        <hpd-piechart [data]="responseCodeData" [showLabels]="true" [showLegend]="true" [view]="[300, 260]" />
+        <ngx-charts-pie-chart [results]="responseCodeData" [labels]="true" [legend]="true" [explodeSlices]="true" />
       </div>
 
       <div class="overflow-hidden rounded-3xl border border-slate-100 bg-slate-50 p-4">
@@ -84,15 +84,7 @@
           <span class="text-xs text-slate-500">GET, POST, PUT, PATCH, DELETE</span>
         </div>
 
-        <hpd-linechart
-          [lineData]="serviceTrafficData"
-          [showLegend]="false"
-          [showGridLines]="true"
-          [showDataLabel]="false"
-          [showYAxisLabel]="false"
-          [showXAxisLabel]="false"
-          [view]="[760, 280]"
-        />
+        <ngx-charts-line-chart [results]="serviceTrafficData" [legend]="true" [scheme]="serviceTrafficScheme" />
       </div>
     </div>
 

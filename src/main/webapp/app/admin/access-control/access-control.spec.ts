@@ -38,7 +38,7 @@ describe('AccessControlComponent', () => {
 
   it('builds access coverage from the current account and admin APIs', () => {
     accountService.identity.mockReturnValue(
-      of(new Account(true, [Authority.ADMIN, Authority.USER], 'admin@example.com', 'Admin', 'en', 'User', 'admin', null)),
+      of(new Account(true, [{ name: Authority.ADMIN }, { name: Authority.USER }], 'admin@example.com', 'Admin', 'en', 'User', 'admin', null)),
     );
     userManagementService.query.mockReturnValue(
       of(
@@ -52,7 +52,7 @@ describe('AccessControlComponent', () => {
         }),
       ),
     );
-    userManagementService.authorities.mockReturnValue(of([Authority.USER, Authority.ADMIN]));
+    userManagementService.authorities.mockReturnValue(of([{ name: Authority.USER }, { name: Authority.ADMIN }]));
 
     component.ngOnInit();
 
@@ -62,7 +62,7 @@ describe('AccessControlComponent', () => {
     expect(component.activeAdminUserCount).toBe(1);
     expect(component.totalManagedUsers).toBe(3);
     expect(component.protectedRoutes.every(route => route.accessGranted)).toBe(true);
-    expect(component.availableAuthorities).toEqual([Authority.USER, Authority.ADMIN]);
+    expect(component.availableAuthorities).toEqual([{ name: Authority.USER }, { name: Authority.ADMIN }]);
   });
 
   it('surfaces permission failures from the access APIs', () => {
@@ -72,7 +72,7 @@ describe('AccessControlComponent', () => {
         status: 403,
       })),
     );
-    userManagementService.authorities.mockReturnValue(of([Authority.USER]));
+    userManagementService.authorities.mockReturnValue(of([{ name: Authority.USER }]));
 
     component.ngOnInit();
 

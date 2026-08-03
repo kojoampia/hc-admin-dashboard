@@ -18,7 +18,8 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 function accountWithAuthorities(authorities: string[]): Account {
   return {
     activated: true,
-    authorities,
+    // Account.authorities is IAuthority[]; the call sites all name authorities as plain strings.
+    authorities: authorities.map(name => ({ name })),
     email: '',
     firstName: '',
     langKey: '',

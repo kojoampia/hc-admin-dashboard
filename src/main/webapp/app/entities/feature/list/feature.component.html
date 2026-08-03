@@ -50,11 +50,11 @@
               ) {
                 <th
                   scope="col"
-                  [hpdSortBy]="column[0]"
+                  [hpdSortBy]="column[0]!"
                   class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500"
                 >
                   <div class="inline-flex items-center gap-1">
-                    <span [hpdTranslate]="column[1]">{{ column[0] }}</span>
+                    <span [hpdTranslate]="column[1]!">{{ column[0] }}</span>
                     <mat-icon class="!h-4 !w-4 !text-base text-slate-400">unfold_more</mat-icon>
                   </div>
                 </th>

@@ -1,5 +1,5 @@
 import { Component, OnInit, RendererFactory2, Renderer2, inject } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -34,6 +34,7 @@ export default class MainComponent implements OnInit {
   private readonly accountService = inject(AccountService);
   private readonly appPageTitleStrategy = inject(AppPageTitleStrategy);
   private readonly translateService = inject(TranslateService);
+  private readonly router = inject(Router);
   private renderer: Renderer2;
 
   constructor(rootRenderer: RendererFactory2) {
@@ -44,6 +45,10 @@ export default class MainComponent implements OnInit {
     this.accountService.identity().subscribe();
 
     this.translateService.onLangChange.subscribe((event: LangChangeEvent) => {
+      // The title is translated once, by the router's TitleStrategy on navigation. Without this it
+      // keeps the previous language until the next navigation — appPageTitleStrategy was injected
+      // for exactly this and then never called.
+      this.appPageTitleStrategy.updateTitle(this.router.routerState.snapshot);
       dayjs.locale(event.lang);
       this.renderer.setAttribute(document.querySelector('html'), 'lang', event.lang);
     });

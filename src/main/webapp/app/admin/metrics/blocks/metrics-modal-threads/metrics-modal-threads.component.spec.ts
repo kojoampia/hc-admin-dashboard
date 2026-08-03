@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialogRef } from '@angular/material/dialog';
 
 import { ThreadState } from '../../metrics.model';
 import { MetricsModalThreadsComponent } from './metrics-modal-threads.component';
@@ -9,12 +9,20 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 describe('MetricsModalThreadsComponent', () => {
   let comp: MetricsModalThreadsComponent;
   let fixture: ComponentFixture<MetricsModalThreadsComponent>;
-  let mockActiveModal: NgbActiveModal;
+  let mockDialogRef: { close: jest.Mock };
 
   beforeEach(waitForAsync(() => {
+    mockDialogRef = { close: jest.fn() };
+
     TestBed.configureTestingModule({
       imports: [MetricsModalThreadsComponent],
-      providers: [NgbActiveModal, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
+      providers: [
+        // The component injects MatDialogRef, not NgbActiveModal — it moved to Angular Material
+        // and this spec was left behind, so every test here failed on a NullInjectorError.
+        { provide: MatDialogRef, useFactory: () => mockDialogRef },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+      ],
     })
       .overrideTemplate(MetricsModalThreadsComponent, '')
       .compileComponents();
@@ -23,7 +31,7 @@ describe('MetricsModalThreadsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(MetricsModalThreadsComponent);
     comp = fixture.componentInstance;
-    mockActiveModal = TestBed.inject(NgbActiveModal);
+
   });
 
   describe('ngOnInit', () => {
@@ -133,7 +141,7 @@ describe('MetricsModalThreadsComponent', () => {
       const badgeClass = comp.getBadgeClass(threadState);
 
       // THEN
-      expect(badgeClass).toEqual('bg-success');
+      expect(badgeClass).toEqual('bg-emerald-50 text-emerald-700');
     });
 
     it('should return an info badge class for waiting thread state', () => {
@@ -144,7 +152,7 @@ describe('MetricsModalThreadsComponent', () => {
       const badgeClass = comp.getBadgeClass(threadState);
 
       // THEN
-      expect(badgeClass).toEqual('bg-info');
+      expect(badgeClass).toEqual('bg-sky-50 text-sky-700');
     });
 
     it('should return a warning badge class for time waiting thread state', () => {
@@ -155,7 +163,7 @@ describe('MetricsModalThreadsComponent', () => {
       const badgeClass = comp.getBadgeClass(threadState);
 
       // THEN
-      expect(badgeClass).toEqual('bg-warning');
+      expect(badgeClass).toEqual('bg-amber-50 text-amber-700');
     });
 
     it('should return a danger badge class for blocked thread state', () => {
@@ -166,7 +174,7 @@ describe('MetricsModalThreadsComponent', () => {
       const badgeClass = comp.getBadgeClass(threadState);
 
       // THEN
-      expect(badgeClass).toEqual('bg-danger');
+      expect(badgeClass).toEqual('bg-rose-50 text-rose-700');
     });
 
     it('should return an empty string for others threads', () => {
@@ -314,13 +322,13 @@ describe('MetricsModalThreadsComponent', () => {
   describe('dismiss', () => {
     it('should call dismiss function for modal on dismiss', () => {
       // GIVEN
-      jest.spyOn(mockActiveModal, 'dismiss').mockReturnValue(undefined);
+
 
       // WHEN
       comp.dismiss();
 
       // THEN
-      expect(mockActiveModal.dismiss).toHaveBeenCalled();
+      expect(mockDialogRef.close).toHaveBeenCalled();
     });
   });
 });

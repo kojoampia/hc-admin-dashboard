@@ -46,14 +46,14 @@ describe('User Management Update Component', () => {
       [],
       fakeAsync(() => {
         // GIVEN
-        jest.spyOn(service, 'authorities').mockReturnValue(of(['USER']));
+        jest.spyOn(service, 'authorities').mockReturnValue(of([{ name: 'USER' }]));
 
         // WHEN
         comp.ngOnInit();
 
         // THEN
         expect(service.authorities).toHaveBeenCalled();
-        expect(comp.authorities).toEqual(['USER']);
+        expect(comp.authorities).toEqual([{ name: 'USER' }]);
       }),
     ));
   });

@@ -1,9 +1,10 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { setupZoneTestEnv } from 'jest-preset-angular/setup-env/zone';
 
 import DutyRosterComponent from './duty-roster';
 
-setupZoneTestEnv();
+// The test environment is set up globally by jest.conf.js (setupFilesAfterEnv). Calling
+// setupZoneTestEnv() here as well throws "Cannot set base providers because it has already
+// been called".
 
 describe('DutyRosterComponent', () => {
   let comp: DutyRosterComponent;

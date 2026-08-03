@@ -11,6 +11,11 @@ module.exports = {
   transformIgnorePatterns: ['node_modules/(?!(.*\\.mjs$|dayjs/esm|@angular/common/locales/.*\\.js$|d3-.*|internmap))'],
   globals: {
     ...environment,
+    // app.constants.ts reads WEBSOCKET_ENABLED, which only webpack.custom.js's DefinePlugin ever
+    // defines — environment.js carries the per-profile DEV_/TEST_/PROD_ variants instead. Without
+    // it every spec that pulls in app.constants dies with "WEBSOCKET_ENABLED is not defined".
+    // false, matching the dev profile: specs should not try to open a socket.
+    WEBSOCKET_ENABLED: environment.DEV_WEBSOCKET_ENABLED,
   },
   roots: ['<rootDir>', `<rootDir>/${baseUrl}`],
   modulePaths: [`<rootDir>/${baseUrl}`],

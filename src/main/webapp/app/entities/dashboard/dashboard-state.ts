@@ -1,7 +1,7 @@
 import { Injectable, signal, computed, inject, DestroyRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { WebsocketAuthService } from 'app/widgets/chatbot/websocket-auth.service';
+import { WebsocketAuthService } from 'app/core/websocket/websocket-auth.service';
 import { AuditLogService } from 'app/entities/audit-log/service/audit-log.service';
 import { AccountService } from 'app/core/auth/account.service';
 import { IAuditLog } from 'app/entities/audit-log/audit-log.model';

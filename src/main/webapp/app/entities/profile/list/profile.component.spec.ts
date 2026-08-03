@@ -7,18 +7,18 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { sampleWithRequiredData } from '../profile.test-samples';
 import { ProfileService } from '../service/profile.service';
 
-import { ProfileComponent } from './profile.component';
+import { ProfileListComponent } from './profile.component';
 import SpyInstance = jest.SpyInstance;
 
 describe('Profile Management Component', () => {
-  let comp: ProfileComponent;
-  let fixture: ComponentFixture<ProfileComponent>;
+  let comp: ProfileListComponent;
+  let fixture: ComponentFixture<ProfileListComponent>;
   let service: ProfileService;
   let routerNavigateSpy: SpyInstance<Promise<boolean>>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ProfileComponent],
+      imports: [ProfileListComponent],
       providers: [
         provideHttpClient(),
         {
@@ -46,10 +46,10 @@ describe('Profile Management Component', () => {
         },
       ],
     })
-      .overrideTemplate(ProfileComponent, '')
+      .overrideTemplate(ProfileListComponent, '')
       .compileComponents();
 
-    fixture = TestBed.createComponent(ProfileComponent);
+    fixture = TestBed.createComponent(ProfileListComponent);
     comp = fixture.componentInstance;
     service = TestBed.inject(ProfileService);
     routerNavigateSpy = jest.spyOn(comp.router, 'navigate');
