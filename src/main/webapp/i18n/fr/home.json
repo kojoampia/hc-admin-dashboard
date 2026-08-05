@@ -13,7 +13,9 @@
       "chat": "HealthConnect public chat room",
       "follow": "Suivez @healthconnect sur Twitter"
     },
+    "star": "Si vous appréciez HealthConnect, n’oubliez pas de nous attribuer une étoile sur",
+    "github": "GitHub ",
     "like": "Aimez-nous sur ",
-    "github": "GitHub "
+    "facebook": "Facebook"
   }
 }

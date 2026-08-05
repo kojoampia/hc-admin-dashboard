@@ -1,31 +1,34 @@
 <article class="flex h-full flex-col gap-5 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
   <div class="flex items-start justify-between gap-4">
     <div class="space-y-1">
-      <p class="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">Real-time data</p>
-      <h2 class="text-xl font-semibold tracking-tight text-slate-900">Live audit activity stream</h2>
-      <p class="text-sm leading-6 text-slate-600">
-        Surfaces the current audit-event feed already connected through <code>DashboardStateService</code> and the existing WebSocket
-        integration.
-      </p>
+      <p class="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500" hpdTranslate="adminDashboard.realTimeData.title"></p>
+      <h2 class="text-xl font-semibold tracking-tight text-slate-900" hpdTranslate="adminDashboard.realTimeData.subtitle"></h2>
+      <!-- The old copy here claimed "the existing WebSocket integration". There is no WebSocket:
+           the feed is Server-Sent Events against the api's Kafka bridge. -->
+      <p
+        class="text-sm leading-6 text-slate-600"
+        hpdTranslate="adminDashboard.realTimeData.description"
+        [translateValues]="{ service: 'AuditStreamService' }"
+      ></p>
     </div>
 
     <a mat-stroked-button routerLink="/admin/logs" class="!rounded-full">
       <mat-icon>stream</mat-icon>
-      Open logs
+      <span hpdTranslate="adminDashboard.alerts.openLogs">Open logs</span>
     </a>
   </div>
 
   <div class="grid gap-3 sm:grid-cols-3">
     <div class="rounded-2xl bg-emerald-50 p-4">
-      <p class="text-xs font-medium uppercase tracking-wide text-emerald-700">Feed status</p>
+      <p class="text-xs font-medium uppercase tracking-wide text-emerald-700" hpdTranslate="adminDashboard.realTimeData.feedStatus"></p>
       <p class="mt-2 text-3xl font-semibold text-emerald-900">{{ isConnected() ? 'Live' : 'Offline' }}</p>
     </div>
     <div class="rounded-2xl bg-rose-50 p-4">
-      <p class="text-xs font-medium uppercase tracking-wide text-rose-700">Security events</p>
+      <p class="text-xs font-medium uppercase tracking-wide text-rose-700" hpdTranslate="adminDashboard.realTimeData.securityEvents"></p>
       <p class="mt-2 text-3xl font-semibold text-rose-900">{{ securityEventCount() }}</p>
     </div>
     <div class="rounded-2xl bg-indigo-50 p-4">
-      <p class="text-xs font-medium uppercase tracking-wide text-indigo-700">Event types</p>
+      <p class="text-xs font-medium uppercase tracking-wide text-indigo-700" hpdTranslate="adminDashboard.realTimeData.eventTypes"></p>
       <p class="mt-2 text-3xl font-semibold text-indigo-900">{{ distinctEventTypes() }}</p>
     </div>
   </div>
@@ -33,7 +36,7 @@
   <div class="grid gap-4 xl:grid-cols-[minmax(0,1fr)_18rem]">
     <div class="space-y-3 rounded-3xl border border-slate-100 bg-slate-50 p-4">
       <div class="flex items-center justify-between gap-3">
-        <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-600">Latest events</h3>
+        <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-600" hpdTranslate="adminDashboard.realTimeData.latestEvents"></h3>
         <span class="text-xs text-slate-500">{{ latestEvents().length }} entries</span>
       </div>
 
@@ -58,8 +61,8 @@
 
     <div class="space-y-3 rounded-3xl border border-slate-100 bg-slate-50 p-4">
       <div class="flex items-center justify-between gap-3">
-        <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-600">Top event families</h3>
-        <span class="text-xs text-slate-500">By feed volume</span>
+        <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-600" hpdTranslate="adminDashboard.realTimeData.topEventFamilies"></h3>
+        <span class="text-xs text-slate-500" hpdTranslate="adminDashboard.realTimeData.byFeedVolume"></span>
       </div>
 
       <div class="grid gap-2">

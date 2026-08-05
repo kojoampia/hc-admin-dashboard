@@ -1,0 +1,120 @@
+{
+  "adminDashboard": {
+    "shell": {
+      "navigation": "Navigation",
+      "administration": "Administration",
+      "status": "État du tableau de bord",
+      "visibleWidgets": "Widgets visibles",
+      "closedWidgets": "Widgets fermés",
+      "collapsed": "Réduit",
+      "focusedView": "Vue ciblée",
+      "widgetMinimized": "Widget réduit. Utilisez la barre d’accès rapide ou le contrôle d’en-tête pour rouvrir le contenu."
+    },
+    "accessControl": {
+      "title": "Contrôle d’accès",
+      "subtitle": "Couverture des permissions du tableau de bord",
+      "description": "Passe en revue l’accès de la session courante, les autorisations disponibles et les routes d’administration protégées par {{ guard }}.",
+      "loading": "Chargement des règles d’accès…",
+      "currentSession": "Session courante",
+      "adminRouteAccess": "Accès aux routes d’administration",
+      "availableAuthorities": "Autorisations disponibles",
+      "authoritiesSource": "Renvoyées par l’API d’autorisations d’administration existante.",
+      "adminCoverage": "Couverture administrateur",
+      "protectedRoutes": "Routes protégées",
+      "authorityCatalog": "Catalogue des autorisations",
+      "reviewAdmins": "Examiner les administrateurs"
+    },
+    "alerts": {
+      "title": "Alertes",
+      "subtitle": "Surveillance des événements critiques",
+      "description": "Gérez les alertes par seuil et consultez les notifications en temps réel du flux d’audit d’administration.",
+      "loading": "Chargement de la configuration des alertes…",
+      "activeAlerts": "Alertes actives",
+      "criticalAlerts": "Alertes critiques",
+      "configuredRules": "Règles configurées",
+      "alertRules": "Règles d’alerte",
+      "adjustThresholds": "Ajuster les seuils sur place",
+      "threshold": "Seuil",
+      "realtimeNotifications": "Notifications en temps réel",
+      "newestFirst": "Plus récentes d’abord",
+      "empty": "Aucune alerte active. Les seuils et les notifications en temps réel apparaîtront ici.",
+      "openLogs": "Ouvrir les journaux"
+    },
+    "layout": {
+      "title": "Disposition personnalisable",
+      "subtitle": "Choisissez l’agencement du tableau de bord",
+      "widgetOrder": "Ordre des widgets",
+      "show": "Afficher",
+      "hide": "Masquer",
+      "reset": "Réinitialiser"
+    },
+    "dataExport": {
+      "title": "Export de données",
+      "subtitle": "Télécharger un instantané du tableau de bord",
+      "description": "Exportez les données d’utilisateurs, de santé et de métriques du tableau de bord sous forme de charge JSON complète ou de résumé CSV compact.",
+      "sources": "Sources",
+      "sourcesValue": "Utilisateurs, santé et métriques d’exécution",
+      "formats": "Formats",
+      "formatsValue": "Instantané JSON complet et résumé CSV",
+      "access": "Accès",
+      "accessValue": "Respecte les permissions existantes de l’API d’administration",
+      "exportJson": "Exporter en JSON",
+      "exportCsv": "Exporter en CSV"
+    },
+    "realTimeData": {
+      "title": "Données en temps réel",
+      "subtitle": "Flux d’activité d’audit en direct",
+      "description": "Expose le flux d’événements d’audit diffusé via Server-Sent Events par {{ service }}.",
+      "feedStatus": "État du flux",
+      "securityEvents": "Événements de sécurité",
+      "eventTypes": "Types d’événements",
+      "latestEvents": "Derniers événements",
+      "topEventFamilies": "Principales familles d’événements",
+      "byFeedVolume": "Par volume du flux"
+    },
+    "systemHealth": {
+      "title": "Santé du système",
+      "subtitle": "Aperçu de la stabilité d’exécution",
+      "description": "Contrôles de santé et métriques de processus combinés depuis les points de diagnostic existants.",
+      "loading": "Chargement de la santé du système…",
+      "overallStatus": "État global",
+      "systemCpu": "Processeur système",
+      "processCpu": "Processeur du processus",
+      "uptime": "Temps de fonctionnement",
+      "componentChecks": "Contrôles des composants",
+      "openHealth": "Ouvrir la santé"
+    },
+    "usageStatistics": {
+      "title": "Statistiques d’utilisation",
+      "subtitle": "Trafic et utilisation des services",
+      "description": "Répartition des requêtes et activité des services issues du point de métriques existant.",
+      "loading": "Chargement des statistiques d’utilisation…",
+      "totalRequests": "Requêtes totales",
+      "successRate": "Taux de réussite",
+      "avgResponse": "Réponse moyenne",
+      "busiestService": "Service le plus sollicité",
+      "usageInsights": "Analyses d’utilisation",
+      "topResponseCode": "Code de réponse principal",
+      "peakResponseTime": "Temps de réponse maximal",
+      "systemLoad": "Charge système (1 min)",
+      "activeDbConnections": "Connexions BD actives",
+      "mostActiveServices": "Services les plus actifs",
+      "topByRequestVolume": "Top 3 par volume de requêtes",
+      "topServiceTraffic": "Trafic des principaux services",
+      "requests": "Requêtes",
+      "httpMethods": "GET, POST, PUT, PATCH, DELETE",
+      "openMetrics": "Ouvrir les métriques"
+    },
+    "userActivity": {
+      "title": "Activité des utilisateurs",
+      "subtitle": "Aperçu de l’engagement des comptes",
+      "description": "Couverture d’activation et arrivées récentes, d’après le point de gestion des utilisateurs existant.",
+      "loading": "Chargement de l’activité des utilisateurs…",
+      "totalUsers": "Utilisateurs totaux",
+      "activated": "Activés",
+      "administrators": "Administrateurs",
+      "newIn30Days": "Nouveaux sur 30 jours",
+      "manageUsers": "Gérer les utilisateurs"
+    }
+  }
+}

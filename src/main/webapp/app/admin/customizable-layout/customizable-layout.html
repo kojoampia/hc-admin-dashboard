@@ -1,7 +1,7 @@
 <article class="flex h-full flex-col gap-5 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
   <div class="space-y-1">
-    <p class="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">Customizable layout</p>
-    <h2 class="text-xl font-semibold tracking-tight text-slate-900">Choose the dashboard arrangement</h2>
+    <p class="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500" hpdTranslate="adminDashboard.layout.title"></p>
+    <h2 class="text-xl font-semibold tracking-tight text-slate-900" hpdTranslate="adminDashboard.layout.subtitle"></h2>
     <p class="text-sm leading-6 text-slate-600">
       Save a preferred dashboard layout by showing, hiding, and reordering widgets. Preferences persist in local browser storage for future
       sessions.
@@ -25,13 +25,13 @@
 
     <button mat-button type="button" class="!rounded-full" (click)="reset()">
       <mat-icon>restart_alt</mat-icon>
-      Reset
+      <span hpdTranslate="adminDashboard.layout.reset">Reset</span>
     </button>
   </div>
 
   <div class="rounded-3xl border border-slate-100 bg-slate-50 p-4">
     <div class="mb-3 flex items-center justify-between gap-3">
-      <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-600">Widget order</h3>
+      <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-600" hpdTranslate="adminDashboard.layout.widgetOrder"></h3>
       <span class="text-xs text-slate-500">{{ layout.visibleWidgetIds().length }} visible widgets</span>
     </div>
 
@@ -66,9 +66,9 @@
           </div>
 
           <div class="flex items-center gap-2">
-            <button mat-stroked-button type="button" [disabled]="!widget.visible" (click)="setVisibility(widget.id, false)">Hide</button>
-            <button mat-flat-button color="primary" type="button" [disabled]="widget.visible" (click)="setVisibility(widget.id, true)">
-              Show
+            <button mat-stroked-button type="button" [disabled]="!widget.visible" (click)="setVisibility(widget.id, false)" hpdTranslate="adminDashboard.layout.hide"></button>
+            <button mat-flat-button color="primary" type="button" [disabled]="widget.visible" (click)="setVisibility(widget.id, true)" hpdTranslate="adminDashboard.layout.show">
+              
             </button>
           </div>
         </div>

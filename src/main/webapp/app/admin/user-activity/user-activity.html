@@ -1,39 +1,39 @@
 <article class="flex h-full flex-col gap-5 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
   <div class="flex items-start justify-between gap-4">
     <div class="space-y-1">
-      <p class="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">User activity</p>
-      <h2 class="text-xl font-semibold tracking-tight text-slate-900">Account engagement snapshot</h2>
-      <p class="text-sm leading-6 text-slate-600">
-        Activation coverage and recent onboarding based on the existing user-management endpoint.
+      <p class="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500" hpdTranslate="adminDashboard.userActivity.title"></p>
+      <h2 class="text-xl font-semibold tracking-tight text-slate-900" hpdTranslate="adminDashboard.userActivity.subtitle"></h2>
+      <p class="text-sm leading-6 text-slate-600" hpdTranslate="adminDashboard.userActivity.description">
+        
       </p>
     </div>
 
     <a mat-stroked-button routerLink="/admin/user-management" class="!rounded-full">
       <mat-icon>groups</mat-icon>
-      Manage users
+      <span hpdTranslate="adminDashboard.userActivity.manageUsers">Manage users</span>
     </a>
   </div>
 
   @if (isLoading) {
-  <p class="rounded-2xl bg-slate-50 px-4 py-3 text-sm text-slate-600">Loading user activity data...</p>
+  <p class="rounded-2xl bg-slate-50 px-4 py-3 text-sm text-slate-600" hpdTranslate="adminDashboard.userActivity.loading"></p>
   } @else if (errorMessage) {
   <p class="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">{{ errorMessage }}</p>
   } @else {
   <div class="grid gap-3 sm:grid-cols-2">
     <div class="rounded-2xl bg-slate-50 p-4">
-      <p class="text-xs font-medium uppercase tracking-wide text-slate-500">Total users</p>
+      <p class="text-xs font-medium uppercase tracking-wide text-slate-500" hpdTranslate="adminDashboard.userActivity.totalUsers"></p>
       <p class="mt-2 text-3xl font-semibold text-slate-900">{{ totalUsers }}</p>
     </div>
     <div class="rounded-2xl bg-emerald-50 p-4">
-      <p class="text-xs font-medium uppercase tracking-wide text-emerald-700">Activated</p>
+      <p class="text-xs font-medium uppercase tracking-wide text-emerald-700" hpdTranslate="adminDashboard.userActivity.activated"></p>
       <p class="mt-2 text-3xl font-semibold text-emerald-900">{{ activeUsers }}</p>
     </div>
     <div class="rounded-2xl bg-amber-50 p-4">
-      <p class="text-xs font-medium uppercase tracking-wide text-amber-700">Administrators</p>
+      <p class="text-xs font-medium uppercase tracking-wide text-amber-700" hpdTranslate="adminDashboard.userActivity.administrators"></p>
       <p class="mt-2 text-3xl font-semibold text-amber-900">{{ adminUsers }}</p>
     </div>
     <div class="rounded-2xl bg-indigo-50 p-4">
-      <p class="text-xs font-medium uppercase tracking-wide text-indigo-700">New in 30 days</p>
+      <p class="text-xs font-medium uppercase tracking-wide text-indigo-700" hpdTranslate="adminDashboard.userActivity.newIn30Days"></p>
       <p class="mt-2 text-3xl font-semibold text-indigo-900">{{ recentUsers }}</p>
     </div>
   </div>

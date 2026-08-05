@@ -1,0 +1,120 @@
+{
+  "adminDashboard": {
+    "shell": {
+      "navigation": "Navigation",
+      "administration": "Administration",
+      "status": "Dashboard-Status",
+      "visibleWidgets": "Sichtbare Widgets",
+      "closedWidgets": "Geschlossene Widgets",
+      "collapsed": "Eingeklappt",
+      "focusedView": "Fokussierte Ansicht",
+      "widgetMinimized": "Widget minimiert. Über die Schnellzugriffsleiste oder das Kopfzeilen-Steuerelement wieder öffnen."
+    },
+    "accessControl": {
+      "title": "Zugriffssteuerung",
+      "subtitle": "Berechtigungsabdeckung des Dashboards",
+      "description": "Prüft den Zugriff der aktuellen Sitzung, die verfügbaren Berechtigungen und die durch {{ guard }} geschützten Administrationsrouten.",
+      "loading": "Zugriffsregeln werden geladen…",
+      "currentSession": "Aktuelle Sitzung",
+      "adminRouteAccess": "Zugriff auf Administrationsrouten",
+      "availableAuthorities": "Verfügbare Berechtigungen",
+      "authoritiesSource": "Von der bestehenden Administrations-API für Berechtigungen zurückgegeben.",
+      "adminCoverage": "Administrator-Abdeckung",
+      "protectedRoutes": "Geschützte Routen",
+      "authorityCatalog": "Berechtigungskatalog",
+      "reviewAdmins": "Administratoren prüfen"
+    },
+    "alerts": {
+      "title": "Warnungen",
+      "subtitle": "Überwachung kritischer Ereignisse",
+      "description": "Schwellenwertbasierte Warnungen verwalten und Echtzeit-Benachrichtigungen aus dem Administrations-Audit-Feed prüfen.",
+      "loading": "Warnungskonfiguration wird geladen…",
+      "activeAlerts": "Aktive Warnungen",
+      "criticalAlerts": "Kritische Warnungen",
+      "configuredRules": "Konfigurierte Regeln",
+      "alertRules": "Warnregeln",
+      "adjustThresholds": "Schwellenwerte direkt anpassen",
+      "threshold": "Schwellenwert",
+      "realtimeNotifications": "Echtzeit-Benachrichtigungen",
+      "newestFirst": "Neueste zuerst",
+      "empty": "Keine aktiven Warnungen. Schwellenwerte und Echtzeit-Benachrichtigungen erscheinen hier.",
+      "openLogs": "Protokolle öffnen"
+    },
+    "layout": {
+      "title": "Anpassbares Layout",
+      "subtitle": "Dashboard-Anordnung wählen",
+      "widgetOrder": "Widget-Reihenfolge",
+      "show": "Anzeigen",
+      "hide": "Ausblenden",
+      "reset": "Zurücksetzen"
+    },
+    "dataExport": {
+      "title": "Datenexport",
+      "subtitle": "Momentaufnahme des Dashboards herunterladen",
+      "description": "Exportieren Sie dieselben Benutzer-, Zustands- und Metrikdaten des Dashboards als vollständige JSON-Datei oder als kompakte CSV-Zusammenfassung.",
+      "sources": "Quellen",
+      "sourcesValue": "Benutzer, Systemzustand und Laufzeitmetriken",
+      "formats": "Formate",
+      "formatsValue": "Vollständige JSON-Momentaufnahme und CSV-Zusammenfassung",
+      "access": "Zugriff",
+      "accessValue": "Berücksichtigt die bestehenden Berechtigungen der Administrations-API",
+      "exportJson": "Als JSON exportieren",
+      "exportCsv": "Als CSV exportieren"
+    },
+    "realTimeData": {
+      "title": "Echtzeitdaten",
+      "subtitle": "Live-Audit-Aktivitätsstrom",
+      "description": "Zeigt den Audit-Ereignis-Feed, der über Server-Sent Events durch {{ service }} geliefert wird.",
+      "feedStatus": "Feed-Status",
+      "securityEvents": "Sicherheitsereignisse",
+      "eventTypes": "Ereignistypen",
+      "latestEvents": "Neueste Ereignisse",
+      "topEventFamilies": "Häufigste Ereignisfamilien",
+      "byFeedVolume": "Nach Feed-Volumen"
+    },
+    "systemHealth": {
+      "title": "Systemzustand",
+      "subtitle": "Überblick über die Laufzeitstabilität",
+      "description": "Zustandsprüfungen und Prozessmetriken, kombiniert aus den bestehenden Diagnose-Endpunkten.",
+      "loading": "Systemzustand wird geladen…",
+      "overallStatus": "Gesamtstatus",
+      "systemCpu": "System-CPU",
+      "processCpu": "Prozess-CPU",
+      "uptime": "Betriebszeit",
+      "componentChecks": "Komponentenprüfungen",
+      "openHealth": "Zustand öffnen"
+    },
+    "usageStatistics": {
+      "title": "Nutzungsstatistiken",
+      "subtitle": "Datenverkehr und Dienstauslastung",
+      "description": "Anfrageverteilung und Dienstaktivität aus dem bestehenden Metrik-Endpunkt.",
+      "loading": "Nutzungsstatistiken werden geladen…",
+      "totalRequests": "Anfragen gesamt",
+      "successRate": "Erfolgsquote",
+      "avgResponse": "Durchschnittliche Antwortzeit",
+      "busiestService": "Meistgenutzter Dienst",
+      "usageInsights": "Nutzungsanalysen",
+      "topResponseCode": "Häufigster Antwortcode",
+      "peakResponseTime": "Maximale Antwortzeit",
+      "systemLoad": "Systemlast (1 Min.)",
+      "activeDbConnections": "Aktive DB-Verbindungen",
+      "mostActiveServices": "Aktivste Dienste",
+      "topByRequestVolume": "Top 3 nach Anfragevolumen",
+      "topServiceTraffic": "Datenverkehr der Top-Dienste",
+      "requests": "Anfragen",
+      "httpMethods": "GET, POST, PUT, PATCH, DELETE",
+      "openMetrics": "Metriken öffnen"
+    },
+    "userActivity": {
+      "title": "Benutzeraktivität",
+      "subtitle": "Momentaufnahme der Kontonutzung",
+      "description": "Aktivierungsabdeckung und kürzlich hinzugekommene Konten, basierend auf dem bestehenden Benutzerverwaltungs-Endpunkt.",
+      "loading": "Benutzeraktivität wird geladen…",
+      "totalUsers": "Benutzer gesamt",
+      "activated": "Aktiviert",
+      "administrators": "Administratoren",
+      "newIn30Days": "Neu in 30 Tagen",
+      "manageUsers": "Benutzer verwalten"
+    }
+  }
+}

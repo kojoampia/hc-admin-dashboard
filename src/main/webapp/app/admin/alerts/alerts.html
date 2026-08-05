@@ -1,10 +1,10 @@
 <article class="flex h-full flex-col gap-5 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
   <div class="flex items-start justify-between gap-4">
     <div class="space-y-1">
-      <p class="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">Alerts</p>
-      <h2 class="text-xl font-semibold tracking-tight text-slate-900">Critical event monitoring</h2>
-      <p class="text-sm leading-6 text-slate-600">
-        Manage threshold-based alerts and review real-time notifications flowing through the admin audit feed.
+      <p class="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500" hpdTranslate="adminDashboard.alerts.title"></p>
+      <h2 class="text-xl font-semibold tracking-tight text-slate-900" hpdTranslate="adminDashboard.alerts.subtitle"></h2>
+      <p class="text-sm leading-6 text-slate-600" hpdTranslate="adminDashboard.alerts.description">
+        
       </p>
       <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-medium text-slate-500">
         <span class="inline-flex items-center gap-2">
@@ -19,27 +19,27 @@
 
     <a mat-stroked-button routerLink="/admin/logs" class="!rounded-full">
       <mat-icon>notifications_active</mat-icon>
-      Open logs
+      <span hpdTranslate="adminDashboard.alerts.openLogs">Open logs</span>
     </a>
   </div>
 
   @if (isLoading) {
-  <p class="rounded-2xl bg-slate-50 px-4 py-3 text-sm text-slate-600">Loading alert configuration...</p>
+  <p class="rounded-2xl bg-slate-50 px-4 py-3 text-sm text-slate-600" hpdTranslate="adminDashboard.alerts.loading"></p>
   } @else { @if (errorMessage) {
   <p class="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">{{ errorMessage }}</p>
   }
 
   <div class="grid gap-3 md:grid-cols-3">
     <div class="rounded-2xl bg-rose-50 p-4">
-      <p class="text-xs font-medium uppercase tracking-wide text-rose-700">Critical alerts</p>
+      <p class="text-xs font-medium uppercase tracking-wide text-rose-700" hpdTranslate="adminDashboard.alerts.criticalAlerts"></p>
       <p class="mt-2 text-3xl font-semibold text-rose-900">{{ criticalAlertCount() }}</p>
     </div>
     <div class="rounded-2xl bg-slate-50 p-4">
-      <p class="text-xs font-medium uppercase tracking-wide text-slate-500">Configured rules</p>
+      <p class="text-xs font-medium uppercase tracking-wide text-slate-500" hpdTranslate="adminDashboard.alerts.configuredRules"></p>
       <p class="mt-2 text-3xl font-semibold text-slate-900">{{ rules.length }}</p>
     </div>
     <div class="rounded-2xl bg-indigo-50 p-4">
-      <p class="text-xs font-medium uppercase tracking-wide text-indigo-700">Realtime notifications</p>
+      <p class="text-xs font-medium uppercase tracking-wide text-indigo-700" hpdTranslate="adminDashboard.alerts.realtimeNotifications"></p>
       <p class="mt-2 text-3xl font-semibold text-indigo-900">{{ alerts.length }}</p>
     </div>
   </div>
@@ -47,8 +47,8 @@
   <div class="grid gap-4 xl:grid-cols-[minmax(0,1fr)_24rem]">
     <div class="space-y-3 rounded-3xl border border-slate-100 bg-slate-50 p-4">
       <div class="flex items-center justify-between gap-3">
-        <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-600">Alert rules</h3>
-        <span class="text-xs text-slate-500">Adjust thresholds in place</span>
+        <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-600" hpdTranslate="adminDashboard.alerts.alertRules"></h3>
+        <span class="text-xs text-slate-500" hpdTranslate="adminDashboard.alerts.adjustThresholds"></span>
       </div>
 
       <div class="grid gap-3">
@@ -66,7 +66,7 @@
 
           <div class="mt-4 flex items-center justify-between gap-3">
             <div>
-              <p class="text-xs uppercase tracking-wide text-slate-500">Threshold</p>
+              <p class="text-xs uppercase tracking-wide text-slate-500" hpdTranslate="adminDashboard.alerts.threshold"></p>
               <p class="text-2xl font-semibold text-slate-900">{{ rule.threshold }} {{ rule.unit }}</p>
             </div>
 
@@ -82,14 +82,14 @@
 
     <div class="space-y-3 rounded-3xl border border-slate-100 bg-slate-50 p-4">
       <div class="flex items-center justify-between gap-3">
-        <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-600">Active alerts</h3>
-        <span class="text-xs text-slate-500">Newest first</span>
+        <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-600" hpdTranslate="adminDashboard.alerts.activeAlerts"></h3>
+        <span class="text-xs text-slate-500" hpdTranslate="adminDashboard.alerts.newestFirst"></span>
       </div>
 
       <div class="grid gap-3">
         @if (alerts.length === 0) {
-        <div class="rounded-2xl bg-white p-4 text-sm text-slate-600">
-          No active alerts. Thresholds and real-time notifications will appear here.
+        <div class="rounded-2xl bg-white p-4 text-sm text-slate-600" hpdTranslate="adminDashboard.alerts.empty">
+          
         </div>
         } @else { @for (alert of alerts; track alert.id) {
         <div class="rounded-2xl bg-white p-4">

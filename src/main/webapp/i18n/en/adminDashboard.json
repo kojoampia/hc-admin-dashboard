@@ -1,0 +1,120 @@
+{
+  "adminDashboard": {
+    "shell": {
+      "navigation": "Navigation",
+      "administration": "Administration",
+      "status": "Dashboard status",
+      "visibleWidgets": "Visible widgets",
+      "closedWidgets": "Closed widgets",
+      "collapsed": "Collapsed",
+      "focusedView": "Focused view",
+      "widgetMinimized": "Widget minimized. Use the quick-access bar or the header control to reopen the content."
+    },
+    "accessControl": {
+      "title": "Access control",
+      "subtitle": "Dashboard permission coverage",
+      "description": "Reviews current-session access, available authorities, and the protected admin routes secured by {{ guard }}.",
+      "loading": "Loading dashboard access rules…",
+      "currentSession": "Current session",
+      "adminRouteAccess": "Admin route access",
+      "availableAuthorities": "Available authorities",
+      "authoritiesSource": "Returned by the existing admin authorities API.",
+      "adminCoverage": "Admin coverage",
+      "protectedRoutes": "Protected routes",
+      "authorityCatalog": "Authority catalog",
+      "reviewAdmins": "Review admins"
+    },
+    "alerts": {
+      "title": "Alerts",
+      "subtitle": "Critical event monitoring",
+      "description": "Manage threshold-based alerts and review real-time notifications flowing through the admin audit feed.",
+      "loading": "Loading alert configuration…",
+      "activeAlerts": "Active alerts",
+      "criticalAlerts": "Critical alerts",
+      "configuredRules": "Configured rules",
+      "alertRules": "Alert rules",
+      "adjustThresholds": "Adjust thresholds in place",
+      "threshold": "Threshold",
+      "realtimeNotifications": "Realtime notifications",
+      "newestFirst": "Newest first",
+      "empty": "No active alerts. Thresholds and real-time notifications will appear here.",
+      "openLogs": "Open logs"
+    },
+    "layout": {
+      "title": "Customizable layout",
+      "subtitle": "Choose the dashboard arrangement",
+      "widgetOrder": "Widget order",
+      "show": "Show",
+      "hide": "Hide",
+      "reset": "Reset"
+    },
+    "dataExport": {
+      "title": "Data export",
+      "subtitle": "Download an admin dashboard snapshot",
+      "description": "Export the same user, health, and metrics data backing the dashboard as either a full JSON payload or a compact CSV summary.",
+      "sources": "Sources",
+      "sourcesValue": "Users, health, and runtime metrics",
+      "formats": "Formats",
+      "formatsValue": "Full JSON snapshot and CSV summary",
+      "access": "Access",
+      "accessValue": "Respects existing admin API permissions",
+      "exportJson": "Export JSON",
+      "exportCsv": "Export CSV"
+    },
+    "realTimeData": {
+      "title": "Real-time data",
+      "subtitle": "Live audit activity stream",
+      "description": "Surfaces the audit-event feed delivered over Server-Sent Events through {{ service }}.",
+      "feedStatus": "Feed status",
+      "securityEvents": "Security events",
+      "eventTypes": "Event types",
+      "latestEvents": "Latest events",
+      "topEventFamilies": "Top event families",
+      "byFeedVolume": "By feed volume"
+    },
+    "systemHealth": {
+      "title": "System health",
+      "subtitle": "Runtime stability overview",
+      "description": "Health checks and process metrics combined from the existing diagnostics endpoints.",
+      "loading": "Loading system health…",
+      "overallStatus": "Overall status",
+      "systemCpu": "System CPU",
+      "processCpu": "Process CPU",
+      "uptime": "Uptime",
+      "componentChecks": "Component checks",
+      "openHealth": "Open health"
+    },
+    "usageStatistics": {
+      "title": "Usage statistics",
+      "subtitle": "Traffic and service utilization",
+      "description": "Request distribution and service activity derived from the existing metrics endpoint.",
+      "loading": "Loading usage statistics…",
+      "totalRequests": "Total requests",
+      "successRate": "Success rate",
+      "avgResponse": "Avg response",
+      "busiestService": "Busiest service",
+      "usageInsights": "Usage insights",
+      "topResponseCode": "Top response code",
+      "peakResponseTime": "Peak response time",
+      "systemLoad": "System load (1m)",
+      "activeDbConnections": "Active DB connections",
+      "mostActiveServices": "Most active services",
+      "topByRequestVolume": "Top 3 by request volume",
+      "topServiceTraffic": "Top service traffic",
+      "requests": "Requests",
+      "httpMethods": "GET, POST, PUT, PATCH, DELETE",
+      "openMetrics": "Open metrics"
+    },
+    "userActivity": {
+      "title": "User activity",
+      "subtitle": "Account engagement snapshot",
+      "description": "Activation coverage and recent onboarding based on the existing user-management endpoint.",
+      "loading": "Loading user activity data…",
+      "totalUsers": "Total users",
+      "activated": "Activated",
+      "administrators": "Administrators",
+      "newIn30Days": "New in 30 days",
+      "manageUsers": "Manage users"
+    }
+  }
+}

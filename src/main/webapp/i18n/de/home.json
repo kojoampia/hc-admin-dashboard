@@ -13,7 +13,9 @@
       "chat": "HealthConnect Chat",
       "follow": "kontaktieren Sie uns mit @healthconnect auf Twitter"
     },
+    "star": "Wenn Ihnen HealthConnect gefällt, vergeben Sie gern einen Stern auf",
+    "github": "GitHub",
     "like": "Liken Sie uns auf",
-    "github": "GitHub"
+    "facebook": "Facebook"
   }
 }
