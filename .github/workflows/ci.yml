@@ -42,7 +42,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           # Angular 21 requires ^20.19.0 || ^22.12.0 || >=24.0.0; matches deploy/docker/web.Dockerfile.
           node-version: 22
