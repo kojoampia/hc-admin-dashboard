@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed, fakeAsync, inject, tick } from '@angular/core/testing';
 import { HttpHeaders, HttpResponse, provideHttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
+import { ITEMS_PER_PAGE } from 'app/config/pagination.constants';
 import { Subject, of } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -118,6 +119,42 @@ describe('Notification Management Component', () => {
 
     // THEN
     expect(service.query).toHaveBeenLastCalledWith(expect.objectContaining({ sort: ['id,desc'] }));
+  });
+
+
+  it('should request a page and a size, not the whole collection', () => {
+    // WHEN
+    comp.ngOnInit();
+
+    // THEN
+    // The endpoint is paginated now. If these ever stop being sent the server falls back to its
+    // default page — which looks like a working screen showing only the first 20 rows.
+    expect(service.query).toHaveBeenLastCalledWith(expect.objectContaining({ page: 0, size: ITEMS_PER_PAGE }));
+  });
+
+  it('should reflect the total count from the response header', () => {
+    // GIVEN a response carrying X-Total-Count, which the shared mock above does not set
+    // mockReset first: beforeEach queues two mockReturnValueOnce values, and the queue takes
+    // precedence over mockReturnValue, so without this the assertion reads the shared mock instead.
+    const query = jest.spyOn(service, 'query');
+    query.mockReset();
+    query.mockReturnValue(of(new HttpResponse({ body: [], headers: new HttpHeaders({ 'X-Total-Count': '123' }) })));
+
+    // WHEN
+    comp.ngOnInit();
+
+    // THEN
+    // Drives hpd-item-count and the pager's collectionSize. Left unread, both render as if the
+    // collection were empty while the table shows rows.
+    expect(comp.totalItems).toBe(123);
+  });
+
+  it('should load a page', () => {
+    // WHEN
+    comp.navigateToPage(1);
+
+    // THEN
+    expect(routerNavigateSpy).toHaveBeenCalled();
   });
 
   describe('delete', () => {

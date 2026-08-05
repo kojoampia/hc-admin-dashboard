@@ -1,12 +1,15 @@
 import { Component, NgZone, OnInit, inject, signal } from '@angular/core';
+import { HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Data, ParamMap, Router, RouterModule } from '@angular/router';
 import { Observable, Subscription, combineLatest, filter, tap } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 
 import SharedModule from 'app/shared/shared.module';
+import { ItemCountComponent, PaginationComponent } from 'app/shared/pagination';
 import { SortByDirective, SortDirective, SortService, type SortState, sortStateSignal } from 'app/shared/sort';
 import { FormatMediumDatePipe } from 'app/shared/date';
 import { FormsModule } from '@angular/forms';
+import { ITEMS_PER_PAGE, PAGE_HEADER, TOTAL_COUNT_RESPONSE_HEADER } from 'app/config/pagination.constants';
 import { DEFAULT_SORT_DATA, ITEM_DELETED_EVENT, SORT } from 'app/config/navigation.constants';
 import { IOrganisation } from '../organisation.model';
 import { EntityArrayResponseType, OrganisationService } from '../service/organisation.service';
@@ -15,7 +18,7 @@ import { OrganisationDeleteDialogComponent } from '../delete/organisation-delete
 @Component({
   selector: 'hpd-organisation',
   templateUrl: './organisation.component.html',
-  imports: [RouterModule, FormsModule, SharedModule, SortDirective, SortByDirective, FormatMediumDatePipe],
+  imports: [RouterModule, FormsModule, SharedModule, SortDirective, SortByDirective, FormatMediumDatePipe, ItemCountComponent, PaginationComponent],
 })
 export class OrganisationComponent implements OnInit {
   subscription: Subscription | null = null;
@@ -23,6 +26,10 @@ export class OrganisationComponent implements OnInit {
   isLoading = false;
 
   sortState = sortStateSignal({});
+
+  itemsPerPage = ITEMS_PER_PAGE;
+  totalItems = 0;
+  page = 1;
 
   public readonly router = inject(Router);
   protected readonly organisationService = inject(OrganisationService);
@@ -37,13 +44,9 @@ export class OrganisationComponent implements OnInit {
     this.subscription = combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data])
       .pipe(
         tap(([params, data]) => this.fillComponentAttributeFromRoute(params, data)),
-        tap(() => {
-          if (this.organisations().length === 0) {
-            this.load();
-          } else {
-            this.organisations.set(this.refineData(this.organisations()));
-          }
-        }),
+        // Always reload: page and sort now live on the server, so an already-loaded slice is
+        // not the answer to a changed query.
+        tap(() => this.load()),
       )
       .subscribe();
   }
@@ -69,37 +72,47 @@ export class OrganisationComponent implements OnInit {
   }
 
   navigateToWithComponentValues(event: SortState): void {
-    this.handleNavigation(event);
+    this.handleNavigation(this.page, event);
+  }
+
+  navigateToPage(page: number): void {
+    this.handleNavigation(page, this.sortState());
   }
 
   protected fillComponentAttributeFromRoute(params: ParamMap, data: Data): void {
+    this.page = +(params.get(PAGE_HEADER) ?? 1);
     this.sortState.set(this.sortService.parseSortParam(params.get(SORT) ?? data[DEFAULT_SORT_DATA]));
   }
 
   protected onResponseSuccess(response: EntityArrayResponseType): void {
+    this.fillComponentAttributesFromResponseHeader(response.headers);
     const dataFromBody = this.fillComponentAttributesFromResponseBody(response.body);
-    this.organisations.set(this.refineData(dataFromBody));
+    this.organisations.set(dataFromBody);
   }
 
-  protected refineData(data: IOrganisation[]): IOrganisation[] {
-    const { predicate, order } = this.sortState();
-    return predicate && order ? data.sort(this.sortService.startSort({ predicate, order })) : data;
-  }
 
   protected fillComponentAttributesFromResponseBody(data: IOrganisation[] | null): IOrganisation[] {
     return data ?? [];
   }
 
+  protected fillComponentAttributesFromResponseHeader(headers: HttpHeaders): void {
+    this.totalItems = Number(headers.get(TOTAL_COUNT_RESPONSE_HEADER));
+  }
+
   protected queryBackend(): Observable<EntityArrayResponseType> {
     this.isLoading = true;
     const queryObject: any = {
+      page: this.page - 1,
+      size: this.itemsPerPage,
       sort: this.sortService.buildSortParam(this.sortState()),
     };
     return this.organisationService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
   }
 
-  protected handleNavigation(sortState: SortState): void {
+  protected handleNavigation(page: number, sortState: SortState): void {
     const queryParamsObj = {
+      page,
+      size: this.itemsPerPage,
       sort: this.sortService.buildSortParam(sortState),
     };
 

@@ -118,3 +118,23 @@
     </div>
   }
 </div>
+
+@if (facilityCatalogs().length > 0) {
+  <div class="space-y-4 rounded-3xl border border-slate-200 bg-white p-4 shadow-sm">
+    <div class="flex justify-center">
+      <hpd-item-count [params]="{ page, totalItems, itemsPerPage }" />
+    </div>
+
+    <div class="flex justify-center">
+      <hpd-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      />
+    </div>
+  </div>
+}
