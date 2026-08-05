@@ -7,7 +7,7 @@ const profileRoute: Routes = [
   {
     path: '',
     loadComponent: () => import('./list/profile.component').then(m => m.ProfileListComponent),
-    data: {},
+    data: { authorities: ['ROLE_ADMIN', 'ROLE_OPERATOR'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -16,6 +16,7 @@ const profileRoute: Routes = [
     resolve: {
       profile: ProfileResolve,
     },
+    data: { authorities: ['ROLE_ADMIN', 'ROLE_OPERATOR'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -24,6 +25,7 @@ const profileRoute: Routes = [
     resolve: {
       profile: ProfileResolve,
     },
+    data: { authorities: ['ROLE_ADMIN'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -32,6 +34,7 @@ const profileRoute: Routes = [
     resolve: {
       profile: ProfileResolve,
     },
+    data: { authorities: ['ROLE_ADMIN'] },
     canActivate: [UserRouteAccessService],
   },
 ];

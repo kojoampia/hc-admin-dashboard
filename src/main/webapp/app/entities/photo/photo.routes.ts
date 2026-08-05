@@ -7,7 +7,7 @@ const photoRoute: Routes = [
   {
     path: '',
     loadComponent: () => import('./list/photo.component').then(m => m.PhotoComponent),
-    data: {},
+    data: { authorities: ['ROLE_ADMIN', 'ROLE_OPERATOR'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -16,6 +16,7 @@ const photoRoute: Routes = [
     resolve: {
       photo: PhotoResolve,
     },
+    data: { authorities: ['ROLE_ADMIN', 'ROLE_OPERATOR'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -24,6 +25,7 @@ const photoRoute: Routes = [
     resolve: {
       photo: PhotoResolve,
     },
+    data: { authorities: ['ROLE_ADMIN'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -32,6 +34,7 @@ const photoRoute: Routes = [
     resolve: {
       photo: PhotoResolve,
     },
+    data: { authorities: ['ROLE_ADMIN'] },
     canActivate: [UserRouteAccessService],
   },
 ];

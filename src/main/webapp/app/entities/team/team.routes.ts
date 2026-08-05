@@ -7,7 +7,7 @@ const teamRoute: Routes = [
   {
     path: '',
     loadComponent: () => import('./list/team.component').then(m => m.TeamComponent),
-    data: {},
+    data: { authorities: ['ROLE_ADMIN', 'ROLE_OPERATOR'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -16,6 +16,7 @@ const teamRoute: Routes = [
     resolve: {
       team: TeamResolve,
     },
+    data: { authorities: ['ROLE_ADMIN', 'ROLE_OPERATOR'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -24,6 +25,7 @@ const teamRoute: Routes = [
     resolve: {
       team: TeamResolve,
     },
+    data: { authorities: ['ROLE_ADMIN'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -32,6 +34,7 @@ const teamRoute: Routes = [
     resolve: {
       team: TeamResolve,
     },
+    data: { authorities: ['ROLE_ADMIN'] },
     canActivate: [UserRouteAccessService],
   },
 ];

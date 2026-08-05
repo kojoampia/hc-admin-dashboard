@@ -7,7 +7,7 @@ const organisationRoute: Routes = [
   {
     path: '',
     loadComponent: () => import('./list/organisation.component').then(m => m.OrganisationComponent),
-    data: {},
+    data: { authorities: ['ROLE_ADMIN', 'ROLE_OPERATOR'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -16,6 +16,7 @@ const organisationRoute: Routes = [
     resolve: {
       organisation: OrganisationResolve,
     },
+    data: { authorities: ['ROLE_ADMIN', 'ROLE_OPERATOR'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -24,6 +25,7 @@ const organisationRoute: Routes = [
     resolve: {
       organisation: OrganisationResolve,
     },
+    data: { authorities: ['ROLE_ADMIN'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -32,6 +34,7 @@ const organisationRoute: Routes = [
     resolve: {
       organisation: OrganisationResolve,
     },
+    data: { authorities: ['ROLE_ADMIN'] },
     canActivate: [UserRouteAccessService],
   },
 ];

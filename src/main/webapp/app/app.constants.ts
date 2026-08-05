@@ -4,8 +4,11 @@
 
 declare const __DEBUG_INFO_ENABLED__: boolean;
 declare const __VERSION__: string;
-declare const WEBSOCKET_ENABLED: boolean;
+declare const REALTIME_ENABLED: boolean;
 
 export const VERSION = __VERSION__;
 export const DEBUG_INFO_ENABLED = __DEBUG_INFO_ENABLED__;
-export const ENABLE_WEBSOCKET = WEBSOCKET_ENABLED;
+// Kill switch for the live audit stream (SSE). Named for what it gates, not for a transport:
+// this used to be ENABLE_WEBSOCKET, back when the client spoke STOMP over SockJS to a
+// `/websocket` endpoint no backend implemented.
+export const ENABLE_REALTIME = REALTIME_ENABLED;

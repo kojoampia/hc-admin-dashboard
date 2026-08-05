@@ -18,7 +18,7 @@
   <div class="grid gap-3 sm:grid-cols-3">
     <div class="rounded-2xl bg-emerald-50 p-4">
       <p class="text-xs font-medium uppercase tracking-wide text-emerald-700">Feed status</p>
-      <p class="mt-2 text-3xl font-semibold text-emerald-900">{{ isConnected ? 'Live' : 'Offline' }}</p>
+      <p class="mt-2 text-3xl font-semibold text-emerald-900">{{ isConnected() ? 'Live' : 'Offline' }}</p>
     </div>
     <div class="rounded-2xl bg-rose-50 p-4">
       <p class="text-xs font-medium uppercase tracking-wide text-rose-700">Security events</p>

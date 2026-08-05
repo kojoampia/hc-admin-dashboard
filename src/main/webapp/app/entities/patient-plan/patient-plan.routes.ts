@@ -7,7 +7,7 @@ const patientPlanRoute: Routes = [
   {
     path: '',
     loadComponent: () => import('./list/patient-plan.component').then(m => m.PatientPlanComponent),
-    data: {},
+    data: { authorities: ['ROLE_ADMIN', 'ROLE_OPERATOR'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -16,6 +16,7 @@ const patientPlanRoute: Routes = [
     resolve: {
       patientPlan: PatientPlanResolve,
     },
+    data: { authorities: ['ROLE_ADMIN', 'ROLE_OPERATOR'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -24,6 +25,7 @@ const patientPlanRoute: Routes = [
     resolve: {
       patientPlan: PatientPlanResolve,
     },
+    data: { authorities: ['ROLE_ADMIN'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -32,6 +34,7 @@ const patientPlanRoute: Routes = [
     resolve: {
       patientPlan: PatientPlanResolve,
     },
+    data: { authorities: ['ROLE_ADMIN'] },
     canActivate: [UserRouteAccessService],
   },
 ];

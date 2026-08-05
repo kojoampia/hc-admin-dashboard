@@ -19,7 +19,7 @@
     "ecmaVersion": 2018,
     "sourceType": "module",
     "warnOnUnsupportedTypeScriptVersion": false,
-    "project": ["./tsconfig.app.json", "./src/test/javascript/cypress/tsconfig.json", "./tsconfig.spec.json"]
+    "project": ["./tsconfig.app.json", "./tsconfig.spec.json"]
   },
   "rules": {
     "@angular-eslint/component-selector": [

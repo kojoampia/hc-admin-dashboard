@@ -7,7 +7,7 @@ const notificationRoute: Routes = [
   {
     path: '',
     loadComponent: () => import('./list/notification.component').then(m => m.NotificationComponent),
-    data: {},
+    data: { authorities: ['ROLE_ADMIN', 'ROLE_OPERATOR'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -16,6 +16,7 @@ const notificationRoute: Routes = [
     resolve: {
       notification: NotificationResolve,
     },
+    data: { authorities: ['ROLE_ADMIN', 'ROLE_OPERATOR'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -24,6 +25,7 @@ const notificationRoute: Routes = [
     resolve: {
       notification: NotificationResolve,
     },
+    data: { authorities: ['ROLE_ADMIN'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -32,6 +34,7 @@ const notificationRoute: Routes = [
     resolve: {
       notification: NotificationResolve,
     },
+    data: { authorities: ['ROLE_ADMIN'] },
     canActivate: [UserRouteAccessService],
   },
 ];

@@ -1,0 +1,24 @@
+# Neither the d3.js security-holding package nor the Angular sanitization-bypass advisories were
+# found by tooling — both surfaced in a manual audit, which is the argument for this file existing.
+#
+# Weekly, not daily: three repositories on one reviewer, and a PR nobody reads is not a gate.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    groups:
+      # Angular's packages must move together — a PR bumping @angular/core alone fails peer
+      # resolution against the rest of the framework.
+      angular:
+        patterns: ['@angular/*', '@angular-devkit/*', '@angular-builders/*', '@angular-eslint/*']
+      testing:
+        patterns: ['jest*', '@types/jest', 'jest-preset-angular']
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly

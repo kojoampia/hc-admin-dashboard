@@ -5,8 +5,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 
-import { DashboardStateService, UserRole } from 'app/entities/dashboard/dashboard-state';
-import { ProfileDialogComponent, ProfileData } from 'app/entities/profile/profile-dialog';
+import { DashboardStateService } from 'app/entities/dashboard/dashboard-state';
+import { ProfileDialogComponent, ProfileData, ProfileType } from 'app/entities/profile/profile-dialog';
 import { ProfileService } from 'app/entities/profile/service/profile.service';
 
 @Component({
@@ -17,7 +17,7 @@ import { ProfileService } from 'app/entities/profile/service/profile.service';
   styleUrl: './profile-component.scss',
 })
 export class ProfileComponent {
-  readonly profileTypes: UserRole[] = ['PATIENT', 'PROFESSIONAL', 'VENDOR', 'USER', 'ADMIN'];
+  readonly profileTypes: ProfileType[] = ['PATIENT', 'PROFESSIONAL', 'VENDOR', 'USER', 'ADMIN'];
   api = inject(ProfileService);
   state = inject(DashboardStateService);
   readonly filteredProfiles = computed(() => {
@@ -26,7 +26,7 @@ export class ProfileComponent {
   });
 
   displayedColumns = ['name', 'type', 'status', 'actions'];
-  selectedType = signal<UserRole>('USER');
+  selectedType = signal<ProfileType>('USER');
 
   profiles = signal<ProfileData[]>([
     { name: 'Alice Johnson', roles: ['PATIENT'], status: 'ACTIVE' },
@@ -46,8 +46,12 @@ export class ProfileComponent {
     }
   }
 
-  canEditProfile(profile: ProfileData): boolean {
-    return profile.roles.every((role: UserRole) => this.state.canAssignRole(role));
+  /**
+   * Editing a profile is an admin action on the directory, not a question about grantable
+   * authorities — which is what this asked before ProfileType and UserRole were separated.
+   */
+  canEditProfile(_profile: ProfileData): boolean {
+    return this.state.canAccess('PROFILES', 'UPDATE');
   }
 
   openAddModal(): void {

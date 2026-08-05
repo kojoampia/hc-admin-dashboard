@@ -4,15 +4,17 @@ import { signal } from '@angular/core';
 
 import type { ActivityEvent, DashboardStateService } from 'app/entities/dashboard/dashboard-state';
 
-(globalThis as { WEBSOCKET_ENABLED?: boolean }).WEBSOCKET_ENABLED = false;
+(globalThis as { REALTIME_ENABLED?: boolean }).REALTIME_ENABLED = false;
 
 import RealTimeDataComponent from './real-time-data';
 
 describe('RealTimeDataComponent', () => {
-  let dashboardState: Pick<DashboardStateService, 'operationLogs' | 'connectAuditTrail' | 'disconnectAuditTrail'>;
+  let dashboardState: Pick<DashboardStateService, 'operationLogs' | 'auditTrailConnected' | 'connectAuditTrail' | 'disconnectAuditTrail'>;
+  let connected: ReturnType<typeof signal<boolean>>;
   let component: RealTimeDataComponent;
 
   beforeEach(() => {
+    connected = signal(false);
     dashboardState = {
       operationLogs: signal<ActivityEvent[]>([
         {
@@ -32,8 +34,11 @@ describe('RealTimeDataComponent', () => {
           colorClass: 'bg-indigo-100 text-indigo-600',
         },
       ]),
-      connectAuditTrail: jest.fn(),
-      disconnectAuditTrail: jest.fn(),
+      // The component reads this rather than assuming a connection happened — see the field comment
+      // on RealTimeDataComponent.isConnected.
+      auditTrailConnected: connected,
+      connectAuditTrail: jest.fn(() => connected.set(true)),
+      disconnectAuditTrail: jest.fn(() => connected.set(false)),
     };
 
     component = new RealTimeDataComponent(dashboardState as DashboardStateService);
@@ -43,7 +48,7 @@ describe('RealTimeDataComponent', () => {
     component.ngOnInit();
 
     expect(dashboardState.connectAuditTrail).toHaveBeenCalled();
-    expect(component.isConnected).toBe(true);
+    expect(component.isConnected()).toBe(true);
     expect(component.latestEvents()).toHaveLength(2);
     expect(component.securityEventCount()).toBe(1);
     expect(component.distinctEventTypes()).toBe(2);
@@ -51,5 +56,15 @@ describe('RealTimeDataComponent', () => {
 
     component.ngOnDestroy();
     expect(dashboardState.disconnectAuditTrail).toHaveBeenCalled();
+    expect(component.isConnected()).toBe(false);
+  });
+
+  it('reports Offline until the stream is actually reading', () => {
+    // The bug this replaces: isConnected was a plain field set to true on the line after
+    // connectAuditTrail(), so the tile said "Live" whether or not anything connected.
+    component.ngOnInit();
+    connected.set(false);
+
+    expect(component.isConnected()).toBe(false);
   });
 });

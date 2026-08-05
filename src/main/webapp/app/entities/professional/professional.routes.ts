@@ -7,7 +7,7 @@ const professionalRoute: Routes = [
   {
     path: '',
     loadComponent: () => import('./list/professional.component').then(m => m.ProfessionalComponent),
-    data: {},
+    data: { authorities: ['ROLE_ADMIN', 'ROLE_OPERATOR'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -16,6 +16,7 @@ const professionalRoute: Routes = [
     resolve: {
       professional: ProfessionalResolve,
     },
+    data: { authorities: ['ROLE_ADMIN', 'ROLE_OPERATOR'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -24,6 +25,7 @@ const professionalRoute: Routes = [
     resolve: {
       professional: ProfessionalResolve,
     },
+    data: { authorities: ['ROLE_ADMIN'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -32,6 +34,7 @@ const professionalRoute: Routes = [
     resolve: {
       professional: ProfessionalResolve,
     },
+    data: { authorities: ['ROLE_ADMIN'] },
     canActivate: [UserRouteAccessService],
   },
 ];

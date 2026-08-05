@@ -7,7 +7,7 @@ const addressRoute: Routes = [
   {
     path: '',
     loadComponent: () => import('./list/address.component').then(m => m.AddressComponent),
-    data: {},
+    data: { authorities: ['ROLE_ADMIN', 'ROLE_OPERATOR'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -16,6 +16,7 @@ const addressRoute: Routes = [
     resolve: {
       address: AddressResolve,
     },
+    data: { authorities: ['ROLE_ADMIN', 'ROLE_OPERATOR'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -24,6 +25,7 @@ const addressRoute: Routes = [
     resolve: {
       address: AddressResolve,
     },
+    data: { authorities: ['ROLE_ADMIN'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -32,6 +34,7 @@ const addressRoute: Routes = [
     resolve: {
       address: AddressResolve,
     },
+    data: { authorities: ['ROLE_ADMIN'] },
     canActivate: [UserRouteAccessService],
   },
 ];

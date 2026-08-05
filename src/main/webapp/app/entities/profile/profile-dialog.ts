@@ -5,15 +5,24 @@ import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/materia
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 
-import { UserRole } from 'app/entities/dashboard/dashboard-state';
+/**
+ * What a Profile record *is* — distinct from the authority the signed-in operator *holds*.
+ *
+ * These two were the same union until the authentication roles were narrowed to the three the
+ * gateway actually issues. They were never the same thing: PATIENT and VENDOR describe a person or
+ * organisation in the directory, and no login ever carried them. Conflating them meant
+ * `canEditProfile` asked `canAssignRole('VENDOR')` — a question about a grantable authority, asked
+ * of a value that was never one.
+ */
+export type ProfileType = 'USER' | 'ADMIN' | 'PATIENT' | 'PROFESSIONAL' | 'VENDOR' | 'EDITOR';
 
 export interface ProfileData {
   name: string;
-  roles: UserRole[];
+  roles: ProfileType[];
   status: string;
 }
 
-const ALL_ROLES: UserRole[] = ['USER', 'ADMIN', 'PATIENT', 'PROFESSIONAL', 'VENDOR', 'EDITOR'];
+const ALL_ROLES: ProfileType[] = ['USER', 'ADMIN', 'PATIENT', 'PROFESSIONAL', 'VENDOR', 'EDITOR'];
 
 @Component({
   selector: 'hpd-profile-dialog',
@@ -110,14 +119,14 @@ export class ProfileDialogComponent {
     roles: this.data?.roles ?? [],
     status: this.data?.status ?? 'ACTIVE',
   });
-  readonly allRoles: UserRole[] = ALL_ROLES;
+  readonly allRoles: ProfileType[] = ALL_ROLES;
   private readonly dialogRef = inject(MatDialogRef<ProfileDialogComponent>);
 
   patch<K extends keyof ProfileData>(key: K, value: ProfileData[K]): void {
     this.form.update(f => ({ ...f, [key]: value }));
   }
 
-  toggleRole(role: UserRole): void {
+  toggleRole(role: ProfileType): void {
     this.form.update(f => {
       const roles = f.roles.includes(role) ? f.roles.filter(r => r !== role) : [...f.roles, role];
       return { ...f, roles };

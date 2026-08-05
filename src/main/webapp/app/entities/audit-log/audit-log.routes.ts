@@ -7,7 +7,7 @@ const auditLogRoute: Routes = [
   {
     path: '',
     loadComponent: () => import('./list/audit-log.component').then(m => m.AuditLogComponent),
-    data: {},
+    data: { authorities: ['ROLE_ADMIN', 'ROLE_OPERATOR'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -16,6 +16,7 @@ const auditLogRoute: Routes = [
     resolve: {
       auditLog: AuditLogResolve,
     },
+    data: { authorities: ['ROLE_ADMIN', 'ROLE_OPERATOR'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -24,6 +25,7 @@ const auditLogRoute: Routes = [
     resolve: {
       auditLog: AuditLogResolve,
     },
+    data: { authorities: ['ROLE_ADMIN'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -32,6 +34,7 @@ const auditLogRoute: Routes = [
     resolve: {
       auditLog: AuditLogResolve,
     },
+    data: { authorities: ['ROLE_ADMIN'] },
     canActivate: [UserRouteAccessService],
   },
 ];

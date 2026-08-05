@@ -7,7 +7,7 @@ const featureRoute: Routes = [
   {
     path: '',
     loadComponent: () => import('./list/feature.component').then(m => m.FeatureComponent),
-    data: {},
+    data: { authorities: ['ROLE_ADMIN', 'ROLE_OPERATOR'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -16,6 +16,7 @@ const featureRoute: Routes = [
     resolve: {
       feature: FeatureResolve,
     },
+    data: { authorities: ['ROLE_ADMIN', 'ROLE_OPERATOR'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -24,6 +25,7 @@ const featureRoute: Routes = [
     resolve: {
       feature: FeatureResolve,
     },
+    data: { authorities: ['ROLE_ADMIN'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -32,6 +34,7 @@ const featureRoute: Routes = [
     resolve: {
       feature: FeatureResolve,
     },
+    data: { authorities: ['ROLE_ADMIN'] },
     canActivate: [UserRouteAccessService],
   },
 ];

@@ -7,7 +7,7 @@ const pricingPlanRoute: Routes = [
   {
     path: '',
     loadComponent: () => import('./list/pricing-plan.component').then(m => m.PricingPlanComponent),
-    data: {},
+    data: { authorities: ['ROLE_ADMIN', 'ROLE_OPERATOR'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -16,6 +16,7 @@ const pricingPlanRoute: Routes = [
     resolve: {
       pricingPlan: PricingPlanResolve,
     },
+    data: { authorities: ['ROLE_ADMIN', 'ROLE_OPERATOR'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -24,6 +25,7 @@ const pricingPlanRoute: Routes = [
     resolve: {
       pricingPlan: PricingPlanResolve,
     },
+    data: { authorities: ['ROLE_ADMIN'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -32,6 +34,7 @@ const pricingPlanRoute: Routes = [
     resolve: {
       pricingPlan: PricingPlanResolve,
     },
+    data: { authorities: ['ROLE_ADMIN'] },
     canActivate: [UserRouteAccessService],
   },
 ];

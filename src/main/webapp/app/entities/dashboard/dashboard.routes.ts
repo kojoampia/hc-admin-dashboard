@@ -7,13 +7,13 @@ const dashboardRoute: Routes = [
   {
     path: '',
     loadComponent: () => import('./dashboard-component').then(m => m.DashboardComponent),
-    data: {},
+    data: { authorities: ['ROLE_ADMIN', 'ROLE_OPERATOR'] },
     canActivate: [UserRouteAccessService],
   },
   {
     path: 'manage',
     loadComponent: () => import('./list/dashboard.component').then(m => m.DashboardComponent),
-    data: {},
+    data: { authorities: ['ROLE_ADMIN', 'ROLE_OPERATOR'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -22,6 +22,7 @@ const dashboardRoute: Routes = [
     resolve: {
       dashboard: DashboardResolve,
     },
+    data: { authorities: ['ROLE_ADMIN', 'ROLE_OPERATOR'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -30,6 +31,7 @@ const dashboardRoute: Routes = [
     resolve: {
       dashboard: DashboardResolve,
     },
+    data: { authorities: ['ROLE_ADMIN'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -38,6 +40,7 @@ const dashboardRoute: Routes = [
     resolve: {
       dashboard: DashboardResolve,
     },
+    data: { authorities: ['ROLE_ADMIN'] },
     canActivate: [UserRouteAccessService],
   },
 ];

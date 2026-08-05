@@ -7,7 +7,7 @@ const documentItemRoute: Routes = [
   {
     path: '',
     loadComponent: () => import('./list/document-item.component').then(m => m.DocumentItemComponent),
-    data: {},
+    data: { authorities: ['ROLE_ADMIN', 'ROLE_OPERATOR'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -16,6 +16,7 @@ const documentItemRoute: Routes = [
     resolve: {
       documentItem: DocumentItemResolve,
     },
+    data: { authorities: ['ROLE_ADMIN', 'ROLE_OPERATOR'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -24,6 +25,7 @@ const documentItemRoute: Routes = [
     resolve: {
       documentItem: DocumentItemResolve,
     },
+    data: { authorities: ['ROLE_ADMIN'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -32,6 +34,7 @@ const documentItemRoute: Routes = [
     resolve: {
       documentItem: DocumentItemResolve,
     },
+    data: { authorities: ['ROLE_ADMIN'] },
     canActivate: [UserRouteAccessService],
   },
 ];

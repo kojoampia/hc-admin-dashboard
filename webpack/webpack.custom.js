@@ -115,10 +115,10 @@ module.exports = async (config, options, targetOptions) => {
       // APP_VERSION is passed as an environment variable from the Gradle / Maven build tasks.
       __VERSION__: JSON.stringify(environment.__VERSION__),
       __DEBUG_INFO_ENABLED__: environment.__DEBUG_INFO_ENABLED__ || config.mode === 'development',
-      WEBSOCKET_ENABLED:
+      REALTIME_ENABLED:
         config.mode === 'development'
-          ? JSON.stringify(environment.DEV_WEBSOCKET_ENABLED)
-          : JSON.stringify(environment.PROD_WEBSOCKET_ENABLED),
+          ? JSON.stringify(environment.DEV_REALTIME_ENABLED)
+          : JSON.stringify(environment.PROD_REALTIME_ENABLED),
       // The root URL for API calls, ending with a '/' - for example: `"https://www.jhipster.tech:8081/myservice/"`.
       // If this URL is left empty (""), then it will be relative to the current context.
       // If you use an API server, in `prod` mode, you will need to enable CORS

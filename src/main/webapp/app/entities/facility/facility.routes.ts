@@ -7,7 +7,7 @@ const facilityRoute: Routes = [
   {
     path: '',
     loadComponent: () => import('./list/facility.component').then(m => m.FacilityComponent),
-    data: {},
+    data: { authorities: ['ROLE_ADMIN', 'ROLE_OPERATOR'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -16,6 +16,7 @@ const facilityRoute: Routes = [
     resolve: {
       facility: FacilityResolve,
     },
+    data: { authorities: ['ROLE_ADMIN', 'ROLE_OPERATOR'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -24,6 +25,7 @@ const facilityRoute: Routes = [
     resolve: {
       facility: FacilityResolve,
     },
+    data: { authorities: ['ROLE_ADMIN'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -32,6 +34,7 @@ const facilityRoute: Routes = [
     resolve: {
       facility: FacilityResolve,
     },
+    data: { authorities: ['ROLE_ADMIN'] },
     canActivate: [UserRouteAccessService],
   },
 ];

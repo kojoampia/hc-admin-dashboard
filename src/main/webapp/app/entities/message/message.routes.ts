@@ -7,7 +7,7 @@ const messageRoute: Routes = [
   {
     path: '',
     loadComponent: () => import('./list/message.component').then(m => m.MessageComponent),
-    data: {},
+    data: { authorities: ['ROLE_ADMIN', 'ROLE_OPERATOR'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -16,6 +16,7 @@ const messageRoute: Routes = [
     resolve: {
       message: MessageResolve,
     },
+    data: { authorities: ['ROLE_ADMIN', 'ROLE_OPERATOR'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -24,6 +25,7 @@ const messageRoute: Routes = [
     resolve: {
       message: MessageResolve,
     },
+    data: { authorities: ['ROLE_ADMIN'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -32,6 +34,7 @@ const messageRoute: Routes = [
     resolve: {
       message: MessageResolve,
     },
+    data: { authorities: ['ROLE_ADMIN'] },
     canActivate: [UserRouteAccessService],
   },
 ];

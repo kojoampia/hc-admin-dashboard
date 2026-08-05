@@ -1,7 +1,7 @@
 import { Injectable, signal, computed, inject, DestroyRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { WebsocketAuthService } from 'app/core/websocket/websocket-auth.service';
+import { AuditStreamService } from 'app/core/sse/audit-stream.service';
 import { AuditLogService } from 'app/entities/audit-log/service/audit-log.service';
 import { AccountService } from 'app/core/auth/account.service';
 import { IAuditLog } from 'app/entities/audit-log/audit-log.model';
@@ -10,7 +10,12 @@ export type AppResource = 'DASHBOARD' | 'MESSAGES' | 'DUTY_ROSTER' | 'PRICE_PLAN
 
 export type Permission = 'READ' | 'WRITE' | 'DELETE' | 'CREATE' | 'UPDATE';
 
-export type UserRole = 'USER' | 'ADMIN' | 'PATIENT' | 'PROFESSIONAL' | 'VENDOR' | 'EDITOR' | 'OPERATOR';
+/**
+ * The three authorities this stack actually issues — the gateway's `AuthoritiesMigration` seeds
+ * exactly these. PATIENT, PROFESSIONAL, VENDOR and EDITOR used to be listed here and no backend
+ * ever minted them, so `canAssignRole` was reasoning about roles that could not exist.
+ */
+export type UserRole = 'USER' | 'OPERATOR' | 'ADMIN';
 
 export interface AppUser {
   name: string;
@@ -25,8 +30,6 @@ export interface ActivityEvent {
   icon: string;
   colorClass: string;
 }
-
-const AUDIT_TOPIC = '/topic/audit-events';
 
 const TYPE_ICON_MAP: Record<string, string> = {
   'Audit Log': 'receipt_long',
@@ -62,7 +65,10 @@ export class DashboardStateService {
 
   readonly operationLogs = signal<ActivityEvent[]>([]);
 
-  private readonly wsService = inject(WebsocketAuthService);
+  /** Live connection state, straight from the stream — see {@link AuditStreamService.connected}. */
+  readonly auditTrailConnected = computed(() => this.auditStream.connected());
+
+  private readonly auditStream = inject(AuditStreamService);
   private readonly auditLogService = inject(AuditLogService);
   private readonly accountService = inject(AccountService);
   private readonly destroyRef = inject(DestroyRef);
@@ -88,25 +94,25 @@ export class DashboardStateService {
     this.currentUser.set(user);
   }
 
+  /**
+   * Mirrors the api's filter chain: admins do everything, operators read, a bare USER reaches
+   * nothing. This is a hint for hiding controls, not a gate — the server decides.
+   */
   canAccess(resource: AppResource, permission: Permission): boolean {
     const role = this.currentUser().role;
     if (role === 'ADMIN') {
       return true;
     }
-    // Default: all authenticated users can READ all resources
-    if (permission === 'READ') {
-      return true;
+    if (role === 'OPERATOR') {
+      return permission === 'READ';
     }
     return false;
   }
 
   canAssignRole(role: UserRole): boolean {
-    const currentRole = this.currentUser().role;
-    if (currentRole === 'ADMIN') {
-      return true;
-    }
-    const nonAdminAssignable: UserRole[] = ['USER', 'PATIENT', 'PROFESSIONAL', 'EDITOR'];
-    return nonAdminAssignable.includes(role);
+    // Only an admin assigns authorities at all — /api/admin/users is ROLE_ADMIN on every method,
+    // so anyone else offering the choice is offering a request the gateway will reject.
+    return this.currentUser().role === 'ADMIN' && (['USER', 'OPERATOR', 'ADMIN'] as UserRole[]).includes(role);
   }
 
   connectAuditTrail(): void {
@@ -114,8 +120,8 @@ export class DashboardStateService {
     if (this.auditSubscription) {
       return;
     }
-    this.wsService.connect();
-    this.auditSubscription = this.wsService.subscribe(AUDIT_TOPIC).subscribe((raw: any) => {
+    this.auditStream.connect();
+    this.auditSubscription = this.auditStream.stream().subscribe((raw: any) => {
       this.operationLogs.update(logs => [this.mapToActivityEvent(raw), ...logs]);
     });
   }
@@ -125,6 +131,9 @@ export class DashboardStateService {
     if (this.auditConsumers === 0 && this.auditSubscription) {
       this.auditSubscription.unsubscribe();
       this.auditSubscription = null;
+      // The old code stopped here, leaving the transport open for the lifetime of the app. Refcount
+      // reaching zero means nothing is listening, so the stream should close too.
+      this.auditStream.disconnect();
     }
   }
 
@@ -137,7 +146,10 @@ export class DashboardStateService {
           const name = [account.firstName, account.lastName].filter(Boolean).join(' ') || account.login;
           // `.some` on the name, not `.includes` of a literal: authorities are IAuthority objects,
           // and includes() compares by reference, so a fresh literal never matches.
-          const role = account.authorities.some(authority => authority.name === 'ROLE_ADMIN') ? 'ADMIN' : 'USER';
+          const has = (authority: string): boolean => account.authorities.some(held => held.name === authority);
+          // Checked most-privileged first: the operator account also holds ROLE_USER as a baseline,
+          // so the order is what stops it reading as a plain user.
+          const role: UserRole = has('ROLE_ADMIN') ? 'ADMIN' : has('ROLE_OPERATOR') ? 'OPERATOR' : 'USER';
           this.currentUser.set({ name, role });
         }
       });

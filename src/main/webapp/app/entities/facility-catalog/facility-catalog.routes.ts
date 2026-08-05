@@ -7,7 +7,7 @@ const facilityCatalogRoute: Routes = [
   {
     path: '',
     loadComponent: () => import('./list/facility-catalog.component').then(m => m.FacilityCatalogComponent),
-    data: {},
+    data: { authorities: ['ROLE_ADMIN', 'ROLE_OPERATOR'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -16,6 +16,7 @@ const facilityCatalogRoute: Routes = [
     resolve: {
       facilityCatalog: FacilityCatalogResolve,
     },
+    data: { authorities: ['ROLE_ADMIN', 'ROLE_OPERATOR'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -24,6 +25,7 @@ const facilityCatalogRoute: Routes = [
     resolve: {
       facilityCatalog: FacilityCatalogResolve,
     },
+    data: { authorities: ['ROLE_ADMIN'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -32,6 +34,7 @@ const facilityCatalogRoute: Routes = [
     resolve: {
       facilityCatalog: FacilityCatalogResolve,
     },
+    data: { authorities: ['ROLE_ADMIN'] },
     canActivate: [UserRouteAccessService],
   },
 ];

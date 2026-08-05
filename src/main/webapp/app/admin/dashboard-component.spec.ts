@@ -7,7 +7,7 @@ import { Account } from 'app/core/auth/account.model';
 import { AccountService } from 'app/core/auth/account.service';
 import { DashboardLayoutService, DashboardWidgetLayout } from './dashboard-layout.service';
 
-(globalThis as { WEBSOCKET_ENABLED?: boolean }).WEBSOCKET_ENABLED = false;
+(globalThis as { REALTIME_ENABLED?: boolean }).REALTIME_ENABLED = false;
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const DashboardComponent = require('./dashboard-component').default as typeof import('./dashboard-component').default;

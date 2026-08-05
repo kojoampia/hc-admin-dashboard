@@ -7,7 +7,7 @@ const systemCatalogRoute: Routes = [
   {
     path: '',
     loadComponent: () => import('./list/system-catalog.component').then(m => m.SystemCatalogComponent),
-    data: {},
+    data: { authorities: ['ROLE_ADMIN', 'ROLE_OPERATOR'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -16,6 +16,7 @@ const systemCatalogRoute: Routes = [
     resolve: {
       systemCatalog: SystemCatalogResolve,
     },
+    data: { authorities: ['ROLE_ADMIN', 'ROLE_OPERATOR'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -24,6 +25,7 @@ const systemCatalogRoute: Routes = [
     resolve: {
       systemCatalog: SystemCatalogResolve,
     },
+    data: { authorities: ['ROLE_ADMIN'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -32,6 +34,7 @@ const systemCatalogRoute: Routes = [
     resolve: {
       systemCatalog: SystemCatalogResolve,
     },
+    data: { authorities: ['ROLE_ADMIN'] },
     canActivate: [UserRouteAccessService],
   },
 ];

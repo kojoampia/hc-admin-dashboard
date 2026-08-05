@@ -7,7 +7,7 @@ const contactRoute: Routes = [
   {
     path: '',
     loadComponent: () => import('./list/contact.component').then(m => m.ContactComponent),
-    data: {},
+    data: { authorities: ['ROLE_ADMIN', 'ROLE_OPERATOR'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -16,6 +16,7 @@ const contactRoute: Routes = [
     resolve: {
       contact: ContactResolve,
     },
+    data: { authorities: ['ROLE_ADMIN', 'ROLE_OPERATOR'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -24,6 +25,7 @@ const contactRoute: Routes = [
     resolve: {
       contact: ContactResolve,
     },
+    data: { authorities: ['ROLE_ADMIN'] },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -32,6 +34,7 @@ const contactRoute: Routes = [
     resolve: {
       contact: ContactResolve,
     },
+    data: { authorities: ['ROLE_ADMIN'] },
     canActivate: [UserRouteAccessService],
   },
 ];

@@ -29,18 +29,21 @@ export default class RealTimeDataComponent implements OnInit, OnDestroy {
       .slice(0, 4),
   );
 
-  isConnected = false;
+  /**
+   * Reflects the transport, not the intent to use it. This used to be a plain field set to `true`
+   * on the line after `connectAuditTrail()` — so the tile read "Live" whether or not anything had
+   * connected, which is how a stream pointed at a nonexistent `/websocket` endpoint went unnoticed.
+   */
+  readonly isConnected = computed(() => this.dashboardState.auditTrailConnected());
 
   constructor(public dashboardState: DashboardStateService) {}
 
   ngOnInit(): void {
     this.dashboardState.connectAuditTrail();
-    this.isConnected = true;
   }
 
   ngOnDestroy(): void {
     this.dashboardState.disconnectAuditTrail();
-    this.isConnected = false;
   }
 
   private isSecurityEvent(event: ActivityEvent): boolean {
