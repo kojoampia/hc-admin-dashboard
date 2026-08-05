@@ -2,12 +2,12 @@ import { Component, NgZone, OnInit, inject, signal } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Data, ParamMap, Router, RouterModule } from '@angular/router';
 import { Observable, Subscription, combineLatest, filter, tap } from 'rxjs';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialog } from '@angular/material/dialog';
 
 import SharedModule from 'app/shared/shared.module';
 import { SortByDirective, SortDirective, SortService, type SortState, sortStateSignal } from 'app/shared/sort';
 import { FormatMediumDatetimePipe } from 'app/shared/date';
-import { ItemCountComponent } from 'app/shared/pagination';
+import { ItemCountComponent, PaginationComponent } from 'app/shared/pagination';
 import { FormsModule } from '@angular/forms';
 
 import { ITEMS_PER_PAGE, PAGE_HEADER, TOTAL_COUNT_RESPONSE_HEADER } from 'app/config/pagination.constants';
@@ -19,7 +19,7 @@ import { TeamDeleteDialogComponent } from '../delete/team-delete-dialog.componen
 @Component({
   selector: 'hpd-team',
   templateUrl: './team.component.html',
-  imports: [RouterModule, FormsModule, SharedModule, SortDirective, SortByDirective, FormatMediumDatetimePipe, ItemCountComponent],
+  imports: [RouterModule, FormsModule, SharedModule, SortDirective, SortByDirective, FormatMediumDatetimePipe, ItemCountComponent, PaginationComponent],
 })
 export class TeamComponent implements OnInit {
   subscription: Subscription | null = null;
@@ -36,7 +36,7 @@ export class TeamComponent implements OnInit {
   protected readonly teamService = inject(TeamService);
   protected readonly activatedRoute = inject(ActivatedRoute);
   protected readonly sortService = inject(SortService);
-  protected modalService = inject(NgbModal);
+  protected dialog = inject(MatDialog);
   protected ngZone = inject(NgZone);
 
   trackId = (item: ITeam): string => this.teamService.getTeamIdentifier(item);
@@ -51,10 +51,10 @@ export class TeamComponent implements OnInit {
   }
 
   delete(team: ITeam): void {
-    const modalRef = this.modalService.open(TeamDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
-    modalRef.componentInstance.team = team;
-    // unsubscribe not needed because closed completes on modal close
-    modalRef.closed
+    const dialogRef = this.dialog.open(TeamDeleteDialogComponent, { width: '640px', disableClose: true });
+    dialogRef.componentInstance.team = team;
+    // unsubscribe not needed because afterClosed() completes on close
+    dialogRef.afterClosed()
       .pipe(
         filter(reason => reason === ITEM_DELETED_EVENT),
         tap(() => this.load()),

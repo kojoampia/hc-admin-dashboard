@@ -2,12 +2,12 @@ import { Component, NgZone, OnInit, inject, signal } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Data, ParamMap, Router, RouterModule } from '@angular/router';
 import { Observable, Subscription, combineLatest, filter, tap } from 'rxjs';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialog } from '@angular/material/dialog';
 
 import SharedModule from 'app/shared/shared.module';
 import { SortByDirective, SortDirective, SortService, type SortState, sortStateSignal } from 'app/shared/sort';
 import { FormatMediumDatetimePipe } from 'app/shared/date';
-import { ItemCountComponent } from 'app/shared/pagination';
+import { ItemCountComponent, PaginationComponent } from 'app/shared/pagination';
 import { FormsModule } from '@angular/forms';
 
 import { ITEMS_PER_PAGE, PAGE_HEADER, TOTAL_COUNT_RESPONSE_HEADER } from 'app/config/pagination.constants';
@@ -19,7 +19,7 @@ import { MessageDeleteDialogComponent } from '../delete/message-delete-dialog.co
 @Component({
   selector: 'hpd-message',
   templateUrl: './message.component.html',
-  imports: [RouterModule, FormsModule, SharedModule, SortDirective, SortByDirective, FormatMediumDatetimePipe, ItemCountComponent],
+  imports: [RouterModule, FormsModule, SharedModule, SortDirective, SortByDirective, FormatMediumDatetimePipe, ItemCountComponent, PaginationComponent],
 })
 export class MessageComponent implements OnInit {
   subscription: Subscription | null = null;
@@ -36,7 +36,7 @@ export class MessageComponent implements OnInit {
   protected readonly messageService = inject(MessageService);
   protected readonly activatedRoute = inject(ActivatedRoute);
   protected readonly sortService = inject(SortService);
-  protected modalService = inject(NgbModal);
+  protected dialog = inject(MatDialog);
   protected ngZone = inject(NgZone);
 
   trackId = (item: IMessage): string => this.messageService.getMessageIdentifier(item);
@@ -51,10 +51,10 @@ export class MessageComponent implements OnInit {
   }
 
   delete(message: IMessage): void {
-    const modalRef = this.modalService.open(MessageDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
-    modalRef.componentInstance.message = message;
-    // unsubscribe not needed because closed completes on modal close
-    modalRef.closed
+    const dialogRef = this.dialog.open(MessageDeleteDialogComponent, { width: '640px', disableClose: true });
+    dialogRef.componentInstance.message = message;
+    // unsubscribe not needed because afterClosed() completes on close
+    dialogRef.afterClosed()
       .pipe(
         filter(reason => reason === ITEM_DELETED_EVENT),
         tap(() => this.load()),

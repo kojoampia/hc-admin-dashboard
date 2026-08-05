@@ -1,5 +1,4 @@
 import { CommonModule } from '@angular/common';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -17,7 +16,6 @@ export { AlertComponent, AlertErrorComponent, FindLanguageFromKeyPipe, Translate
 
 const SharedModule = [
   CommonModule,
-  NgbModule,
   MatButtonModule,
   MatFormFieldModule,
   MatIconModule,

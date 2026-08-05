@@ -1,9 +1,7 @@
-jest.mock('@ng-bootstrap/ng-bootstrap');
-
 import { ComponentFixture, TestBed, fakeAsync, inject, tick } from '@angular/core/testing';
 import { HttpResponse, provideHttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialogRef } from '@angular/material/dialog';
 
 import { OrganisationService } from '../service/organisation.service';
 
@@ -13,19 +11,19 @@ describe('Organisation Management Delete Component', () => {
   let comp: OrganisationDeleteDialogComponent;
   let fixture: ComponentFixture<OrganisationDeleteDialogComponent>;
   let service: OrganisationService;
-  let mockActiveModal: NgbActiveModal;
+  let dialogRef: { close: jest.Mock };
 
   beforeEach(() => {
+    dialogRef = { close: jest.fn() };
     TestBed.configureTestingModule({
       imports: [OrganisationDeleteDialogComponent],
-      providers: [provideHttpClient(), NgbActiveModal],
+      providers: [provideHttpClient(), { provide: MatDialogRef, useValue: dialogRef }],
     })
       .overrideTemplate(OrganisationDeleteDialogComponent, '')
       .compileComponents();
     fixture = TestBed.createComponent(OrganisationDeleteDialogComponent);
     comp = fixture.componentInstance;
     service = TestBed.inject(OrganisationService);
-    mockActiveModal = TestBed.inject(NgbActiveModal);
   });
 
   describe('confirmDelete', () => {
@@ -41,7 +39,7 @@ describe('Organisation Management Delete Component', () => {
 
         // THEN
         expect(service.delete).toHaveBeenCalledWith('ABC');
-        expect(mockActiveModal.close).toHaveBeenCalledWith('deleted');
+        expect(dialogRef.close).toHaveBeenCalledWith('deleted');
       }),
     ));
 
@@ -54,8 +52,8 @@ describe('Organisation Management Delete Component', () => {
 
       // THEN
       expect(service.delete).not.toHaveBeenCalled();
-      expect(mockActiveModal.close).not.toHaveBeenCalled();
-      expect(mockActiveModal.dismiss).toHaveBeenCalled();
+      expect(dialogRef.close).not.toHaveBeenCalledWith('deleted');
+      expect(dialogRef.close).toHaveBeenCalledWith();
     });
   });
 });

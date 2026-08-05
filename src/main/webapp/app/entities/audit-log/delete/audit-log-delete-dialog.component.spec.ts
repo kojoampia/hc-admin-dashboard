@@ -1,9 +1,7 @@
-jest.mock('@ng-bootstrap/ng-bootstrap');
-
 import { ComponentFixture, TestBed, fakeAsync, inject, tick } from '@angular/core/testing';
 import { HttpResponse, provideHttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialogRef } from '@angular/material/dialog';
 
 import { AuditLogService } from '../service/audit-log.service';
 
@@ -13,19 +11,19 @@ describe('AuditLog Management Delete Component', () => {
   let comp: AuditLogDeleteDialogComponent;
   let fixture: ComponentFixture<AuditLogDeleteDialogComponent>;
   let service: AuditLogService;
-  let mockActiveModal: NgbActiveModal;
+  let dialogRef: { close: jest.Mock };
 
   beforeEach(() => {
+    dialogRef = { close: jest.fn() };
     TestBed.configureTestingModule({
       imports: [AuditLogDeleteDialogComponent],
-      providers: [provideHttpClient(), NgbActiveModal],
+      providers: [provideHttpClient(), { provide: MatDialogRef, useValue: dialogRef }],
     })
       .overrideTemplate(AuditLogDeleteDialogComponent, '')
       .compileComponents();
     fixture = TestBed.createComponent(AuditLogDeleteDialogComponent);
     comp = fixture.componentInstance;
     service = TestBed.inject(AuditLogService);
-    mockActiveModal = TestBed.inject(NgbActiveModal);
   });
 
   describe('confirmDelete', () => {
@@ -41,7 +39,7 @@ describe('AuditLog Management Delete Component', () => {
 
         // THEN
         expect(service.delete).toHaveBeenCalledWith('ABC');
-        expect(mockActiveModal.close).toHaveBeenCalledWith('deleted');
+        expect(dialogRef.close).toHaveBeenCalledWith('deleted');
       }),
     ));
 
@@ -54,8 +52,8 @@ describe('AuditLog Management Delete Component', () => {
 
       // THEN
       expect(service.delete).not.toHaveBeenCalled();
-      expect(mockActiveModal.close).not.toHaveBeenCalled();
-      expect(mockActiveModal.dismiss).toHaveBeenCalled();
+      expect(dialogRef.close).not.toHaveBeenCalledWith('deleted');
+      expect(dialogRef.close).toHaveBeenCalledWith();
     });
   });
 });

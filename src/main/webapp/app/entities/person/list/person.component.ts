@@ -2,12 +2,12 @@ import { Component, NgZone, OnInit, inject, signal } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Data, ParamMap, Router, RouterModule } from '@angular/router';
 import { Observable, Subscription, combineLatest, filter, tap } from 'rxjs';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialog } from '@angular/material/dialog';
 
 import SharedModule from 'app/shared/shared.module';
 import { SortByDirective, SortDirective, SortService, type SortState, sortStateSignal } from 'app/shared/sort';
 import { FormatMediumDatePipe, FormatMediumDatetimePipe } from 'app/shared/date';
-import { ItemCountComponent } from 'app/shared/pagination';
+import { ItemCountComponent, PaginationComponent } from 'app/shared/pagination';
 import { FormsModule } from '@angular/forms';
 
 import { ITEMS_PER_PAGE, PAGE_HEADER, TOTAL_COUNT_RESPONSE_HEADER } from 'app/config/pagination.constants';
@@ -28,6 +28,7 @@ import { PersonDeleteDialogComponent } from '../delete/person-delete-dialog.comp
     FormatMediumDatetimePipe,
     FormatMediumDatePipe,
     ItemCountComponent,
+    PaginationComponent,
   ],
 })
 export class PersonComponent implements OnInit {
@@ -45,7 +46,7 @@ export class PersonComponent implements OnInit {
   protected readonly personService = inject(PersonService);
   protected readonly activatedRoute = inject(ActivatedRoute);
   protected readonly sortService = inject(SortService);
-  protected modalService = inject(NgbModal);
+  protected dialog = inject(MatDialog);
   protected ngZone = inject(NgZone);
 
   trackId = (item: IPerson): string => this.personService.getPersonIdentifier(item);
@@ -60,10 +61,10 @@ export class PersonComponent implements OnInit {
   }
 
   delete(person: IPerson): void {
-    const modalRef = this.modalService.open(PersonDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
-    modalRef.componentInstance.person = person;
-    // unsubscribe not needed because closed completes on modal close
-    modalRef.closed
+    const dialogRef = this.dialog.open(PersonDeleteDialogComponent, { width: '640px', disableClose: true });
+    dialogRef.componentInstance.person = person;
+    // unsubscribe not needed because afterClosed() completes on close
+    dialogRef.afterClosed()
       .pipe(
         filter(reason => reason === ITEM_DELETED_EVENT),
         tap(() => this.load()),

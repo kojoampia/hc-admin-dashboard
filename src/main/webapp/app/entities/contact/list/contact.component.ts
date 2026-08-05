@@ -2,11 +2,11 @@ import { Component, NgZone, OnInit, inject, signal } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Data, ParamMap, Router, RouterModule } from '@angular/router';
 import { Observable, Subscription, combineLatest, filter, tap } from 'rxjs';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialog } from '@angular/material/dialog';
 
 import SharedModule from 'app/shared/shared.module';
 import { SortByDirective, SortDirective, SortService, type SortState, sortStateSignal } from 'app/shared/sort';
-import { ItemCountComponent } from 'app/shared/pagination';
+import { ItemCountComponent, PaginationComponent } from 'app/shared/pagination';
 import { FormsModule } from '@angular/forms';
 
 import { ITEMS_PER_PAGE, PAGE_HEADER, TOTAL_COUNT_RESPONSE_HEADER } from 'app/config/pagination.constants';
@@ -18,7 +18,7 @@ import { ContactDeleteDialogComponent } from '../delete/contact-delete-dialog.co
 @Component({
   selector: 'hpd-contact',
   templateUrl: './contact.component.html',
-  imports: [RouterModule, FormsModule, SharedModule, SortDirective, SortByDirective, ItemCountComponent],
+  imports: [RouterModule, FormsModule, SharedModule, SortDirective, SortByDirective, ItemCountComponent, PaginationComponent],
 })
 export class ContactComponent implements OnInit {
   subscription: Subscription | null = null;
@@ -35,7 +35,7 @@ export class ContactComponent implements OnInit {
   protected readonly contactService = inject(ContactService);
   protected readonly activatedRoute = inject(ActivatedRoute);
   protected readonly sortService = inject(SortService);
-  protected modalService = inject(NgbModal);
+  protected dialog = inject(MatDialog);
   protected ngZone = inject(NgZone);
 
   trackId = (item: IContact): string => this.contactService.getContactIdentifier(item);
@@ -50,10 +50,10 @@ export class ContactComponent implements OnInit {
   }
 
   delete(contact: IContact): void {
-    const modalRef = this.modalService.open(ContactDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
-    modalRef.componentInstance.contact = contact;
-    // unsubscribe not needed because closed completes on modal close
-    modalRef.closed
+    const dialogRef = this.dialog.open(ContactDeleteDialogComponent, { width: '640px', disableClose: true });
+    dialogRef.componentInstance.contact = contact;
+    // unsubscribe not needed because afterClosed() completes on close
+    dialogRef.afterClosed()
       .pipe(
         filter(reason => reason === ITEM_DELETED_EVENT),
         tap(() => this.load()),

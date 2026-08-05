@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import locale from '@angular/common/locales/en';
-import dayjs from 'dayjs/esm';
-import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 
@@ -18,9 +16,8 @@ import MainComponent from './layouts/main/main.component';
   ],
 })
 export default class AppComponent {
-  constructor(applicationConfigService: ApplicationConfigService, dpConfig: NgbDatepickerConfig) {
+  constructor(applicationConfigService: ApplicationConfigService) {
     applicationConfigService.setEndpointPrefix(SERVER_API_URL);
     registerLocaleData(locale);
-    dpConfig.minDate = { year: dayjs().subtract(100, 'year').year(), month: 1, day: 1 };
   }
 }

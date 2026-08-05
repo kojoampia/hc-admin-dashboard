@@ -5,13 +5,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { HttpResponse, HttpHeaders } from '@angular/common/http';
 import { combineLatest } from 'rxjs';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialog } from '@angular/material/dialog';
 
 import SharedModule from 'app/shared/shared.module';
 import { SortDirective, SortByDirective } from 'app/shared/sort';
 import { ITEMS_PER_PAGE } from 'app/config/pagination.constants';
 import { ASC, DESC, SORT } from 'app/config/navigation.constants';
-import { ItemCountComponent } from 'app/shared/pagination';
+import { ItemCountComponent, PaginationComponent } from 'app/shared/pagination';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/auth/account.model';
 import { UserManagementService } from '../service/user-management.service';
@@ -21,7 +21,7 @@ import UserManagementDeleteDialogComponent from '../delete/user-management-delet
 @Component({
   selector: 'hpd-user-mgmt',
   templateUrl: './user-management.component.html',
-  imports: [RouterModule, SharedModule, SortDirective, SortByDirective, ItemCountComponent, MatButtonModule, MatCardModule, MatIconModule],
+  imports: [RouterModule, SharedModule, SortDirective, SortByDirective, ItemCountComponent, MatButtonModule, MatCardModule, MatIconModule, PaginationComponent],
 })
 export default class UserManagementComponent implements OnInit {
   currentAccount: Account | null = null;
@@ -38,7 +38,7 @@ export default class UserManagementComponent implements OnInit {
     private accountService: AccountService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private modalService: NgbModal,
+    private dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
@@ -55,10 +55,10 @@ export default class UserManagementComponent implements OnInit {
   }
 
   deleteUser(user: User): void {
-    const modalRef = this.modalService.open(UserManagementDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
-    modalRef.componentInstance.user = user;
-    // unsubscribe not needed because closed completes on modal close
-    modalRef.closed.subscribe(reason => {
+    const dialogRef = this.dialog.open(UserManagementDeleteDialogComponent, { width: '640px', disableClose: true });
+    dialogRef.componentInstance.user = user;
+    // unsubscribe not needed because afterClosed() completes on close
+    dialogRef.afterClosed().subscribe(reason => {
       if (reason === 'deleted') {
         this.loadAll();
       }

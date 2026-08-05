@@ -1,9 +1,7 @@
-jest.mock('@ng-bootstrap/ng-bootstrap');
-
 import { ComponentFixture, TestBed, fakeAsync, inject, tick } from '@angular/core/testing';
 import { HttpResponse, provideHttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialogRef } from '@angular/material/dialog';
 
 import { TeamService } from '../service/team.service';
 
@@ -13,19 +11,19 @@ describe('Team Management Delete Component', () => {
   let comp: TeamDeleteDialogComponent;
   let fixture: ComponentFixture<TeamDeleteDialogComponent>;
   let service: TeamService;
-  let mockActiveModal: NgbActiveModal;
+  let dialogRef: { close: jest.Mock };
 
   beforeEach(() => {
+    dialogRef = { close: jest.fn() };
     TestBed.configureTestingModule({
       imports: [TeamDeleteDialogComponent],
-      providers: [provideHttpClient(), NgbActiveModal],
+      providers: [provideHttpClient(), { provide: MatDialogRef, useValue: dialogRef }],
     })
       .overrideTemplate(TeamDeleteDialogComponent, '')
       .compileComponents();
     fixture = TestBed.createComponent(TeamDeleteDialogComponent);
     comp = fixture.componentInstance;
     service = TestBed.inject(TeamService);
-    mockActiveModal = TestBed.inject(NgbActiveModal);
   });
 
   describe('confirmDelete', () => {
@@ -41,7 +39,7 @@ describe('Team Management Delete Component', () => {
 
         // THEN
         expect(service.delete).toHaveBeenCalledWith('ABC');
-        expect(mockActiveModal.close).toHaveBeenCalledWith('deleted');
+        expect(dialogRef.close).toHaveBeenCalledWith('deleted');
       }),
     ));
 
@@ -54,8 +52,8 @@ describe('Team Management Delete Component', () => {
 
       // THEN
       expect(service.delete).not.toHaveBeenCalled();
-      expect(mockActiveModal.close).not.toHaveBeenCalled();
-      expect(mockActiveModal.dismiss).toHaveBeenCalled();
+      expect(dialogRef.close).not.toHaveBeenCalledWith('deleted');
+      expect(dialogRef.close).toHaveBeenCalledWith();
     });
   });
 });

@@ -2,7 +2,7 @@ import { Component, NgZone, OnInit, WritableSignal, computed, inject, signal } f
 import { HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Data, ParamMap, Router, RouterModule } from '@angular/router';
 import { Observable, Subscription, combineLatest, filter, tap } from 'rxjs';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialog } from '@angular/material/dialog';
 
 import SharedModule from 'app/shared/shared.module';
 import { SortByDirective, SortDirective, SortService, type SortState, sortStateSignal } from 'app/shared/sort';
@@ -41,7 +41,7 @@ export class SystemCatalogComponent implements OnInit {
   protected readonly sortService = inject(SortService);
   protected parseLinks = inject(ParseLinks);
   protected dataUtils = inject(DataUtils);
-  protected modalService = inject(NgbModal);
+  protected dialog = inject(MatDialog);
   protected ngZone = inject(NgZone);
 
   trackId = (item: ISystemCatalog): string => this.systemCatalogService.getSystemCatalogIdentifier(item);
@@ -73,10 +73,10 @@ export class SystemCatalogComponent implements OnInit {
   }
 
   delete(systemCatalog: ISystemCatalog): void {
-    const modalRef = this.modalService.open(SystemCatalogDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
-    modalRef.componentInstance.systemCatalog = systemCatalog;
-    // unsubscribe not needed because closed completes on modal close
-    modalRef.closed
+    const dialogRef = this.dialog.open(SystemCatalogDeleteDialogComponent, { width: '640px', disableClose: true });
+    dialogRef.componentInstance.systemCatalog = systemCatalog;
+    // unsubscribe not needed because afterClosed() completes on close
+    dialogRef.afterClosed()
       .pipe(
         filter(reason => reason === ITEM_DELETED_EVENT),
         tap(() => this.load()),

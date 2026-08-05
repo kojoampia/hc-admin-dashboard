@@ -1,7 +1,7 @@
 import { Component, NgZone, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute, Data, ParamMap, Router, RouterModule } from '@angular/router';
 import { Observable, Subscription, combineLatest, filter, tap } from 'rxjs';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialog } from '@angular/material/dialog';
 
 import SharedModule from 'app/shared/shared.module';
 import { SortByDirective, SortDirective, SortService, type SortState, sortStateSignal } from 'app/shared/sort';
@@ -28,7 +28,7 @@ export class OrganisationComponent implements OnInit {
   protected readonly organisationService = inject(OrganisationService);
   protected readonly activatedRoute = inject(ActivatedRoute);
   protected readonly sortService = inject(SortService);
-  protected modalService = inject(NgbModal);
+  protected dialog = inject(MatDialog);
   protected ngZone = inject(NgZone);
 
   trackId = (item: IOrganisation): string => this.organisationService.getOrganisationIdentifier(item);
@@ -49,10 +49,10 @@ export class OrganisationComponent implements OnInit {
   }
 
   delete(organisation: IOrganisation): void {
-    const modalRef = this.modalService.open(OrganisationDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
-    modalRef.componentInstance.organisation = organisation;
-    // unsubscribe not needed because closed completes on modal close
-    modalRef.closed
+    const dialogRef = this.dialog.open(OrganisationDeleteDialogComponent, { width: '640px', disableClose: true });
+    dialogRef.componentInstance.organisation = organisation;
+    // unsubscribe not needed because afterClosed() completes on close
+    dialogRef.afterClosed()
       .pipe(
         filter(reason => reason === ITEM_DELETED_EVENT),
         tap(() => this.load()),

@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialogRef } from '@angular/material/dialog';
 
 import SharedModule from 'app/shared/shared.module';
 import { ITEM_DELETED_EVENT } from 'app/config/navigation.constants';
@@ -15,15 +15,17 @@ export class DashboardDeleteDialogComponent {
   dashboard?: IDashboard;
 
   protected dashboardService = inject(DashboardService);
-  protected activeModal = inject(NgbActiveModal);
+  protected dialogRef = inject(MatDialogRef<DashboardDeleteDialogComponent>);
 
   cancel(): void {
-    this.activeModal.dismiss();
+    // close() with no result: the caller filters on ITEM_DELETED_EVENT, so an
+    // argument-less close reads as a cancel exactly as NgbActiveModal.dismiss() did.
+    this.dialogRef.close();
   }
 
   confirmDelete(id: string): void {
     this.dashboardService.delete(id).subscribe(() => {
-      this.activeModal.close(ITEM_DELETED_EVENT);
+      this.dialogRef.close(ITEM_DELETED_EVENT);
     });
   }
 }

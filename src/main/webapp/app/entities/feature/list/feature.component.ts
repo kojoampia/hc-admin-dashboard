@@ -1,7 +1,7 @@
 import { Component, NgZone, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute, Data, ParamMap, Router, RouterModule } from '@angular/router';
 import { Observable, Subscription, combineLatest, filter, tap } from 'rxjs';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialog } from '@angular/material/dialog';
 
 import SharedModule from 'app/shared/shared.module';
 import { SortByDirective, SortDirective, SortService, type SortState, sortStateSignal } from 'app/shared/sort';
@@ -27,7 +27,7 @@ export class FeatureComponent implements OnInit {
   protected readonly featureService = inject(FeatureService);
   protected readonly activatedRoute = inject(ActivatedRoute);
   protected readonly sortService = inject(SortService);
-  protected modalService = inject(NgbModal);
+  protected dialog = inject(MatDialog);
   protected ngZone = inject(NgZone);
 
   trackId = (item: IFeature): string => this.featureService.getFeatureIdentifier(item);
@@ -48,10 +48,10 @@ export class FeatureComponent implements OnInit {
   }
 
   delete(feature: IFeature): void {
-    const modalRef = this.modalService.open(FeatureDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
-    modalRef.componentInstance.feature = feature;
-    // unsubscribe not needed because closed completes on modal close
-    modalRef.closed
+    const dialogRef = this.dialog.open(FeatureDeleteDialogComponent, { width: '640px', disableClose: true });
+    dialogRef.componentInstance.feature = feature;
+    // unsubscribe not needed because afterClosed() completes on close
+    dialogRef.afterClosed()
       .pipe(
         filter(reason => reason === ITEM_DELETED_EVENT),
         tap(() => this.load()),

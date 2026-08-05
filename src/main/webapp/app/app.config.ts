@@ -7,15 +7,12 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { MatIconRegistry } from '@angular/material/icon';
 import { provideNgxWebstorage, withLocalStorage, withSessionStorage } from 'ngx-webstorage';
 
-import { NgbDateAdapter } from '@ng-bootstrap/ng-bootstrap';
-
 import { DEBUG_INFO_ENABLED } from 'app/app.constants';
 import './config/dayjs';
 import { provideTranslation } from 'app/shared/language/translation.module';
 import { httpInterceptorProviders } from 'app/core/interceptor/index';
 import routes from './app.routes';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
-import { NgbDateDayjsAdapter } from './config/datepicker-adapter';
 import { AppPageTitleStrategy } from './app-page-title-strategy';
 
 const routerFeatures: Array<RouterFeatures> = [withComponentInputBinding()];
@@ -34,7 +31,6 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptorsFromDi()),
     Title,
     { provide: LOCALE_ID, useValue: 'en' },
-    { provide: NgbDateAdapter, useClass: NgbDateDayjsAdapter },
     httpInterceptorProviders,
     provideNgxWebstorage(withLocalStorage(), withSessionStorage()),
     { provide: TitleStrategy, useClass: AppPageTitleStrategy },

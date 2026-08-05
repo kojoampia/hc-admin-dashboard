@@ -1,7 +1,7 @@
 import { Component, NgZone, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute, Data, ParamMap, Router, RouterModule } from '@angular/router';
 import { Observable, Subscription, combineLatest, filter, tap } from 'rxjs';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialog } from '@angular/material/dialog';
 
 import SharedModule from 'app/shared/shared.module';
 import { SortByDirective, SortDirective, SortService, type SortState, sortStateSignal } from 'app/shared/sort';
@@ -27,7 +27,7 @@ export class PricingPlanComponent implements OnInit {
   protected readonly pricingPlanService = inject(PricingPlanService);
   protected readonly activatedRoute = inject(ActivatedRoute);
   protected readonly sortService = inject(SortService);
-  protected modalService = inject(NgbModal);
+  protected dialog = inject(MatDialog);
   protected ngZone = inject(NgZone);
 
   trackId = (item: IPricingPlan): string => this.pricingPlanService.getPricingPlanIdentifier(item);
@@ -48,10 +48,10 @@ export class PricingPlanComponent implements OnInit {
   }
 
   delete(pricingPlan: IPricingPlan): void {
-    const modalRef = this.modalService.open(PricingPlanDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
-    modalRef.componentInstance.pricingPlan = pricingPlan;
-    // unsubscribe not needed because closed completes on modal close
-    modalRef.closed
+    const dialogRef = this.dialog.open(PricingPlanDeleteDialogComponent, { width: '640px', disableClose: true });
+    dialogRef.componentInstance.pricingPlan = pricingPlan;
+    // unsubscribe not needed because afterClosed() completes on close
+    dialogRef.afterClosed()
       .pipe(
         filter(reason => reason === ITEM_DELETED_EVENT),
         tap(() => this.load()),

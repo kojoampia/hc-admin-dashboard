@@ -4,10 +4,19 @@
 put Sass variables here:
 eg $input-color: red;
 ****************************/
-// Override Bootstrap variables
-@import 'bootstrap-variables';
-// Import Bootstrap source files from node_modules
-@import 'bootstrap/scss/bootstrap';
+// Bootstrap is gone. It used to be imported in full here, alongside the whole Angular Material
+// theme and Tailwind on top — three UI systems in one bundle, 358 kB of CSS.
+//
+// Removing it was safe because Tailwind already won: global.scss (which holds `@tailwind
+// utilities`) is listed after this file in angular.json, so at equal specificity Tailwind's p-4,
+// mt-2 and the rest were already overriding Bootstrap's identically-named utilities, and
+// @tailwind base's Preflight was already overriding Reboot. Only four tokens were genuinely
+// Bootstrap-only — d-flex, justify-content-end, w-100, h-100, in two files — and those were
+// translated to their Tailwind equivalents.
+//
+// _bootstrap-variables.scss stays: it is a Sass variable partial that global.scss still `@use`s
+// for colour values, and it pulls in no Bootstrap CSS of its own.
+
 // Angular Material theme
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
 // Material Icons font (includes @font-face referencing local woff2/woff files)

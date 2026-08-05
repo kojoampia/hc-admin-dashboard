@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed, fakeAsync, inject, tick } from '@angular/cor
 import { HttpHeaders, HttpResponse, provideHttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, of } from 'rxjs';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialog } from '@angular/material/dialog';
 
 import { sampleWithRequiredData } from '../facility.test-samples';
 import { FacilityService } from '../service/facility.service';
@@ -129,15 +129,15 @@ describe('Facility Management Component', () => {
   });
 
   describe('delete', () => {
-    let ngbModal: NgbModal;
+    let dialog: MatDialog;
     let deleteModalMock: any;
 
     beforeEach(() => {
-      deleteModalMock = { componentInstance: {}, closed: new Subject() };
-      // NgbModal is not a singleton using TestBed.inject.
-      // ngbModal = TestBed.inject(NgbModal);
-      ngbModal = (comp as any).modalService;
-      jest.spyOn(ngbModal, 'open').mockReturnValue(deleteModalMock);
+      // afterClosed() is a method on MatDialogRef, not a property as NgbModalRef.closed was.
+      const closed = new Subject();
+      deleteModalMock = { componentInstance: {}, afterClosed: () => closed, closed };
+      dialog = (comp as any).dialog;
+      jest.spyOn(dialog, 'open').mockReturnValue(deleteModalMock);
     });
 
     it('on confirm should call load', inject(
@@ -152,7 +152,7 @@ describe('Facility Management Component', () => {
         tick();
 
         // THEN
-        expect(ngbModal.open).toHaveBeenCalled();
+        expect(dialog.open).toHaveBeenCalled();
         expect(comp.load).toHaveBeenCalled();
       }),
     ));
@@ -169,7 +169,7 @@ describe('Facility Management Component', () => {
         tick();
 
         // THEN
-        expect(ngbModal.open).toHaveBeenCalled();
+        expect(dialog.open).toHaveBeenCalled();
         expect(comp.load).not.toHaveBeenCalled();
       }),
     ));
