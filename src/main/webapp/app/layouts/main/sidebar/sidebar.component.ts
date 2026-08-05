@@ -46,10 +46,10 @@ export class SidebarComponent implements OnInit {
   showSystemAdminLink = false;
 
   private readonly menuItems: MenuItem[] = [
-    { label: 'DASHBOARD', icon: 'dashboard', path: '/dashboard', resource: 'DASHBOARD' },
+    { label: 'DASHBOARD', icon: 'dashboard', path: '/dashboards', resource: 'DASHBOARD' },
     { label: 'MESSAGES', icon: 'chat', path: '/messages', resource: 'MESSAGES' },
-    { label: 'DUTY ROSTER', icon: 'calendar_month', path: '/duty-roster', resource: 'DUTY_ROSTER' },
-    { label: 'PRICE PLANS', icon: 'subscriptions', path: '/pricing-plan', resource: 'PRICE_PLANS' },
+    { label: 'DUTY ROSTER', icon: 'calendar_month', path: '/duty-rosters', resource: 'DUTY_ROSTER' },
+    { label: 'PRICE PLANS', icon: 'subscriptions', path: '/pricing-plans', resource: 'PRICE_PLANS' },
     { label: 'CATALOG', icon: 'auto_stories', path: '/catalog', resource: 'CATALOG' },
     { label: 'FACILITIES', icon: 'local_hospital', path: '/facilities', resource: 'FACILITIES' },
     { label: 'TEAMS', icon: 'groups', path: '/teams', resource: 'TEAMS' },

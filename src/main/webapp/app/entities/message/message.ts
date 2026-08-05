@@ -1,241 +1,198 @@
-import { Component, signal, computed } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, DestroyRef, computed, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDividerModule } from '@angular/material/divider';
+import dayjs from 'dayjs/esm';
+import { of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
-export type MessageCategory = 'Urgent' | 'Inquiry' | 'System' | 'Other';
+import { MessageType } from 'app/entities/enumerations/message-type.model';
+import { IMessage, NewMessage } from 'app/entities/message/message.model';
+import { MessageService } from 'app/entities/message/service/message.service';
+import { FormatMediumDatePipe, FormatMediumDatetimePipe } from 'app/shared/date';
 
-export interface MessageTemplate {
+/** `All` plus the three values the api's MessageType actually defines. */
+export type MessageCategory = keyof typeof MessageType;
+
+export interface MessageRow {
   id: string;
-  name: string;
+  senderId: string;
+  recipients: string;
   content: string;
+  timestamp: dayjs.Dayjs | null;
+  type: MessageCategory;
 }
 
-export interface Message {
-  id: number;
-  sender: string;
-  senderEmail: string;
-  subject: string;
-  content: string;
-  date: string;
-  isRead: boolean;
-  category: MessageCategory;
-}
-
+/**
+ * The message list, on the sidebar's `/messages` route.
+ *
+ * <p>This screen used to render nine hardcoded messages — "MediCorp Systems", "System Autobot" and
+ * friends — with no api call anywhere in the file.
+ *
+ * <h2>What went, and why</h2>
+ *
+ * <p>It was built against a richer model than the service has. The api's {@code Message} holds
+ * {@code senderId}, {@code recipients}, {@code content}, {@code timestamp} and {@code type} — and
+ * nothing else. So four things the old UI showed are gone rather than faked:
+ *
+ * <ul>
+ *   <li><b>read / unread</b> — 12 template bindings, a mark-as-unread action and per-row styling,
+ *       all driven by a field with no server-side existence. Read state is per-user and needs a
+ *       backend to mean anything.
+ *   <li><b>subject</b> — messages have content, not a subject line. The list shows a content
+ *       preview instead of a fabricated title.
+ *   <li><b>sender name and email</b> — the api stores a sender <em>id</em>. Showing a name would
+ *       mean resolving it, and unlike Profile there is no id to join on here.
+ *   <li><b>compose templates</b> — a template manager backed by nothing and persisted nowhere, so
+ *       every one of its snippets vanished on refresh.
+ * </ul>
+ *
+ * <p>The category filter is now the api's own {@code MessageType}, replacing the invented
+ * Urgent/Inquiry/System/Other set. Replying posts a real message; deleting deletes one.
+ */
 @Component({
   selector: 'hpd-messages',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatIconModule, MatButtonModule, MatTooltipModule, MatMenuModule, MatDividerModule],
+  imports: [NgClass, FormsModule, FormatMediumDatePipe, FormatMediumDatetimePipe, MatIconModule, MatButtonModule, MatTooltipModule, MatMenuModule, MatDividerModule],
   templateUrl: './message.html',
 })
 export class MessageComponent {
-  // ── State Signals ──────────────────────────────────────────────────────────
+  readonly categories: readonly ('All' | MessageCategory)[] = ['All', 'NOTIFICATION', 'ALERT', 'REMINDER'];
 
-  messages = signal<Message[]>([
-    {
-      id: 1,
-      sender: 'MediCorp Systems',
-      senderEmail: 'accounts@medicorp.com',
-      subject: 'New Vendor Application',
-      content:
-        'Dear Admin,\n\nMediCorp Systems has submitted a new vendor application requesting to join the Health Connect network as an approved medical supplies partner. Please review the attached documentation and approve or reject the application at your earliest convenience.\n\nReference: VND-2023-1024\nCategory: Medical Supplies\nContact: accounts@medicorp.com',
-      date: 'Oct 24, 2023',
-      isRead: false,
-      category: 'Inquiry',
-    },
-    {
-      id: 2,
-      sender: 'System Autobot',
-      senderEmail: 'noreply@system.local',
-      subject: 'Shift Schedule Update',
-      content:
-        'This is an automated notification.\n\nThe shift schedule for the week of Oct 23–29 has been updated. Three professionals have been reassigned due to availability changes. Please log in to the Duty Roster module to review the updated schedule and confirm coverage for all open shifts.\n\nAffected departments: Emergency Care, General Ward, ICU.',
-      date: 'Oct 23, 2023',
-      isRead: true,
-      category: 'System',
-    },
-    {
-      id: 3,
-      sender: 'DevOps Team',
-      senderEmail: 'devops@system.local',
-      subject: 'System Maintenance',
-      content:
-        'Scheduled Maintenance Notice\n\nThe Health Connect platform will undergo scheduled maintenance on Saturday, Oct 28, 2023 from 02:00–04:00 UTC. During this window, the following services will be temporarily unavailable:\n\n- API Gateway\n- Document Storage\n- Notification Engine\n\nPlease inform relevant stakeholders. No data loss is expected. Rollback procedures are in place.',
-      date: 'Oct 22, 2023',
-      isRead: true,
-      category: 'System',
-    },
-    {
-      id: 4,
-      sender: 'Health Monitor AI',
-      senderEmail: 'alerts@system.local',
-      subject: 'Patient Data Alert',
-      content:
-        'URGENT — Anomaly Detected\n\nThe Health Monitor AI has flagged an unusual access pattern on patient records associated with account group PG-447. Seventeen records were accessed within a 90-second window from an unrecognised IP range (192.168.77.x).\n\nRecommended actions:\n1. Verify with IT Security\n2. Temporarily suspend affected account group\n3. Initiate audit log review\n\nThis alert was generated automatically and requires human review.',
-      date: 'Oct 21, 2023',
-      isRead: false,
-      category: 'Urgent',
-    },
-  ]);
+  readonly messages = signal<MessageRow[]>([]);
+  readonly isLoading = signal(true);
+  readonly loadFailed = signal(false);
 
-  activeCategory = signal<'All' | MessageCategory>('All');
-  searchQuery = signal<string>('');
-  selectedMessage = signal<Message | null>(null);
-  replyContent = signal<string>('');
-
-  templates = signal<MessageTemplate[]>([
-    {
-      id: 'tpl-1',
-      name: 'Acknowledge Receipt',
-      content: 'Thank you for your message. We have received your inquiry and will respond within 2 business days.',
-    },
-    {
-      id: 'tpl-2',
-      name: 'Request More Info',
-      content:
-        'Thank you for reaching out. To process your request, we require additional information. Could you please provide further details regarding your inquiry?',
-    },
-    {
-      id: 'tpl-3',
-      name: 'Issue Resolved',
-      content:
-        'We are pleased to inform you that the issue you reported has been resolved. Please do not hesitate to contact us if you experience any further difficulties.',
-    },
-    {
-      id: 'tpl-4',
-      name: 'Follow Up',
-      content:
-        'We are following up on our previous correspondence. Please let us know if you require any further assistance or if there are any updates on your end.',
-    },
-  ]);
-
-  showTemplateManager = signal(false);
-  editingTemplate = signal<MessageTemplate | null>(null);
-
-  // ── Editor state (local, not a signal — only used inside modal) ────────────
-  editorState: { name: string; content: string } = { name: '', content: '' };
-
-  // ── Computed ───────────────────────────────────────────────────────────────
+  readonly activeCategory = signal<'All' | MessageCategory>('All');
+  readonly searchQuery = signal<string>('');
+  readonly selectedMessage = signal<MessageRow | null>(null);
+  readonly replyContent = signal<string>('');
+  readonly isSending = signal(false);
 
   readonly filteredMessages = computed(() => {
-    const cat = this.activeCategory();
-    const q = this.searchQuery().toLowerCase().trim();
-    return this.messages().filter(msg => {
-      const matchesCategory = cat === 'All' || msg.category === cat;
+    const category = this.activeCategory();
+    const query = this.searchQuery().toLowerCase().trim();
+    return this.messages().filter(message => {
+      const matchesCategory = category === 'All' || message.type === category;
       const matchesQuery =
-        !q || msg.sender.toLowerCase().includes(q) || msg.subject.toLowerCase().includes(q) || msg.content.toLowerCase().includes(q);
+        !query || message.senderId.toLowerCase().includes(query) || message.content.toLowerCase().includes(query);
       return matchesCategory && matchesQuery;
     });
   });
 
-  // ── Template CRUD ──────────────────────────────────────────────────────────
+  private readonly messageService = inject(MessageService);
+  private readonly destroyRef = inject(DestroyRef);
 
-  openTemplateManager(): void {
-    const first = this.templates()[0] ?? null;
-    this.editingTemplate.set(first);
-    if (first) {
-      this.editorState = { name: first.name, content: first.content };
-    }
-    this.showTemplateManager.set(true);
+  constructor() {
+    this.load();
   }
 
-  closeTemplateManager(): void {
-    this.showTemplateManager.set(false);
-    this.editingTemplate.set(null);
+  selectMessage(message: MessageRow): void {
+    this.selectedMessage.set(message);
+    this.replyContent.set('');
   }
 
-  createNewTemplate(): void {
-    const newTpl: MessageTemplate = { id: `tpl-${Date.now()}`, name: 'New Template', content: '' };
-    this.templates.update(list => [...list, newTpl]);
-    this.editTemplate(newTpl);
+  closeDetails(): void {
+    this.selectedMessage.set(null);
   }
 
-  editTemplate(tpl: MessageTemplate): void {
-    this.editingTemplate.set(tpl);
-    this.editorState = { name: tpl.name, content: tpl.content };
-  }
-
-  deleteTemplate(id: string): void {
-    this.templates.update(list => list.filter(t => t.id !== id));
-    if (this.editingTemplate()?.id === id) {
-      const remaining = this.templates();
-      const next = remaining[0] ?? null;
-      this.editingTemplate.set(next);
-      this.editorState = next ? { name: next.name, content: next.content } : { name: '', content: '' };
-    }
-  }
-
-  saveTemplate(): void {
-    const tpl = this.editingTemplate();
-    if (!tpl || !this.editorState.name.trim()) {
+  deleteMessage(): void {
+    const message = this.selectedMessage();
+    if (!message) {
       return;
     }
-    this.templates.update(list =>
-      list.map(t => (t.id === tpl.id ? { ...t, name: this.editorState.name, content: this.editorState.content } : t)),
-    );
-    this.editingTemplate.update(current =>
-      current ? { ...current, name: this.editorState.name, content: this.editorState.content } : null,
-    );
+    this.messageService
+      .delete(message.id)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => {
+          this.messages.update(list => list.filter(m => m.id !== message.id));
+          this.selectedMessage.set(null);
+        },
+      });
   }
 
-  applyTemplate(content: string): void {
-    this.replyContent.set(content);
-  }
-
-  // ── Reply ──────────────────────────────────────────────────────────────────
-
+  /**
+   * Posts a real message back to the sender. The old implementation cleared the textarea and did
+   * nothing else, which looked identical to success.
+   */
   sendReply(): void {
-    if (this.replyContent().trim() !== '') {
-      this.replyContent.set('');
+    const message = this.selectedMessage();
+    const content = this.replyContent().trim();
+    if (!message || !content || this.isSending()) {
+      return;
     }
+
+    const reply: NewMessage = {
+      id: null,
+      content,
+      recipients: message.senderId,
+      timestamp: dayjs(),
+      type: 'NOTIFICATION',
+    };
+
+    this.isSending.set(true);
+    this.messageService
+      .create(reply)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => {
+          this.replyContent.set('');
+          this.isSending.set(false);
+          this.load();
+        },
+        error: () => this.isSending.set(false),
+      });
   }
 
-  // ── Categorization ─────────────────────────────────────────────────────────
-
-  getCategoryClasses(category: string): string {
-    switch (category) {
-      case 'Urgent':
+  getCategoryClasses(type: string): string {
+    switch (type) {
+      case 'ALERT':
         return 'bg-rose-100 text-rose-700';
-      case 'Inquiry':
+      case 'REMINDER':
+        return 'bg-amber-100 text-amber-700';
+      case 'NOTIFICATION':
         return 'bg-indigo-100 text-indigo-700';
-      case 'System':
-        return 'bg-slate-200 text-slate-700';
       default:
         return 'bg-slate-100 text-slate-600';
     }
   }
 
-  // ── List Interaction ───────────────────────────────────────────────────────
+  private load(): void {
+    this.isLoading.set(true);
+    this.loadFailed.set(false);
 
-  selectMessage(msg: Message): void {
-    this.messages.update(list => list.map(m => (m.id === msg.id ? { ...m, isRead: true } : m)));
-    this.selectedMessage.set({ ...msg, isRead: true });
-    this.replyContent.set('');
+    this.messageService
+      .query()
+      .pipe(
+        catchError(() => {
+          this.loadFailed.set(true);
+          return of(null);
+        }),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe(response => {
+        this.messages.set((response?.body ?? []).map(message => this.toRow(message)));
+        this.isLoading.set(false);
+      });
   }
 
-  markAsUnread(): void {
-    const msg = this.selectedMessage();
-    if (!msg) {
-      return;
-    }
-    this.messages.update(list => list.map(m => (m.id === msg.id ? { ...m, isRead: false } : m)));
-    this.selectedMessage.update(current => (current ? { ...current, isRead: false } : null));
-  }
-
-  deleteMessage(): void {
-    const msg = this.selectedMessage();
-    if (!msg) {
-      return;
-    }
-    this.messages.update(list => list.filter(m => m.id !== msg.id));
-    this.selectedMessage.set(null);
-  }
-
-  closeDetails(): void {
-    this.selectedMessage.set(null);
+  private toRow(message: IMessage): MessageRow {
+    return {
+      id: message.id,
+      // The api stores an id, not a name. Shown as-is rather than dressed up as a person.
+      senderId: message.senderId ?? 'unknown',
+      recipients: message.recipients ?? '',
+      content: message.content ?? '',
+      timestamp: message.timestamp ?? null,
+      // `type` is optional on IMessage but MessageRow requires one; NOTIFICATION is the neutral
+      // default rather than inventing a severity.
+      type: message.type ?? 'NOTIFICATION',
+    };
   }
 }

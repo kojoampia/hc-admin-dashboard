@@ -1,4 +1,8 @@
-import { Component, inject, signal, computed } from '@angular/core';
+import { Component, DestroyRef, computed, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { forkJoin, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import dayjs from 'dayjs/esm';
 
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
@@ -9,6 +13,10 @@ import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { TeamService } from 'app/entities/team/service/team.service';
 import { TeamDialogComponent, TeamDialogData } from 'app/entities/team/team-dialog';
 import { DashboardStateService } from 'app/entities/dashboard/dashboard-state';
+import { PersonService } from 'app/entities/person/service/person.service';
+import { AuditLogService } from 'app/entities/audit-log/service/audit-log.service';
+import { ITeam } from 'app/entities/team/team.model';
+import { IAuditLog } from 'app/entities/audit-log/audit-log.model';
 
 export interface Team {
   id: string;
@@ -18,14 +26,12 @@ export interface Team {
   updatedAt: string;
 }
 
-export interface Member {
-  id: string;
-  name: string;
-  role: 'Doctor' | 'Nurse' | 'Pharmacist' | 'Caregiver' | 'Paramedic' | 'Front Desk';
-  contact: string;
-  teamId: string;
-  updatedAt: string;
-}
+/*
+ * There was a `Member` interface here — id, name, role, contact — backed by five invented staff
+ * ("Dr. Alice Mensah", "alice@hc.org"). The api has no Member entity at all: ITeam.members is a
+ * free-text field of person ids. Names are resolved from PersonService below; role and contact had
+ * nowhere to come from and are gone rather than faked.
+ */
 
 export interface AuditEvent {
   id: string;
@@ -222,114 +228,79 @@ export class TeamComponent {
   dialog = inject(MatDialog);
   state = inject(DashboardStateService);
 
+
   columns = ['name', 'description', 'members', 'updatedAt', 'actions'];
 
-  teams = signal<Team[]>([
-    {
-      id: '1',
-      name: 'Cardiology Unit',
-      description: 'Specialises in heart disease diagnosis and treatment.',
-      members: ['m1', 'm2', 'm3'],
-      updatedAt: '2 hours ago',
-    },
-    {
-      id: '2',
-      name: 'Pediatrics',
-      description: 'Focused on medical care for infants, children, and adolescents.',
-      members: ['m4', 'm5'],
-      updatedAt: '1 day ago',
-    },
-    {
-      id: '3',
-      name: 'Oncology',
-      description: 'Cancer prevention, diagnosis, and treatment team.',
-      members: ['m2', 'm5'],
-      updatedAt: '3 days ago',
-    },
-    {
-      id: '4',
-      name: 'Emergency Response',
-      description: 'First-response team handling critical emergency cases.',
-      members: ['m1', 'm3', 'm4'],
-      updatedAt: '5 days ago',
-    },
-  ]);
-
-  members = signal<Member[]>([
-    { id: 'm1', name: 'Dr. Alice Mensah', role: 'Doctor', contact: 'alice@hc.org', teamId: '1', updatedAt: '2 hours ago' },
-    { id: 'm2', name: 'Nurse Kwame Boateng', role: 'Nurse', contact: 'kwame@hc.org', teamId: '1', updatedAt: '1 day ago' },
-    { id: 'm3', name: 'Dr. Robert Asante', role: 'Doctor', contact: 'robert@hc.org', teamId: '1', updatedAt: '3 days ago' },
-    { id: 'm4', name: 'Ama Ofori', role: 'Caregiver', contact: 'ama@hc.org', teamId: '2', updatedAt: '1 day ago' },
-    { id: 'm5', name: 'Kofi Darko', role: 'Pharmacist', contact: 'kofi@hc.org', teamId: '2', updatedAt: '5 days ago' },
-  ]);
+  readonly teams = signal<Team[]>([]);
+  readonly isLoading = signal(true);
+  readonly loadFailed = signal(false);
 
   isAuditTrailOpen = signal(true);
 
-  auditEvents = signal<AuditEvent[]>([
-    {
-      id: '1',
-      type: 'UPDATE',
-      message: 'Updated Team "Cardiology" description',
-      timestamp: '10 mins ago',
-      icon: 'edit_document',
-      colorClass: 'bg-amber-100 text-amber-600',
-    },
-    {
-      id: '2',
-      type: 'CREATE',
-      message: 'Added new Team "Pediatrics"',
-      timestamp: '2 hours ago',
-      icon: 'post_add',
-      colorClass: 'bg-emerald-100 text-emerald-600',
-    },
-    {
-      id: '3',
-      type: 'DELETE',
-      message: 'Removed Team "Oncology"',
-      timestamp: '1 day ago',
-      icon: 'delete',
-      colorClass: 'bg-rose-100 text-rose-600',
-    },
-  ]);
+  readonly auditEvents = signal<AuditEvent[]>([]);
 
   readonly teamMembersMap = computed<Record<string, string[]>>(() => {
-    const map: Record<string, string[]> = {};
+    const byTeam: Record<string, string[]> = {};
+    const names = this.memberNames();
     for (const team of this.teams()) {
-      map[team.id] = this.members()
-        .filter(m => team.members.includes(m.id))
-        .map(m => m.name);
+      // An unresolved id is shown as the id: a silently shorter list would read as a team that has
+      // fewer members than it does.
+      byTeam[team.id] = team.members.map(id => names.get(id) ?? id);
     }
-    return map;
+    return byTeam;
   });
 
+  /** Person id -> display name, for resolving ITeam.members. */
+  private readonly memberNames = signal<Map<string, string>>(new Map());
+
+  private readonly personService = inject(PersonService);
+  private readonly auditLogService = inject(AuditLogService);
+  private readonly destroyRef = inject(DestroyRef);
+
+  constructor() {
+    this.loadData();
+  }
+
   loadData(): void {
-    // In production: call this.api.query() and populate signals
-    // Dummy data is pre-loaded in signal initialisers above
+    this.isLoading.set(true);
+    this.loadFailed.set(false);
+
+    forkJoin({
+      teams: this.api.query().pipe(catchError(() => of(null))),
+      people: this.personService.query().pipe(catchError(() => of(null))),
+      audits: this.auditLogService.query({ sort: ['createdDate,desc'], size: 20 }).pipe(catchError(() => of(null))),
+    })
+      .pipe(
+        map(({ teams, people, audits }) => ({
+          teams: teams?.body ?? null,
+          names: new Map(
+            (people?.body ?? []).map(person => [person.id, [person.firstName, person.lastName].filter(Boolean).join(' ').trim()]),
+          ),
+          audits: (audits?.body ?? []).map(entry => this.toAuditEvent(entry)),
+        })),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe(({ teams, names, audits }) => {
+        // Only the teams call failing is a failure — names and the audit feed are decoration.
+        this.loadFailed.set(teams === null);
+        this.memberNames.set(names);
+        this.teams.set((teams ?? []).map(team => this.toRow(team)));
+        this.auditEvents.set(audits);
+        this.isLoading.set(false);
+      });
   }
 
   toggleAuditTrail(): void {
     this.isAuditTrailOpen.update(v => !v);
   }
 
-  logEvent(type: 'CREATE' | 'UPDATE' | 'DELETE', message: string): void {
-    // Keyed by the union rather than `string`, so every key is present by construction and the
-    // lookups below are definite instead of `string | undefined`.
-    const iconMap: Record<AuditEvent['type'], string> = { CREATE: 'post_add', UPDATE: 'edit_document', DELETE: 'delete' };
-    const colorMap: Record<AuditEvent['type'], string> = {
-      CREATE: 'bg-emerald-100 text-emerald-600',
-      UPDATE: 'bg-amber-100 text-amber-600',
-      DELETE: 'bg-rose-100 text-rose-600',
-    };
-    const event: AuditEvent = {
-      id: Date.now().toString(),
-      type,
-      message,
-      timestamp: 'just now',
-      icon: iconMap[type],
-      colorClass: colorMap[type],
-    };
-    this.auditEvents.update(list => [event, ...list]);
-  }
+  /*
+   * There was a logEvent() here that prepended a client-invented entry to the audit trail on every
+   * mutation. That is the same class of problem as the seeded data it sat beside: the api now
+   * records a real AuditLog row for every save and delete (AuditLogCallback), so a locally
+   * fabricated line would sit next to server-recorded ones looking identical and being neither
+   * durable nor true. Mutations reload the feed instead.
+   */
 
   openAddModal(): void {
     if (!this.state.canAccess('TEAMS', 'CREATE')) {
@@ -347,7 +318,7 @@ export class TeamComponent {
           updatedAt: 'just now',
         };
         this.teams.update(list => [newTeam, ...list]);
-        this.logEvent('CREATE', `Added new Team "${result.name}"`);
+        this.loadData();
       }
     });
   }
@@ -366,7 +337,7 @@ export class TeamComponent {
         this.teams.update(list =>
           list.map(t => (t.id === team.id ? { ...t, name: result.name, description: result.description, updatedAt: 'just now' } : t)),
         );
-        this.logEvent('UPDATE', `Updated Team "${result.name}" details`);
+        this.loadData();
       }
     });
   }
@@ -380,7 +351,7 @@ export class TeamComponent {
     }
 
     this.teams.update(list => list.filter(t => t.id !== team.id));
-    this.logEvent('DELETE', `Removed Team "${team.name}"`);
+    this.loadData();
   }
 
   openManageMembersModal(team: Team): void {
@@ -388,6 +359,39 @@ export class TeamComponent {
   }
 
   logManageMembers(team: Team): void {
-    this.logEvent('UPDATE', `Managed members for Team "${team.name}"`);
+    this.loadData();
+  }
+
+  private toRow(team: ITeam): Team {
+    return {
+      id: team.id,
+      name: team.name ?? '',
+      description: team.description ?? '',
+      // `members` is a free-text field on the api — comma or space separated ids in practice.
+      members: (team.members ?? '')
+        .split(/[,\s]+/)
+        .map(id => id.trim())
+        .filter(Boolean),
+      updatedAt: team.modifiedDate ? dayjs(team.modifiedDate).fromNow() : '',
+    };
+  }
+
+  private toAuditEvent(entry: IAuditLog): AuditEvent {
+    const action = (entry.actionType ?? '').toUpperCase();
+    const type: AuditEvent['type'] = action === 'DELETE' ? 'DELETE' : action === 'SAVE' || action === 'CREATE' ? 'CREATE' : 'UPDATE';
+    const iconMap: Record<AuditEvent['type'], string> = { CREATE: 'post_add', UPDATE: 'edit_document', DELETE: 'delete' };
+    const colorMap: Record<AuditEvent['type'], string> = {
+      CREATE: 'bg-emerald-100 text-emerald-600',
+      UPDATE: 'bg-amber-100 text-amber-600',
+      DELETE: 'bg-rose-100 text-rose-600',
+    };
+    return {
+      id: entry.id,
+      type,
+      message: entry.metadata ?? 'System event recorded.',
+      timestamp: entry.createdDate ? entry.createdDate.fromNow() : '',
+      icon: iconMap[type],
+      colorClass: colorMap[type],
+    };
   }
 }

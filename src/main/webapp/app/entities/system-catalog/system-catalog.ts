@@ -1,4 +1,7 @@
-import { Component, inject, signal, computed } from '@angular/core';
+import { Component, DestroyRef, inject, signal, computed } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
@@ -9,6 +12,7 @@ import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { SystemCatalogService } from './service/system-catalog.service';
 import { SystemCatalogDialogComponent } from './system-catalog-dialog';
 import { DashboardStateService } from '../dashboard/dashboard-state';
+import { AuditLogService } from 'app/entities/audit-log/service/audit-log.service';
 
 export type CatalogType = 'ABOUT' | 'TERMS' | 'PRIVACY' | 'PRODUCTS' | 'FAQ';
 
@@ -57,37 +61,16 @@ export class SystemCatalogComponent {
   columns = ['title', 'updatedAt', 'actions'];
   isAuditTrailOpen = signal(true);
 
-  auditEvents = signal<CatalogAuditEvent[]>([
-    {
-      id: '1',
-      type: 'UPDATE',
-      message: 'Updated Terms of Service section 4.1',
-      timestamp: '10 mins ago',
-      icon: 'edit_document',
-      colorClass: 'bg-amber-100 text-amber-600',
-    },
-    {
-      id: '2',
-      type: 'CREATE',
-      message: 'Added new Product "Health Monitor"',
-      timestamp: '2 hours ago',
-      icon: 'post_add',
-      colorClass: 'bg-emerald-100 text-emerald-600',
-    },
-    {
-      id: '3',
-      type: 'DELETE',
-      message: 'Removed deprecated FAQ entry',
-      timestamp: '1 day ago',
-      icon: 'delete',
-      colorClass: 'bg-rose-100 text-rose-600',
-    },
-  ]);
+  readonly auditEvents = signal<CatalogAuditEvent[]>([]);
 
   readonly filteredData = computed(() => this.catalogData().filter(item => item.type === this.activeTab()));
 
+  private readonly auditLogService = inject(AuditLogService);
+  private readonly destroyRef = inject(DestroyRef);
+
   constructor() {
     this.loadData();
+    this.loadAuditTrail();
     if (!this.state.canAccess('CATALOG', 'UPDATE') && !this.state.canAccess('CATALOG', 'DELETE')) {
       this.columns = ['title', 'updatedAt'];
     }
@@ -99,28 +82,6 @@ export class SystemCatalogComponent {
 
   toggleAuditTrail(): void {
     this.isAuditTrailOpen.update(v => !v);
-  }
-
-  logEvent(type: 'CREATE' | 'UPDATE' | 'DELETE', message: string): void {
-    const iconMap: Record<'CREATE' | 'UPDATE' | 'DELETE', string> = {
-      CREATE: 'post_add',
-      UPDATE: 'edit_document',
-      DELETE: 'delete',
-    };
-    const colorMap: Record<'CREATE' | 'UPDATE' | 'DELETE', string> = {
-      CREATE: 'bg-emerald-100 text-emerald-600',
-      UPDATE: 'bg-amber-100 text-amber-600',
-      DELETE: 'bg-rose-100 text-rose-600',
-    };
-    const newEvent: CatalogAuditEvent = {
-      id: crypto.randomUUID(),
-      type,
-      message,
-      timestamp: 'Just now',
-      icon: iconMap[type],
-      colorClass: colorMap[type],
-    };
-    this.auditEvents.update(events => [newEvent, ...events].slice(0, 20));
   }
 
   openAddModal(): void {
@@ -137,7 +98,7 @@ export class SystemCatalogComponent {
       if (result) {
         this.api.post('/system-catalog', result).subscribe(() => {
           this.loadData();
-          this.logEvent('CREATE', `Added new ${result.type} content: "${result.title}"`);
+          this.loadAuditTrail();
         });
       }
     });
@@ -157,7 +118,7 @@ export class SystemCatalogComponent {
       if (result) {
         this.api.put(`/system-catalog/${item.id}`, result).subscribe(() => {
           this.loadData();
-          this.logEvent('UPDATE', `Updated ${result.type} content: "${result.title}"`);
+          this.loadAuditTrail();
         });
       }
     });
@@ -173,7 +134,50 @@ export class SystemCatalogComponent {
 
     this.api.delete(item.id).subscribe(() => {
       this.loadData();
-      this.logEvent('DELETE', `Deleted ${item.type} content: "${item.title}"`);
+      this.loadAuditTrail();
     });
+  }
+
+  /*
+   * There was a logEvent() here that prepended a client-invented entry to this trail, alongside a
+   * seeded set of three fabricated ones. The api records a real AuditLog row for every save and
+   * delete now (AuditLogCallback), so an invented line would sit next to server-recorded ones
+   * looking identical while being neither durable nor true. The feed is loaded and reloaded from
+   * the api instead.
+   */
+  private loadAuditTrail(): void {
+    this.auditLogService
+      .query({ sort: ['createdDate,desc'], size: 20 })
+      .pipe(
+        catchError(() => of(null)),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe(response => {
+        this.auditEvents.set(
+          (response?.body ?? []).map(entry => {
+            const action = (entry.actionType ?? '').toUpperCase();
+            const type: CatalogAuditEvent['type'] =
+              action === 'DELETE' ? 'DELETE' : action === 'SAVE' || action === 'CREATE' ? 'CREATE' : 'UPDATE';
+            const iconMap: Record<CatalogAuditEvent['type'], string> = {
+              CREATE: 'post_add',
+              UPDATE: 'edit_document',
+              DELETE: 'delete',
+            };
+            const colorMap: Record<CatalogAuditEvent['type'], string> = {
+              CREATE: 'bg-emerald-100 text-emerald-600',
+              UPDATE: 'bg-amber-100 text-amber-600',
+              DELETE: 'bg-rose-100 text-rose-600',
+            };
+            return {
+              id: entry.id,
+              type,
+              message: entry.metadata ?? 'System event recorded.',
+              timestamp: entry.createdDate ? entry.createdDate.fromNow() : '',
+              icon: iconMap[type],
+              colorClass: colorMap[type],
+            };
+          }),
+        );
+      });
   }
 }

@@ -36,8 +36,14 @@ const routes: Routes = [
     component: LoginComponent,
     title: 'login.title',
   },
+  // NOTE ON PATHS: the screens below are the sidebar's hand-written surface and use PLURAL paths.
+  // The generated CRUD reached from the entity navbar uses the singular ones and is registered in
+  // entities/entity.routes.ts. That split is load-bearing: this array is matched before the
+  // lazy-loaded children, so a hand-written screen sharing a path with a generated one wins and the
+  // navbar link silently goes somewhere other than where it says. /dashboard, /duty-roster and
+  // /pricing-plan all did exactly that.
   {
-    path: 'dashboard',
+    path: 'dashboards',
     loadComponent: () => import('./entities/dashboard/dashboard-component').then(m => m.DashboardComponent),
     data: { authorities: [Authority.ADMIN, Authority.OPERATOR] },
     canActivate: [UserRouteAccessService],
@@ -51,14 +57,14 @@ const routes: Routes = [
     title: 'adminDashboardApp.hcAdminServiceMessage.home.title',
   },
   {
-    path: 'duty-roster',
+    path: 'duty-rosters',
     loadComponent: () => import('./entities/duty-roster/duty-roster').then(m => m.DutyRosterComponent),
     data: { authorities: [Authority.ADMIN, Authority.OPERATOR] },
     canActivate: [UserRouteAccessService],
     title: 'adminDashboardApp.hcAdminServiceDutyRoster.home.title',
   },
   {
-    path: 'pricing-plan',
+    path: 'pricing-plans',
     loadComponent: () => import('./entities/pricing-plan/pricing-plan').then(m => m.PricingPlanComponent),
     data: { authorities: [Authority.ADMIN, Authority.OPERATOR] },
     canActivate: [UserRouteAccessService],
