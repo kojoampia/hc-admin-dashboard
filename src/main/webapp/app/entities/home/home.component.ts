@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -15,14 +15,12 @@ import { DashboardComponent } from 'app/entities/dashboard/list/dashboard.compon
   imports: [SharedModule, RouterModule, DashboardComponent],
 })
 export default class HomeComponent implements OnInit, OnDestroy {
+  private accountService = inject(AccountService);
+  private router = inject(Router);
+
   account: Account | null = null;
 
   private readonly destroy$ = new Subject<void>();
-
-  constructor(
-    private accountService: AccountService,
-    private router: Router,
-  ) {}
 
   ngOnInit(): void {
     this.accountService

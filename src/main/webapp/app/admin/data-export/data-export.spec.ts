@@ -1,3 +1,4 @@
+import { TestBed } from '@angular/core/testing';
 import '@angular/compiler';
 
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
@@ -44,12 +45,18 @@ describe('DataExportComponent', () => {
     window.URL.revokeObjectURL = jest.fn();
     createElementSpy = jest.spyOn(document, 'createElement').mockReturnValue(anchor as unknown as HTMLAnchorElement);
 
-    component = new DataExportComponent(
-      userManagementService as unknown as UserManagementService,
-      healthService as unknown as HealthService,
-      metricsService as unknown as MetricsService,
-      changeDetectorRef as unknown as ChangeDetectorRef,
-    );
+      // The component takes its dependencies through inject() now, so it can no longer be
+      // constructed with them. TestBed supplies the same doubles through the injector; the
+      // mocks and every assertion below are unchanged.
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: UserManagementService, useValue: userManagementService },
+        { provide: HealthService, useValue: healthService },
+        { provide: MetricsService, useValue: metricsService },
+        { provide: ChangeDetectorRef, useValue: changeDetectorRef },
+      ],
+    });
+    component = TestBed.runInInjectionContext(() => new DataExportComponent());
   });
 
   afterEach(() => {

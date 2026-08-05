@@ -1,3 +1,4 @@
+import { TestBed } from '@angular/core/testing';
 import '@angular/compiler';
 
 jest.mock('app/entities/dashboard/dashboard-state', () => ({
@@ -12,7 +13,7 @@ import { Router } from '@angular/router';
 import { AccountService } from 'app/core/auth/account.service';
 import { LoginService } from 'app/login/login.service';
 import { Authority } from 'app/config/authority.constants';
-import type { DashboardStateService } from 'app/entities/dashboard/dashboard-state';
+import { DashboardStateService } from 'app/entities/dashboard/dashboard-state';
 import { SidebarComponent } from './sidebar.component';
 
 describe('SidebarComponent', () => {
@@ -54,17 +55,28 @@ describe('SidebarComponent', () => {
     destroyCallbacks.forEach(callback => callback());
   });
 
+
+  // The component takes its dependencies through inject() now, so it can no longer be constructed
+  // with them. The doubles and every assertion below are unchanged.
+  const build = (): SidebarComponent => {
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: DashboardStateService, useValue: dashboardState },
+        { provide: AccountService, useValue: accountService },
+        { provide: DestroyRef, useValue: destroyRef },
+        { provide: LoginService, useValue: loginService },
+        { provide: Router, useValue: router },
+      ],
+    });
+    return TestBed.runInInjectionContext(() => new SidebarComponent());
+  };
+
   it('shows the System Admin link for administrators', () => {
     accountService.getAuthenticationState.mockReturnValue(of({} as never));
     accountService.hasAnyAuthority.mockReturnValue(true);
 
-    component = new SidebarComponent(
-      dashboardState as DashboardStateService,
-      accountService as unknown as AccountService,
-      destroyRef,
-      loginService as unknown as LoginService,
-      router as unknown as Router,
-    );
+    component = build();
     component.ngOnInit();
 
     expect(accountService.hasAnyAuthority).toHaveBeenCalledWith(Authority.ADMIN);
@@ -75,13 +87,7 @@ describe('SidebarComponent', () => {
     accountService.getAuthenticationState.mockReturnValue(of({} as never));
     accountService.hasAnyAuthority.mockReturnValue(false);
 
-    component = new SidebarComponent(
-      dashboardState as DashboardStateService,
-      accountService as unknown as AccountService,
-      destroyRef,
-      loginService as unknown as LoginService,
-      router as unknown as Router,
-    );
+    component = build();
     component.ngOnInit();
 
     expect(component.showSystemAdminLink).toBe(false);

@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit, AfterViewInit, ElementRef } from '@angular/core';
+import { Component, ViewChild, OnInit, AfterViewInit, ElementRef, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -27,6 +27,10 @@ import { AccountService } from 'app/core/auth/account.service';
   templateUrl: './login.component.html',
 })
 export default class LoginComponent implements OnInit, AfterViewInit {
+  private accountService = inject(AccountService);
+  private loginService = inject(LoginService);
+  private router = inject(Router);
+
   @ViewChild('username', { static: false })
   username!: ElementRef;
 
@@ -37,12 +41,6 @@ export default class LoginComponent implements OnInit, AfterViewInit {
     password: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
     rememberMe: new FormControl(false, { nonNullable: true, validators: [Validators.required] }),
   });
-
-  constructor(
-    private accountService: AccountService,
-    private loginService: LoginService,
-    private router: Router,
-  ) {}
 
   ngOnInit(): void {
     // if already authenticated then navigate to home page

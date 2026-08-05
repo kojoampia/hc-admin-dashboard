@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 import SharedModule from 'app/shared/shared.module';
@@ -10,9 +10,9 @@ import { HealthKey, HealthDetails } from '../health.model';
   imports: [SharedModule, MatDialogModule],
 })
 export default class HealthModalComponent {
-  health?: { key: HealthKey; value: HealthDetails };
+  private dialogRef = inject<MatDialogRef<HealthModalComponent>>(MatDialogRef);
 
-  constructor(private dialogRef: MatDialogRef<HealthModalComponent>) {}
+  health?: { key: HealthKey; value: HealthDetails };
 
   readableValue(value: any): string {
     if (this.health?.key === 'diskSpace') {

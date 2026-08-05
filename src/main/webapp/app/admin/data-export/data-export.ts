@@ -1,5 +1,5 @@
 import { HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { catchError, forkJoin, of, throwError } from 'rxjs';
@@ -50,16 +50,14 @@ type DashboardExportSnapshot = {
   imports: [SharedModule, MatButtonModule, MatIconModule],
 })
 export default class DataExportComponent {
+  private userManagementService = inject(UserManagementService);
+  private healthService = inject(HealthService);
+  private metricsService = inject(MetricsService);
+  private changeDetectorRef = inject(ChangeDetectorRef);
+
   isExporting = false;
   errorMessage = '';
   lastExportedAt: Date | null = null;
-
-  constructor(
-    private userManagementService: UserManagementService,
-    private healthService: HealthService,
-    private metricsService: MetricsService,
-    private changeDetectorRef: ChangeDetectorRef,
-  ) {}
 
   exportSnapshotJson(): void {
     this.exportDashboardData('json');

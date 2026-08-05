@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { ActivatedRoute } from '@angular/router';
@@ -12,9 +12,9 @@ import { User } from '../user-management.model';
   imports: [SharedModule, MatButtonModule, MatCardModule],
 })
 export default class UserManagementDetailComponent implements OnInit {
-  user: User | null = null;
+  private route = inject(ActivatedRoute);
 
-  constructor(private route: ActivatedRoute) {}
+  user: User | null = null;
 
   ngOnInit(): void {
     this.route.data.subscribe(({ user }) => {

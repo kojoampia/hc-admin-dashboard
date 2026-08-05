@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, Renderer2 } from '@angular/core';
+import { Component, ElementRef, Input, Renderer2, inject } from '@angular/core';
 
 import SharedModule from 'app/shared/shared.module';
 
@@ -9,12 +9,10 @@ import SharedModule from 'app/shared/shared.module';
   styleUrl: './password-strength-bar.component.scss',
 })
 export default class PasswordStrengthBarComponent {
-  colors = ['#F00', '#F90', '#FF0', '#9F0', '#0F0'];
+  private renderer = inject(Renderer2);
+  private elementRef = inject(ElementRef);
 
-  constructor(
-    private renderer: Renderer2,
-    private elementRef: ElementRef,
-  ) {}
+  colors = ['#F00', '#F90', '#FF0', '#9F0', '#0F0'];
 
   measureStrength(p: string): number {
     let force = 0;

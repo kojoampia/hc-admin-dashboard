@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 import SharedModule from 'app/shared/shared.module';
@@ -11,6 +11,8 @@ import { MetricsModalThreadsComponent } from '../metrics-modal-threads/metrics-m
   imports: [SharedModule, MatDialogModule],
 })
 export class JvmThreadsComponent {
+  private dialog = inject(MatDialog);
+
   threadStats = {
     threadDumpAll: 0,
     threadDumpRunnable: 0,
@@ -54,8 +56,6 @@ export class JvmThreadsComponent {
   }
 
   private _threads: Thread[] | undefined;
-
-  constructor(private dialog: MatDialog) {}
 
   percentage(value: number): number {
     return this.threadStats.threadDumpAll > 0 ? (value * 100) / this.threadStats.threadDumpAll : 0;

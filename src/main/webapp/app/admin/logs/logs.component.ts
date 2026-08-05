@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -34,6 +34,9 @@ import { LogsService } from './logs.service';
   ],
 })
 export default class LogsComponent implements OnInit {
+  private logsService = inject(LogsService);
+  private gatewayRoutesService = inject(GatewayRoutesService);
+
   readonly logLevels: Level[] = ['TRACE', 'DEBUG', 'INFO', 'WARN', 'ERROR', 'OFF'];
   loggers?: Log[];
   filteredAndOrderedLoggers?: Log[];
@@ -43,11 +46,6 @@ export default class LogsComponent implements OnInit {
   ascending = true;
   services: string[] = [];
   selectedService: string | undefined = undefined;
-
-  constructor(
-    private logsService: LogsService,
-    private gatewayRoutesService: GatewayRoutesService,
-  ) {}
 
   ngOnInit(): void {
     this.findAndExtractLoggers();

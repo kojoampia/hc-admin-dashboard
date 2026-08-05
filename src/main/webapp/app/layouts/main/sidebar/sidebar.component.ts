@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/member-ordering */
-import { Component, computed, DestroyRef, OnInit } from '@angular/core';
+import { Component, computed, DestroyRef, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
@@ -40,6 +40,11 @@ interface MenuItem {
   styleUrl: './sidebar.component.scss',
 })
 export class SidebarComponent implements OnInit {
+  private accountService = inject(AccountService);
+  private destroyRef = inject(DestroyRef);
+  private loginService = inject(LoginService);
+  private router = inject(Router);
+
   readonly state: DashboardStateService;
   readonly isExpanded;
   readonly filteredMenuItems;
@@ -62,13 +67,9 @@ export class SidebarComponent implements OnInit {
     path: '/admin/dashboard',
   };
 
-  constructor(
-    state: DashboardStateService,
-    private accountService: AccountService,
-    private destroyRef: DestroyRef,
-    private loginService: LoginService,
-    private router: Router,
-  ) {
+  constructor() {
+    const state = inject(DashboardStateService);
+
     this.state = state;
     this.isExpanded = this.state.sidebarExpanded;
     this.filteredMenuItems = computed(() => this.menuItems.filter(item => this.state.canAccess(item.resource, 'READ')));

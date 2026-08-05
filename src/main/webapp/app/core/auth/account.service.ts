@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
@@ -12,17 +12,15 @@ import { IAuthority } from 'app/admin/user-management/user-management.model';
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {
+  private translateService = inject(TranslateService);
+  private http = inject(HttpClient);
+  private stateStorageService = inject(StateStorageService);
+  private router = inject(Router);
+  private applicationConfigService = inject(ApplicationConfigService);
+
   private userIdentity: Account | null = null;
   private authenticationState = new ReplaySubject<Account | null>(1);
   private accountCache$?: Observable<Account> | null;
-
-  constructor(
-    private translateService: TranslateService,
-    private http: HttpClient,
-    private stateStorageService: StateStorageService,
-    private router: Router,
-    private applicationConfigService: ApplicationConfigService,
-  ) {}
 
   save(account: Account): Observable<{}> {
     return this.http.post(this.applicationConfigService.getEndpointFor('api/account'), account);

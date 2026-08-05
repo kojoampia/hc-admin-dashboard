@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, AfterViewInit, ElementRef, ViewChild, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -14,6 +14,9 @@ import { PasswordResetInitService } from './password-reset-init.service';
   templateUrl: './password-reset-init.component.html',
 })
 export default class PasswordResetInitComponent implements AfterViewInit {
+  private passwordResetInitService = inject(PasswordResetInitService);
+  private fb = inject(FormBuilder);
+
   @ViewChild('email', { static: false })
   email?: ElementRef;
 
@@ -21,11 +24,6 @@ export default class PasswordResetInitComponent implements AfterViewInit {
   resetRequestForm = this.fb.group({
     email: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(254), Validators.email]],
   });
-
-  constructor(
-    private passwordResetInitService: PasswordResetInitService,
-    private fb: FormBuilder,
-  ) {}
 
   ngAfterViewInit(): void {
     if (this.email) {

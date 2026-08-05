@@ -1,5 +1,5 @@
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
@@ -38,6 +38,10 @@ const ADMIN_ROUTES: Array<Pick<ProtectedRoute, 'label' | 'route' | 'description'
   imports: [RouterModule, SharedModule, MatButtonModule, MatIconModule],
 })
 export default class AccessControlComponent implements OnInit {
+  private accountService = inject(AccountService);
+  private userManagementService = inject(UserManagementService);
+  private changeDetectorRef = inject(ChangeDetectorRef);
+
   readonly requiredAuthority = Authority.ADMIN;
 
   isLoading = true;
@@ -51,12 +55,6 @@ export default class AccessControlComponent implements OnInit {
   activeAdminUserCount = 0;
   totalManagedUsers = 0;
   protectedRoutes: ProtectedRoute[] = [];
-
-  constructor(
-    private accountService: AccountService,
-    private userManagementService: UserManagementService,
-    private changeDetectorRef: ChangeDetectorRef,
-  ) {}
 
   ngOnInit(): void {
     this.loadAccessOverview();

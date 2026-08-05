@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -16,13 +16,13 @@ import { Bean, PropertySource } from './configuration.model';
   imports: [SharedModule, FormsModule, SortDirective, SortByDirective, MatCardModule, MatFormFieldModule, MatIconModule, MatInputModule],
 })
 export default class ConfigurationComponent implements OnInit {
+  private configurationService = inject(ConfigurationService);
+
   allBeans!: Bean[];
   beans: Bean[] = [];
   beansFilter = '';
   beansAscending = true;
   propertySources: PropertySource[] = [];
-
-  constructor(private configurationService: ConfigurationService) {}
 
   ngOnInit(): void {
     this.configurationService.getBeans().subscribe(beans => {

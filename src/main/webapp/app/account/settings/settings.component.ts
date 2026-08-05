@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -29,6 +29,9 @@ const initialAccount: Account = {} as Account;
   templateUrl: './settings.component.html',
 })
 export default class SettingsComponent implements OnInit {
+  private accountService = inject(AccountService);
+  private translateService = inject(TranslateService);
+
   success = false;
   languages = LANGUAGES;
 
@@ -52,11 +55,6 @@ export default class SettingsComponent implements OnInit {
     imageUrl: new FormControl(initialAccount.imageUrl, { nonNullable: true }),
     login: new FormControl(initialAccount.login, { nonNullable: true }),
   });
-
-  constructor(
-    private accountService: AccountService,
-    private translateService: TranslateService,
-  ) {}
 
   ngOnInit(): void {
     this.accountService.identity().subscribe(account => {

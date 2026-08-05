@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -13,10 +13,10 @@ import { DashboardLayoutPreset, DashboardLayoutService, DashboardWidgetId } from
   imports: [SharedModule, MatButtonModule, MatIconModule],
 })
 export default class CustomizableLayoutComponent {
+  private dashboardLayoutService = inject(DashboardLayoutService);
+
   readonly layout = this.dashboardLayoutService;
   readonly presets: Exclude<DashboardLayoutPreset, 'custom'>[] = ['balanced', 'operations', 'security'];
-
-  constructor(private dashboardLayoutService: DashboardLayoutService) {}
 
   setVisibility(widgetId: DashboardWidgetId, visible: boolean): void {
     this.dashboardLayoutService.setWidgetVisibility(widgetId, visible);

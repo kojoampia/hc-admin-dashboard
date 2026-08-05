@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -36,6 +36,10 @@ export const USAGE_STATISTICS_REFRESH_INTERVAL_MS = 30_000;
   imports: [RouterModule, SharedModule, MatButtonModule, MatIconModule, NgxChartsModule],
 })
 export default class UsageStatisticsComponent implements OnInit {
+  private metricsService = inject(MetricsService);
+  private changeDetectorRef = inject(ChangeDetectorRef);
+  private destroyRef = inject(DestroyRef);
+
   // Carried over verbatim from the deleted linechart wrapper, which was the only thing that ever
   // supplied a scheme to this chart. ngx-charts falls back to its own palette without it.
   readonly serviceTrafficScheme = {
@@ -87,12 +91,6 @@ export default class UsageStatisticsComponent implements OnInit {
   responseCodeData: ChartDatum[] = [];
   serviceTrafficData: LineSeries[] = [];
   serviceHighlights: Array<{ name: string; totalRequests: number; methods: string }> = [];
-
-  constructor(
-    private metricsService: MetricsService,
-    private changeDetectorRef: ChangeDetectorRef,
-    private destroyRef: DestroyRef,
-  ) {}
 
   ngOnInit(): void {
     this.loadUsageMetrics();

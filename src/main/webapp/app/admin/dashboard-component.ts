@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, computed, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, computed, signal, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -59,6 +59,10 @@ type DashboardSectionView = DashboardSection & {
   ],
 })
 export default class DashboardComponent implements OnInit {
+  private dashboardLayoutService = inject(DashboardLayoutService);
+  private accountService = inject(AccountService);
+  private destroyRef = inject(DestroyRef);
+
   readonly layout = this.dashboardLayoutService;
   readonly account = signal<Account | null>(null);
   readonly maximizedWidgetId = signal<DashboardWidgetId | null>(null);
@@ -153,12 +157,6 @@ export default class DashboardComponent implements OnInit {
       icon: 'description',
     },
   ];
-
-  constructor(
-    private dashboardLayoutService: DashboardLayoutService,
-    private accountService: AccountService,
-    private destroyRef: DestroyRef,
-  ) {}
 
   ngOnInit(): void {
     this.accountService

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 
@@ -12,12 +12,10 @@ import { UserManagementService } from '../service/user-management.service';
   imports: [SharedModule, FormsModule],
 })
 export default class UserManagementDeleteDialogComponent {
-  user?: User;
+  private userService = inject(UserManagementService);
+  private dialogRef = inject<MatDialogRef<UserManagementDeleteDialogComponent>>(MatDialogRef);
 
-  constructor(
-    private userService: UserManagementService,
-    private dialogRef: MatDialogRef<UserManagementDeleteDialogComponent>,
-  ) {}
+  user?: User;
 
   cancel(): void {
     // close() with no result: the caller filters on the 'deleted' reason, so an argument-less

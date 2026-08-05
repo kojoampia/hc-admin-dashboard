@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -32,6 +32,11 @@ export const SYSTEM_HEALTH_REFRESH_INTERVAL_MS = 30_000;
   imports: [RouterModule, SharedModule, MatButtonModule, MatIconModule, NgxChartsModule],
 })
 export default class SystemHealthComponent implements OnInit {
+  private healthService = inject(HealthService);
+  private metricsService = inject(MetricsService);
+  private changeDetectorRef = inject(ChangeDetectorRef);
+  private destroyRef = inject(DestroyRef);
+
   readonly refreshIntervalSeconds = SYSTEM_HEALTH_REFRESH_INTERVAL_MS / 1000;
 
   isLoading = true;
@@ -44,13 +49,6 @@ export default class SystemHealthComponent implements OnInit {
   lastUpdated: Date | null = null;
   componentStatuses: HealthComponentStatus[] = [];
   healthDistribution: ChartDatum[] = [];
-
-  constructor(
-    private healthService: HealthService,
-    private metricsService: MetricsService,
-    private changeDetectorRef: ChangeDetectorRef,
-    private destroyRef: DestroyRef,
-  ) {}
 
   ngOnInit(): void {
     this.loadHealthData();

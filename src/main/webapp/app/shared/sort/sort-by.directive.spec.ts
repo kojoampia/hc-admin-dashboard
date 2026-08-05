@@ -1,3 +1,4 @@
+import { TestBed } from '@angular/core/testing';
 import '@angular/compiler';
 import { ElementRef, EventEmitter } from '@angular/core';
 
@@ -31,7 +32,12 @@ describe('Directive: SortByDirective', () => {
         transition({ predicate: field, order: ascending ? 'asc' : 'desc', ascending });
       }),
     };
-    sortByDirective = new SortByDirective(sortDirective as unknown as SortDirective<string>);
+    // Constructed through the injector now that the class uses inject(). The doubles and every
+    // assertion below are unchanged.
+    TestBed.configureTestingModule({
+      providers: [{ provide: SortDirective, useValue: sortDirective }],
+    });
+    sortByDirective = TestBed.runInInjectionContext(() => new SortByDirective());
     sortByDirective.hpdSortBy = 'name';
     iconElement = new ElementRef(document.createElement('mat-icon'));
     sortByDirective.iconElement = iconElement;

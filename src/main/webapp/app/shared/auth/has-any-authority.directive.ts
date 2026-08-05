@@ -1,4 +1,4 @@
-import { Directive, Input, TemplateRef, ViewContainerRef, OnDestroy } from '@angular/core';
+import { Directive, Input, TemplateRef, ViewContainerRef, OnDestroy, inject } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -20,15 +20,13 @@ import { AccountService } from 'app/core/auth/account.service';
   selector: '[hpdHasAnyAuthority]',
 })
 export default class HasAnyAuthorityDirective implements OnDestroy {
+  private accountService = inject(AccountService);
+  private templateRef = inject<TemplateRef<any>>(TemplateRef);
+  private viewContainerRef = inject(ViewContainerRef);
+
   private authorities!: string | string[];
 
   private readonly destroy$ = new Subject<void>();
-
-  constructor(
-    private accountService: AccountService,
-    private templateRef: TemplateRef<any>,
-    private viewContainerRef: ViewContainerRef,
-  ) {}
 
   @Input()
   set hpdHasAnyAuthority(value: string | string[]) {

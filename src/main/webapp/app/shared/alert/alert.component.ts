@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -11,9 +11,9 @@ import { AlertService, Alert } from 'app/core/util/alert.service';
   imports: [CommonModule, MatButtonModule, MatIconModule],
 })
 export class AlertComponent implements OnInit, OnDestroy {
-  alerts: Alert[] = [];
+  private alertService = inject(AlertService);
 
-  constructor(private alertService: AlertService) {}
+  alerts: Alert[] = [];
 
   ngOnInit(): void {
     this.alerts = this.alertService.get();

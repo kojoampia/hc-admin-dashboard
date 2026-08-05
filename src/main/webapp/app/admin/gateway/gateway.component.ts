@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -14,10 +14,10 @@ import { GatewayRoute } from './gateway-route.model';
   imports: [SharedModule, MatButtonModule, MatCardModule, MatIconModule],
 })
 export default class GatewayComponent implements OnInit {
+  private gatewayRoutesService = inject(GatewayRoutesService);
+
   gatewayRoutes: GatewayRoute[] = [];
   updatingRoutes = false;
-
-  constructor(private gatewayRoutesService: GatewayRoutesService) {}
 
   ngOnInit(): void {
     this.refresh();

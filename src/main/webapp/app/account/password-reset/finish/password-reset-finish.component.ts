@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ElementRef, ViewChild, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -26,6 +26,9 @@ import { PasswordResetFinishService } from './password-reset-finish.service';
   templateUrl: './password-reset-finish.component.html',
 })
 export default class PasswordResetFinishComponent implements OnInit, AfterViewInit {
+  private passwordResetFinishService = inject(PasswordResetFinishService);
+  private route = inject(ActivatedRoute);
+
   @ViewChild('newPassword', { static: false })
   newPassword?: ElementRef;
 
@@ -45,11 +48,6 @@ export default class PasswordResetFinishComponent implements OnInit, AfterViewIn
       validators: [Validators.required, Validators.minLength(4), Validators.maxLength(50)],
     }),
   });
-
-  constructor(
-    private passwordResetFinishService: PasswordResetFinishService,
-    private route: ActivatedRoute,
-  ) {}
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {

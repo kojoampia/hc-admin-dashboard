@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -36,6 +36,9 @@ const newUser: IUser = {
   ],
 })
 export default class UserManagementUpdateComponent implements OnInit {
+  private userService = inject(UserManagementService);
+  private route = inject(ActivatedRoute);
+
   languages = LANGUAGES;
   authorities: IAuthority[] = [];
   isSaving = false;
@@ -61,11 +64,6 @@ export default class UserManagementUpdateComponent implements OnInit {
     langKey: new FormControl(userTemplate.langKey, { nonNullable: true }),
     authorities: new FormControl(userTemplate.authorities, { nonNullable: true }),
   });
-
-  constructor(
-    private userService: UserManagementService,
-    private route: ActivatedRoute,
-  ) {}
 
   ngOnInit(): void {
     this.route.data.subscribe(({ user }) => {

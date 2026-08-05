@@ -1,3 +1,4 @@
+import { TestBed } from '@angular/core/testing';
 import '@angular/compiler';
 
 import { ChangeDetectorRef, DestroyRef } from '@angular/core';
@@ -33,11 +34,17 @@ describe('UsageStatisticsComponent', () => {
       },
     } as DestroyRef;
 
-    component = new UsageStatisticsComponent(
-      metricsService as unknown as MetricsService,
-      changeDetectorRef as unknown as ChangeDetectorRef,
-      destroyRef,
-    );
+      // The component takes its dependencies through inject() now, so it can no longer be
+      // constructed with them. TestBed supplies the same doubles through the injector; the
+      // mocks and every assertion below are unchanged.
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: MetricsService, useValue: metricsService },
+        { provide: ChangeDetectorRef, useValue: changeDetectorRef },
+        { provide: DestroyRef, useValue: destroyRef },
+      ],
+    });
+    component = TestBed.runInInjectionContext(() => new UsageStatisticsComponent());
   });
 
   afterEach(() => {

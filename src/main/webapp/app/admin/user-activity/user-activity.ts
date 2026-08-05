@@ -1,5 +1,5 @@
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
@@ -22,6 +22,8 @@ type ChartDatum = {
   imports: [RouterModule, SharedModule, MatButtonModule, MatIconModule, NgxChartsModule],
 })
 export default class UserActivityComponent implements OnInit {
+  private userManagementService = inject(UserManagementService);
+
   isLoading = true;
   errorMessage = '';
   totalUsers = 0;
@@ -30,8 +32,6 @@ export default class UserActivityComponent implements OnInit {
   adminUsers = 0;
   recentUsers = 0;
   userStatusData: ChartDatum[] = [];
-
-  constructor(private userManagementService: UserManagementService) {}
 
   ngOnInit(): void {
     this.loadUserActivity();

@@ -37,7 +37,9 @@ export default class MainComponent implements OnInit {
   private readonly router = inject(Router);
   private renderer: Renderer2;
 
-  constructor(rootRenderer: RendererFactory2) {
+  constructor() {
+    const rootRenderer = inject(RendererFactory2);
+
     this.renderer = rootRenderer.createRenderer(document.querySelector('html'), null);
   }
 

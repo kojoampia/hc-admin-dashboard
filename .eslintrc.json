@@ -22,7 +22,6 @@
     "project": ["./tsconfig.app.json", "./tsconfig.spec.json"]
   },
   "rules": {
-    "@angular-eslint/prefer-inject": "off",
     "@angular-eslint/component-selector": [
       "error",
       {
@@ -59,9 +58,7 @@
           "public-static-field",
           "protected-static-field",
           "private-static-field",
-          "public-instance-field",
-          "protected-instance-field",
-          "private-instance-field",
+          ["public-instance-field", "protected-instance-field", "private-instance-field"],
           "constructor",
           "public-static-method",
           "protected-static-method",

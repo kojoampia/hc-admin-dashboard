@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import locale from '@angular/common/locales/en';
 
@@ -16,7 +16,9 @@ import MainComponent from './layouts/main/main.component';
   ],
 })
 export default class AppComponent {
-  constructor(applicationConfigService: ApplicationConfigService) {
+  constructor() {
+    const applicationConfigService = inject(ApplicationConfigService);
+
     applicationConfigService.setEndpointPrefix(SERVER_API_URL);
     registerLocaleData(locale);
   }

@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnDestroy, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -48,6 +48,12 @@ const MAX_ALERTS = 8;
   imports: [RouterModule, SharedModule, MatButtonModule, MatIconModule],
 })
 export default class AlertsComponent implements OnInit, OnDestroy {
+  dashboardState = inject(DashboardStateService);
+  private healthService = inject(HealthService);
+  private metricsService = inject(MetricsService);
+  private changeDetectorRef = inject(ChangeDetectorRef);
+  private destroyRef = inject(DestroyRef);
+
   readonly refreshIntervalSeconds = ALERTS_REFRESH_INTERVAL_MS / 1000;
 
   isLoading = true;
@@ -92,14 +98,6 @@ export default class AlertsComponent implements OnInit, OnDestroy {
       unit: 'events',
     },
   ];
-
-  constructor(
-    public dashboardState: DashboardStateService,
-    private healthService: HealthService,
-    private metricsService: MetricsService,
-    private changeDetectorRef: ChangeDetectorRef,
-    private destroyRef: DestroyRef,
-  ) {}
 
   ngOnInit(): void {
     this.dashboardState.connectAuditTrail();

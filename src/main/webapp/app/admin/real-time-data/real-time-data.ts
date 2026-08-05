@@ -1,4 +1,4 @@
-import { computed, ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { computed, ChangeDetectionStrategy, Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
@@ -14,6 +14,8 @@ import SharedModule from 'app/shared/shared.module';
   imports: [RouterModule, SharedModule, MatButtonModule, MatIconModule],
 })
 export default class RealTimeDataComponent implements OnInit, OnDestroy {
+  dashboardState = inject(DashboardStateService);
+
   readonly latestEvents = computed(() => this.dashboardState.operationLogs().slice(0, 6));
   readonly securityEventCount = computed(() => this.dashboardState.operationLogs().filter(event => this.isSecurityEvent(event)).length);
   readonly distinctEventTypes = computed(() => new Set(this.dashboardState.operationLogs().map(event => event.type)).size);
@@ -35,8 +37,6 @@ export default class RealTimeDataComponent implements OnInit, OnDestroy {
    * connected, which is how a stream pointed at a nonexistent `/websocket` endpoint went unnoticed.
    */
   readonly isConnected = computed(() => this.dashboardState.auditTrailConnected());
-
-  constructor(public dashboardState: DashboardStateService) {}
 
   ngOnInit(): void {
     this.dashboardState.connectAuditTrail();

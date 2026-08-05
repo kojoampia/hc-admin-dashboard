@@ -1,4 +1,4 @@
-import { Input, Directive, ElementRef, OnChanges, OnInit, OnDestroy } from '@angular/core';
+import { Input, Directive, ElementRef, OnChanges, OnInit, OnDestroy, inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -13,15 +13,13 @@ import { translationNotFoundMessage } from 'app/config/translation.config';
   selector: '[hpdTranslate]',
 })
 export default class TranslateDirective implements OnChanges, OnInit, OnDestroy {
+  private el = inject(ElementRef);
+  private translateService = inject(TranslateService);
+
   @Input() hpdTranslate!: string;
   @Input() translateValues?: { [key: string]: unknown };
 
   private readonly directiveDestroyed = new Subject();
-
-  constructor(
-    private el: ElementRef,
-    private translateService: TranslateService,
-  ) {}
 
   ngOnInit(): void {
     this.translateService.onLangChange.pipe(takeUntil(this.directiveDestroyed)).subscribe(() => {

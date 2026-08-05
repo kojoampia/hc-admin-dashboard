@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
@@ -13,12 +13,10 @@ import HealthModalComponent from './modal/health-modal.component';
   imports: [SharedModule, MatDialogModule],
 })
 export default class HealthComponent implements OnInit {
-  health?: Health;
+  private dialog = inject(MatDialog);
+  private healthService = inject(HealthService);
 
-  constructor(
-    private dialog: MatDialog,
-    private healthService: HealthService,
-  ) {}
+  health?: Health;
 
   ngOnInit(): void {
     this.refresh();

@@ -1,3 +1,4 @@
+import { TestBed } from '@angular/core/testing';
 import '@angular/compiler';
 
 jest.mock('app/entities/dashboard/dashboard-state', () => ({
@@ -7,7 +8,7 @@ jest.mock('app/entities/dashboard/dashboard-state', () => ({
 import { ChangeDetectorRef, DestroyRef } from '@angular/core';
 import { of, throwError } from 'rxjs';
 
-import type { ActivityEvent, DashboardStateService } from 'app/entities/dashboard/dashboard-state';
+import { ActivityEvent, DashboardStateService } from 'app/entities/dashboard/dashboard-state';
 import { Health } from '../health/health.model';
 import { HealthService } from '../health/health.service';
 import { Metrics } from '../metrics/metrics.model';
@@ -63,13 +64,19 @@ describe('AlertsComponent', () => {
       },
     } as DestroyRef;
 
-    component = new AlertsComponent(
-      dashboardState as unknown as DashboardStateService,
-      healthService as unknown as HealthService,
-      metricsService as unknown as MetricsService,
-      changeDetectorRef as unknown as ChangeDetectorRef,
-      destroyRef,
-    );
+      // The component takes its dependencies through inject() now, so it can no longer be
+      // constructed with them. TestBed supplies the same doubles through the injector; the
+      // mocks and every assertion below are unchanged.
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: DashboardStateService, useValue: dashboardState },
+        { provide: HealthService, useValue: healthService },
+        { provide: MetricsService, useValue: metricsService },
+        { provide: ChangeDetectorRef, useValue: changeDetectorRef },
+        { provide: DestroyRef, useValue: destroyRef },
+      ],
+    });
+    component = TestBed.runInInjectionContext(() => new AlertsComponent());
   });
 
   afterEach(() => {

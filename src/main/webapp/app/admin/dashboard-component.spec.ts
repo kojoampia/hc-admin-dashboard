@@ -1,3 +1,4 @@
+import { TestBed } from '@angular/core/testing';
 import '@angular/compiler';
 
 import { DestroyRef } from '@angular/core';
@@ -44,11 +45,17 @@ describe('DashboardComponent', () => {
       },
     } as DestroyRef;
 
-    component = new DashboardComponent(
-      dashboardLayoutService as unknown as DashboardLayoutService,
-      accountService as unknown as AccountService,
-      destroyRef,
-    );
+      // The component takes its dependencies through inject() now, so it can no longer be
+      // constructed with them. TestBed supplies the same doubles through the injector; the
+      // mocks and every assertion below are unchanged.
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: DashboardLayoutService, useValue: dashboardLayoutService },
+        { provide: AccountService, useValue: accountService },
+        { provide: DestroyRef, useValue: destroyRef },
+      ],
+    });
+    component = TestBed.runInInjectionContext(() => new DashboardComponent());
     jest.spyOn(document, 'getElementById').mockReturnValue({
       scrollIntoView: jest.fn(),
     } as unknown as HTMLElement);

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -27,6 +27,9 @@ import PasswordStrengthBarComponent from './password-strength-bar/password-stren
   templateUrl: './password.component.html',
 })
 export default class PasswordComponent implements OnInit {
+  private passwordService = inject(PasswordService);
+  private accountService = inject(AccountService);
+
   doNotMatch = false;
   error = false;
   success = false;
@@ -42,11 +45,6 @@ export default class PasswordComponent implements OnInit {
       validators: [Validators.required, Validators.minLength(4), Validators.maxLength(50)],
     }),
   });
-
-  constructor(
-    private passwordService: PasswordService,
-    private accountService: AccountService,
-  ) {}
 
   ngOnInit(): void {
     this.account$ = this.accountService.identity();

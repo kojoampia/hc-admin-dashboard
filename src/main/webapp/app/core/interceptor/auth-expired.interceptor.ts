@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -10,12 +10,10 @@ import { AccountService } from 'app/core/auth/account.service';
 
 @Injectable()
 export class AuthExpiredInterceptor implements HttpInterceptor {
-  constructor(
-    private loginService: LoginService,
-    private stateStorageService: StateStorageService,
-    private router: Router,
-    private accountService: AccountService,
-  ) {}
+  private loginService = inject(LoginService);
+  private stateStorageService = inject(StateStorageService);
+  private router = inject(Router);
+  private accountService = inject(AccountService);
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(

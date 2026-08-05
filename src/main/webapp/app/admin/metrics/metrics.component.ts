@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, inject } from '@angular/core';
 import { combineLatest } from 'rxjs';
 
 import SharedModule from 'app/shared/shared.module';
@@ -30,14 +30,12 @@ import { MetricsSystemComponent } from './blocks/metrics-system/metrics-system.c
   ],
 })
 export default class MetricsComponent implements OnInit {
+  private metricsService = inject(MetricsService);
+  private changeDetector = inject(ChangeDetectorRef);
+
   metrics?: Metrics;
   threads?: Thread[];
   updatingMetrics = true;
-
-  constructor(
-    private metricsService: MetricsService,
-    private changeDetector: ChangeDetectorRef,
-  ) {}
 
   ngOnInit(): void {
     this.refresh();

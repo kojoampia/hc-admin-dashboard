@@ -1,4 +1,4 @@
-import { computed, Injectable, Signal, signal, WritableSignal } from '@angular/core';
+import { computed, Injectable, Signal, signal, WritableSignal, inject } from '@angular/core';
 import { LocalStorageService } from 'ngx-webstorage';
 
 export type DashboardWidgetId =
@@ -129,13 +129,15 @@ const PRESET_STATES: Record<Exclude<DashboardLayoutPreset, 'custom'>, Omit<Store
 
 @Injectable({ providedIn: 'root' })
 export class DashboardLayoutService {
+  private localStorageService = inject(LocalStorageService);
+
   readonly activePreset: Signal<DashboardLayoutPreset>;
   readonly widgets: Signal<DashboardWidgetLayout[]>;
   readonly visibleWidgetIds: Signal<DashboardWidgetId[]>;
 
   private readonly layoutState: WritableSignal<StoredDashboardLayout>;
 
-  constructor(private localStorageService: LocalStorageService) {
+  constructor() {
     this.layoutState = signal<StoredDashboardLayout>(this.loadState());
     this.activePreset = computed(() => this.layoutState().preset);
     this.widgets = computed<DashboardWidgetLayout[]>(() => {

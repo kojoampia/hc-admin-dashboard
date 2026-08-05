@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -10,12 +10,10 @@ import { IUser, getUserIdentifier } from './user.model';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
-  private resourceUrl = this.applicationConfigService.getEndpointFor('api/users');
+  private http = inject(HttpClient);
+  private applicationConfigService = inject(ApplicationConfigService);
 
-  constructor(
-    private http: HttpClient,
-    private applicationConfigService: ApplicationConfigService,
-  ) {}
+  private resourceUrl = this.applicationConfigService.getEndpointFor('api/users');
 
   query(req?: Pagination): Observable<HttpResponse<IUser[]>> {
     const options = createRequestOption(req);

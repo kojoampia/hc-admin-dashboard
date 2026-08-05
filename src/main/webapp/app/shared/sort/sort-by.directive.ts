@@ -1,4 +1,4 @@
-import { AfterContentInit, ContentChild, Directive, ElementRef, Host, HostListener, Input, OnDestroy } from '@angular/core';
+import { AfterContentInit, ContentChild, Directive, ElementRef, HostListener, Input, OnDestroy, inject } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -10,6 +10,8 @@ import SortDirective from './sort.directive';
   selector: '[hpdSortBy]',
 })
 export default class SortByDirective<T extends string = string> implements AfterContentInit, OnDestroy {
+  private sort = inject<SortDirective<T>>(SortDirective, { host: true });
+
   @Input() hpdSortBy!: T;
 
   @ContentChild(MatIcon, { read: ElementRef, static: false })
@@ -17,7 +19,9 @@ export default class SortByDirective<T extends string = string> implements After
 
   private readonly destroy$ = new Subject<void>();
 
-  constructor(@Host() private sort: SortDirective<T>) {
+  constructor() {
+    const sort = this.sort;
+
     sort.predicateChange.pipe(takeUntil(this.destroy$)).subscribe(() => this.updateIconDefinition());
     sort.ascendingChange.pipe(takeUntil(this.destroy$)).subscribe(() => this.updateIconDefinition());
   }

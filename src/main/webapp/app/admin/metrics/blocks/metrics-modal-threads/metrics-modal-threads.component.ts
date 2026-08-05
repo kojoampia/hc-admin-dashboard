@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 import SharedModule from 'app/shared/shared.module';
@@ -11,6 +11,8 @@ import { Thread, ThreadState } from 'app/admin/metrics/metrics.model';
   imports: [SharedModule, MatDialogModule],
 })
 export class MetricsModalThreadsComponent implements OnInit {
+  private dialogRef = inject<MatDialogRef<MetricsModalThreadsComponent>>(MatDialogRef);
+
   ThreadState = ThreadState;
   threadStateFilter?: ThreadState;
   threads?: Thread[];
@@ -19,8 +21,6 @@ export class MetricsModalThreadsComponent implements OnInit {
   threadDumpRunnable = 0;
   threadDumpTimedWaiting = 0;
   threadDumpWaiting = 0;
-
-  constructor(private dialogRef: MatDialogRef<MetricsModalThreadsComponent>) {}
 
   ngOnInit(): void {
     this.threads?.forEach(thread => {

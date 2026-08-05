@@ -1,3 +1,4 @@
+import { TestBed } from '@angular/core/testing';
 import '@angular/compiler';
 
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
@@ -16,7 +17,15 @@ describe('UserActivityComponent', () => {
       query: jest.fn(),
     };
 
-    component = new UserActivityComponent(userManagementService as unknown as UserManagementService);
+      // The component takes its dependencies through inject() now, so it can no longer be
+      // constructed with them. TestBed supplies the same doubles through the injector; the
+      // mocks and every assertion below are unchanged.
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: UserManagementService, useValue: userManagementService },
+      ],
+    });
+    component = TestBed.runInInjectionContext(() => new UserActivityComponent());
   });
 
   it('builds user activity insights from the admin users endpoint', () => {

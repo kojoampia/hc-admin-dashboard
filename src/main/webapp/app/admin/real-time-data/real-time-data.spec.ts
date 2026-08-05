@@ -1,8 +1,9 @@
+import { TestBed } from '@angular/core/testing';
 import '@angular/compiler';
 
 import { signal } from '@angular/core';
 
-import type { ActivityEvent, DashboardStateService } from 'app/entities/dashboard/dashboard-state';
+import { ActivityEvent, DashboardStateService } from 'app/entities/dashboard/dashboard-state';
 
 (globalThis as { REALTIME_ENABLED?: boolean }).REALTIME_ENABLED = false;
 
@@ -41,7 +42,15 @@ describe('RealTimeDataComponent', () => {
       disconnectAuditTrail: jest.fn(() => connected.set(false)),
     };
 
-    component = new RealTimeDataComponent(dashboardState as DashboardStateService);
+      // The component takes its dependencies through inject() now, so it can no longer be
+      // constructed with them. TestBed supplies the same doubles through the injector; the
+      // mocks and every assertion below are unchanged.
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: DashboardStateService, useValue: dashboardState },
+      ],
+    });
+    component = TestBed.runInInjectionContext(() => new RealTimeDataComponent());
   });
 
   it('connects to the live feed and summarizes the latest activity', () => {

@@ -1,3 +1,4 @@
+import { TestBed } from '@angular/core/testing';
 import '@angular/compiler';
 
 import { LocalStorageService } from 'ngx-webstorage';
@@ -14,7 +15,12 @@ describe('DashboardLayoutService', () => {
       store: jest.fn(),
     };
 
-    service = new DashboardLayoutService(localStorageService as unknown as LocalStorageService);
+    // Constructed through the injector now that the class uses inject(). The doubles and every
+    // assertion below are unchanged.
+    TestBed.configureTestingModule({
+      providers: [{ provide: LocalStorageService, useValue: localStorageService }],
+    });
+    service = TestBed.runInInjectionContext(() => new DashboardLayoutService());
   });
 
   it('applies presets and persists visibility and ordering updates', () => {

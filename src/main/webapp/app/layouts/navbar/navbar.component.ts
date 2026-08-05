@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -27,6 +27,13 @@ type MenuItem = NavbarItem & {
   imports: [RouterModule, SharedModule, HasAnyAuthorityDirective, ActiveMenuDirective],
 })
 export default class NavbarComponent implements OnInit {
+  private loginService = inject(LoginService);
+  private translateService = inject(TranslateService);
+  private stateStorageService = inject(StateStorageService);
+  private accountService = inject(AccountService);
+  private profileService = inject(ProfileService);
+  private router = inject(Router);
+
   inProduction?: boolean;
   isNavbarCollapsed = true;
   languages = LANGUAGES;
@@ -57,14 +64,7 @@ export default class NavbarComponent implements OnInit {
   readonly adminRoutes = this.adminMenuItems.map(item => item.route);
   readonly accountRoutes = ['/account/settings', '/account/password'];
 
-  constructor(
-    private loginService: LoginService,
-    private translateService: TranslateService,
-    private stateStorageService: StateStorageService,
-    private accountService: AccountService,
-    private profileService: ProfileService,
-    private router: Router,
-  ) {
+  constructor() {
     if (VERSION) {
       this.version = VERSION.toLowerCase().startsWith('v') ? VERSION : `v${VERSION}`;
     }

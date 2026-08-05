@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -21,9 +21,25 @@ import UserManagementDeleteDialogComponent from '../delete/user-management-delet
 @Component({
   selector: 'hpd-user-mgmt',
   templateUrl: './user-management.component.html',
-  imports: [RouterModule, SharedModule, SortDirective, SortByDirective, ItemCountComponent, MatButtonModule, MatCardModule, MatIconModule, PaginationComponent],
+  imports: [
+    RouterModule,
+    SharedModule,
+    SortDirective,
+    SortByDirective,
+    ItemCountComponent,
+    MatButtonModule,
+    MatCardModule,
+    MatIconModule,
+    PaginationComponent,
+  ],
 })
 export default class UserManagementComponent implements OnInit {
+  private userService = inject(UserManagementService);
+  private accountService = inject(AccountService);
+  private activatedRoute = inject(ActivatedRoute);
+  private router = inject(Router);
+  private dialog = inject(MatDialog);
+
   currentAccount: Account | null = null;
   users: User[] | null = null;
   isLoading = false;
@@ -32,14 +48,6 @@ export default class UserManagementComponent implements OnInit {
   page!: number;
   predicate!: string;
   ascending!: boolean;
-
-  constructor(
-    private userService: UserManagementService,
-    private accountService: AccountService,
-    private activatedRoute: ActivatedRoute,
-    private router: Router,
-    private dialog: MatDialog,
-  ) {}
 
   ngOnInit(): void {
     this.accountService.identity().subscribe(account => (this.currentAccount = account));

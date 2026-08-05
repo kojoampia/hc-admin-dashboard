@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, inject } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
@@ -16,15 +16,17 @@ import { AlertError } from './alert-error.model';
   imports: [CommonModule, MatButtonModule, MatIconModule],
 })
 export class AlertErrorComponent implements OnDestroy {
+  private alertService = inject(AlertService);
+  private eventManager = inject(EventManager);
+
   alerts: Alert[] = [];
   errorListener: Subscription;
   httpErrorListener: Subscription;
 
-  constructor(
-    private alertService: AlertService,
-    private eventManager: EventManager,
-    translateService: TranslateService,
-  ) {
+  constructor() {
+    const eventManager = this.eventManager;
+    const translateService = inject(TranslateService);
+
     this.errorListener = eventManager.subscribe('adminGatewayApp.error', (response: EventWithContent<unknown> | string) => {
       const errorResponse = (response as EventWithContent<AlertError>).content;
       this.addErrorAlert(errorResponse.message, errorResponse.key, errorResponse.params);

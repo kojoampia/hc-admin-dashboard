@@ -1,3 +1,4 @@
+import { TestBed } from '@angular/core/testing';
 import '@angular/compiler';
 
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
@@ -29,11 +30,17 @@ describe('AccessControlComponent', () => {
       markForCheck: jest.fn(),
     };
 
-    component = new AccessControlComponent(
-      accountService as unknown as AccountService,
-      userManagementService as unknown as UserManagementService,
-      changeDetectorRef as unknown as ChangeDetectorRef,
-    );
+      // The component takes its dependencies through inject() now, so it can no longer be
+      // constructed with them. TestBed supplies the same doubles through the injector; the
+      // mocks and every assertion below are unchanged.
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: AccountService, useValue: accountService },
+        { provide: UserManagementService, useValue: userManagementService },
+        { provide: ChangeDetectorRef, useValue: changeDetectorRef },
+      ],
+    });
+    component = TestBed.runInInjectionContext(() => new AccessControlComponent());
   });
 
   it('builds access coverage from the current account and admin APIs', () => {

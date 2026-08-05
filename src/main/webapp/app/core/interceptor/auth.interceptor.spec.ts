@@ -1,3 +1,4 @@
+import { TestBed } from '@angular/core/testing';
 import '@angular/compiler';
 import { HttpHandler, HttpRequest, HttpResponse } from '@angular/common/http';
 import { of } from 'rxjs';
@@ -24,10 +25,15 @@ describe('AuthInterceptor', () => {
       handle: jest.fn((req: HttpRequest<any>) => of(new HttpResponse({ status: 200, body: req.url }))),
     };
 
-    interceptor = new AuthInterceptor(
-      stateStorageService as unknown as StateStorageService,
-      applicationConfigService as unknown as ApplicationConfigService,
-    );
+    // Constructed through the injector now that the class uses inject(). The doubles and every
+    // assertion below are unchanged.
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: StateStorageService, useValue: stateStorageService },
+        { provide: ApplicationConfigService, useValue: applicationConfigService },
+      ],
+    });
+    interceptor = TestBed.runInInjectionContext(() => new AuthInterceptor());
   });
 
   it('adds the bearer token to protected API requests', () => {
