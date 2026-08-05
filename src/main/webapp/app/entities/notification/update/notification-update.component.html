@@ -31,33 +31,33 @@
       <mat-form-field class="md:col-span-2">
         <mat-label hpdTranslate="adminDashboardApp.notification.content">Content</mat-label>
         <textarea matInput name="content" id="field_content" data-cy="content" formControlName="content" rows="3"></textarea>
-        <mat-error *ngIf="editForm.get('content')?.errors?.required" hpdTranslate="entity.validation.required"
-          >This field is required.</mat-error
-        >
+        @if (editForm.get('content')?.errors?.required) {
+          <mat-error hpdTranslate="entity.validation.required">This field is required.</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field>
         <mat-label hpdTranslate="adminDashboardApp.notification.recipientId">Recipient Id</mat-label>
         <input matInput type="text" name="recipientId" id="field_recipientId" data-cy="recipientId" formControlName="recipientId" />
-        <mat-error *ngIf="editForm.get('recipientId')?.errors?.required" hpdTranslate="entity.validation.required">
-          This field is required.
-        </mat-error>
+        @if (editForm.get('recipientId')?.errors?.required) {
+          <mat-error hpdTranslate="entity.validation.required"> This field is required. </mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field>
         <mat-label hpdTranslate="adminDashboardApp.notification.senderId">Sender Id</mat-label>
         <input matInput type="text" name="senderId" id="field_senderId" data-cy="senderId" formControlName="senderId" />
-        <mat-error *ngIf="editForm.get('senderId')?.errors?.required" hpdTranslate="entity.validation.required"
-          >This field is required.</mat-error
-        >
+        @if (editForm.get('senderId')?.errors?.required) {
+          <mat-error hpdTranslate="entity.validation.required">This field is required.</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field class="md:col-span-2">
         <mat-label hpdTranslate="adminDashboardApp.notification.messageType">Message Type</mat-label>
         <input matInput type="text" name="messageType" id="field_messageType" data-cy="messageType" formControlName="messageType" />
-        <mat-error *ngIf="editForm.get('messageType')?.errors?.required" hpdTranslate="entity.validation.required">
-          This field is required.
-        </mat-error>
+        @if (editForm.get('messageType')?.errors?.required) {
+          <mat-error hpdTranslate="entity.validation.required"> This field is required. </mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field>

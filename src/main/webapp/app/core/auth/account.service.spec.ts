@@ -51,7 +51,8 @@ describe('Account Service', () => {
     jest.spyOn(mockRouter, 'navigateByUrl').mockImplementation(() => Promise.resolve(true));
 
     mockTranslateService = TestBed.inject(TranslateService);
-    jest.spyOn(mockTranslateService, 'use').mockImplementation(() => of(''));
+    // ngx-translate 16 types use() as returning the loaded translation object, not a string.
+    jest.spyOn(mockTranslateService, 'use').mockImplementation(() => of({}));
   });
 
   afterEach(() => {

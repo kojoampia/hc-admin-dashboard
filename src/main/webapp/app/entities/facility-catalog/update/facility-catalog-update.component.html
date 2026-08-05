@@ -31,9 +31,9 @@
       <mat-form-field>
         <mat-label hpdTranslate="adminDashboardApp.facilityCatalog.name">Name</mat-label>
         <input matInput type="text" name="name" id="field_name" data-cy="name" formControlName="name" />
-        <mat-error *ngIf="editForm.get('name')?.errors?.required" hpdTranslate="entity.validation.required"
-          >This field is required.</mat-error
-        >
+        @if (editForm.get('name')?.errors?.required) {
+          <mat-error hpdTranslate="entity.validation.required">This field is required.</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field class="md:col-span-2">
@@ -46,17 +46,17 @@
           formControlName="description"
           rows="3"
         ></textarea>
-        <mat-error *ngIf="editForm.get('description')?.errors?.required" hpdTranslate="entity.validation.required">
-          This field is required.
-        </mat-error>
+        @if (editForm.get('description')?.errors?.required) {
+          <mat-error hpdTranslate="entity.validation.required"> This field is required. </mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field class="md:col-span-2">
         <mat-label hpdTranslate="adminDashboardApp.facilityCatalog.facilities">Facilities</mat-label>
         <textarea matInput name="facilities" id="field_facilities" data-cy="facilities" formControlName="facilities" rows="3"></textarea>
-        <mat-error *ngIf="editForm.get('facilities')?.errors?.required" hpdTranslate="entity.validation.required">
-          This field is required.
-        </mat-error>
+        @if (editForm.get('facilities')?.errors?.required) {
+          <mat-error hpdTranslate="entity.validation.required"> This field is required. </mat-error>
+        }
       </mat-form-field>
     </div>
 

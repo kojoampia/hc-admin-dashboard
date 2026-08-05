@@ -2,7 +2,7 @@
 import { Component, computed, DestroyRef, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { CommonModule } from '@angular/common';
+
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
@@ -26,7 +26,6 @@ interface MenuItem {
   selector: 'hpd-sidebar',
   standalone: true,
   imports: [
-    CommonModule,
     RouterLink,
     RouterLinkActive,
     MatIconModule,

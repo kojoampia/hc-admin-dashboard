@@ -44,6 +44,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
+          # Angular 21 requires ^20.19.0 || ^22.12.0 || >=24.0.0; matches deploy/docker/web.Dockerfile.
           node-version: 22
           cache: npm
 
@@ -72,17 +73,14 @@ jobs:
         run: npm run webapp:build:prod
 
       # --omit=dev, because a build-time advisory is not a shipped one and this gate has to stay
-      # actionable. --audit-level=high is the floor the tree currently meets, not an aspiration:
-      # it went from 1 critical + 15 high to 0 critical + 11 high once the unused packages were
-      # dropped, and the 11 that remain are all Angular-major-blocked.
+      # actionable.
       #
-      # `continue-on-error` is deliberate and temporary. Those 11 have no fix short of the Angular
-      # 19 -> 22 upgrade, so failing on them would leave this job permanently red and therefore
-      # ignored. It reports; it does not yet block. REMOVE THIS LINE once the upgrade lands —
-      # otherwise the gate silently stops being one.
+      # This BLOCKS. It carried continue-on-error while eleven Angular advisories had no fix short
+      # of the major upgrade; that upgrade has landed and the production tree is now at zero
+      # vulnerabilities of any severity, so there is nothing left for the flag to excuse. Do not
+      # reinstate it to make a red build green — that is the failure mode it existed to avoid.
       - name: Audit production dependencies
-        continue-on-error: true
-        run: npm audit --omit=dev --audit-level=high
+        run: npm audit --omit=dev --audit-level=moderate
 
       - name: Upload test results
         if: failure()

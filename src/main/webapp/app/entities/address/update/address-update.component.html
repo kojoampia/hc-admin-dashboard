@@ -31,17 +31,17 @@
       <mat-form-field>
         <mat-label hpdTranslate="adminDashboardApp.address.street">Street</mat-label>
         <input matInput name="street" id="field_street" data-cy="street" formControlName="street" />
-        <mat-error *ngIf="editForm.get('street')?.errors?.required" hpdTranslate="entity.validation.required"
-          >This field is required.</mat-error
-        >
+        @if (editForm.get('street')?.errors?.required) {
+          <mat-error hpdTranslate="entity.validation.required">This field is required.</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field>
         <mat-label hpdTranslate="adminDashboardApp.address.district">District</mat-label>
         <input matInput name="district" id="field_district" data-cy="district" formControlName="district" />
-        <mat-error *ngIf="editForm.get('district')?.errors?.required" hpdTranslate="entity.validation.required"
-          >This field is required.</mat-error
-        >
+        @if (editForm.get('district')?.errors?.required) {
+          <mat-error hpdTranslate="entity.validation.required">This field is required.</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field>
@@ -52,33 +52,33 @@
       <mat-form-field>
         <mat-label hpdTranslate="adminDashboardApp.address.city">City</mat-label>
         <input matInput name="city" id="field_city" data-cy="city" formControlName="city" />
-        <mat-error *ngIf="editForm.get('city')?.errors?.required" hpdTranslate="entity.validation.required"
-          >This field is required.</mat-error
-        >
+        @if (editForm.get('city')?.errors?.required) {
+          <mat-error hpdTranslate="entity.validation.required">This field is required.</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field>
         <mat-label hpdTranslate="adminDashboardApp.address.region">Region</mat-label>
         <input matInput name="region" id="field_region" data-cy="region" formControlName="region" />
-        <mat-error *ngIf="editForm.get('region')?.errors?.required" hpdTranslate="entity.validation.required"
-          >This field is required.</mat-error
-        >
+        @if (editForm.get('region')?.errors?.required) {
+          <mat-error hpdTranslate="entity.validation.required">This field is required.</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field>
         <mat-label hpdTranslate="adminDashboardApp.address.code">Code</mat-label>
         <input matInput name="code" id="field_code" data-cy="code" formControlName="code" />
-        <mat-error *ngIf="editForm.get('code')?.errors?.required" hpdTranslate="entity.validation.required"
-          >This field is required.</mat-error
-        >
+        @if (editForm.get('code')?.errors?.required) {
+          <mat-error hpdTranslate="entity.validation.required">This field is required.</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field>
         <mat-label hpdTranslate="adminDashboardApp.address.country">Country</mat-label>
         <input matInput name="country" id="field_country" data-cy="country" formControlName="country" />
-        <mat-error *ngIf="editForm.get('country')?.errors?.required" hpdTranslate="entity.validation.required"
-          >This field is required.</mat-error
-        >
+        @if (editForm.get('country')?.errors?.required) {
+          <mat-error hpdTranslate="entity.validation.required">This field is required.</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field>
@@ -91,12 +91,12 @@
           name="createdDate"
           formControlName="createdDate"
         />
-        <mat-error *ngIf="editForm.get('createdDate')?.errors?.required" hpdTranslate="entity.validation.required"
-          >This field is required.</mat-error
-        >
-        <mat-error *ngIf="editForm.get('createdDate')?.errors?.datetimelocal" hpdTranslate="entity.validation.datetimelocal"
-          >This field should be a date and time.</mat-error
-        >
+        @if (editForm.get('createdDate')?.errors?.required) {
+          <mat-error hpdTranslate="entity.validation.required">This field is required.</mat-error>
+        }
+        @if (editForm.get('createdDate')?.errors?.datetimelocal) {
+          <mat-error hpdTranslate="entity.validation.datetimelocal">This field should be a date and time.</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field>
@@ -109,12 +109,12 @@
           name="modifiedDate"
           formControlName="modifiedDate"
         />
-        <mat-error *ngIf="editForm.get('modifiedDate')?.errors?.required" hpdTranslate="entity.validation.required"
-          >This field is required.</mat-error
-        >
-        <mat-error *ngIf="editForm.get('modifiedDate')?.errors?.datetimelocal" hpdTranslate="entity.validation.datetimelocal"
-          >This field should be a date and time.</mat-error
-        >
+        @if (editForm.get('modifiedDate')?.errors?.required) {
+          <mat-error hpdTranslate="entity.validation.required">This field is required.</mat-error>
+        }
+        @if (editForm.get('modifiedDate')?.errors?.datetimelocal) {
+          <mat-error hpdTranslate="entity.validation.datetimelocal">This field should be a date and time.</mat-error>
+        }
       </mat-form-field>
     </div>
 

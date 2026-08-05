@@ -31,43 +31,41 @@
       <mat-form-field>
         <mat-label hpdTranslate="adminDashboardApp.contact.personId">Person Id</mat-label>
         <input matInput name="personId" id="field_personId" data-cy="personId" formControlName="personId" />
-        <mat-error *ngIf="editForm.get('personId')?.errors?.required" hpdTranslate="entity.validation.required"
-          >This field is required.</mat-error
-        >
+        @if (editForm.get('personId')?.errors?.required) {
+          <mat-error hpdTranslate="entity.validation.required">This field is required.</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field>
         <mat-label hpdTranslate="adminDashboardApp.contact.email">Email</mat-label>
         <input matInput type="email" name="email" id="field_email" data-cy="email" formControlName="email" />
-        <mat-error *ngIf="editForm.get('email')?.errors?.required" hpdTranslate="entity.validation.required"
-          >This field is required.</mat-error
-        >
+        @if (editForm.get('email')?.errors?.required) {
+          <mat-error hpdTranslate="entity.validation.required">This field is required.</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field>
         <mat-label hpdTranslate="adminDashboardApp.contact.phoneNumber">Phone Number</mat-label>
         <input matInput type="tel" name="phoneNumber" id="field_phoneNumber" data-cy="phoneNumber" formControlName="phoneNumber" />
-        <mat-error *ngIf="editForm.get('phoneNumber')?.errors?.required" hpdTranslate="entity.validation.required"
-          >This field is required.</mat-error
-        >
-        <mat-error
-          *ngIf="editForm.get('phoneNumber')?.errors?.pattern"
-          hpdTranslate="entity.validation.pattern"
-          [translateValues]="{ pattern: 'Phone Number' }"
-        >
-          This field should follow pattern for Phone Number.
-        </mat-error>
+        @if (editForm.get('phoneNumber')?.errors?.required) {
+          <mat-error hpdTranslate="entity.validation.required">This field is required.</mat-error>
+        }
+        @if (editForm.get('phoneNumber')?.errors?.pattern) {
+          <mat-error hpdTranslate="entity.validation.pattern" [translateValues]="{ pattern: 'Phone Number' }">
+            This field should follow pattern for Phone Number.
+          </mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field>
         <mat-label hpdTranslate="adminDashboardApp.contact.countryCode">Country Code</mat-label>
         <input matInput type="number" name="countryCode" id="field_countryCode" data-cy="countryCode" formControlName="countryCode" />
-        <mat-error *ngIf="editForm.get('countryCode')?.errors?.required" hpdTranslate="entity.validation.required"
-          >This field is required.</mat-error
-        >
-        <mat-error *ngIf="editForm.get('countryCode')?.errors?.number" hpdTranslate="entity.validation.number"
-          >This field should be a number.</mat-error
-        >
+        @if (editForm.get('countryCode')?.errors?.required) {
+          <mat-error hpdTranslate="entity.validation.required">This field is required.</mat-error>
+        }
+        @if (editForm.get('countryCode')?.errors?.number) {
+          <mat-error hpdTranslate="entity.validation.number">This field should be a number.</mat-error>
+        }
       </mat-form-field>
     </div>
 

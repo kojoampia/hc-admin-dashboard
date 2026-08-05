@@ -4,8 +4,8 @@ import { waitForAsync, ComponentFixture, TestBed, fakeAsync, tick } from '@angul
 import { Router, TitleStrategy } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
-import { DOCUMENT } from '@angular/common';
-import { Component } from '@angular/core';
+
+import { Component, DOCUMENT } from '@angular/core';
 import { of } from 'rxjs';
 import { TranslateModule, TranslateService, LangChangeEvent } from '@ngx-translate/core';
 
@@ -64,7 +64,9 @@ describe('MainComponent', () => {
     const defaultPageTitle = 'global.title';
     const parentRoutePageTitle = 'parentTitle';
     const childRoutePageTitle = 'childTitle';
-    const langChangeEvent: LangChangeEvent = { lang: 'en', translations: null };
+    // `translations` is typed InterpolatableTranslationObject from ngx-translate 16 onwards;
+    // the tests only care about `lang`, so an empty object stands in for the null it used to be.
+    const langChangeEvent: LangChangeEvent = { lang: 'en', translations: {} };
 
     beforeEach(() => {
       routerState.snapshot.root = { data: {} };
@@ -226,13 +228,13 @@ describe('MainComponent', () => {
       comp.ngOnInit();
 
       // WHEN
-      translateService.onLangChange.emit({ lang: 'lang1', translations: null });
+      translateService.onLangChange.emit({ lang: 'lang1', translations: {} });
 
       // THEN
       expect(document.querySelector('html')?.getAttribute('lang')).toEqual('lang1');
 
       // WHEN
-      translateService.onLangChange.emit({ lang: 'lang2', translations: null });
+      translateService.onLangChange.emit({ lang: 'lang2', translations: {} });
 
       // THEN
       expect(document.querySelector('html')?.getAttribute('lang')).toEqual('lang2');

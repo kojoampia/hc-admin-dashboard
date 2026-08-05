@@ -41,9 +41,9 @@
             <mat-option [value]="featureType">{{ 'adminDashboardApp.FeatureType.' + featureType | translate }}</mat-option>
           }
         </mat-select>
-        <mat-error *ngIf="editForm.get('type')?.errors?.required" hpdTranslate="entity.validation.required"
-          >This field is required.</mat-error
-        >
+        @if (editForm.get('type')?.errors?.required) {
+          <mat-error hpdTranslate="entity.validation.required">This field is required.</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field class="md:col-span-2">

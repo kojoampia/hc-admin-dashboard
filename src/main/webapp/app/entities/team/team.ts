@@ -1,5 +1,5 @@
 import { Component, inject, signal, computed } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
@@ -39,7 +39,7 @@ export interface AuditEvent {
 @Component({
   selector: 'hpd-team',
   standalone: true,
-  imports: [CommonModule, MatTabsModule, MatTableModule, MatIconModule, MatButtonModule, MatDialogModule],
+  imports: [MatTabsModule, MatTableModule, MatIconModule, MatButtonModule, MatDialogModule],
   template: `
     <div class="space-y-6">
       <!-- ── Header ────────────────────────────────────────────────────── -->

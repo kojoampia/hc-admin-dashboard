@@ -48,7 +48,7 @@ describe('Directive: SortByDirective', () => {
     // THEN
     expect(sortByDirective.hpdSortBy).toEqual('name');
     expect(sortDirective.predicate).toEqual('id');
-    expect(iconElement.nativeElement.textContent?.trim()).toEqual('unfold_more');
+    expect(iconElement.nativeElement.textContent.trim()).toEqual('unfold_more');
     expect(transition).toHaveBeenCalledTimes(0);
   });
 
@@ -64,7 +64,7 @@ describe('Directive: SortByDirective', () => {
     expect(sortByDirective.hpdSortBy).toEqual('name');
     expect(sortDirective.predicate).toEqual('name');
     expect(sortDirective.ascending).toEqual(true);
-    expect(iconElement.nativeElement.textContent?.trim()).toEqual('arrow_upward');
+    expect(iconElement.nativeElement.textContent.trim()).toEqual('arrow_upward');
     expect(transition).toHaveBeenCalledTimes(0);
   });
 
@@ -80,7 +80,7 @@ describe('Directive: SortByDirective', () => {
     // THEN
     expect(sortDirective.predicate).toEqual('name');
     expect(sortDirective.ascending).toEqual(false);
-    expect(iconElement.nativeElement.textContent?.trim()).toEqual('arrow_downward');
+    expect(iconElement.nativeElement.textContent.trim()).toEqual('arrow_downward');
     expect(transition).toHaveBeenCalledTimes(1);
     expect(transition).toHaveBeenCalledWith({ predicate: 'name', order: 'desc', ascending: false });
   });
@@ -98,7 +98,7 @@ describe('Directive: SortByDirective', () => {
     // THEN
     expect(sortDirective.predicate).toEqual('name');
     expect(sortDirective.ascending).toEqual(true);
-    expect(iconElement.nativeElement.textContent?.trim()).toEqual('arrow_upward');
+    expect(iconElement.nativeElement.textContent.trim()).toEqual('arrow_upward');
     expect(transition).toHaveBeenCalledTimes(2);
     expect(transition).toHaveBeenNthCalledWith(1, { predicate: 'name', order: 'desc', ascending: false });
     expect(transition).toHaveBeenNthCalledWith(2, { predicate: 'name', order: 'asc', ascending: true });

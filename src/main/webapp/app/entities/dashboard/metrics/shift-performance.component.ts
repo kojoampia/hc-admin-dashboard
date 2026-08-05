@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 type ShiftMetric = {
   readonly label: string;
@@ -11,7 +10,7 @@ type ShiftMetric = {
 @Component({
   selector: 'hpd-shift-performance',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   template: `
     <div class="space-y-4">
       <div class="grid gap-3 sm:grid-cols-2">

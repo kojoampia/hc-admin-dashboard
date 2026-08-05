@@ -31,33 +31,33 @@
       <mat-form-field>
         <mat-label hpdTranslate="adminDashboardApp.hcAdminServicePatientPlan.planId">Plan Id</mat-label>
         <input matInput type="text" name="planId" id="field_planId" data-cy="planId" formControlName="planId" />
-        <mat-error *ngIf="editForm.get('planId')?.errors?.required" hpdTranslate="entity.validation.required"
-          >This field is required.</mat-error
-        >
+        @if (editForm.get('planId')?.errors?.required) {
+          <mat-error hpdTranslate="entity.validation.required">This field is required.</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field>
         <mat-label hpdTranslate="adminDashboardApp.hcAdminServicePatientPlan.patientId">Patient Id</mat-label>
         <input matInput type="text" name="patientId" id="field_patientId" data-cy="patientId" formControlName="patientId" />
-        <mat-error *ngIf="editForm.get('patientId')?.errors?.required" hpdTranslate="entity.validation.required"
-          >This field is required.</mat-error
-        >
+        @if (editForm.get('patientId')?.errors?.required) {
+          <mat-error hpdTranslate="entity.validation.required">This field is required.</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field>
         <mat-label hpdTranslate="adminDashboardApp.hcAdminServicePatientPlan.startDate">Start Date</mat-label>
         <input matInput id="field_startDate" data-cy="startDate" type="date" name="startDate" formControlName="startDate" />
-        <mat-error *ngIf="editForm.get('startDate')?.errors?.required" hpdTranslate="entity.validation.required"
-          >This field is required.</mat-error
-        >
+        @if (editForm.get('startDate')?.errors?.required) {
+          <mat-error hpdTranslate="entity.validation.required">This field is required.</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field>
         <mat-label hpdTranslate="adminDashboardApp.hcAdminServicePatientPlan.endDate">End Date</mat-label>
         <input matInput id="field_endDate" data-cy="endDate" type="date" name="endDate" formControlName="endDate" />
-        <mat-error *ngIf="editForm.get('endDate')?.errors?.required" hpdTranslate="entity.validation.required"
-          >This field is required.</mat-error
-        >
+        @if (editForm.get('endDate')?.errors?.required) {
+          <mat-error hpdTranslate="entity.validation.required">This field is required.</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field>
@@ -70,20 +70,20 @@
           name="createdDate"
           formControlName="createdDate"
         />
-        <mat-error *ngIf="editForm.get('createdDate')?.errors?.required" hpdTranslate="entity.validation.required"
-          >This field is required.</mat-error
-        >
-        <mat-error *ngIf="editForm.get('createdDate')?.errors?.datetimelocal" hpdTranslate="entity.validation.datetimelocal">
-          This field should be a date and time.
-        </mat-error>
+        @if (editForm.get('createdDate')?.errors?.required) {
+          <mat-error hpdTranslate="entity.validation.required">This field is required.</mat-error>
+        }
+        @if (editForm.get('createdDate')?.errors?.datetimelocal) {
+          <mat-error hpdTranslate="entity.validation.datetimelocal"> This field should be a date and time. </mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field>
         <mat-label hpdTranslate="adminDashboardApp.hcAdminServicePatientPlan.createdBy">Created By</mat-label>
         <input matInput type="text" name="createdBy" id="field_createdBy" data-cy="createdBy" formControlName="createdBy" />
-        <mat-error *ngIf="editForm.get('createdBy')?.errors?.required" hpdTranslate="entity.validation.required"
-          >This field is required.</mat-error
-        >
+        @if (editForm.get('createdBy')?.errors?.required) {
+          <mat-error hpdTranslate="entity.validation.required">This field is required.</mat-error>
+        }
       </mat-form-field>
     </div>
 

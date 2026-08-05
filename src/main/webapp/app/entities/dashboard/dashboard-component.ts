@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, computed, inject, signal } from '@angular/core';
-import { CommonModule, DOCUMENT } from '@angular/common';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, computed, inject, signal, DOCUMENT } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 

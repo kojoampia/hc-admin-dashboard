@@ -22,6 +22,7 @@
     "project": ["./tsconfig.app.json", "./tsconfig.spec.json"]
   },
   "rules": {
+    "@angular-eslint/prefer-inject": "off",
     "@angular-eslint/component-selector": [
       "error",
       {

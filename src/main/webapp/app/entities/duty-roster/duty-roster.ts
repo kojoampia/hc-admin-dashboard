@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, signal, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 
 type TeamId = 'TEAM_BLUE' | 'TEAM_GOLD' | 'TEAM_GREEN';
@@ -391,7 +391,7 @@ function describeAvailability(professional: ProfessionalProfile, date: string): 
 @Component({
   selector: 'hpd-duty-roster',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule],
   templateUrl: './duty-roster.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

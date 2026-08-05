@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 type RevenueChannel = {
   readonly label: string;
@@ -11,7 +10,7 @@ type RevenueChannel = {
 @Component({
   selector: 'hpd-revenue-breakdown',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   template: `
     <div class="space-y-4">
       <div class="rounded-2xl border border-white/10 bg-white/5 p-4">

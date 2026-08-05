@@ -1,5 +1,5 @@
 import { Component, computed, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { MatIconModule } from '@angular/material/icon';
 
 import { DashboardStateService } from '../dashboard-state';
@@ -7,7 +7,7 @@ import { DashboardStateService } from '../dashboard-state';
 @Component({
   selector: 'hpd-live-activity-feed',
   standalone: true,
-  imports: [CommonModule, MatIconModule],
+  imports: [MatIconModule],
   template: `
     <div class="space-y-3">
       <div class="flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3">

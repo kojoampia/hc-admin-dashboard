@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { MatIconModule } from '@angular/material/icon';
 
 type FinanceMetric = {
@@ -12,7 +12,7 @@ type FinanceMetric = {
 @Component({
   selector: 'hpd-finance-pulse',
   standalone: true,
-  imports: [CommonModule, MatIconModule],
+  imports: [MatIconModule],
   template: `
     <div class="grid gap-4 sm:grid-cols-2">
       @for (metric of metrics; track metric.label) {

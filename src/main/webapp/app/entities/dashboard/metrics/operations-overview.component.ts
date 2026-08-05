@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { MatIconModule } from '@angular/material/icon';
 
 type OverviewMetric = {
@@ -14,7 +14,7 @@ type OverviewMetric = {
 @Component({
   selector: 'hpd-operations-overview',
   standalone: true,
-  imports: [CommonModule, MatIconModule],
+  imports: [MatIconModule],
   template: `
     <div class="grid gap-4 sm:grid-cols-2">
       @for (metric of metrics; track metric.label) {

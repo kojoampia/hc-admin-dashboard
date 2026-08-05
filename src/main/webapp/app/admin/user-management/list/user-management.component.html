@@ -70,7 +70,7 @@
           </thead>
 
           <tbody class="divide-y divide-slate-100 text-sm text-slate-700">
-            @for (user of users; track trackIdentity) {
+            @for (user of users; track trackIdentity($index, user)) {
               <tr class="align-top">
                 <td class="px-4 py-4">
                   <a class="font-semibold text-cyan-700 hover:text-cyan-600" [routerLink]="['./', user.login, 'view']">{{ user.id }}</a>

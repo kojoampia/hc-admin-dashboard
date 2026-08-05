@@ -31,17 +31,17 @@
       <mat-form-field>
         <mat-label hpdTranslate="adminDashboardApp.auditLog.actionType">Action Type</mat-label>
         <input matInput type="text" name="actionType" id="field_actionType" data-cy="actionType" formControlName="actionType" />
-        <mat-error *ngIf="editForm.get('actionType')?.errors?.required" hpdTranslate="entity.validation.required">
-          This field is required.
-        </mat-error>
+        @if (editForm.get('actionType')?.errors?.required) {
+          <mat-error hpdTranslate="entity.validation.required"> This field is required. </mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field>
         <mat-label hpdTranslate="adminDashboardApp.auditLog.userId">User Id</mat-label>
         <input matInput type="text" name="userId" id="field_userId" data-cy="userId" formControlName="userId" />
-        <mat-error *ngIf="editForm.get('userId')?.errors?.required" hpdTranslate="entity.validation.required"
-          >This field is required.</mat-error
-        >
+        @if (editForm.get('userId')?.errors?.required) {
+          <mat-error hpdTranslate="entity.validation.required">This field is required.</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field class="md:col-span-2">

@@ -20,10 +20,12 @@ module.exports = {
   roots: ['<rootDir>', `<rootDir>/${baseUrl}`],
   modulePaths: [`<rootDir>/${baseUrl}`],
   setupFiles: ['jest-date-mock'],
-  // Initialises TestBed and pulls in @angular/compiler. Without it every spec that touches an
-  // Angular injectable dies with "needs to be compiled using the JIT compiler" — the app is
-  // zone-based (`polyfills: ["zone.js"]` in angular.json), hence the zone entrypoint.
-  setupFilesAfterEnv: ['jest-preset-angular/setup-env/zone'],
+  // No setupFilesAfterEnv here: @angular-builders/jest supplies the entrypoint itself and
+  // concatenates anything listed here, so naming it again loads it twice. Which entrypoint it
+  // picks is governed by `zoneless` in angular.json's test options — that defaults to TRUE from
+  // builder v21 onwards, and this app is zone-based (`polyfills: ["zone.js"]`), so it is set to
+  // false there. Get that wrong and every spec touching an Angular injectable fails with
+  // "Need to call TestBed.initTestEnvironment() first".
   cacheDirectory: '<rootDir>/target/jest-cache',
   coverageDirectory: '<rootDir>/target/test-results/',
   // Set at the level the suite actually meets today (91.89 / 64.74 / 85.78 / 92.2), rounded down a

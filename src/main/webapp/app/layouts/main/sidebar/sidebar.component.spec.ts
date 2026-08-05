@@ -37,7 +37,8 @@ describe('SidebarComponent', () => {
       hasAnyAuthority: jest.fn((_authorities: string | string[]) => true),
     };
     loginService = { logout: jest.fn() };
-    router = { navigate: jest.fn((_commands: any[]) => Promise.resolve(true)) };
+    // readonly, matching Router.navigate from Angular 20 onwards.
+    router = { navigate: jest.fn((_commands: readonly any[]) => Promise.resolve(true)) };
     destroyCallbacks = [];
     destroyRef = {
       onDestroy(callback: () => void) {

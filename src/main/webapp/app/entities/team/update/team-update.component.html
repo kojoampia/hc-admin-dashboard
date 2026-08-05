@@ -31,9 +31,9 @@
       <mat-form-field>
         <mat-label hpdTranslate="adminDashboardApp.team.name">Name</mat-label>
         <input matInput name="name" id="field_name" data-cy="name" formControlName="name" />
-        <mat-error *ngIf="editForm.get('name')?.errors?.required" hpdTranslate="entity.validation.required"
-          >This field is required.</mat-error
-        >
+        @if (editForm.get('name')?.errors?.required) {
+          <mat-error hpdTranslate="entity.validation.required">This field is required.</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field>
@@ -51,9 +51,9 @@
           formControlName="description"
           rows="3"
         ></textarea>
-        <mat-error *ngIf="editForm.get('description')?.errors?.required" hpdTranslate="entity.validation.required"
-          >This field is required.</mat-error
-        >
+        @if (editForm.get('description')?.errors?.required) {
+          <mat-error hpdTranslate="entity.validation.required">This field is required.</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field>
@@ -69,9 +69,9 @@
       <mat-form-field>
         <mat-label hpdTranslate="adminDashboardApp.team.createdBy">Created By</mat-label>
         <input matInput name="createdBy" id="field_createdBy" data-cy="createdBy" formControlName="createdBy" />
-        <mat-error *ngIf="editForm.get('createdBy')?.errors?.required" hpdTranslate="entity.validation.required"
-          >This field is required.</mat-error
-        >
+        @if (editForm.get('createdBy')?.errors?.required) {
+          <mat-error hpdTranslate="entity.validation.required">This field is required.</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field>
@@ -84,20 +84,20 @@
           name="createdDate"
           formControlName="createdDate"
         />
-        <mat-error *ngIf="editForm.get('createdDate')?.errors?.required" hpdTranslate="entity.validation.required"
-          >This field is required.</mat-error
-        >
-        <mat-error *ngIf="editForm.get('createdDate')?.errors?.datetimelocal" hpdTranslate="entity.validation.datetimelocal"
-          >This field should be a date and time.</mat-error
-        >
+        @if (editForm.get('createdDate')?.errors?.required) {
+          <mat-error hpdTranslate="entity.validation.required">This field is required.</mat-error>
+        }
+        @if (editForm.get('createdDate')?.errors?.datetimelocal) {
+          <mat-error hpdTranslate="entity.validation.datetimelocal">This field should be a date and time.</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field>
         <mat-label hpdTranslate="adminDashboardApp.team.modifiedBy">Modified By</mat-label>
         <input matInput name="modifiedBy" id="field_modifiedBy" data-cy="modifiedBy" formControlName="modifiedBy" />
-        <mat-error *ngIf="editForm.get('modifiedBy')?.errors?.required" hpdTranslate="entity.validation.required"
-          >This field is required.</mat-error
-        >
+        @if (editForm.get('modifiedBy')?.errors?.required) {
+          <mat-error hpdTranslate="entity.validation.required">This field is required.</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field>
@@ -110,12 +110,12 @@
           name="modifiedDate"
           formControlName="modifiedDate"
         />
-        <mat-error *ngIf="editForm.get('modifiedDate')?.errors?.required" hpdTranslate="entity.validation.required"
-          >This field is required.</mat-error
-        >
-        <mat-error *ngIf="editForm.get('modifiedDate')?.errors?.datetimelocal" hpdTranslate="entity.validation.datetimelocal"
-          >This field should be a date and time.</mat-error
-        >
+        @if (editForm.get('modifiedDate')?.errors?.required) {
+          <mat-error hpdTranslate="entity.validation.required">This field is required.</mat-error>
+        }
+        @if (editForm.get('modifiedDate')?.errors?.datetimelocal) {
+          <mat-error hpdTranslate="entity.validation.datetimelocal">This field should be a date and time.</mat-error>
+        }
       </mat-form-field>
     </div>
 

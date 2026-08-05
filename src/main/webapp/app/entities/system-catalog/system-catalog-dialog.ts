@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -9,7 +9,7 @@ import { CatalogItem, CatalogType } from './system-catalog';
 @Component({
   selector: 'hpd-system-catalog-dialog',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatDialogModule, MatIconModule, MatButtonModule],
+  imports: [FormsModule, MatDialogModule, MatIconModule, MatButtonModule],
   template: `
     <div class="p-6 w-full">
       <!-- Header -->

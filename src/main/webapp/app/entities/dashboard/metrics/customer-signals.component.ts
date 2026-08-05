@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 type CustomerSignal = {
   readonly label: string;
@@ -11,7 +10,7 @@ type CustomerSignal = {
 @Component({
   selector: 'hpd-customer-signals',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   template: `
     <div class="space-y-4 rounded-2xl border border-white/10 bg-white/5 p-4">
       @for (signal of signals; track signal.label) {

@@ -31,36 +31,36 @@
       <mat-form-field class="md:col-span-2">
         <mat-label hpdTranslate="adminDashboardApp.hcAdminServiceMessage.content">Content</mat-label>
         <textarea matInput name="content" id="field_content" data-cy="content" formControlName="content" rows="3"></textarea>
-        <mat-error *ngIf="editForm.get('content')?.errors?.required" hpdTranslate="entity.validation.required"
-          >This field is required.</mat-error
-        >
+        @if (editForm.get('content')?.errors?.required) {
+          <mat-error hpdTranslate="entity.validation.required">This field is required.</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field>
         <mat-label hpdTranslate="adminDashboardApp.hcAdminServiceMessage.timestamp">Timestamp</mat-label>
         <input matInput id="field_timestamp" data-cy="timestamp" type="datetime-local" name="timestamp" formControlName="timestamp" />
-        <mat-error *ngIf="editForm.get('timestamp')?.errors?.required" hpdTranslate="entity.validation.required"
-          >This field is required.</mat-error
-        >
-        <mat-error *ngIf="editForm.get('timestamp')?.errors?.datetimelocal" hpdTranslate="entity.validation.datetimelocal">
-          This field should be a date and time.
-        </mat-error>
+        @if (editForm.get('timestamp')?.errors?.required) {
+          <mat-error hpdTranslate="entity.validation.required">This field is required.</mat-error>
+        }
+        @if (editForm.get('timestamp')?.errors?.datetimelocal) {
+          <mat-error hpdTranslate="entity.validation.datetimelocal"> This field should be a date and time. </mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field>
         <mat-label hpdTranslate="adminDashboardApp.hcAdminServiceMessage.senderId">Sender Id</mat-label>
         <input matInput type="text" name="senderId" id="field_senderId" data-cy="senderId" formControlName="senderId" />
-        <mat-error *ngIf="editForm.get('senderId')?.errors?.required" hpdTranslate="entity.validation.required"
-          >This field is required.</mat-error
-        >
+        @if (editForm.get('senderId')?.errors?.required) {
+          <mat-error hpdTranslate="entity.validation.required">This field is required.</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field class="md:col-span-2">
         <mat-label hpdTranslate="adminDashboardApp.hcAdminServiceMessage.recipients">Recipients</mat-label>
         <input matInput type="text" name="recipients" id="field_recipients" data-cy="recipients" formControlName="recipients" />
-        <mat-error *ngIf="editForm.get('recipients')?.errors?.required" hpdTranslate="entity.validation.required"
-          >This field is required.</mat-error
-        >
+        @if (editForm.get('recipients')?.errors?.required) {
+          <mat-error hpdTranslate="entity.validation.required">This field is required.</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field class="md:col-span-2">
@@ -71,9 +71,9 @@
             <mat-option [value]="messageType">{{ 'adminDashboardApp.MessageType.' + messageType | translate }}</mat-option>
           }
         </mat-select>
-        <mat-error *ngIf="editForm.get('type')?.errors?.required" hpdTranslate="entity.validation.required"
-          >This field is required.</mat-error
-        >
+        @if (editForm.get('type')?.errors?.required) {
+          <mat-error hpdTranslate="entity.validation.required">This field is required.</mat-error>
+        }
       </mat-form-field>
     </div>
 

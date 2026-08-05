@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { MatIconModule } from '@angular/material/icon';
 
 type CoverageMetric = {
@@ -13,7 +13,7 @@ type CoverageMetric = {
 @Component({
   selector: 'hpd-shift-coverage',
   standalone: true,
-  imports: [CommonModule, MatIconModule],
+  imports: [MatIconModule],
   template: `
     <div class="grid gap-4 md:grid-cols-2">
       @for (metric of metrics; track metric.label) {
