@@ -72,6 +72,14 @@ jobs:
       - name: Production build
         run: npm run webapp:build:prod
 
+      # Must run AFTER the build and read its output, because the thing it looks for does not exist
+      # in src/. Angular's inlineCritical optimisation rewrites the stylesheet links at build time
+      # into `media=print onload="this.media='all'"`, and the production CSP (script-src 'self')
+      # blocks that handler — so styles.css stays print-only and the whole app renders unstyled.
+      # That shipped on 2026-08-06 with every test green.
+      - name: Check built index.html against the production CSP
+        run: node scripts/check-index-csp.mjs
+
       # --omit=dev, because a build-time advisory is not a shipped one and this gate has to stay
       # actionable.
       #

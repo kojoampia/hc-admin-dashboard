@@ -91,6 +91,31 @@ generated Cypress specs under `src/test/javascript/cypress/` already assume that
 - Defer heavy chart/widget rendering until the component is visible (use `@defer` blocks in Angular 19 templates where appropriate).
 - Avoid blocking the main thread with synchronous heavy computation; offload to Web Workers when necessary.
 
+### `inlineCritical` must stay off — and `angular.json` cannot tell you so
+
+`angular.json`'s production `optimization` is spelled out as an object purely to hold
+`styles.inlineCritical: false`. The bare `"optimization": true` it replaced turns that on, which
+rewrites every stylesheet link at build time:
+
+```html
+<link rel="stylesheet" href="styles.<hash>.css" media="print" onload="this.media='all'">
+```
+
+`deploy/prod-server/hc-admin.conf` serves `script-src 'self'` with no `'unsafe-inline'` and no
+nonce, so the browser blocks that handler. The sheet stays `media="print"` and never applies to
+screen — and `styles.css` is Tailwind plus the entire Material theme, so the app renders as
+unstyled HTML. It shipped that way on 2026-08-06 with a green build, because the handler exists
+only in build output: nothing that reads `src/` can see it.
+
+The constraint is recorded here because the Angular CLI schema sets `additionalProperties: false`,
+so a `"//"` comment key inside `angular.json` fails schema validation rather than documenting
+anything.
+
+`scripts/check-index-csp.mjs` enforces it against `target/classes/static/index.html`. It runs in
+CI after the production build, and inside `npm run webapp:prod` — which is what
+`deploy/docker/web.Dockerfile` invokes, so a broken image cannot build. If you ever need an inline
+script in `index.html`, the answer is a real file, not `'unsafe-inline'`.
+
 ## Technology Stack
 
 - **Angular 19.2.21** with standalone components and lazy-loaded routes

@@ -29,8 +29,9 @@
     "webapp:dev": "ng serve",
     "webapp:dev-ssl": "ng serve --ssl",
     "webapp:dev-verbose": "ng serve --verbose",
-    "webapp:prod": "npm run clean-www && npm run webapp:build:prod",
-    "webapp:test": "npm run test --"
+    "webapp:prod": "npm run clean-www && npm run webapp:build:prod && npm run check:csp",
+    "webapp:test": "npm run test --",
+    "check:csp": "node scripts/check-index-csp.mjs"
   },
   "dependencies": {
     "@angular/animations": "21.2.19",
