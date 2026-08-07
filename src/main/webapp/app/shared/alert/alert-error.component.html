@@ -2,7 +2,7 @@
   @for (alert of alerts; track $index) {
     <div [ngClass]="setClasses(alert)">
       @if (alert.message) {
-        <div class="flex items-start gap-3 rounded-2xl border p-4 shadow-sm" [class]="panelClasses(alert)">
+        <div class="flex items-start gap-3 rounded-hpd border p-4 shadow-hpd-sm" [class]="panelClasses(alert)">
           <mat-icon class="mt-0.5 !text-[20px]">{{ iconFor(alert) }}</mat-icon>
           <div class="min-w-0 flex-1">
             <pre class="m-0 whitespace-pre-wrap break-words bg-transparent p-0 font-inherit text-inherit" [innerHTML]="alert.message"></pre>

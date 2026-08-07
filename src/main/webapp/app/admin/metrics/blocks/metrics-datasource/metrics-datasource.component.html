@@ -1,13 +1,13 @@
-<div class="rounded-[2rem] border border-slate-200 bg-white/95 p-6 shadow-sm">
+<div class="rounded-hpd-xl border border-hpd-border bg-white/95 p-6 shadow-hpd-sm">
   <div class="space-y-4">
-    <h3 id="datasourceMetrics" class="text-xl font-semibold text-slate-900" hpdTranslate="metrics.datasource.title">
+    <h3 id="datasourceMetrics" class="text-xl font-semibold text-hpd-primary-dark" hpdTranslate="metrics.datasource.title">
       DataSource statistics (time in millisecond)
     </h3>
 
     @if (!updating && datasourceMetrics) {
-      <div class="overflow-x-auto rounded-2xl border border-slate-200">
-        <table class="min-w-full divide-y divide-slate-200 bg-white" aria-describedby="datasourceMetrics">
-          <thead class="bg-slate-50 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+      <div class="overflow-x-auto rounded-hpd border border-hpd-border">
+        <table class="min-w-full divide-y divide-hpd-border bg-white" aria-describedby="datasourceMetrics">
+          <thead class="bg-hpd-cream text-left text-xs font-semibold uppercase tracking-wide text-hpd-muted">
             <tr>
               <th scope="col" class="px-4 py-3">
                 <span hpdTranslate="metrics.datasource.usage">Connection Pool Usage</span> (active: {{ datasourceMetrics.active.value }},
@@ -23,9 +23,9 @@
               <th scope="col" class="px-4 py-3 text-right" hpdTranslate="metrics.datasource.max">Max</th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-slate-100 text-sm text-slate-700">
+          <tbody class="divide-y divide-hpd-border text-sm text-hpd-muted">
             <tr>
-              <td class="px-4 py-4 font-medium text-slate-900">Acquire</td>
+              <td class="px-4 py-4 font-medium text-hpd-primary-dark">Acquire</td>
               <td class="px-4 py-4 text-right">{{ datasourceMetrics.acquire.count }}</td>
               <td class="px-4 py-4 text-right">{{ filterNaN(datasourceMetrics.acquire.mean) | number: '1.0-2' }}</td>
               <td class="px-4 py-4 text-right">{{ datasourceMetrics.acquire['0.0'] | number: '1.0-3' }}</td>
@@ -36,7 +36,7 @@
               <td class="px-4 py-4 text-right">{{ filterNaN(datasourceMetrics.acquire.max) | number: '1.0-2' }}</td>
             </tr>
             <tr>
-              <td class="px-4 py-4 font-medium text-slate-900">Creation</td>
+              <td class="px-4 py-4 font-medium text-hpd-primary-dark">Creation</td>
               <td class="px-4 py-4 text-right">{{ datasourceMetrics.creation.count }}</td>
               <td class="px-4 py-4 text-right">{{ filterNaN(datasourceMetrics.creation.mean) | number: '1.0-2' }}</td>
               <td class="px-4 py-4 text-right">{{ datasourceMetrics.creation['0.0'] | number: '1.0-3' }}</td>
@@ -47,7 +47,7 @@
               <td class="px-4 py-4 text-right">{{ filterNaN(datasourceMetrics.creation.max) | number: '1.0-2' }}</td>
             </tr>
             <tr>
-              <td class="px-4 py-4 font-medium text-slate-900">Usage</td>
+              <td class="px-4 py-4 font-medium text-hpd-primary-dark">Usage</td>
               <td class="px-4 py-4 text-right">{{ datasourceMetrics.usage.count }}</td>
               <td class="px-4 py-4 text-right">{{ filterNaN(datasourceMetrics.usage.mean) | number: '1.0-2' }}</td>
               <td class="px-4 py-4 text-right">{{ datasourceMetrics.usage['0.0'] | number: '1.0-3' }}</td>

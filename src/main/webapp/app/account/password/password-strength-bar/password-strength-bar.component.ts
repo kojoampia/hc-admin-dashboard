@@ -12,7 +12,13 @@ export default class PasswordStrengthBarComponent {
   private renderer = inject(Renderer2);
   private elementRef = inject(ElementRef);
 
-  colors = ['#F00', '#F90', '#FF0', '#9F0', '#0F0'];
+  /**
+   * Weakest to strongest, on the BridgeCare status tokens rather than the pure-RGB ramp
+   * (#F00 → #0F0) this shipped with. Two of those were unusable as a signal: #FF0 and #9F0 are
+   * 1.07:1 and 1.6:1 against white, so the middle of the scale was effectively invisible.
+   * Kept as literals because the bar is painted through Renderer2.setStyle, not a class.
+   */
+  colors = ['#b3402f', '#c2503f', '#b4741a', '#2e7d5b', '#2a7554'];
 
   measureStrength(p: string): number {
     let force = 0;
@@ -70,7 +76,7 @@ export default class PasswordStrengthBarComponent {
         if (i < c.idx) {
           this.renderer.setStyle(lis[i], 'backgroundColor', c.color);
         } else {
-          this.renderer.setStyle(lis[i], 'backgroundColor', '#DDD');
+          this.renderer.setStyle(lis[i], 'backgroundColor', 'var(--hpd-color-border)');
         }
       }
     }

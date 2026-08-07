@@ -1,11 +1,11 @@
-<section class="space-y-6 bg-slate-50 p-4 sm:p-6">
-  <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+<section class="space-y-6 bg-hpd-cream p-4 sm:p-6">
+  <div class="rounded-hpd-lg border border-hpd-border bg-white p-6 shadow-hpd-sm">
     <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
       <div class="space-y-3">
-        <p class="text-sm font-semibold uppercase tracking-[0.2em] text-cyan-600">Duty roster</p>
+        <p class="text-sm font-semibold uppercase tracking-[0.2em] text-hpd-primary">Duty roster</p>
         <div class="space-y-2">
-          <h1 class="text-3xl font-semibold tracking-tight text-slate-900">Patient-centred assignment board</h1>
-          <p class="max-w-3xl text-sm leading-6 text-slate-600">
+          <h1 class="text-3xl font-semibold tracking-tight text-hpd-primary-dark">Patient-centred assignment board</h1>
+          <p class="max-w-3xl text-sm leading-6 text-hpd-muted">
             Review a patient schedule, switch target dates, and auto-assign clinicians using team alignment, geographic coverage, and
             date-range availability.
           </p>
@@ -14,23 +14,23 @@
 
       <button
         type="button"
-        class="inline-flex items-center justify-center rounded-2xl bg-cyan-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-cyan-500"
+        class="inline-flex items-center justify-center rounded-hpd bg-hpd-primary px-4 py-3 text-sm font-semibold text-white transition hover:bg-hpd-chart-blue"
         (click)="autoSchedule()"
       >
         Auto-schedule all visits
       </button>
     </div>
 
-    <div class="mt-5 rounded-2xl bg-slate-900 px-4 py-3 text-sm text-slate-100">{{ runSummaryMessage() }}</div>
+    <div class="mt-5 rounded-hpd bg-hpd-primary-deep px-4 py-3 text-sm text-white">{{ runSummaryMessage() }}</div>
   </div>
 
   <div class="grid gap-4 xl:grid-cols-[minmax(0,2fr)_minmax(18rem,1fr)]">
     <div class="space-y-4">
       <div class="grid gap-4 lg:grid-cols-4">
-        <label class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-          <span class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Patient</span>
+        <label class="rounded-hpd border border-hpd-border bg-white p-4 shadow-hpd-sm">
+          <span class="text-xs font-semibold uppercase tracking-[0.2em] text-hpd-muted">Patient</span>
           <select
-            class="mt-3 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 outline-none ring-0 transition focus:border-cyan-400"
+            class="mt-3 w-full rounded-xl border border-hpd-border bg-hpd-cream px-3 py-2 text-sm text-hpd-primary-dark outline-none ring-0 transition focus:border-hpd-primary/40"
             [ngModel]="selectedPatientId()"
             (ngModelChange)="selectPatient($event)"
           >
@@ -40,11 +40,11 @@
           </select>
         </label>
 
-        <label class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-          <span class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Target date</span>
+        <label class="rounded-hpd border border-hpd-border bg-white p-4 shadow-hpd-sm">
+          <span class="text-xs font-semibold uppercase tracking-[0.2em] text-hpd-muted">Target date</span>
           <input
             type="date"
-            class="mt-3 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 outline-none ring-0 transition focus:border-cyan-400"
+            class="mt-3 w-full rounded-xl border border-hpd-border bg-hpd-cream px-3 py-2 text-sm text-hpd-primary-dark outline-none ring-0 transition focus:border-hpd-primary/40"
             [ngModel]="selectedDate()"
             [min]="dates[0]"
             [max]="dates[dates.length - 1]"
@@ -52,70 +52,70 @@
           />
         </label>
 
-        <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Coverage</p>
-          <p class="mt-3 text-3xl font-semibold text-slate-900">{{ selectedDateSummary().coveragePercent }}%</p>
-          <p class="mt-2 text-sm text-slate-600">
+        <div class="rounded-hpd border border-hpd-border bg-white p-4 shadow-hpd-sm">
+          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-hpd-muted">Coverage</p>
+          <p class="mt-3 text-3xl font-semibold text-hpd-primary-dark">{{ selectedDateSummary().coveragePercent }}%</p>
+          <p class="mt-2 text-sm text-hpd-muted">
             {{ selectedDateSummary().assignedCount }} of {{ selectedDateSummary().totalVisits }} visits assigned
           </p>
         </div>
 
-        <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Patients in scope</p>
-          <p class="mt-3 text-3xl font-semibold text-slate-900">{{ selectedDateSummary().patientCount }}</p>
-          <p class="mt-2 text-sm text-slate-600">{{ selectedDateSummary().pendingCount }} visits still need manual review</p>
+        <div class="rounded-hpd border border-hpd-border bg-white p-4 shadow-hpd-sm">
+          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-hpd-muted">Patients in scope</p>
+          <p class="mt-3 text-3xl font-semibold text-hpd-primary-dark">{{ selectedDateSummary().patientCount }}</p>
+          <p class="mt-2 text-sm text-hpd-muted">{{ selectedDateSummary().pendingCount }} visits still need manual review</p>
         </div>
       </div>
 
-      <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div class="rounded-hpd-lg border border-hpd-border bg-white p-6 shadow-hpd-sm">
         <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
           <div class="space-y-3">
             <div class="flex flex-wrap items-center gap-2">
-              <h2 class="text-2xl font-semibold text-slate-900">{{ selectedPatient()!.name }}</h2>
-              <span class="rounded-full bg-cyan-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700">
+              <h2 class="text-2xl font-semibold text-hpd-primary-dark">{{ selectedPatient()!.name }}</h2>
+              <span class="rounded-full bg-hpd-chart-blue/15 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-hpd-primary">
                 {{ formatTeam(selectedPatient()!.teamId) }}
               </span>
             </div>
-            <p class="text-sm text-slate-600">
+            <p class="text-sm text-hpd-muted">
               {{ selectedPatient()!.age }} years old, {{ selectedPatient()!.ward }}, {{ selectedPatient()!.careLevel }}.
             </p>
             <div class="flex flex-wrap gap-2">
               @for (alert of selectedPatient()!.alerts; track $index) {
-                <span class="rounded-full bg-rose-50 px-3 py-1 text-xs font-medium text-rose-700">{{ alert }}</span>
+              <span class="rounded-full bg-hpd-danger-tint px-3 py-1 text-xs font-medium text-hpd-danger">{{ alert }}</span>
               }
             </div>
           </div>
 
           <div class="grid gap-3 sm:grid-cols-2">
-            <div class="rounded-2xl bg-slate-50 px-4 py-3">
-              <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Selected date</p>
-              <p class="mt-2 text-lg font-semibold text-slate-900">{{ formatDate(selectedDate()) }}</p>
+            <div class="rounded-hpd bg-hpd-cream px-4 py-3">
+              <p class="text-xs font-semibold uppercase tracking-[0.2em] text-hpd-muted">Selected date</p>
+              <p class="mt-2 text-lg font-semibold text-hpd-primary-dark">{{ formatDate(selectedDate()) }}</p>
             </div>
-            <div class="rounded-2xl bg-slate-50 px-4 py-3">
-              <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Patient coverage</p>
-              <p class="mt-2 text-lg font-semibold text-slate-900">{{ selectedPatientCoverage() }}%</p>
+            <div class="rounded-hpd bg-hpd-cream px-4 py-3">
+              <p class="text-xs font-semibold uppercase tracking-[0.2em] text-hpd-muted">Patient coverage</p>
+              <p class="mt-2 text-lg font-semibold text-hpd-primary-dark">{{ selectedPatientCoverage() }}%</p>
             </div>
           </div>
         </div>
 
         <div class="mt-5 flex flex-wrap gap-2">
           @for (focusArea of selectedPatient()!.focusAreas; track $index) {
-            <span class="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700">{{ focusArea }}</span>
+          <span class="rounded-full bg-hpd-surface px-3 py-1 text-xs font-medium text-hpd-muted">{{ focusArea }}</span>
           }
         </div>
 
         @if (selectedPatientPlan().length === 0) {
-        <div class="mt-6 rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-4 py-8 text-center text-sm text-slate-500">
+        <div class="mt-6 rounded-hpd border border-dashed border-hpd-border bg-hpd-cream px-4 py-8 text-center text-sm text-hpd-muted">
           No services are configured for this patient on the selected date.
         </div>
         } @else {
         <div class="mt-6 grid gap-4 md:grid-cols-2">
           @for (visit of selectedPatientPlan(); track visit.id) {
-          <article class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+          <article class="rounded-hpd border border-hpd-border bg-hpd-cream p-4">
             <div class="flex flex-wrap items-start justify-between gap-3">
               <div>
-                <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">{{ visit.start }} - {{ visit.end }}</p>
-                <h3 class="mt-2 text-lg font-semibold text-slate-900">{{ visit.title }}</h3>
+                <p class="text-xs font-semibold uppercase tracking-[0.2em] text-hpd-muted">{{ visit.start }} - {{ visit.end }}</p>
+                <h3 class="mt-2 text-lg font-semibold text-hpd-primary-dark">{{ visit.title }}</h3>
               </div>
               <span
                 class="rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em]"
@@ -126,18 +126,18 @@
             </div>
 
             <div class="mt-4 flex flex-wrap gap-2 text-xs font-medium">
-              <span class="rounded-full bg-slate-200 px-3 py-1 text-slate-700">{{ formatRole(visit.requiredRole) }}</span>
-              <span class="rounded-full bg-cyan-50 px-3 py-1 text-cyan-700">{{ visit.zone }}</span>
-              <span class="rounded-full bg-violet-50 px-3 py-1 text-violet-700">{{ formatPriority(visit.priority) }}</span>
+              <span class="rounded-full bg-hpd-border px-3 py-1 text-hpd-muted">{{ formatRole(visit.requiredRole) }}</span>
+              <span class="rounded-full bg-hpd-chart-blue/15 px-3 py-1 text-hpd-primary">{{ visit.zone }}</span>
+              <span class="rounded-full bg-hpd-chart-blue/15 px-3 py-1 text-hpd-primary">{{ formatPriority(visit.priority) }}</span>
             </div>
 
-            <div class="mt-4 space-y-2 text-sm text-slate-600">
+            <div class="mt-4 space-y-2 text-sm text-hpd-muted">
               <p>
-                <span class="font-semibold text-slate-900">Assigned to:</span> {{ visit.assignedProfessionalName ?? 'Manual intervention
-                required' }}
+                <span class="font-semibold text-hpd-primary-dark">Assigned to:</span> {{ visit.assignedProfessionalName ?? 'Manual
+                intervention required' }}
               </p>
-              <p><span class="font-semibold text-slate-900">Reason:</span> {{ visit.assignmentReason }}</p>
-              <p><span class="font-semibold text-slate-900">Clinical note:</span> {{ visit.notes }}</p>
+              <p><span class="font-semibold text-hpd-primary-dark">Reason:</span> {{ visit.assignmentReason }}</p>
+              <p><span class="font-semibold text-hpd-primary-dark">Clinical note:</span> {{ visit.notes }}</p>
             </div>
           </article>
           }
@@ -145,36 +145,36 @@
         }
       </div>
 
-      <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div class="rounded-hpd-lg border border-hpd-border bg-white p-6 shadow-hpd-sm">
         <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <h2 class="text-xl font-semibold text-slate-900">All patients on {{ formatDate(selectedDate()) }}</h2>
-            <p class="mt-1 text-sm text-slate-600">Coverage summary to spot which care plans still need attention.</p>
+            <h2 class="text-xl font-semibold text-hpd-primary-dark">All patients on {{ formatDate(selectedDate()) }}</h2>
+            <p class="mt-1 text-sm text-hpd-muted">Coverage summary to spot which care plans still need attention.</p>
           </div>
         </div>
 
         <div class="mt-6 grid gap-4 lg:grid-cols-2">
           @for (summary of patientScheduleSummaries(); track summary.patient.id) {
-          <article class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+          <article class="rounded-hpd border border-hpd-border bg-hpd-cream p-4">
             <div class="flex items-start justify-between gap-3">
               <div>
-                <h3 class="text-lg font-semibold text-slate-900">{{ summary.patient.name }}</h3>
-                <p class="mt-1 text-sm text-slate-600">{{ summary.patient.ward }} - {{ summary.patient.zone }}</p>
+                <h3 class="text-lg font-semibold text-hpd-primary-dark">{{ summary.patient.name }}</h3>
+                <p class="mt-1 text-sm text-hpd-muted">{{ summary.patient.ward }} - {{ summary.patient.zone }}</p>
               </div>
-              <span class="rounded-full bg-slate-900 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-white">
+              <span class="rounded-full bg-hpd-primary-deep px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-white">
                 {{ summary.coveragePercent }}%
               </span>
             </div>
 
             @if (summary.visits.length === 0) {
-            <p class="mt-4 text-sm text-slate-500">No visits configured.</p>
+            <p class="mt-4 text-sm text-hpd-muted">No visits configured.</p>
             } @else {
             <div class="mt-4 space-y-3">
               @for (visit of summary.visits; track visit.id) {
-              <div class="grid gap-2 rounded-xl bg-white p-3 text-sm text-slate-600 sm:grid-cols-[6rem_minmax(0,1fr)]">
-                <p class="font-semibold text-slate-900">{{ visit.start }}</p>
+              <div class="grid gap-2 rounded-xl bg-white p-3 text-sm text-hpd-muted sm:grid-cols-[6rem_minmax(0,1fr)]">
+                <p class="font-semibold text-hpd-primary-dark">{{ visit.start }}</p>
                 <div class="space-y-1">
-                  <p class="font-medium text-slate-900">{{ visit.title }}</p>
+                  <p class="font-medium text-hpd-primary-dark">{{ visit.title }}</p>
                   <p>{{ visit.assignedProfessionalName ?? 'Pending assignment' }}</p>
                 </div>
               </div>
@@ -188,35 +188,35 @@
     </div>
 
     <aside class="space-y-4">
-      <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-        <h2 class="text-xl font-semibold text-slate-900">Team availability</h2>
-        <p class="mt-1 text-sm text-slate-600">
+      <div class="rounded-hpd-lg border border-hpd-border bg-white p-6 shadow-hpd-sm">
+        <h2 class="text-xl font-semibold text-hpd-primary-dark">Team availability</h2>
+        <p class="mt-1 text-sm text-hpd-muted">
           Resources for {{ formatTeam(selectedPatient()!.teamId) }} on {{ formatDate(selectedDate()) }}.
         </p>
 
         <div class="mt-6 space-y-3">
           @for (workload of teamWorkload(); track workload.professional.id) {
-          <article class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+          <article class="rounded-hpd border border-hpd-border bg-hpd-cream p-4">
             <div class="flex items-start justify-between gap-3">
               <div>
-                <h3 class="font-semibold text-slate-900">{{ workload.professional.name }}</h3>
-                <p class="mt-1 text-sm text-slate-600">
+                <h3 class="font-semibold text-hpd-primary-dark">{{ workload.professional.name }}</h3>
+                <p class="mt-1 text-sm text-hpd-muted">
                   {{ formatRole(workload.professional.role) }} - {{ workload.professional.primaryZone }}
                 </p>
               </div>
-              <span class="rounded-full bg-cyan-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700">
+              <span class="rounded-full bg-hpd-chart-blue/15 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-hpd-primary">
                 {{ workload.assignedCount }} assigned
               </span>
             </div>
 
             <div class="mt-4 grid gap-3 sm:grid-cols-2">
               <div class="rounded-xl bg-white p-3">
-                <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Availability</p>
-                <p class="mt-2 text-sm font-medium text-slate-900">{{ workload.availabilityLabel }}</p>
+                <p class="text-xs font-semibold uppercase tracking-[0.2em] text-hpd-muted">Availability</p>
+                <p class="mt-2 text-sm font-medium text-hpd-primary-dark">{{ workload.availabilityLabel }}</p>
               </div>
               <div class="rounded-xl bg-white p-3">
-                <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Scheduled minutes</p>
-                <p class="mt-2 text-sm font-medium text-slate-900">{{ workload.assignedMinutes }} min</p>
+                <p class="text-xs font-semibold uppercase tracking-[0.2em] text-hpd-muted">Scheduled minutes</p>
+                <p class="mt-2 text-sm font-medium text-hpd-primary-dark">{{ workload.assignedMinutes }} min</p>
               </div>
             </div>
           </article>
@@ -224,22 +224,23 @@
         </div>
       </div>
 
-      <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-        <h2 class="text-xl font-semibold text-slate-900">Scheduling rules</h2>
-        <div class="mt-4 space-y-3 text-sm leading-6 text-slate-600">
+      <div class="rounded-hpd-lg border border-hpd-border bg-white p-6 shadow-hpd-sm">
+        <h2 class="text-xl font-semibold text-hpd-primary-dark">Scheduling rules</h2>
+        <div class="mt-4 space-y-3 text-sm leading-6 text-hpd-muted">
           <p>
-            <span class="font-semibold text-slate-900">Team match:</span> only professionals attached to the patient's team are considered.
+            <span class="font-semibold text-hpd-primary-dark">Team match:</span> only professionals attached to the patient's team are
+            considered.
           </p>
           <p>
-            <span class="font-semibold text-slate-900">Geographic fit:</span> assignments stay inside the clinician's configured coverage
-            zones.
+            <span class="font-semibold text-hpd-primary-dark">Geographic fit:</span> assignments stay inside the clinician's configured
+            coverage zones.
           </p>
           <p>
-            <span class="font-semibold text-slate-900">Date and time:</span> a professional must be available for the full visit window with
-            no overlap.
+            <span class="font-semibold text-hpd-primary-dark">Date and time:</span> a professional must be available for the full visit
+            window with no overlap.
           </p>
           <p>
-            <span class="font-semibold text-slate-900">Continuity:</span> preferred clinicians score higher before workload balancing
+            <span class="font-semibold text-hpd-primary-dark">Continuity:</span> preferred clinicians score higher before workload balancing
             applies.
           </p>
         </div>

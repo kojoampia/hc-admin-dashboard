@@ -4,24 +4,24 @@
   </div>
 } @else {
   <div class="mx-auto grid w-full max-w-7xl gap-6 lg:grid-cols-[minmax(0,20rem)_minmax(0,1fr)]">
-    <div class="hidden items-center justify-center rounded-[2rem] bg-white/80 p-6 shadow-sm backdrop-blur lg:flex">
+    <div class="hidden items-center justify-center rounded-hpd-xl bg-white/80 p-6 shadow-hpd-sm backdrop-blur lg:flex">
       <span class="healthconnect"></span>
     </div>
 
-    <mat-card class="!rounded-[2rem] !border !border-slate-200 !bg-white/90 !p-8 !shadow-sm">
+    <mat-card class="!rounded-hpd-xl !border !border-hpd-border !bg-white/90 !p-8 !shadow-hpd-sm">
       <div class="space-y-6">
         <div class="space-y-2">
-          <h1 class="text-4xl font-semibold tracking-tight text-slate-900">
+          <h1 class="text-4xl font-semibold tracking-tight text-hpd-primary-dark">
             <span hpdTranslate="home.title">Welcome!</span>
           </h1>
-          <p class="text-lg text-slate-600" hpdTranslate="home.subtitle">This is your homepage</p>
+          <p class="text-lg text-hpd-muted" hpdTranslate="home.subtitle">This is your homepage</p>
         </div>
 
-        <div class="flex items-start gap-3 rounded-2xl border border-cyan-200 bg-cyan-50 p-4 text-cyan-950">
+        <div class="flex items-start gap-3 rounded-hpd border border-hpd-primary/30 bg-hpd-chart-blue/15 p-4 text-hpd-primary-deep">
           <mat-icon class="mt-0.5 !text-[20px]">login</mat-icon>
           <p class="m-0 text-sm leading-6">
             <span hpdTranslate="global.messages.info.authenticated.prefix">If you want to </span>
-            <button mat-button type="button" class="!min-w-0 !px-1 !text-cyan-700" (click)="login()">
+            <button mat-button type="button" class="!min-w-0 !px-1 !text-hpd-primary" (click)="login()">
               <span hpdTranslate="global.messages.info.authenticated.link">sign in</span>
             </button>
             .
@@ -29,10 +29,10 @@
         </div>
 
         <div class="space-y-4">
-          <h2 class="text-lg font-medium text-slate-800" hpdTranslate="home.question">If you have any question on JHipster:</h2>
+          <h2 class="text-lg font-medium text-hpd-primary-dark" hpdTranslate="home.question">If you have any question on JHipster:</h2>
           <div class="grid gap-3 sm:grid-cols-2">
             <a
-              class="rounded-2xl bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 shadow-sm transition hover:bg-white hover:text-cyan-700"
+              class="rounded-hpd bg-hpd-cream px-4 py-3 text-sm font-medium text-hpd-muted shadow-hpd-sm transition hover:bg-white hover:text-hpd-primary"
               href="https://healthconnect.jojoaddison.net/"
               target="_blank"
               rel="noopener noreferrer"
@@ -41,7 +41,7 @@
               Health Connect homepage
             </a>
             <a
-              class="rounded-2xl bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 shadow-sm transition hover:bg-white hover:text-cyan-700"
+              class="rounded-hpd bg-hpd-cream px-4 py-3 text-sm font-medium text-hpd-muted shadow-hpd-sm transition hover:bg-white hover:text-hpd-primary"
               href="https://stackoverflow.com/tags/jojoaddison/healthconnect"
               target="_blank"
               rel="noopener noreferrer"
@@ -50,7 +50,7 @@
               Health Connect on Stack Overflow
             </a>
             <a
-              class="rounded-2xl bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 shadow-sm transition hover:bg-white hover:text-cyan-700"
+              class="rounded-hpd bg-hpd-cream px-4 py-3 text-sm font-medium text-hpd-muted shadow-hpd-sm transition hover:bg-white hover:text-hpd-primary"
               href="https://github.com/jojoaddison/health-connect/issues?state=open"
               target="_blank"
               rel="noopener noreferrer"
@@ -59,7 +59,7 @@
               Health Connect bug tracker
             </a>
             <a
-              class="rounded-2xl bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 shadow-sm transition hover:bg-white hover:text-cyan-700"
+              class="rounded-hpd bg-hpd-cream px-4 py-3 text-sm font-medium text-hpd-muted shadow-hpd-sm transition hover:bg-white hover:text-hpd-primary"
               href="https://gitter.im/jojoaddison/health-connect"
               target="_blank"
               rel="noopener noreferrer"
@@ -68,7 +68,7 @@
               Health Connect public chat room
             </a>
             <a
-              class="rounded-2xl bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 shadow-sm transition hover:bg-white hover:text-cyan-700"
+              class="rounded-hpd bg-hpd-cream px-4 py-3 text-sm font-medium text-hpd-muted shadow-hpd-sm transition hover:bg-white hover:text-hpd-primary"
               href="https://x.com/jojoaddison-health-connect"
               target="_blank"
               rel="noopener noreferrer"
@@ -76,10 +76,10 @@
             >
               follow &#64;health connect on Twitter
             </a>
-            <div class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700">
+            <div class="rounded-hpd border border-hpd-border bg-hpd-cream px-4 py-3 text-sm text-hpd-muted">
               <span hpdTranslate="home.like">If you like Health Connect, don&apos;t forget to give us a like on</span>
               <a
-                class="ml-1 font-semibold text-cyan-700 hover:text-cyan-600"
+                class="ml-1 font-semibold text-hpd-primary hover:text-hpd-primary"
                 href="https://facebook.com/jojoaddison"
                 target="_blank"
                 rel="noopener noreferrer"

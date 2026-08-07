@@ -1,9 +1,9 @@
-<div class="rounded-[2rem] border border-slate-200 bg-white/95 p-6 shadow-sm">
+<div class="rounded-hpd-xl border border-hpd-border bg-white/95 p-6 shadow-hpd-sm">
   <div class="space-y-4">
-    <h4 class="text-lg font-semibold text-slate-900">System</h4>
+    <h4 class="text-lg font-semibold text-hpd-primary-dark">System</h4>
 
     @if (!updating && systemMetrics) {
-      <div class="space-y-3 text-sm text-slate-700">
+      <div class="space-y-3 text-sm text-hpd-muted">
         <div class="grid grid-cols-[minmax(0,1fr)_auto] gap-3">
           <div>Uptime</div>
           <div class="text-right">{{ convertMillisecondsToDuration(systemMetrics['process.uptime'] ?? 0) }}</div>
@@ -13,23 +13,23 @@
           <div class="text-right">{{ systemMetrics['process.start.time'] | date: 'full' }}</div>
         </div>
 
-        <div class="space-y-2 rounded-2xl bg-slate-50 p-4">
+        <div class="space-y-2 rounded-hpd bg-hpd-cream p-4">
           <div class="grid grid-cols-[minmax(0,1fr)_auto] gap-3">
             <div>Process CPU usage</div>
             <div class="text-right">{{ 100 * (systemMetrics['process.cpu.usage'] ?? 0) | number: '1.0-2' }} %</div>
           </div>
-          <div class="h-3 overflow-hidden rounded-full bg-slate-200">
-            <div class="h-full rounded-full bg-emerald-500" [style.width.%]="100 * (systemMetrics['process.cpu.usage'] ?? 0)"></div>
+          <div class="h-3 overflow-hidden rounded-full bg-hpd-border">
+            <div class="h-full rounded-full bg-hpd-success-accent" [style.width.%]="100 * (systemMetrics['process.cpu.usage'] ?? 0)"></div>
           </div>
         </div>
 
-        <div class="space-y-2 rounded-2xl bg-slate-50 p-4">
+        <div class="space-y-2 rounded-hpd bg-hpd-cream p-4">
           <div class="grid grid-cols-[minmax(0,1fr)_auto] gap-3">
             <div>System CPU usage</div>
             <div class="text-right">{{ 100 * (systemMetrics['system.cpu.usage'] ?? 0) | number: '1.0-2' }} %</div>
           </div>
-          <div class="h-3 overflow-hidden rounded-full bg-slate-200">
-            <div class="h-full rounded-full bg-sky-500" [style.width.%]="100 * (systemMetrics['system.cpu.usage'] ?? 0)"></div>
+          <div class="h-3 overflow-hidden rounded-full bg-hpd-border">
+            <div class="h-full rounded-full bg-hpd-chart-blue" [style.width.%]="100 * (systemMetrics['system.cpu.usage'] ?? 0)"></div>
           </div>
         </div>
 

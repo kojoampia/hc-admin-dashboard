@@ -1,15 +1,18 @@
-<section class="min-h-screen bg-slate-950 text-slate-100">
-  <header class="sticky top-0 z-30 border-b border-white/10 bg-slate-950/90 backdrop-blur">
+<section class="min-h-screen bg-hpd-primary-deep text-white">
+  <header class="sticky top-0 z-30 border-b border-white/10 bg-hpd-primary-deep/90 backdrop-blur">
     <div class="mx-auto flex max-w-screen-2xl flex-col gap-4 px-4 py-4 lg:px-6">
       <div class="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
         <div class="flex items-center gap-4">
           <span
-            class="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-500/15 text-indigo-300 ring-1 ring-inset ring-indigo-400/30"
+            class="inline-flex h-12 w-12 items-center justify-center rounded-hpd bg-hpd-primary/15 text-hpd-on-navy-muted ring-1 ring-inset ring-hpd-primary/30"
           >
             <mat-icon>space_dashboard</mat-icon>
           </span>
           <div>
-            <p class="text-xs font-semibold uppercase tracking-[0.32em] text-indigo-200" hpdTranslate="adminDashboard.shell.administration"></p>
+            <p
+              class="text-xs font-semibold uppercase tracking-[0.32em] text-hpd-on-navy-muted"
+              hpdTranslate="adminDashboard.shell.administration"
+            ></p>
             <h1 class="text-2xl font-semibold tracking-tight" hpdTranslate="global.menu.admin.dashboard">Dashboard</h1>
           </div>
         </div>
@@ -20,7 +23,7 @@
         <button
           mat-stroked-button
           type="button"
-          class="!min-w-max !rounded-full !border-white/15 !bg-white/5 !text-slate-100"
+          class="!min-w-max !rounded-full !border-white/15 !bg-white/5 !text-white"
           [class.opacity-70]="!widget.visible"
           (click)="openWidget(widget.id)"
         >
@@ -40,14 +43,14 @@
     >
       @if (!maximizedWidgetId()) {
       <aside class="space-y-5 xl:sticky xl:top-28 xl:self-start">
-        <div class="rounded-3xl border border-white/10 bg-white/5 p-5 shadow-lg shadow-slate-950/20">
-          <p class="text-xs font-semibold uppercase tracking-[0.28em] text-slate-400" hpdTranslate="adminDashboard.shell.navigation"></p>
+        <div class="rounded-hpd-lg border border-white/10 bg-white/5 p-5 shadow-hpd-lg shadow-hpd-primary-deep/20">
+          <p class="text-xs font-semibold uppercase tracking-[0.28em] text-hpd-subtle" hpdTranslate="adminDashboard.shell.navigation"></p>
           <div class="mt-4 space-y-2">
             @for (section of dashboardSections; track section.id) {
             <button
               mat-button
               type="button"
-              class="!flex !w-full !justify-start !rounded-2xl !px-4 !py-3 !text-left !text-slate-100"
+              class="!flex !w-full !justify-start !rounded-hpd !px-4 !py-3 !text-left !text-white"
               (click)="navigateToSection(section.id)"
             >
               <mat-icon>{{ section.icon }}</mat-icon>
@@ -57,15 +60,15 @@
           </div>
         </div>
 
-        <div class="rounded-3xl border border-white/10 bg-white/5 p-5 shadow-lg shadow-slate-950/20">
-          <p class="text-xs font-semibold uppercase tracking-[0.28em] text-slate-400" hpdTranslate="adminDashboard.shell.status"></p>
+        <div class="rounded-hpd-lg border border-white/10 bg-white/5 p-5 shadow-hpd-lg shadow-hpd-primary-deep/20">
+          <p class="text-xs font-semibold uppercase tracking-[0.28em] text-hpd-subtle" hpdTranslate="adminDashboard.shell.status"></p>
           <div class="mt-4 grid gap-3">
-            <div class="rounded-2xl bg-white/5 p-4">
-              <p class="text-xs font-medium uppercase tracking-wide text-slate-400" hpdTranslate="adminDashboard.shell.visibleWidgets"></p>
+            <div class="rounded-hpd bg-white/5 p-4">
+              <p class="text-xs font-medium uppercase tracking-wide text-hpd-subtle" hpdTranslate="adminDashboard.shell.visibleWidgets"></p>
               <p class="mt-2 text-3xl font-semibold text-white">{{ visibleWidgetCount() }}</p>
             </div>
-            <div class="rounded-2xl bg-white/5 p-4">
-              <p class="text-xs font-medium uppercase tracking-wide text-slate-400" hpdTranslate="adminDashboard.shell.closedWidgets"></p>
+            <div class="rounded-hpd bg-white/5 p-4">
+              <p class="text-xs font-medium uppercase tracking-wide text-hpd-subtle" hpdTranslate="adminDashboard.shell.closedWidgets"></p>
               <p class="mt-2 text-3xl font-semibold text-white">{{ hiddenWidgetCount() }}</p>
             </div>
           </div>
@@ -77,14 +80,14 @@
         @for (section of visibleSections(); track section.id) {
         <section [id]="sectionElementId(section.id)" class="space-y-4 scroll-mt-28">
           @if (section.id !== 'settings') {
-          <div class="flex flex-col gap-2 rounded-3xl border border-white/10 bg-white/5 p-5 shadow-lg shadow-slate-950/20">
+          <div class="flex flex-col gap-2 rounded-hpd-lg border border-white/10 bg-white/5 p-5 shadow-hpd-lg shadow-hpd-primary-deep/20">
             <div class="flex items-center gap-3">
-              <span class="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-indigo-400/10 text-indigo-200">
+              <span class="inline-flex h-11 w-11 items-center justify-center rounded-hpd bg-hpd-primary/10 text-hpd-on-navy-muted">
                 <mat-icon>{{ section.icon }}</mat-icon>
               </span>
               <div>
                 <h2 class="text-xl font-semibold text-white">{{ section.title }}</h2>
-                <p class="text-sm text-slate-300">{{ section.description }}</p>
+                <p class="text-sm text-hpd-on-navy-muted">{{ section.description }}</p>
               </div>
             </div>
           </div>
@@ -93,18 +96,18 @@
             @for (link of adminLinks; track link.route) {
             <a
               [routerLink]="link.route"
-              class="group flex min-h-40 flex-col gap-3 rounded-2xl border border-white/10 bg-white/5 p-5 text-slate-100 no-underline shadow-lg shadow-slate-950/20 transition hover:-translate-y-0.5 hover:border-indigo-300/40 hover:bg-white/10"
+              class="group flex min-h-40 flex-col gap-3 rounded-hpd border border-white/10 bg-white/5 p-5 text-white no-underline shadow-hpd-lg shadow-hpd-primary-deep/20 transition hover:-translate-y-0.5 hover:border-hpd-primary/40 hover:bg-white/10"
             >
               <div class="flex items-center justify-between">
-                <span class="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-indigo-400/10 text-indigo-200">
+                <span class="inline-flex h-11 w-11 items-center justify-center rounded-hpd bg-hpd-primary/10 text-hpd-on-navy-muted">
                   <mat-icon>{{ link.icon }}</mat-icon>
                 </span>
-                <mat-icon class="text-slate-500 transition group-hover:text-indigo-200">arrow_forward</mat-icon>
+                <mat-icon class="text-hpd-muted transition group-hover:text-hpd-on-navy-muted">arrow_forward</mat-icon>
               </div>
 
               <div class="space-y-2">
                 <h3 class="text-base font-semibold text-white">{{ link.title }}</h3>
-                <p class="text-sm leading-6 text-slate-300">{{ link.description }}</p>
+                <p class="text-sm leading-6 text-hpd-on-navy-muted">{{ link.description }}</p>
               </div>
             </a>
             }
@@ -114,28 +117,34 @@
             @for (widget of section.widgets; track widget.id) {
             <article
               [id]="widgetElementId(widget.id)"
-              class="scroll-mt-28 rounded-3xl border bg-white/95 p-3 text-slate-900 transition"
+              class="scroll-mt-28 rounded-hpd-lg border bg-white/95 p-3 text-hpd-primary-dark transition"
               [ngClass]="widgetContainerClasses(widget.id)"
             >
               <div
-                class="flex flex-col gap-4 rounded-[1.25rem] bg-slate-950 px-5 py-4 text-white lg:flex-row lg:items-start lg:justify-between"
+                class="flex flex-col gap-4 rounded-[1.25rem] bg-hpd-primary-deep px-5 py-4 text-white lg:flex-row lg:items-start lg:justify-between"
               >
                 <div class="space-y-2">
                   <div class="flex items-center gap-3">
-                    <span class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-white/10 text-indigo-200">
+                    <span class="inline-flex h-10 w-10 items-center justify-center rounded-hpd bg-white/10 text-hpd-on-navy-muted">
                       <mat-icon>{{ widget.icon }}</mat-icon>
                     </span>
                     <div>
                       <h3 class="text-lg font-semibold">{{ widget.title }}</h3>
-                      <p class="text-sm text-slate-300">{{ widget.description }}</p>
+                      <p class="text-sm text-hpd-on-navy-muted">{{ widget.description }}</p>
                     </div>
                   </div>
-                  <div class="flex flex-wrap gap-2 text-xs font-medium uppercase tracking-wide text-slate-300">
+                  <div class="flex flex-wrap gap-2 text-xs font-medium uppercase tracking-wide text-hpd-on-navy-muted">
                     <span class="rounded-full bg-white/10 px-3 py-1">{{ section.title }}</span>
                     @if (isWidgetMaximized(widget.id)) {
-                    <span class="rounded-full bg-indigo-400/20 px-3 py-1 text-indigo-100" hpdTranslate="adminDashboard.shell.focusedView"></span>
+                    <span
+                      class="rounded-full bg-hpd-primary/20 px-3 py-1 text-hpd-on-navy-muted"
+                      hpdTranslate="adminDashboard.shell.focusedView"
+                    ></span>
                     } @if (isWidgetMinimized(widget.id)) {
-                    <span class="rounded-full bg-amber-400/20 px-3 py-1 text-amber-100" hpdTranslate="adminDashboard.shell.collapsed"></span>
+                    <span
+                      class="rounded-full bg-hpd-warning-accent/20 px-3 py-1 text-hpd-warning-accent"
+                      hpdTranslate="adminDashboard.shell.collapsed"
+                    ></span>
                     }
                   </div>
                 </div>
@@ -144,7 +153,7 @@
                   <button
                     mat-icon-button
                     type="button"
-                    class="!text-slate-200"
+                    class="!text-hpd-on-navy-muted"
                     [attr.aria-label]="isWidgetMinimized(widget.id) ? 'Expand widget' : 'Minimize widget'"
                     (click)="toggleMinimizeWidget(widget.id)"
                   >
@@ -153,24 +162,25 @@
                   <button
                     mat-icon-button
                     type="button"
-                    class="!text-slate-200"
+                    class="!text-hpd-on-navy-muted"
                     [attr.aria-label]="isWidgetMaximized(widget.id) ? 'Restore widget' : 'Maximize widget'"
                     (click)="toggleMaximizeWidget(widget.id)"
                   >
                     <mat-icon>{{ isWidgetMaximized(widget.id) ? 'close_fullscreen' : 'open_in_full' }}</mat-icon>
                   </button>
-                  <button mat-icon-button type="button" class="!text-rose-200" aria-label="Close widget" (click)="closeWidget(widget.id)">
+                  <button mat-icon-button type="button" class="!text-hpd-danger" aria-label="Close widget" (click)="closeWidget(widget.id)">
                     <mat-icon>close</mat-icon>
                   </button>
                 </div>
               </div>
 
               @if (isWidgetMinimized(widget.id) && !isWidgetMaximized(widget.id)) {
-              <div class="rounded-b-[1.5rem] border-t border-slate-200 bg-slate-50 px-5 py-4 text-sm text-slate-600" hpdTranslate="adminDashboard.shell.widgetMinimized">
-                
-              </div>
+              <div
+                class="rounded-b-[1.5rem] border-t border-hpd-border bg-hpd-cream px-5 py-4 text-sm text-hpd-muted"
+                hpdTranslate="adminDashboard.shell.widgetMinimized"
+              ></div>
               } @else {
-              <div class="rounded-b-[1.5rem] bg-slate-50 p-2" [class.min-h-[calc(100vh-18rem)]]="isWidgetMaximized(widget.id)">
+              <div class="rounded-b-[1.5rem] bg-hpd-cream p-2" [class.min-h-[calc(100vh-18rem)]]="isWidgetMaximized(widget.id)">
                 @switch (widget.id) { @case ('userActivity') {
                 <hpd-user-activity />
                 } @case ('systemHealth') {

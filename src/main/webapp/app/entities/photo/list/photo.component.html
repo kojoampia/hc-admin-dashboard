@@ -1,12 +1,12 @@
 <div class="space-y-6">
   <div
-    class="flex flex-col gap-4 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm lg:flex-row lg:items-center lg:justify-between"
+    class="flex flex-col gap-4 rounded-hpd-lg border border-hpd-border bg-white p-6 shadow-hpd-sm lg:flex-row lg:items-center lg:justify-between"
   >
     <div>
-      <h2 id="page-heading" data-cy="PhotoHeading" class="text-2xl font-semibold tracking-tight text-slate-900">
+      <h2 id="page-heading" data-cy="PhotoHeading" class="text-2xl font-semibold tracking-tight text-hpd-primary-dark">
         <span hpdTranslate="adminDashboardApp.photo.home.title">Photos</span>
       </h2>
-      <p class="mt-1 text-sm text-slate-500">Manage photo assets, type metadata, previews, and audit timestamps.</p>
+      <p class="mt-1 text-sm text-hpd-muted">Manage photo assets, type metadata, previews, and audit timestamps.</p>
     </div>
     <div class="flex flex-wrap items-center gap-3">
       <button type="button" mat-button class="!rounded-full !px-4" (click)="load()" [disabled]="isLoading">
@@ -17,7 +17,7 @@
       <a
         id="jh-create-entity"
         data-cy="entityCreateButton"
-        class="inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-sm font-medium text-white no-underline transition hover:bg-slate-700"
+        class="inline-flex items-center gap-2 rounded-full bg-hpd-primary px-4 py-2 text-sm font-medium text-white no-underline transition hover:bg-hpd-primary-hover"
         [routerLink]="['/photo/new']"
       >
         <mat-icon>add</mat-icon>
@@ -31,14 +31,14 @@
   <hpd-alert />
 
   @if (photos().length === 0) {
-    <div class="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-700" id="no-result">
+    <div class="rounded-hpd border border-hpd-warning-accent/30 bg-hpd-warning-tint px-4 py-3 text-sm text-hpd-warning" id="no-result">
       <span hpdTranslate="adminDashboardApp.photo.home.notFound">No Photos found</span>
     </div>
   } @else {
-    <div class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm" id="entities">
+    <div class="overflow-hidden rounded-hpd-lg border border-hpd-border bg-white shadow-hpd-sm" id="entities">
       <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-slate-200" aria-describedby="page-heading">
-          <thead class="bg-slate-50">
+        <table class="min-w-full divide-y divide-hpd-border" aria-describedby="page-heading">
+          <thead class="bg-hpd-cream">
             <tr hpdSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
               @for (
                 column of [
@@ -60,30 +60,30 @@
                 <th
                   scope="col"
                   [hpdSortBy]="column[0]!"
-                  class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500"
+                  class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-hpd-muted"
                 >
                   <div class="inline-flex items-center gap-1">
                     <span [hpdTranslate]="column[1]!">{{ column[0] }}</span>
-                    <mat-icon class="!h-4 !w-4 !text-base text-slate-400">unfold_more</mat-icon>
+                    <mat-icon class="!h-4 !w-4 !text-base text-hpd-subtle">unfold_more</mat-icon>
                   </div>
                 </th>
               }
-              <th scope="col" class="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-slate-500">Actions</th>
+              <th scope="col" class="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-hpd-muted">Actions</th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-slate-100">
+          <tbody class="divide-y divide-hpd-border">
             @for (photo of photos(); track trackId(photo)) {
-              <tr data-cy="entityTable" class="align-top hover:bg-slate-50/80">
-                <td class="whitespace-nowrap px-4 py-3 text-sm font-medium text-slate-900">
-                  <a [routerLink]="['/photo', photo.id, 'view']" class="text-slate-900 no-underline hover:text-indigo-600">
+              <tr data-cy="entityTable" class="align-top hover:bg-hpd-cream/80">
+                <td class="whitespace-nowrap px-4 py-3 text-sm font-medium text-hpd-primary-dark">
+                  <a [routerLink]="['/photo', photo.id, 'view']" class="text-hpd-primary-dark no-underline hover:text-hpd-primary">
                     {{ photo.id }}
                   </a>
                 </td>
-                <td class="px-4 py-3 text-sm text-slate-600">{{ photo.description }}</td>
-                <td class="px-4 py-3 text-sm text-slate-600">{{ photo.altText }}</td>
-                <td class="max-w-xs px-4 py-3 text-sm text-slate-600">{{ photo.url }}</td>
-                <td class="px-4 py-3 text-sm text-slate-600">{{ photo.profileId }}</td>
-                <td class="px-4 py-3 text-sm text-slate-600" [hpdTranslate]="'adminDashboardApp.PhotoType.' + (photo.photoType ?? 'null')">
+                <td class="px-4 py-3 text-sm text-hpd-muted">{{ photo.description }}</td>
+                <td class="px-4 py-3 text-sm text-hpd-muted">{{ photo.altText }}</td>
+                <td class="max-w-xs px-4 py-3 text-sm text-hpd-muted">{{ photo.url }}</td>
+                <td class="px-4 py-3 text-sm text-hpd-muted">{{ photo.profileId }}</td>
+                <td class="px-4 py-3 text-sm text-hpd-muted" [hpdTranslate]="'adminDashboardApp.PhotoType.' + (photo.photoType ?? 'null')">
                   {{
                     {
                       null: '',
@@ -96,11 +96,11 @@
                     }[photo.photoType ?? 'null']
                   }}
                 </td>
-                <td class="px-4 py-3 text-sm text-slate-600">
+                <td class="px-4 py-3 text-sm text-hpd-muted">
                   @if (photo.data) {
                     <button
                       type="button"
-                      class="flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2 text-left transition hover:border-slate-300"
+                      class="flex items-center gap-3 rounded-hpd border border-hpd-border bg-hpd-cream px-3 py-2 text-left transition hover:border-hpd-border"
                       (click)="openFile(photo.data, photo.dataContentType)"
                     >
                       <img
@@ -108,15 +108,15 @@
                         class="h-10 w-10 rounded-lg object-cover"
                         alt="photo"
                       />
-                      <span class="text-xs text-slate-500">{{ photo.dataContentType }}, {{ byteSize(photo.data) }}</span>
+                      <span class="text-xs text-hpd-muted">{{ photo.dataContentType }}, {{ byteSize(photo.data) }}</span>
                     </button>
                   }
                 </td>
-                <td class="max-w-xs px-4 py-3 text-sm text-slate-600">{{ photo.photoMetadata }}</td>
-                <td class="px-4 py-3 text-sm text-slate-600">{{ photo.createdBy }}</td>
-                <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{{ photo.createdDate | formatMediumDatetime }}</td>
-                <td class="px-4 py-3 text-sm text-slate-600">{{ photo.modifiedBy }}</td>
-                <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{{ photo.modifiedDate | formatMediumDatetime }}</td>
+                <td class="max-w-xs px-4 py-3 text-sm text-hpd-muted">{{ photo.photoMetadata }}</td>
+                <td class="px-4 py-3 text-sm text-hpd-muted">{{ photo.createdBy }}</td>
+                <td class="whitespace-nowrap px-4 py-3 text-sm text-hpd-muted">{{ photo.createdDate | formatMediumDatetime }}</td>
+                <td class="px-4 py-3 text-sm text-hpd-muted">{{ photo.modifiedBy }}</td>
+                <td class="whitespace-nowrap px-4 py-3 text-sm text-hpd-muted">{{ photo.modifiedDate | formatMediumDatetime }}</td>
                 <td class="px-4 py-3">
                   <div class="flex justify-end gap-2">
                     <a [routerLink]="['/photo', photo.id, 'view']" mat-button class="!rounded-full !px-3" data-cy="entityDetailsButton">
@@ -132,7 +132,7 @@
                     <button
                       type="button"
                       mat-button
-                      class="!rounded-full !px-3 !text-rose-600"
+                      class="!rounded-full !px-3 !text-hpd-danger"
                       (click)="delete(photo)"
                       data-cy="entityDeleteButton"
                     >
@@ -150,7 +150,7 @@
   }
 
   @if (photos().length > 0) {
-    <div class="space-y-4 rounded-3xl border border-slate-200 bg-white p-4 shadow-sm">
+    <div class="space-y-4 rounded-hpd-lg border border-hpd-border bg-white p-4 shadow-hpd-sm">
       <div class="flex justify-center">
         <hpd-item-count [params]="{ page, totalItems, itemsPerPage }" />
       </div>

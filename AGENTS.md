@@ -1,6 +1,6 @@
 # Project Overview
 
-This is `hc-admin-dashboard` — the Health Connect Admin frontend. It is an Angular 19.2.21 SPA generated with **JHipster 8.11.0** (`skipServer: true`). There is no Java backend in this project; the frontend proxies API calls to the `hc-admin-gateway` (Spring Cloud Gateway, dev port 5504), which routes on to the `hc-admin-service` microservice (dev port 5507). Both are separate git repositories checked out alongside this one.
+This is `hc-admin-dashboard` — the Health Connect Admin frontend. It is an Angular 21 SPA generated with **JHipster 8.11.0** (`skipServer: true`). There is no Java backend in this project; the frontend proxies API calls to the `hc-admin-gateway` (Spring Cloud Gateway, dev port 5504), which routes on to the `hc-admin-service` microservice (dev port 5507). Both are separate git repositories checked out alongside this one.
 
 - JHipster prefix: `hpd` (component selectors `hpd-*`, directive selectors `hpdCamelCase`)
 - Development server: `http://localhost:4200`
@@ -19,7 +19,7 @@ This is `hc-admin-dashboard` — the Health Connect Admin frontend. It is an Ang
 | [`.github/copilot-instructions.md`](.github/copilot-instructions.md) | Condensed conventions for Copilot                                                                     |
 | [`.github/instructions/*.instructions.md`](.github/instructions)     | Path-scoped conventions (`applyTo:` frontmatter) for services and specs                               |
 
-`admin-web.md` replaced 19 separate brief files. **Its contents are historical — do not execute them as prompts.** The one live item there is the [frontend refactor](admin-web.md#7-frontend-refactor-still-open): Bootstrap removal is still outstanding. Consult it when you need to know _why_ something is shaped the way it is, or before assuming a brief's instruction is still current — several specify paths and folder layouts that were never delivered.
+`admin-web.md` replaced 19 separate brief files. **Its contents are historical — do not execute them as prompts.** Nothing in it is live any more: the frontend refactor's last outstanding item, Bootstrap removal, finished with the BridgeCare redesign on 2026-08-06. That redesign also replaced the indigo/slate scheme those briefs describe, so treat their colours and layouts as a record of what was, not a specification. Consult it when you need to know _why_ something is shaped the way it is — several briefs specify paths and folder layouts that were never delivered.
 
 ## Code Quality and Style
 
@@ -42,16 +42,26 @@ This is `hc-admin-dashboard` — the Health Connect Admin frontend. It is an Ang
   - `core/` — authentication (`AccountService`, `UserRouteAccessService`), interceptors, `ApplicationConfigService`, low-level utilities.
   - `shared/` — reusable pipes, directives, `SharedModule`, alert/filter/sort/pagination helpers.
   - `entities/` — one sub-folder per domain entity; each contains model, service, list/detail/update/delete components, and route config.
-  - `layouts/` — shell components (navbar, footer, error pages).
+  - `layouts/` — the BridgeCare shell. `main/` holds it all: `main.component.*` (sticky cream topbar
+    with the crumb + the route's own translated `title`, and the entity menu), `sidebar/` (the navy
+    grouped rail), and `shell-navigation.ts`, which is the single source of truth for what appears
+    in either. Plus `footer/`, `error/`, `profiles/`.
+    There is no `navbar/`: it was registered on a `navbar` router outlet that no template ever
+    rendered, so neither it nor the entity menu it held had ever appeared on screen. That menu is
+    in the topbar now.
   - `widgets/` — reusable chart and display widgets (badgebox, chatbot, faq, file-viewer, filter, heatmap, histogram, info-box, info-box-sm, linechart, page-display, piechart, pnv, slides, tilebox, treemap).
   - `admin/` — dashboard shell (`dashboard-component.*`, `dashboard-layout.service.ts`) plus admin widgets: access-control, customizable-layout, real-time-data, data-export, system-health, usage-statistics, user-activity, alerts, and the generated user-management / health / metrics / logs / configuration / docs / gateway screens.
   - `account/`, `config/`, `home/`, `login/` — generated JHipster screens.
 - Use Angular standalone components; the legacy `shared/shared.module.ts` exists for backward compatibility but new components should be standalone.
 - Build API URLs through `ApplicationConfigService.getEndpointFor(api, microservice?)` instead of hardcoding paths.
 - Routing uses standalone route arrays, not NgModules: `app.routes.ts`, `admin/admin.routes.ts`, `entities/entity.routes.ts`, and one `*.routes.ts` per entity. There is no `app-routing.module.ts`.
-- Real-time updates connect via SockJS + webstomp-client to the gateway WebSocket endpoint.
+- Real-time updates arrive over **SSE** (`AuditStreamService`, reading the api's Kafka bridge with
+  `fetch` so it can send an `Authorization` header). There is no WebSocket client, and no backend
+  ever served `/websocket` — do not reintroduce one without a server on the other end.
 - Use `dayjs` for all date parsing and formatting.
-- Use `ngx-charts` + D3 for dashboard charts and visualisations.
+- Use `ngx-charts` for dashboard charts. Chart series take the brand colours — see
+  `admin/usage-statistics/usage-statistics.ts` for the domain; d3 receives the domain as values, so
+  those must be literal hexes kept in step with `global.scss`, not `var(--hpd-color-*)`.
 
 ## Implemented Entities
 
@@ -98,7 +108,7 @@ generated Cypress specs under `src/test/javascript/cypress/` already assume that
 rewrites every stylesheet link at build time:
 
 ```html
-<link rel="stylesheet" href="styles.<hash>.css" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="styles.<hash>.css" media="print" onload="this.media='all'" />
 ```
 
 `deploy/prod-server/hc-admin.conf` serves `script-src 'self'` with no `'unsafe-inline'` and no
@@ -118,15 +128,18 @@ script in `index.html`, the answer is a real file, not `'unsafe-inline'`.
 
 ## Technology Stack
 
-- **Angular 19.2.21** with standalone components and lazy-loaded routes
-- **Bootstrap 5.3.2** + **ng-bootstrap 18** for UI components and modals
-- **TailwindCSS 3.4** for layout and spacing utilities
-- **Angular Material 19** + **CDK** — used by the `layouts/main` shell and toolbar
-- **Font Awesome 6.5** is installed but **unused**: there are zero `@fortawesome` or `fa-icon` references in `src/main/webapp/app`. Do not add new usages; the frontend refactor plan in [`admin-web.md`](admin-web.md#7-frontend-refactor-still-open) targets its removal. Use Material icons instead.
+- **Angular 21** with standalone components and lazy-loaded routes
+- **Angular Material 21 (M3)** + **CDK** — themed by `content/scss/material-theme.scss` through
+  `mat.theme()` on the BridgeCare seeds (navy `#0D3058` / gold `#C59437`)
+- **TailwindCSS 3.4**, carrying the BridgeCare tokens as `hpd-*` utilities (`tailwind.config.js`)
+- **Bootstrap and ng-bootstrap are gone**, `_bootstrap-variables.scss` with them. So are Font
+  Awesome, `@ngu/carousel`, the standalone `d3*` packages, SockJS and webstomp-client. Use Material
+  icons; realtime is SSE (`AuditStreamService`), not WebSocket.
+- **`@fontsource/inter`** — Inter, self-hosted. Not the Google Fonts `<link>` `hc-professional/web`
+  uses: the production CSP allows `font-src 'self' data:` only, so that link is blocked in prod.
 - **RxJS 7.8** for reactive state and async data flows
 - **@ngx-translate** (en, fr, de) for internationalisation
-- **ngx-charts** + **D3.js** for data visualisation widgets
-- **SockJS** + **webstomp-client** for WebSocket connectivity
+- **ngx-charts** for data visualisation widgets
 - **ngx-webstorage** for browser storage abstraction
 - **dayjs** for date/time handling
 - **ngx-infinite-scroll** for infinite-scroll pagination

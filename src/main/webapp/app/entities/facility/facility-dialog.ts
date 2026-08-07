@@ -16,10 +16,10 @@ import { FacilityType } from 'app/entities/enumerations/facility-type.model';
       <!-- Header -->
       <div class="flex items-center justify-between mb-6">
         <div>
-          <h2 class="text-lg font-bold text-slate-800">{{ data ? 'Edit Facility' : 'Add Facility' }}</h2>
-          <p class="text-xs text-slate-400 mt-0.5">{{ data ? 'Update the facility details.' : 'Register a new healthcare facility.' }}</p>
+          <h2 class="text-lg font-bold text-hpd-primary-dark">{{ data ? 'Edit Facility' : 'Add Facility' }}</h2>
+          <p class="text-xs text-hpd-subtle mt-0.5">{{ data ? 'Update the facility details.' : 'Register a new healthcare facility.' }}</p>
         </div>
-        <button mat-icon-button class="text-slate-400 hover:text-slate-700" (click)="close()">
+        <button mat-icon-button class="text-hpd-subtle hover:text-hpd-muted" (click)="close()">
           <mat-icon>close</mat-icon>
         </button>
       </div>
@@ -28,11 +28,11 @@ import { FacilityType } from 'app/entities/enumerations/facility-type.model';
       <div class="space-y-4">
         <!-- Name -->
         <div>
-          <label for="fc-name" class="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">Facility Name</label>
+          <label for="fc-name" class="text-xs font-semibold text-hpd-muted uppercase tracking-wider block mb-1.5">Facility Name</label>
           <input
             id="fc-name"
             type="text"
-            class="w-full text-sm border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-300 text-slate-800"
+            class="w-full text-sm border border-hpd-border rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-hpd-primary/40 text-hpd-primary-dark"
             placeholder="e.g. City Hospital"
             [ngModel]="form().name"
             (ngModelChange)="patch('name', $event)"
@@ -41,11 +41,11 @@ import { FacilityType } from 'app/entities/enumerations/facility-type.model';
 
         <!-- Address ID -->
         <div>
-          <label for="fc-address" class="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">Address ID</label>
+          <label for="fc-address" class="text-xs font-semibold text-hpd-muted uppercase tracking-wider block mb-1.5">Address ID</label>
           <input
             id="fc-address"
             type="text"
-            class="w-full text-sm border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-300 text-slate-800"
+            class="w-full text-sm border border-hpd-border rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-hpd-primary/40 text-hpd-primary-dark"
             placeholder="Address identifier"
             [ngModel]="form().addressId"
             (ngModelChange)="patch('addressId', $event)"
@@ -54,10 +54,10 @@ import { FacilityType } from 'app/entities/enumerations/facility-type.model';
 
         <!-- Type -->
         <div>
-          <label for="fc-type" class="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">Type</label>
+          <label for="fc-type" class="text-xs font-semibold text-hpd-muted uppercase tracking-wider block mb-1.5">Type</label>
           <select
             id="fc-type"
-            class="w-full text-sm border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-300 text-slate-800 bg-white"
+            class="w-full text-sm border border-hpd-border rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-hpd-primary/40 text-hpd-primary-dark bg-white"
             [ngModel]="form().type"
             (ngModelChange)="patch('type', $event)"
           >
@@ -69,11 +69,11 @@ import { FacilityType } from 'app/entities/enumerations/facility-type.model';
 
         <!-- Contact ID -->
         <div>
-          <label for="fc-contact" class="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">Contact ID</label>
+          <label for="fc-contact" class="text-xs font-semibold text-hpd-muted uppercase tracking-wider block mb-1.5">Contact ID</label>
           <input
             id="fc-contact"
             type="text"
-            class="w-full text-sm border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-300 text-slate-800"
+            class="w-full text-sm border border-hpd-border rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-hpd-primary/40 text-hpd-primary-dark"
             placeholder="Contact identifier"
             [ngModel]="form().contactId"
             (ngModelChange)="patch('contactId', $event)"
@@ -82,10 +82,10 @@ import { FacilityType } from 'app/entities/enumerations/facility-type.model';
 
         <!-- Description -->
         <div>
-          <label for="fc-description" class="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">Description</label>
+          <label for="fc-description" class="text-xs font-semibold text-hpd-muted uppercase tracking-wider block mb-1.5">Description</label>
           <textarea
             id="fc-description"
-            class="w-full text-sm border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-300 text-slate-800"
+            class="w-full text-sm border border-hpd-border rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-hpd-primary/40 text-hpd-primary-dark"
             rows="3"
             placeholder="Facility description..."
             [ngModel]="form().description"
@@ -95,15 +95,15 @@ import { FacilityType } from 'app/entities/enumerations/facility-type.model';
       </div>
 
       <!-- Footer -->
-      <div class="flex items-center justify-end gap-3 mt-6 pt-6 border-t border-slate-100">
+      <div class="flex items-center justify-end gap-3 mt-6 pt-6 border-t border-hpd-border">
         <button
-          class="px-4 py-2 text-sm font-semibold text-slate-600 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors"
+          class="px-4 py-2 text-sm font-semibold text-hpd-muted bg-white border border-hpd-border rounded-xl hover:bg-hpd-cream transition-colors"
           (click)="close()"
         >
           Cancel
         </button>
         <button
-          class="px-5 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-xl hover:bg-indigo-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+          class="px-5 py-2 text-sm font-semibold text-white bg-hpd-primary rounded-xl hover:bg-hpd-primary-hover transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
           [disabled]="!form().name?.trim() || !form().addressId?.trim()"
           (click)="save()"
         >

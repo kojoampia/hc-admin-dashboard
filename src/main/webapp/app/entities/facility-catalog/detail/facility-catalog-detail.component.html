@@ -1,11 +1,11 @@
 <div class="mx-auto max-w-5xl">
   @if (facilityCatalog(); as facilityCatalogRef) {
-    <div class="space-y-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+    <div class="space-y-6 rounded-hpd-lg border border-hpd-border bg-white p-6 shadow-hpd-sm">
       <div class="space-y-2">
-        <h2 data-cy="facilityCatalogDetailsHeading" class="text-2xl font-semibold text-slate-900">
+        <h2 data-cy="facilityCatalogDetailsHeading" class="text-2xl font-semibold text-hpd-primary-dark">
           <span hpdTranslate="adminDashboardApp.facilityCatalog.detail.title">Facility Catalog</span>
         </h2>
-        <p class="text-sm text-slate-500">Inspect facility catalog metadata and linked facilities.</p>
+        <p class="text-sm text-hpd-muted">Inspect facility catalog metadata and linked facilities.</p>
       </div>
 
       <hpd-alert-error />
@@ -13,25 +13,25 @@
       <hpd-alert />
 
       <div class="grid gap-4 sm:grid-cols-2">
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="global.field.id">ID</p>
-          <p class="mt-1 text-sm text-slate-900">{{ facilityCatalogRef.id }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="global.field.id">ID</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ facilityCatalogRef.id }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.facilityCatalog.name">Name</p>
-          <p class="mt-1 text-sm text-slate-900">{{ facilityCatalogRef.name }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.facilityCatalog.name">Name</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ facilityCatalogRef.name }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4 sm:col-span-2">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.facilityCatalog.description">
+        <div class="rounded-hpd bg-hpd-cream p-4 sm:col-span-2">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.facilityCatalog.description">
             Description
           </p>
-          <p class="mt-1 text-sm text-slate-900">{{ facilityCatalogRef.description }}</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ facilityCatalogRef.description }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4 sm:col-span-2">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.facilityCatalog.facilities">
+        <div class="rounded-hpd bg-hpd-cream p-4 sm:col-span-2">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.facilityCatalog.facilities">
             Facilities
           </p>
-          <p class="mt-1 text-sm text-slate-900">{{ facilityCatalogRef.facilities }}</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ facilityCatalogRef.facilities }}</p>
         </div>
       </div>
 
@@ -45,7 +45,7 @@
           type="button"
           [routerLink]="['/facility-catalog', facilityCatalogRef.id, 'edit']"
           mat-flat-button
-          class="!rounded-full !bg-slate-900 !px-4 !text-white"
+          class="!rounded-full !bg-hpd-primary-deep !px-4 !text-white"
         >
           <mat-icon>edit</mat-icon>
           <span hpdTranslate="entity.action.edit">Edit</span>

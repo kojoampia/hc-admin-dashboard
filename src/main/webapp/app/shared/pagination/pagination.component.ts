@@ -24,14 +24,7 @@ import { MatIconModule } from '@angular/material/icon';
         <ul class="flex list-none items-center gap-1 p-0">
           @if (boundaryLinks()) {
             <li>
-              <button
-                mat-icon-button
-                type="button"
-                aria-label="First page"
-                [disabled]="page() <= 1"
-                (click)="select(1)"
-                class="!h-9 !w-9"
-              >
+              <button mat-icon-button type="button" aria-label="First page" [disabled]="page() <= 1" (click)="select(1)" class="!h-9 !w-9">
                 <mat-icon class="!text-lg">first_page</mat-icon>
               </button>
             </li>
@@ -58,7 +51,7 @@ import { MatIconModule } from '@angular/material/icon';
                 [attr.aria-current]="p === page() ? 'page' : null"
                 (click)="select(p)"
                 class="!min-w-9 !h-9 !rounded-lg"
-                [class.!bg-indigo-600]="p === page()"
+                [class.!bg-hpd-primary]="p === page()"
                 [class.!text-white]="p === page()"
               >
                 {{ p }}

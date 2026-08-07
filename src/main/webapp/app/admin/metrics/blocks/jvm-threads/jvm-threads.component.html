@@ -1,48 +1,48 @@
-<div class="rounded-[2rem] border border-slate-200 bg-white/95 p-6 shadow-sm">
+<div class="rounded-hpd-xl border border-hpd-border bg-white/95 p-6 shadow-hpd-sm">
   <div class="space-y-4">
-    <h4 class="text-lg font-semibold text-slate-900" hpdTranslate="metrics.jvm.threads.title">Threads</h4>
+    <h4 class="text-lg font-semibold text-hpd-primary-dark" hpdTranslate="metrics.jvm.threads.title">Threads</h4>
 
     <div class="space-y-2">
-      <div class="flex items-center justify-between gap-3 text-sm text-slate-700">
+      <div class="flex items-center justify-between gap-3 text-sm text-hpd-muted">
         <span><span hpdTranslate="metrics.jvm.threads.runnable">Runnable</span> {{ threadStats.threadDumpRunnable }}</span>
-        <span class="font-semibold text-slate-500">{{ percentage(threadStats.threadDumpRunnable) | number: '1.0-0' }}%</span>
+        <span class="font-semibold text-hpd-muted">{{ percentage(threadStats.threadDumpRunnable) | number: '1.0-0' }}%</span>
       </div>
-      <div class="h-3 overflow-hidden rounded-full bg-slate-200">
-        <div class="h-full rounded-full bg-emerald-500" [style.width.%]="percentage(threadStats.threadDumpRunnable)"></div>
+      <div class="h-3 overflow-hidden rounded-full bg-hpd-border">
+        <div class="h-full rounded-full bg-hpd-success-accent" [style.width.%]="percentage(threadStats.threadDumpRunnable)"></div>
       </div>
     </div>
 
     <div class="space-y-2">
-      <div class="flex items-center justify-between gap-3 text-sm text-slate-700">
+      <div class="flex items-center justify-between gap-3 text-sm text-hpd-muted">
         <span><span hpdTranslate="metrics.jvm.threads.timedwaiting">Timed waiting</span> {{ threadStats.threadDumpTimedWaiting }}</span>
-        <span class="font-semibold text-slate-500">{{ percentage(threadStats.threadDumpTimedWaiting) | number: '1.0-0' }}%</span>
+        <span class="font-semibold text-hpd-muted">{{ percentage(threadStats.threadDumpTimedWaiting) | number: '1.0-0' }}%</span>
       </div>
-      <div class="h-3 overflow-hidden rounded-full bg-slate-200">
-        <div class="h-full rounded-full bg-amber-500" [style.width.%]="percentage(threadStats.threadDumpTimedWaiting)"></div>
+      <div class="h-3 overflow-hidden rounded-full bg-hpd-border">
+        <div class="h-full rounded-full bg-hpd-warning-accent" [style.width.%]="percentage(threadStats.threadDumpTimedWaiting)"></div>
       </div>
     </div>
 
     <div class="space-y-2">
-      <div class="flex items-center justify-between gap-3 text-sm text-slate-700">
+      <div class="flex items-center justify-between gap-3 text-sm text-hpd-muted">
         <span><span hpdTranslate="metrics.jvm.threads.waiting">Waiting</span> {{ threadStats.threadDumpWaiting }}</span>
-        <span class="font-semibold text-slate-500">{{ percentage(threadStats.threadDumpWaiting) | number: '1.0-0' }}%</span>
+        <span class="font-semibold text-hpd-muted">{{ percentage(threadStats.threadDumpWaiting) | number: '1.0-0' }}%</span>
       </div>
-      <div class="h-3 overflow-hidden rounded-full bg-slate-200">
-        <div class="h-full rounded-full bg-sky-500" [style.width.%]="percentage(threadStats.threadDumpWaiting)"></div>
+      <div class="h-3 overflow-hidden rounded-full bg-hpd-border">
+        <div class="h-full rounded-full bg-hpd-chart-blue" [style.width.%]="percentage(threadStats.threadDumpWaiting)"></div>
       </div>
     </div>
 
     <div class="space-y-2">
-      <div class="flex items-center justify-between gap-3 text-sm text-slate-700">
+      <div class="flex items-center justify-between gap-3 text-sm text-hpd-muted">
         <span><span hpdTranslate="metrics.jvm.threads.blocked">Blocked</span> {{ threadStats.threadDumpBlocked }}</span>
-        <span class="font-semibold text-slate-500">{{ percentage(threadStats.threadDumpBlocked) | number: '1.0-0' }}%</span>
+        <span class="font-semibold text-hpd-muted">{{ percentage(threadStats.threadDumpBlocked) | number: '1.0-0' }}%</span>
       </div>
-      <div class="h-3 overflow-hidden rounded-full bg-slate-200">
-        <div class="h-full rounded-full bg-rose-500" [style.width.%]="percentage(threadStats.threadDumpBlocked)"></div>
+      <div class="h-3 overflow-hidden rounded-full bg-hpd-border">
+        <div class="h-full rounded-full bg-hpd-danger-accent" [style.width.%]="percentage(threadStats.threadDumpBlocked)"></div>
       </div>
     </div>
 
-    <div class="text-sm text-slate-500">Total: {{ threadStats.threadDumpAll }}</div>
+    <div class="text-sm text-hpd-muted">Total: {{ threadStats.threadDumpAll }}</div>
 
     <div class="flex justify-end">
       <button mat-button type="button" (click)="open()">

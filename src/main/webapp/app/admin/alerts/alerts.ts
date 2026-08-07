@@ -130,12 +130,12 @@ export default class AlertsComponent implements OnInit, OnDestroy {
 
   severityClasses(severity: AlertSeverity): string {
     if (severity === 'critical') {
-      return 'bg-rose-50 text-rose-700 ring-1 ring-rose-200';
+      return 'bg-hpd-danger-tint text-hpd-danger ring-1 ring-hpd-danger/30';
     }
     if (severity === 'warning') {
-      return 'bg-amber-50 text-amber-700 ring-1 ring-amber-200';
+      return 'bg-hpd-warning-tint text-hpd-warning ring-1 ring-hpd-warning-accent/30';
     }
-    return 'bg-sky-50 text-sky-700 ring-1 ring-sky-200';
+    return 'bg-hpd-chart-blue/15 text-hpd-primary ring-1 ring-hpd-primary/30';
   }
 
   sourceLabel(source: DashboardAlert['source']): string {

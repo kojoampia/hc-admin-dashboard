@@ -1,65 +1,65 @@
 <div class="mx-auto max-w-4xl">
   @if (organisation(); as organisationRef) {
-    <div class="space-y-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+    <div class="space-y-6 rounded-hpd-lg border border-hpd-border bg-white p-6 shadow-hpd-sm">
       <div class="space-y-2">
-        <h2 data-cy="organisationDetailsHeading" class="text-2xl font-semibold text-slate-900">
+        <h2 data-cy="organisationDetailsHeading" class="text-2xl font-semibold text-hpd-primary-dark">
           <span hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.detail.title">Organisation</span>
         </h2>
-        <p class="text-sm text-slate-500">Inspect organisation profile and audit information.</p>
+        <p class="text-sm text-hpd-muted">Inspect organisation profile and audit information.</p>
       </div>
 
       <hpd-alert-error />
       <hpd-alert />
 
       <div class="grid gap-4 sm:grid-cols-2">
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="global.field.id">ID</p>
-          <p class="mt-1 text-sm text-slate-900">{{ organisationRef.id }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="global.field.id">ID</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ organisationRef.id }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.name">
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.name">
             Name
           </p>
-          <p class="mt-1 text-sm text-slate-900">{{ organisationRef.name }}</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ organisationRef.name }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4 sm:col-span-2">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.description">
+        <div class="rounded-hpd bg-hpd-cream p-4 sm:col-span-2">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.description">
             Description
           </p>
-          <p class="mt-1 text-sm text-slate-900">{{ organisationRef.description }}</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ organisationRef.description }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.profile">
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.profile">
             Profile
           </p>
-          <p class="mt-1 text-sm text-slate-900">{{ organisationRef.profile }}</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ organisationRef.profile }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.createdDate">
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.createdDate">
             Created Date
           </p>
-          <p class="mt-1 text-sm text-slate-900">{{ organisationRef.createdDate | formatMediumDate }}</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ organisationRef.createdDate | formatMediumDate }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.createdBy">
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.createdBy">
             Created By
           </p>
-          <p class="mt-1 text-sm text-slate-900">{{ organisationRef.createdBy }}</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ organisationRef.createdBy }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
+        <div class="rounded-hpd bg-hpd-cream p-4">
           <p
-            class="text-xs font-semibold uppercase text-slate-500"
+            class="text-xs font-semibold uppercase text-hpd-muted"
             hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.modifiedDate"
           >
             Modified Date
           </p>
-          <p class="mt-1 text-sm text-slate-900">{{ organisationRef.modifiedDate | formatMediumDate }}</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ organisationRef.modifiedDate | formatMediumDate }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.modifiedBy">
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.hcAdminServiceOrganisation.modifiedBy">
             Modified By
           </p>
-          <p class="mt-1 text-sm text-slate-900">{{ organisationRef.modifiedBy }}</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ organisationRef.modifiedBy }}</p>
         </div>
       </div>
 
@@ -72,7 +72,7 @@
           type="button"
           [routerLink]="['/organisation', organisationRef.id, 'edit']"
           mat-flat-button
-          class="!rounded-full !bg-slate-900 !px-4 !text-white"
+          class="!rounded-full !bg-hpd-primary-deep !px-4 !text-white"
         >
           <mat-icon>edit</mat-icon>
           <span hpdTranslate="entity.action.edit">Edit</span>

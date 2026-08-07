@@ -1,11 +1,11 @@
 <div class="mx-auto max-w-5xl">
   @if (message(); as messageRef) {
-    <div class="space-y-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+    <div class="space-y-6 rounded-hpd-lg border border-hpd-border bg-white p-6 shadow-hpd-sm">
       <div class="space-y-2">
-        <h2 data-cy="messageDetailsHeading" class="text-2xl font-semibold text-slate-900">
+        <h2 data-cy="messageDetailsHeading" class="text-2xl font-semibold text-hpd-primary-dark">
           <span hpdTranslate="adminDashboardApp.hcAdminServiceMessage.detail.title">Message</span>
         </h2>
-        <p class="text-sm text-slate-500">Inspect message body, recipients, and delivery type.</p>
+        <p class="text-sm text-hpd-muted">Inspect message body, recipients, and delivery type.</p>
       </div>
 
       <hpd-alert-error />
@@ -13,37 +13,37 @@
       <hpd-alert />
 
       <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="global.field.id">ID</p>
-          <p class="mt-1 text-sm text-slate-900">{{ messageRef.id }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="global.field.id">ID</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ messageRef.id }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4 lg:col-span-2">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceMessage.content">
+        <div class="rounded-hpd bg-hpd-cream p-4 lg:col-span-2">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.hcAdminServiceMessage.content">
             Content
           </p>
-          <p class="mt-1 text-sm text-slate-900">{{ messageRef.content }}</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ messageRef.content }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceMessage.timestamp">
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.hcAdminServiceMessage.timestamp">
             Timestamp
           </p>
-          <p class="mt-1 text-sm text-slate-900">{{ messageRef.timestamp | formatMediumDatetime }}</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ messageRef.timestamp | formatMediumDatetime }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceMessage.senderId">
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.hcAdminServiceMessage.senderId">
             Sender Id
           </p>
-          <p class="mt-1 text-sm text-slate-900">{{ messageRef.senderId }}</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ messageRef.senderId }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4 lg:col-span-2">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceMessage.recipients">
+        <div class="rounded-hpd bg-hpd-cream p-4 lg:col-span-2">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.hcAdminServiceMessage.recipients">
             Recipients
           </p>
-          <p class="mt-1 text-sm text-slate-900">{{ messageRef.recipients }}</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ messageRef.recipients }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceMessage.type">Type</p>
-          <p class="mt-1 text-sm text-slate-900" [hpdTranslate]="'adminDashboardApp.MessageType.' + (messageRef.type ?? 'null')">
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.hcAdminServiceMessage.type">Type</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark" [hpdTranslate]="'adminDashboardApp.MessageType.' + (messageRef.type ?? 'null')">
             {{ { null: '', NOTIFICATION: 'NOTIFICATION', ALERT: 'ALERT', REMINDER: 'REMINDER' }[messageRef.type ?? 'null'] }}
           </p>
         </div>
@@ -59,7 +59,7 @@
           type="button"
           [routerLink]="['/message', messageRef.id, 'edit']"
           mat-flat-button
-          class="!rounded-full !bg-slate-900 !px-4 !text-white"
+          class="!rounded-full !bg-hpd-primary-deep !px-4 !text-white"
         >
           <mat-icon>edit</mat-icon>
           <span hpdTranslate="entity.action.edit">Edit</span>

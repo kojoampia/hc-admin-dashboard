@@ -1,50 +1,278 @@
-@use 'bootstrap-variables' as *;
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ==========================================================================
+HealthConnect / Abofonsa BridgeCare design tokens and layout primitives
+
+Shared verbatim with hc-professional/web/src/main/webapp/content/scss/global.scss — the two
+front-ends are one design system, and this block is the single source of truth for its values.
+tailwind.config.js reads every colour below through `var()`; it hardcodes nothing, so a palette
+change is an edit here and nowhere else.
+
+The teal (#29cece) / indigo-and-slate scheme this replaced was never a brand: it was the JHipster
+default plus whatever each dashboard widget reached for. Nothing carried over.
+
+| Token                          | Value      | Tailwind class(es)          | Notes                                   |
+|---------------------------------|------------|------------------------------|------------------------------------------|
+| --hpd-color-primary(-blue)      | #0d3058    | bg/text-hpd-primary          | BridgeCare navy; M3 theme primary seed   |
+| --hpd-color-primary-hover       | #12406f    | bg-hpd-primary-hover         | button hover                             |
+| --hpd-color-primary-deep        | #092239    | bg-hpd-primary-deep          | dark chrome                              |
+| --hpd-color-gold(-bright/-tint) | #c59437 / #ddb868 / #fbf4e6 | bg-hpd-gold* | accent, badges, brand mark  |
+| --hpd-color-cream               | #f7f4ee    | bg-hpd-cream                 | topbar, panel heads                      |
+| --hpd-color-surface             | #f2f0ea    | bg-hpd-surface               | page background                          |
+| --hpd-color-border              | #e6e2d9    | border-hpd-border            | hairlines                                |
+| --hpd-color-text-primary        | #16202c    | text-hpd-primary-dark        | body ink                                 |
+| --hpd-color-text-muted          | #5b6470    | text-hpd-muted               | secondary text                           |
+| --hpd-color-text-subtle         | #8b939e    | text-hpd-subtle              | tertiary text                            |
+| --hpd-color-success(-accent/-tint) | #2a7554 / #2e7d5b / #e7f3ed | *-hpd-success* | text tone is the AA-adjusted one |
+| --hpd-color-warning(-accent/-tint) | #96600f / #b4741a / #fdf3e2 | *-hpd-warning* | text tone is the AA-adjusted one |
+| --hpd-color-danger(-accent/-tint) | #b3402f / #c2503f / #fbeae7 | *-hpd-danger*        |                                   |
+| --hpd-color-card-urgent/open/closed | status tints | bg-hpd-urgent/open/closed  | stat cards tint by status           |
+| --hpd-color-row-urgent/open/closed | status tints | bg-hpd-row-*            | table header tint per status         |
+| --hpd-color-chart-navy/gold/blue | #0d3058 / #c59437 / #8ba9c4 | text-hpd-chart-* | chart series colours            |
+| --hpd-r-sm/r/r-lg/r-xl          | 8/14/20/28px | rounded-hpd-sm etc.        | radius scale                             |
+| --hpd-sh-sm/sh/sh-lg            | navy-tinted  | shadow-hpd-sm etc.         | shadow scale                             |
+
+The two text tones marked AA-adjusted were darkened from the design's own values to reach WCAG AA
+4.5:1 on their tint backgrounds: success #2E7D5B→#2A7554 (4.39→4.89 on #E7F3ED), warning
+#B4741A→#96600F (3.50→4.80 on #FDF3E2). The original hues stay available as the `*-accent` tokens
+for non-text uses — borders, bars, chart fills, status dots.
+========================================================================== */
+
+:root {
+  --hpd-color-primary-blue: #0d3058;
+  --hpd-color-primary: #0d3058;
+  --hpd-color-primary-hover: #12406f;
+  --hpd-color-primary-deep: #092239;
+  --hpd-color-gold: #c59437;
+  --hpd-color-gold-bright: #ddb868;
+  --hpd-color-gold-tint: #fbf4e6;
+  --hpd-color-cream: #f7f4ee;
+  --hpd-color-border: #e6e2d9;
+  --hpd-color-surface: #f2f0ea;
+  --hpd-color-card-urgent: #fbeae7;
+  --hpd-color-card-open: #fdf3e2;
+  --hpd-color-card-closed: #e7f3ed;
+  --hpd-color-text-on-dark: #ffffff;
+  --hpd-color-text-primary: #16202c;
+  --hpd-color-text-muted: #5b6470;
+  --hpd-color-text-subtle: #8b939e;
+  --hpd-color-on-navy-muted: #cbd9e9; /* sidebar nav links (9.3:1 on navy) */
+  --hpd-color-on-navy-soft: #9db2cb; /* sidebar sub-labels */
+  --hpd-color-on-navy-faint: #93aac6; /* sidebar group labels (5.57:1 on navy) */
+  --hpd-color-chart-blue: #8ba9c4;
+  --hpd-color-chart-navy: #0d3058;
+  --hpd-color-chart-gold: #c59437;
+  --hpd-color-success: #2a7554;
+  --hpd-color-success-accent: #2e7d5b;
+  --hpd-color-success-tint: #e7f3ed;
+  --hpd-color-warning: #96600f;
+  --hpd-color-warning-accent: #b4741a;
+  --hpd-color-warning-tint: #fdf3e2;
+  --hpd-color-danger: #b3402f;
+  --hpd-color-danger-accent: #c2503f;
+  --hpd-color-danger-tint: #fbeae7;
+  --hpd-color-row-urgent: #fbeae7;
+  --hpd-color-row-open: #fdf3e2;
+  --hpd-color-row-closed: #e7f3ed;
+  --hpd-font-body: Inter, ui-sans-serif, system-ui, sans-serif;
+  --hpd-focus-ring: 0 0 0 3px rgb(13 48 88 / 45%);
+  --hpd-r-sm: 8px;
+  --hpd-r: 14px;
+  --hpd-r-lg: 20px;
+  --hpd-r-xl: 28px;
+  --hpd-sh-sm: 0 1px 2px rgb(13 48 88 / 6%), 0 1px 3px rgb(13 48 88 / 5%);
+  --hpd-sh: 0 2px 6px rgb(13 48 88 / 6%), 0 8px 24px rgb(13 48 88 / 7%);
+  --hpd-sh-lg: 0 12px 40px rgb(13 48 88 / 16%);
+}
+
 /* ==============================================================
-Bootstrap tweaks
+Page canvas
+
+The old rule painted content/images/background.jpg across the whole viewport, fixed and cover-
+sized, with every panel floating on a translucent white. BridgeCare's canvas is the flat cream
+surface instead — the panels carry the depth.
 ===============================================================*/
 body {
-  background-image: url('/content/images/background.jpg');
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position-y: center;
-  background-position-x: center;
-  background-size: cover;
+  background-color: var(--hpd-color-surface);
+  color: var(--hpd-color-text-primary);
 }
+
+/* BridgeCare scrollbar chrome — WebKit browsers only. */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d5d1c6;
+  border-radius: 10px;
+  border: 3px solid var(--hpd-color-surface);
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.hpd-surface {
+  border-radius: 1rem;
+  background: var(--hpd-color-surface);
+  color: var(--hpd-color-text-primary);
+}
+
+.hpd-focusable:focus-visible {
+  outline: none;
+  box-shadow: var(--hpd-focus-ring);
+}
+
+.hpd-data-table__scroll:focus-visible {
+  outline: none;
+  box-shadow: var(--hpd-focus-ring);
+}
+
+/* ==============================================================
+Typography
+
+Uniform application-wide font: Inter, declared as --hpd-font-body above and as Angular Material's
+M3 brand-family/plain-family in material-theme.scss, and applied here to body so every element —
+not just the ones that happen to sit under a Material component — renders in it. Self-hosted via
+@fontsource in vendor.scss; the production CSP forbids the Google Fonts <link> that
+hc-professional uses.
+===============================================================*/
+
+body {
+  font-family: var(--hpd-font-body);
+}
+
+/* Body copy is regular weight; headings take their weight from per-component utilities. The
+   previous global 300 made the whole app render lighter than the design. */
 body,
 h1,
 h2,
 h3,
 h4 {
-  font-weight: 300;
+  font-weight: 400;
 }
 
-/* Increase contrast of links to get 100% on Lighthouse Accessibility Audit. Override this color if you want to change the link color, or use a Bootswatch theme */
+/* Link colour rides the primary token (navy, 13.3:1 on white — passes AA). */
 a {
-  color: #29cece;
+  color: var(--hpd-color-primary);
   font-weight: bold;
 }
 
 a:hover {
-  color: #29cece;
-}
-
-/* The .dropdown-item overrides that used to sit here fought Bootstrap's _reboot.scss over
-   a:not([href]):not([tabindex]). Both Bootstrap and every .dropdown-* class in this app are gone —
-   navigation menus are mat-menu — so they targeted nothing. */
-
-a:hover {
+  color: var(--hpd-color-primary-hover);
   /* make sure browsers use the pointer cursor for anchors, even with no href */
   cursor: pointer;
 }
 
-.text-info {
-  color: #29cece !important;
+/* ==========================================================================
+BridgeCare component classes — shared across auth, account, and feature pages. Prefer these over
+ad-hoc per-page button styling; variants are primary (navy), gold, ghost, danger.
+Never put white text on gold (2.74:1, fails AA) — use the inherited dark tone.
+========================================================================== */
+.hpd-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border: 0;
+  border-radius: var(--hpd-r-sm);
+  font-weight: 700;
+  font-size: 14.5px;
+  white-space: nowrap;
+  cursor: pointer;
+  text-decoration: none;
 }
+
+.hpd-btn:active {
+  transform: translateY(1px);
+}
+
+.hpd-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.hpd-btn-primary {
+  background: var(--hpd-color-primary);
+  color: #fff;
+  box-shadow: 0 2px 10px rgb(13 48 88 / 22%);
+}
+
+.hpd-btn-primary:hover {
+  background: var(--hpd-color-primary-hover);
+  color: #fff;
+}
+
+.hpd-btn-gold {
+  background: var(--hpd-color-gold);
+  color: #3a2a08;
+  box-shadow: 0 2px 10px rgb(197 148 55 / 30%);
+}
+
+.hpd-btn-gold:hover {
+  background: var(--hpd-color-gold-bright);
+  color: #3a2a08;
+}
+
+.hpd-btn-ghost {
+  background: #fff;
+  border: 1.5px solid var(--hpd-color-border);
+  color: var(--hpd-color-text-primary);
+}
+
+.hpd-btn-ghost:hover {
+  border-color: var(--hpd-color-primary);
+  color: var(--hpd-color-text-primary);
+}
+
+.hpd-btn-danger {
+  background: var(--hpd-color-danger);
+  color: #fff;
+}
+
+.hpd-label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--hpd-color-text-muted);
+}
+
+.hpd-input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid var(--hpd-color-border);
+  border-radius: var(--hpd-r-sm);
+  background: #fff;
+  font-size: 15px;
+}
+
+.hpd-input:focus {
+  outline: none;
+  border-color: var(--hpd-color-primary);
+  box-shadow: 0 0 0 3.5px rgb(13 48 88 / 10%);
+}
+
+/* Split-screen auth brand panel. */
+.hpd-auth-brand {
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(900px 520px at 12% 8%, rgb(197 148 55 / 20%), transparent 62%),
+    radial-gradient(700px 500px at 92% 96%, rgb(18 64 111 / 85%), transparent 60%), var(--hpd-color-primary);
+}
+
+/* Panel head — the cream strip above a table or a card body. */
+.hpd-panel-head {
+  background: var(--hpd-color-cream);
+  border-bottom: 1px solid var(--hpd-color-border);
+}
+
 /* ==========================================================================
 Browser Upgrade Prompt
 ========================================================================== */
@@ -94,6 +322,8 @@ Generic styles
   background-color: #fff;
 }
 
+/* Material form fields wear the BridgeCare field treatment: no notched outline, a cream-tinted
+   well, and the navy focus ring instead of the M3 default. */
 .mat-mdc-form-field {
   .mdc-notched-outline__leading,
   .mdc-notched-outline__notch,
@@ -102,21 +332,21 @@ Generic styles
   }
 
   .mat-mdc-text-field-wrapper {
-    border-radius: 1rem !important;
-    background: rgba(248, 250, 252, 0.92);
-    box-shadow: inset 0 0 0 1px transparent;
+    border-radius: var(--hpd-r-sm) !important;
+    background: #fff;
+    box-shadow: inset 0 0 0 1.5px var(--hpd-color-border);
     transition:
       box-shadow 150ms ease,
       background-color 150ms ease;
   }
 
   &.mat-focused .mat-mdc-text-field-wrapper {
-    background: rgba(255, 255, 255, 0.98);
-    box-shadow: inset 0 0 0 2px rgba(41, 206, 206, 0.28);
+    background: #fff;
+    box-shadow: inset 0 0 0 2px var(--hpd-color-primary);
   }
 
   &.mat-form-field-invalid .mat-mdc-text-field-wrapper {
-    box-shadow: inset 0 0 0 2px rgba(244, 63, 94, 0.18);
+    box-shadow: inset 0 0 0 2px var(--hpd-color-danger);
   }
 }
 
@@ -126,13 +356,24 @@ Generic styles
 }
 
 .footer {
-  border-top: 1px solid rgba(0, 0, 0, 0.125);
+  border-top: 1px solid var(--hpd-color-border);
   font-size: small;
 }
 
 .hand,
 [hpdsortby] {
   cursor: pointer;
+}
+
+/* Error highlight on input fields — only once the user has interacted with the field (a pristine
+   required form shouldn't open covered in red), using the status tokens rather than raw red. */
+.ng-valid.ng-dirty[required],
+.ng-valid.ng-dirty.required {
+  border-left: 5px solid var(--hpd-color-success-accent);
+}
+
+.ng-invalid.ng-touched:not(form) {
+  border-left: 5px solid var(--hpd-color-danger);
 }
 
 /* ==========================================================================
@@ -170,7 +411,7 @@ Custom alerts for notification
     }
   }
   .alert-link {
-    color: #29cece;
+    color: var(--hpd-color-primary);
   }
 }
 
@@ -210,7 +451,7 @@ entity detail page css
       padding: 0.5em 0;
     }
     dd {
-      border-bottom: 1px solid #eee;
+      border-bottom: 1px solid var(--hpd-color-border);
       padding: 0.5em 0;
       margin-left: 0;
     }
@@ -230,6 +471,32 @@ tweaks
   white-space: nowrap;
 }
 
+@media screen and (max-width: 375px) {
+  .table-responsive {
+    margin-inline: -0.25rem;
+  }
+}
+
+@media print {
+  @page {
+    margin: 12mm;
+  }
+
+  .hpd-no-print,
+  .footer {
+    display: none !important;
+  }
+
+  .hpd-data-table {
+    width: 100% !important;
+    font-size: 10pt;
+  }
+
+  .hpd-data-table tr,
+  .hpd-panel {
+    break-inside: avoid;
+  }
+}
 
 /* ==========================================================================
 angular-cli removes postcss-rtl processed inline css, processed rules must be added here instead
@@ -242,14 +509,5 @@ angular-cli removes postcss-rtl processed inline css, processed rules must be ad
   -o-transform: rotate(-45deg);
   -webkit-transform: rotate(-45deg);
   transform: rotate(-45deg);
-}
-
-/* navbar.component.scss */
-.navbar {
-  ul.navbar-nav {
-    .nav-item {
-      margin-left: 0.5em;
-    }
-  }
 }
 /* jhipster-needle-scss-add-main JHipster will add new css style */

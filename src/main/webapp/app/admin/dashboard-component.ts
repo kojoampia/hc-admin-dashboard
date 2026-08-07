@@ -214,10 +214,10 @@ export default class DashboardComponent implements OnInit {
 
   widgetContainerClasses(widgetId: DashboardWidgetId): string {
     if (this.isWidgetMaximized(widgetId)) {
-      return 'min-h-[calc(100vh-12rem)] border-indigo-400 shadow-2xl shadow-indigo-950/15';
+      return 'min-h-[calc(100vh-12rem)] border-hpd-primary/40 shadow-2xl shadow-hpd-primary-deep/15';
     }
 
-    return 'border-slate-200 shadow-sm';
+    return 'border-hpd-border shadow-hpd-sm';
   }
 
   currentUserName(): string {
@@ -231,9 +231,7 @@ export default class DashboardComponent implements OnInit {
 
   currentUserRole(): string {
     const authorities = this.account()?.authorities ?? [];
-    // `.some` on the name, not `.includes` of a literal: authorities are IAuthority objects, and
-    // includes() compares by reference, so a fresh literal never matches.
-    return authorities.some(authority => authority.name === 'ROLE_ADMIN') ? 'Administrator' : 'Operator';
+    return authorities.includes('ROLE_ADMIN') ? 'Administrator' : 'Operator';
   }
 
   currentUserInitials(): string {

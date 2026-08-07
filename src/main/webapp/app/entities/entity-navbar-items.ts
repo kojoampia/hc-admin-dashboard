@@ -1,4 +1,4 @@
-import NavbarItem from 'app/layouts/navbar/navbar-item.model';
+import NavbarItem from 'app/layouts/main/navbar-item.model';
 
 export const EntityNavbarItems: NavbarItem[] = [
   {

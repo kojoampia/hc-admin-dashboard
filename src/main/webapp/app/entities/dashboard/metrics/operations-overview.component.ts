@@ -18,19 +18,19 @@ type OverviewMetric = {
   template: `
     <div class="grid gap-4 sm:grid-cols-2">
       @for (metric of metrics; track metric.label) {
-        <article class="rounded-2xl border border-white/10 bg-white/5 p-4">
+        <article class="rounded-hpd border border-white/10 bg-white/5 p-4">
           <div class="flex items-start justify-between gap-3">
             <div>
-              <p class="text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">{{ metric.label }}</p>
+              <p class="text-xs font-semibold uppercase tracking-[0.24em] text-hpd-subtle">{{ metric.label }}</p>
               <p class="mt-3 text-3xl font-semibold text-white">{{ metric.value }}</p>
             </div>
-            <span class="inline-flex h-11 w-11 items-center justify-center rounded-2xl" [class]="metric.accentClass">
+            <span class="inline-flex h-11 w-11 items-center justify-center rounded-hpd" [class]="metric.accentClass">
               <mat-icon>{{ metric.icon }}</mat-icon>
             </span>
           </div>
           <div class="mt-4 flex items-center justify-between gap-3">
-            <p class="text-sm text-slate-300">{{ metric.detail }}</p>
-            <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-emerald-200">{{ metric.delta }}</span>
+            <p class="text-sm text-hpd-on-navy-muted">{{ metric.detail }}</p>
+            <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-hpd-success-accent">{{ metric.delta }}</span>
           </div>
         </article>
       }
@@ -45,7 +45,7 @@ export class OperationsOverviewComponent {
       delta: '+12%',
       detail: 'Open and in-progress shifts across all active regions.',
       icon: 'medical_services',
-      accentClass: 'bg-emerald-500/15 text-emerald-200',
+      accentClass: 'bg-hpd-success-accent/15 text-hpd-success-accent',
     },
     {
       label: 'Professional profiles',
@@ -53,7 +53,7 @@ export class OperationsOverviewComponent {
       delta: '+5.6%',
       detail: 'Verified professionals currently available for assignment.',
       icon: 'badge',
-      accentClass: 'bg-indigo-500/15 text-indigo-200',
+      accentClass: 'bg-hpd-primary/15 text-hpd-on-navy-muted',
     },
     {
       label: 'Patient profiles',
@@ -61,7 +61,7 @@ export class OperationsOverviewComponent {
       delta: '+3.1%',
       detail: 'Active patient records with recent operator-managed activity.',
       icon: 'personal_injury',
-      accentClass: 'bg-cyan-500/15 text-cyan-200',
+      accentClass: 'bg-hpd-chart-blue/15 text-hpd-chart-blue',
     },
     {
       label: 'Vendor profiles',
@@ -69,7 +69,7 @@ export class OperationsOverviewComponent {
       delta: '+1.4%',
       detail: 'Approved vendors supporting operational supply coverage.',
       icon: 'storefront',
-      accentClass: 'bg-amber-500/15 text-amber-200',
+      accentClass: 'bg-hpd-warning-accent/15 text-hpd-warning-accent',
     },
   ];
 }

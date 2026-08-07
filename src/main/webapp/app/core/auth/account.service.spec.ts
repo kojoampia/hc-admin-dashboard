@@ -18,8 +18,10 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 function accountWithAuthorities(authorities: string[]): Account {
   return {
     activated: true,
-    // Account.authorities is IAuthority[]; the call sites all name authorities as plain strings.
-    authorities: authorities.map(name => ({ name })),
+    // Plain strings, exactly as GET /api/account sends them. This fixture used to wrap each one
+    // as `{ name }` to match a model that had drifted from the wire format — so the suite went on
+    // passing while hasAnyAuthority() returned false for everyone in the real app.
+    authorities,
     email: '',
     firstName: '',
     langKey: '',
@@ -202,6 +204,31 @@ describe('Account Service', () => {
   });
 
   describe('hasAnyAuthority', () => {
+    // Every other test in this block authenticates with a hand-built Account, so it can only ever
+    // check the shape the fixture itself chose. That is precisely how `Account.authorities` came to
+    // be declared `IAuthority[]` while the server kept sending strings: the whole suite stayed
+    // green while hasAnyAuthority() returned false for every user in the running app, which locked
+    // an admin out of the sidebar, the route guards and *hpdHasAnyAuthority alike.
+    //
+    // This one goes through the HTTP path instead and flushes the literal body GET /api/account
+    // returns, so the contract is what is under test, not the fixture.
+    it('reads the authorities array as the account endpoint actually sends it', () => {
+      service.identity().subscribe();
+      httpMock.expectOne({ method: 'GET', url: applicationConfigService.getEndpointFor('api/account') }).flush({
+        activated: true,
+        authorities: ['ROLE_USER', 'ROLE_ADMIN'],
+        email: 'admin@localhost',
+        firstName: 'Admin',
+        langKey: 'en',
+        lastName: 'User',
+        login: 'admin',
+        imageUrl: null,
+      });
+
+      expect(service.hasAnyAuthority(Authority.ADMIN)).toBe(true);
+      expect(service.hasAnyAuthority([Authority.OPERATOR])).toBe(false);
+    });
+
     describe('hasAnyAuthority string parameter', () => {
       it('should return false if user is not logged', () => {
         const hasAuthority = service.hasAnyAuthority(Authority.USER);

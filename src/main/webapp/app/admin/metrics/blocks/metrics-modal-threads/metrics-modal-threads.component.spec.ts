@@ -31,7 +31,6 @@ describe('MetricsModalThreadsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(MetricsModalThreadsComponent);
     comp = fixture.componentInstance;
-
   });
 
   describe('ngOnInit', () => {
@@ -141,7 +140,7 @@ describe('MetricsModalThreadsComponent', () => {
       const badgeClass = comp.getBadgeClass(threadState);
 
       // THEN
-      expect(badgeClass).toEqual('bg-emerald-50 text-emerald-700');
+      expect(badgeClass).toEqual('bg-hpd-success-tint text-hpd-success');
     });
 
     it('should return an info badge class for waiting thread state', () => {
@@ -152,7 +151,7 @@ describe('MetricsModalThreadsComponent', () => {
       const badgeClass = comp.getBadgeClass(threadState);
 
       // THEN
-      expect(badgeClass).toEqual('bg-sky-50 text-sky-700');
+      expect(badgeClass).toEqual('bg-hpd-chart-blue/15 text-hpd-primary');
     });
 
     it('should return a warning badge class for time waiting thread state', () => {
@@ -163,7 +162,7 @@ describe('MetricsModalThreadsComponent', () => {
       const badgeClass = comp.getBadgeClass(threadState);
 
       // THEN
-      expect(badgeClass).toEqual('bg-amber-50 text-amber-700');
+      expect(badgeClass).toEqual('bg-hpd-warning-tint text-hpd-warning');
     });
 
     it('should return a danger badge class for blocked thread state', () => {
@@ -174,7 +173,7 @@ describe('MetricsModalThreadsComponent', () => {
       const badgeClass = comp.getBadgeClass(threadState);
 
       // THEN
-      expect(badgeClass).toEqual('bg-rose-50 text-rose-700');
+      expect(badgeClass).toEqual('bg-hpd-danger-tint text-hpd-danger');
     });
 
     it('should return an empty string for others threads', () => {
@@ -322,7 +321,6 @@ describe('MetricsModalThreadsComponent', () => {
   describe('dismiss', () => {
     it('should call dismiss function for modal on dismiss', () => {
       // GIVEN
-
 
       // WHEN
       comp.dismiss();

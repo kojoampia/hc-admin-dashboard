@@ -1,14 +1,14 @@
 <div class="flex justify-center px-4 py-8">
-  <mat-card class="w-full max-w-xl !rounded-[2rem] !border !border-slate-200 !bg-white/95 !p-8 !shadow-sm">
+  <mat-card class="w-full max-w-xl !rounded-hpd-xl !border !border-hpd-border !bg-white/95 !p-8 !shadow-hpd-sm">
     <div class="space-y-6">
       <div class="space-y-2">
-        <h1 class="text-3xl font-semibold text-slate-900" hpdTranslate="login.title" data-cy="loginTitle">Sign in</h1>
-        <p class="text-sm text-slate-500">Access the admin workspace with your Health Connect credentials.</p>
+        <h1 class="text-3xl font-semibold text-hpd-primary-dark" hpdTranslate="login.title" data-cy="loginTitle">Sign in</h1>
+        <p class="text-sm text-hpd-muted">Access the admin workspace with your Health Connect credentials.</p>
       </div>
 
       @if (authenticationError) {
         <div
-          class="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-900"
+          class="rounded-hpd border border-hpd-danger/30 bg-hpd-danger-tint px-4 py-3 text-sm text-hpd-danger"
           hpdTranslate="login.messages.error.authentication"
           data-cy="loginError"
         >

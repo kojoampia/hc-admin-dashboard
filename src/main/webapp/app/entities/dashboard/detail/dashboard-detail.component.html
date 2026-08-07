@@ -1,11 +1,11 @@
 <div class="mx-auto max-w-5xl">
   @if (dashboard(); as dashboardRef) {
-    <div class="space-y-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+    <div class="space-y-6 rounded-hpd-lg border border-hpd-border bg-white p-6 shadow-hpd-sm">
       <div class="space-y-2">
-        <h2 data-cy="dashboardDetailsHeading" class="text-2xl font-semibold text-slate-900">
+        <h2 data-cy="dashboardDetailsHeading" class="text-2xl font-semibold text-hpd-primary-dark">
           <span hpdTranslate="adminDashboardApp.hcAdminServiceDashboard.detail.title">Dashboard</span>
         </h2>
-        <p class="text-sm text-slate-500">Review dashboard metadata, description, and configured elements.</p>
+        <p class="text-sm text-hpd-muted">Review dashboard metadata, description, and configured elements.</p>
       </div>
 
       <hpd-alert-error />
@@ -13,25 +13,25 @@
       <hpd-alert />
 
       <div class="grid gap-4 sm:grid-cols-2">
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="global.field.id">ID</p>
-          <p class="mt-1 text-sm text-slate-900">{{ dashboardRef.id }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="global.field.id">ID</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ dashboardRef.id }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceDashboard.name">Name</p>
-          <p class="mt-1 text-sm text-slate-900">{{ dashboardRef.name }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.hcAdminServiceDashboard.name">Name</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ dashboardRef.name }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4 sm:col-span-2">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceDashboard.description">
+        <div class="rounded-hpd bg-hpd-cream p-4 sm:col-span-2">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.hcAdminServiceDashboard.description">
             Description
           </p>
-          <p class="mt-1 text-sm text-slate-900">{{ dashboardRef.description }}</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ dashboardRef.description }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4 sm:col-span-2">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceDashboard.elements">
+        <div class="rounded-hpd bg-hpd-cream p-4 sm:col-span-2">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.hcAdminServiceDashboard.elements">
             Elements
           </p>
-          <p class="mt-1 text-sm text-slate-900">{{ dashboardRef.elements }}</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ dashboardRef.elements }}</p>
         </div>
       </div>
 
@@ -45,7 +45,7 @@
           type="button"
           [routerLink]="['/dashboard', dashboardRef.id, 'edit']"
           mat-flat-button
-          class="!rounded-full !bg-slate-900 !px-4 !text-white"
+          class="!rounded-full !bg-hpd-primary-deep !px-4 !text-white"
         >
           <mat-icon>edit</mat-icon>
           <span hpdTranslate="entity.action.edit">Edit</span>

@@ -222,6 +222,51 @@ describe('MainComponent', () => {
     });
   });
 
+  describe('topbar header', () => {
+    beforeEach(() => {
+      comp.ngOnInit();
+    });
+
+    it('takes its title from the active route, so the header and the browser tab agree', fakeAsync(() => {
+      router.resetConfig([{ path: 'teams', title: 'adminDashboardApp.team.home.title', component: BlankComponent }]);
+
+      router.navigateByUrl('teams');
+      tick();
+
+      expect(comp.titleKey).toBe('adminDashboardApp.team.home.title');
+      expect(comp.crumbKey).toBe('global.menu.navigation.organisation');
+    }));
+
+    it('falls back to the app title on a route that declares none', fakeAsync(() => {
+      router.resetConfig([{ path: 'nowhere', component: BlankComponent }]);
+
+      router.navigateByUrl('nowhere');
+      tick();
+
+      expect(comp.titleKey).toBe('global.title');
+      expect(comp.crumbKey).toBeNull();
+    }));
+
+    it('closes the mobile drawer on navigation, so a tap-through does not leave it open', fakeAsync(() => {
+      router.resetConfig([{ path: 'teams', title: 'adminDashboardApp.team.home.title', component: BlankComponent }]);
+      comp.toggleSidebar();
+      expect(comp.sidebarOpen).toBe(true);
+
+      router.navigateByUrl('teams');
+      tick();
+
+      expect(comp.sidebarOpen).toBe(false);
+    }));
+
+    it('closes the mobile drawer on escape', () => {
+      comp.toggleSidebar();
+
+      comp.onEscape();
+
+      expect(comp.sidebarOpen).toBe(false);
+    });
+  });
+
   describe('page language attribute', () => {
     it('should change page language attribute on language change', () => {
       // GIVEN

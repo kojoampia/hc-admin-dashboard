@@ -1,11 +1,11 @@
-<div class="rounded-[2rem] border border-slate-200 bg-white/95 p-6 shadow-sm">
+<div class="rounded-hpd-xl border border-hpd-border bg-white/95 p-6 shadow-hpd-sm">
   <div class="space-y-4">
-    <h3 id="endpointsRequestsMetrics" class="text-xl font-semibold text-slate-900">Endpoints requests (time in millisecond)</h3>
+    <h3 id="endpointsRequestsMetrics" class="text-xl font-semibold text-hpd-primary-dark">Endpoints requests (time in millisecond)</h3>
 
     @if (!updating && endpointsRequestsMetrics) {
-      <div class="overflow-x-auto rounded-2xl border border-slate-200">
-        <table class="min-w-full divide-y divide-slate-200 bg-white" aria-describedby="endpointsRequestsMetrics">
-          <thead class="bg-slate-50 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+      <div class="overflow-x-auto rounded-hpd border border-hpd-border">
+        <table class="min-w-full divide-y divide-hpd-border bg-white" aria-describedby="endpointsRequestsMetrics">
+          <thead class="bg-hpd-cream text-left text-xs font-semibold uppercase tracking-wide text-hpd-muted">
             <tr>
               <th scope="col" class="px-4 py-3">Method</th>
               <th scope="col" class="px-4 py-3">Endpoint url</th>
@@ -13,11 +13,11 @@
               <th scope="col" class="px-4 py-3 text-right">Mean</th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-slate-100 text-sm text-slate-700">
+          <tbody class="divide-y divide-hpd-border text-sm text-hpd-muted">
             @for (entry of endpointsRequestsMetrics | keyvalue; track entry.key) {
               @for (method of entry.value | keyvalue; track method.key) {
                 <tr>
-                  <td class="px-4 py-4 font-medium text-slate-900">{{ method.key }}</td>
+                  <td class="px-4 py-4 font-medium text-hpd-primary-dark">{{ method.key }}</td>
                   <td class="px-4 py-4">{{ entry.key }}</td>
                   <td class="px-4 py-4 text-right">{{ method.value!.count }}</td>
                   <td class="px-4 py-4 text-right">{{ method.value!.mean | number: '1.0-3' }}</td>

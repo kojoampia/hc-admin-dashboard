@@ -1,11 +1,11 @@
 <div class="mx-auto max-w-5xl">
   @if (pricingPlan(); as pricingPlanRef) {
-    <div class="space-y-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+    <div class="space-y-6 rounded-hpd-lg border border-hpd-border bg-white p-6 shadow-hpd-sm">
       <div class="space-y-2">
-        <h2 data-cy="pricingPlanDetailsHeading" class="text-2xl font-semibold text-slate-900">
+        <h2 data-cy="pricingPlanDetailsHeading" class="text-2xl font-semibold text-hpd-primary-dark">
           <span hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.detail.title">Pricing Plan</span>
         </h2>
-        <p class="text-sm text-slate-500">Inspect plan pricing, billing cadence, feature sets, and status.</p>
+        <p class="text-sm text-hpd-muted">Inspect plan pricing, billing cadence, feature sets, and status.</p>
       </div>
 
       <hpd-alert-error />
@@ -13,38 +13,38 @@
       <hpd-alert />
 
       <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="global.field.id">ID</p>
-          <p class="mt-1 text-sm text-slate-900">{{ pricingPlanRef.id }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="global.field.id">ID</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ pricingPlanRef.id }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.name">Name</p>
-          <p class="mt-1 text-sm text-slate-900">{{ pricingPlanRef.name }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.name">Name</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ pricingPlanRef.name }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.price">
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.price">
             Price
           </p>
-          <p class="mt-1 text-sm text-slate-900">{{ pricingPlanRef.price }}</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ pricingPlanRef.price }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4 lg:col-span-3">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.description">
+        <div class="rounded-hpd bg-hpd-cream p-4 lg:col-span-3">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.description">
             Description
           </p>
-          <p class="mt-1 text-sm text-slate-900">{{ pricingPlanRef.description }}</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ pricingPlanRef.description }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4 lg:col-span-2">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.features">
+        <div class="rounded-hpd bg-hpd-cream p-4 lg:col-span-2">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.features">
             Features
           </p>
-          <p class="mt-1 text-sm text-slate-900">{{ pricingPlanRef.features }}</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ pricingPlanRef.features }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.billingCycle">
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.billingCycle">
             Billing Cycle
           </p>
           <p
-            class="mt-1 text-sm text-slate-900"
+            class="mt-1 text-sm text-hpd-primary-dark"
             [hpdTranslate]="'adminDashboardApp.BillingType.' + (pricingPlanRef.billingCycle ?? 'null')"
           >
             {{
@@ -54,11 +54,11 @@
             }}
           </p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.active">
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.active">
             Active
           </p>
-          <p class="mt-1 text-sm text-slate-900">{{ pricingPlanRef.active }}</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ pricingPlanRef.active }}</p>
         </div>
       </div>
 
@@ -72,7 +72,7 @@
           type="button"
           [routerLink]="['/pricing-plan', pricingPlanRef.id, 'edit']"
           mat-flat-button
-          class="!rounded-full !bg-slate-900 !px-4 !text-white"
+          class="!rounded-full !bg-hpd-primary-deep !px-4 !text-white"
         >
           <mat-icon>edit</mat-icon>
           <span hpdTranslate="entity.action.edit">Edit</span>

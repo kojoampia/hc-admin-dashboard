@@ -1,11 +1,11 @@
 <div class="flex justify-center">
-  <mat-card class="w-full max-w-4xl !rounded-[2rem] !border !border-slate-200 !bg-white/95 !p-8 !shadow-sm">
+  <mat-card class="w-full max-w-4xl !rounded-hpd-xl !border !border-hpd-border !bg-white/95 !p-8 !shadow-hpd-sm">
     <form name="editForm" role="form" novalidate class="space-y-6" (ngSubmit)="save()" [formGroup]="editForm">
       <div class="space-y-2">
-        <h2 id="myUserLabel" class="text-3xl font-semibold text-slate-900" hpdTranslate="userManagement.home.createOrEditLabel">
+        <h2 id="myUserLabel" class="text-3xl font-semibold text-hpd-primary-dark" hpdTranslate="userManagement.home.createOrEditLabel">
           Create or edit a user
         </h2>
-        <p class="text-sm text-slate-500">Update profile information, language, and authorities without changing the existing workflow.</p>
+        <p class="text-sm text-hpd-muted">Update profile information, language, and authorities without changing the existing workflow.</p>
       </div>
 
       <hpd-alert-error></hpd-alert-error>
@@ -100,7 +100,7 @@
           <mat-label hpdTranslate="userManagement.profiles">Profiles</mat-label>
           <mat-select multiple name="authority" formControlName="authorities">
             @for (authority of authorities; track $index) {
-              <mat-option [value]="authority">{{ authority.name | titlecase}}</mat-option>
+              <mat-option [value]="authority">{{ authority.name | titlecase }}</mat-option>
             }
           </mat-select>
         </mat-form-field>

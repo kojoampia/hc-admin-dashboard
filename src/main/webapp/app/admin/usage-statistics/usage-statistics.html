@@ -1,12 +1,12 @@
-<article class="flex h-full flex-col gap-5 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
+<article class="flex h-full flex-col gap-5 rounded-hpd-lg border border-hpd-border bg-white p-5 shadow-hpd-sm">
   <div class="flex items-start justify-between gap-4">
     <div class="space-y-1">
-      <p class="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500" hpdTranslate="adminDashboard.usageStatistics.title"></p>
-      <h2 class="text-xl font-semibold tracking-tight text-slate-900" hpdTranslate="adminDashboard.usageStatistics.subtitle"></h2>
-      <p class="text-sm leading-6 text-slate-600" hpdTranslate="adminDashboard.usageStatistics.description"></p>
-      <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-medium text-slate-500">
+      <p class="text-xs font-semibold uppercase tracking-[0.25em] text-hpd-muted" hpdTranslate="adminDashboard.usageStatistics.title"></p>
+      <h2 class="text-xl font-semibold tracking-tight text-hpd-primary-dark" hpdTranslate="adminDashboard.usageStatistics.subtitle"></h2>
+      <p class="text-sm leading-6 text-hpd-muted" hpdTranslate="adminDashboard.usageStatistics.description"></p>
+      <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-medium text-hpd-muted">
         <span class="inline-flex items-center gap-2">
-          <span class="h-2 w-2 rounded-full bg-indigo-500"></span>
+          <span class="h-2 w-2 rounded-full bg-hpd-primary"></span>
           Live updates every {{ refreshIntervalSeconds }} seconds
         </span>
         @if (lastUpdated) {
@@ -22,85 +22,109 @@
   </div>
 
   @if (isLoading) {
-  <p class="rounded-2xl bg-slate-50 px-4 py-3 text-sm text-slate-600" hpdTranslate="adminDashboard.usageStatistics.loading"></p>
+  <p class="rounded-hpd bg-hpd-cream px-4 py-3 text-sm text-hpd-muted" hpdTranslate="adminDashboard.usageStatistics.loading"></p>
   } @else if (errorMessage) {
-  <p class="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">{{ errorMessage }}</p>
+  <p class="rounded-hpd border border-hpd-danger/30 bg-hpd-danger-tint px-4 py-3 text-sm text-hpd-danger">{{ errorMessage }}</p>
   } @else {
   <div class="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
-    <div class="rounded-2xl bg-slate-50 p-4">
-      <p class="text-xs font-medium uppercase tracking-wide text-slate-500" hpdTranslate="adminDashboard.usageStatistics.totalRequests"></p>
-      <p class="mt-2 text-3xl font-semibold text-slate-900">{{ totalRequests }}</p>
+    <div class="rounded-hpd bg-hpd-cream p-4">
+      <p class="text-xs font-medium uppercase tracking-wide text-hpd-muted" hpdTranslate="adminDashboard.usageStatistics.totalRequests"></p>
+      <p class="mt-2 text-3xl font-semibold text-hpd-primary-dark">{{ totalRequests }}</p>
     </div>
-    <div class="rounded-2xl bg-emerald-50 p-4">
-      <p class="text-xs font-medium uppercase tracking-wide text-emerald-700" hpdTranslate="adminDashboard.usageStatistics.successRate"></p>
-      <p class="mt-2 text-3xl font-semibold text-emerald-900">{{ successRate | number: '1.0-1' }}%</p>
+    <div class="rounded-hpd bg-hpd-success-tint p-4">
+      <p class="text-xs font-medium uppercase tracking-wide text-hpd-success" hpdTranslate="adminDashboard.usageStatistics.successRate"></p>
+      <p class="mt-2 text-3xl font-semibold text-hpd-success">{{ successRate | number: '1.0-1' }}%</p>
     </div>
-    <div class="rounded-2xl bg-indigo-50 p-4">
-      <p class="text-xs font-medium uppercase tracking-wide text-indigo-700" hpdTranslate="adminDashboard.usageStatistics.avgResponse"></p>
-      <p class="mt-2 text-3xl font-semibold text-indigo-900">{{ averageResponseMillis | number: '1.0-1' }} ms</p>
+    <div class="rounded-hpd bg-hpd-primary/10 p-4">
+      <p class="text-xs font-medium uppercase tracking-wide text-hpd-primary" hpdTranslate="adminDashboard.usageStatistics.avgResponse"></p>
+      <p class="mt-2 text-3xl font-semibold text-hpd-primary-deep">{{ averageResponseMillis | number: '1.0-1' }} ms</p>
     </div>
-    <div class="rounded-2xl bg-amber-50 p-4">
-      <p class="text-xs font-medium uppercase tracking-wide text-amber-700" hpdTranslate="adminDashboard.usageStatistics.busiestService"></p>
-      <p class="mt-2 text-lg font-semibold text-amber-900">{{ busiestServiceName }}</p>
-      <p class="mt-1 text-sm text-amber-800">{{ busiestServiceRequests }} requests</p>
+    <div class="rounded-hpd bg-hpd-warning-tint p-4">
+      <p
+        class="text-xs font-medium uppercase tracking-wide text-hpd-warning"
+        hpdTranslate="adminDashboard.usageStatistics.busiestService"
+      ></p>
+      <p class="mt-2 text-lg font-semibold text-hpd-warning">{{ busiestServiceName }}</p>
+      <p class="mt-1 text-sm text-hpd-warning">{{ busiestServiceRequests }} requests</p>
     </div>
   </div>
 
   <div class="grid gap-4 xl:grid-cols-[22rem_minmax(0,1fr)]">
-    <div class="space-y-3 rounded-3xl border border-slate-100 bg-slate-50 p-4">
+    <div class="space-y-3 rounded-hpd-lg border border-hpd-border bg-hpd-cream p-4">
       <div class="flex items-center justify-between gap-3">
-        <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-600" hpdTranslate="adminDashboard.usageStatistics.usageInsights"></h3>
-        <span class="text-xs text-slate-500">{{ trackedServices }} tracked services</span>
+        <h3
+          class="text-sm font-semibold uppercase tracking-wide text-hpd-muted"
+          hpdTranslate="adminDashboard.usageStatistics.usageInsights"
+        ></h3>
+        <span class="text-xs text-hpd-muted">{{ trackedServices }} tracked services</span>
       </div>
 
       <div class="grid gap-3">
-        <div class="rounded-2xl bg-white p-4">
-          <p class="text-xs font-medium uppercase tracking-wide text-slate-500" hpdTranslate="adminDashboard.usageStatistics.topResponseCode"></p>
-          <p class="mt-2 text-2xl font-semibold text-slate-900">{{ topResponseCode }}</p>
+        <div class="rounded-hpd bg-white p-4">
+          <p
+            class="text-xs font-medium uppercase tracking-wide text-hpd-muted"
+            hpdTranslate="adminDashboard.usageStatistics.topResponseCode"
+          ></p>
+          <p class="mt-2 text-2xl font-semibold text-hpd-primary-dark">{{ topResponseCode }}</p>
         </div>
-        <div class="rounded-2xl bg-white p-4">
-          <p class="text-xs font-medium uppercase tracking-wide text-slate-500" hpdTranslate="adminDashboard.usageStatistics.peakResponseTime"></p>
-          <p class="mt-2 text-2xl font-semibold text-slate-900">{{ peakResponseMillis | number: '1.0-1' }} ms</p>
+        <div class="rounded-hpd bg-white p-4">
+          <p
+            class="text-xs font-medium uppercase tracking-wide text-hpd-muted"
+            hpdTranslate="adminDashboard.usageStatistics.peakResponseTime"
+          ></p>
+          <p class="mt-2 text-2xl font-semibold text-hpd-primary-dark">{{ peakResponseMillis | number: '1.0-1' }} ms</p>
         </div>
-        <div class="rounded-2xl bg-white p-4">
-          <p class="text-xs font-medium uppercase tracking-wide text-slate-500" hpdTranslate="adminDashboard.usageStatistics.systemLoad"></p>
-          <p class="mt-2 text-2xl font-semibold text-slate-900">{{ systemLoadAverage | number: '1.0-2' }}</p>
+        <div class="rounded-hpd bg-white p-4">
+          <p
+            class="text-xs font-medium uppercase tracking-wide text-hpd-muted"
+            hpdTranslate="adminDashboard.usageStatistics.systemLoad"
+          ></p>
+          <p class="mt-2 text-2xl font-semibold text-hpd-primary-dark">{{ systemLoadAverage | number: '1.0-2' }}</p>
         </div>
-        <div class="rounded-2xl bg-white p-4">
-          <p class="text-xs font-medium uppercase tracking-wide text-slate-500" hpdTranslate="adminDashboard.usageStatistics.activeDbConnections"></p>
-          <p class="mt-2 text-2xl font-semibold text-slate-900">{{ activeDatabaseConnections }}</p>
+        <div class="rounded-hpd bg-white p-4">
+          <p
+            class="text-xs font-medium uppercase tracking-wide text-hpd-muted"
+            hpdTranslate="adminDashboard.usageStatistics.activeDbConnections"
+          ></p>
+          <p class="mt-2 text-2xl font-semibold text-hpd-primary-dark">{{ activeDatabaseConnections }}</p>
         </div>
       </div>
     </div>
 
     <div class="grid gap-4 xl:grid-cols-[20rem_minmax(0,1fr)]">
-      <div class="rounded-3xl border border-slate-100 bg-slate-50 p-3">
+      <div class="rounded-hpd-lg border border-hpd-border bg-hpd-cream p-3">
         <ngx-charts-pie-chart [results]="responseCodeData" [labels]="true" [legend]="true" [explodeSlices]="true" />
       </div>
 
-      <div class="overflow-hidden rounded-3xl border border-slate-100 bg-slate-50 p-4">
+      <div class="overflow-hidden rounded-hpd-lg border border-hpd-border bg-hpd-cream p-4">
         <div class="mb-3 flex items-center justify-between gap-3">
-          <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-600" hpdTranslate="adminDashboard.usageStatistics.topServiceTraffic"></h3>
-          <span class="text-xs text-slate-500" hpdTranslate="adminDashboard.usageStatistics.httpMethods"></span>
+          <h3
+            class="text-sm font-semibold uppercase tracking-wide text-hpd-muted"
+            hpdTranslate="adminDashboard.usageStatistics.topServiceTraffic"
+          ></h3>
+          <span class="text-xs text-hpd-muted" hpdTranslate="adminDashboard.usageStatistics.httpMethods"></span>
         </div>
 
         <ngx-charts-line-chart [results]="serviceTrafficData" [legend]="true" [scheme]="serviceTrafficScheme" />
       </div>
     </div>
 
-    <div class="rounded-3xl border border-slate-100 bg-slate-50 p-4">
+    <div class="rounded-hpd-lg border border-hpd-border bg-hpd-cream p-4">
       <div class="mb-3 flex items-center justify-between gap-3">
-        <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-600" hpdTranslate="adminDashboard.usageStatistics.mostActiveServices"></h3>
-        <span class="text-xs text-slate-500" hpdTranslate="adminDashboard.usageStatistics.topByRequestVolume"></span>
+        <h3
+          class="text-sm font-semibold uppercase tracking-wide text-hpd-muted"
+          hpdTranslate="adminDashboard.usageStatistics.mostActiveServices"
+        ></h3>
+        <span class="text-xs text-hpd-muted" hpdTranslate="adminDashboard.usageStatistics.topByRequestVolume"></span>
       </div>
 
       <div class="grid gap-3 md:grid-cols-3">
         @for (service of serviceHighlights; track service.name) {
-        <div class="rounded-2xl bg-white p-4">
-          <p class="text-sm font-semibold text-slate-900">{{ service.name }}</p>
-          <p class="mt-2 text-2xl font-semibold text-slate-900">{{ service.totalRequests }}</p>
-          <p class="mt-1 text-xs uppercase tracking-wide text-slate-500" hpdTranslate="adminDashboard.usageStatistics.requests"></p>
-          <p class="mt-3 text-sm text-slate-600">{{ service.methods }}</p>
+        <div class="rounded-hpd bg-white p-4">
+          <p class="text-sm font-semibold text-hpd-primary-dark">{{ service.name }}</p>
+          <p class="mt-2 text-2xl font-semibold text-hpd-primary-dark">{{ service.totalRequests }}</p>
+          <p class="mt-1 text-xs uppercase tracking-wide text-hpd-muted" hpdTranslate="adminDashboard.usageStatistics.requests"></p>
+          <p class="mt-3 text-sm text-hpd-muted">{{ service.methods }}</p>
         </div>
         }
       </div>

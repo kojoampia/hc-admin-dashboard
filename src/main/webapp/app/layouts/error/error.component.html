@@ -1,15 +1,15 @@
 <div class="flex justify-center px-4 py-8">
-  <mat-card class="w-full max-w-4xl !rounded-[2rem] !border !border-slate-200 !bg-white/95 !p-8 !shadow-sm">
+  <mat-card class="w-full max-w-4xl !rounded-hpd-xl !border !border-hpd-border !bg-white/95 !p-8 !shadow-hpd-sm">
     <div class="grid gap-8 md:grid-cols-[16rem_minmax(0,1fr)] md:items-center">
       <div class="flex justify-center">
-        <span class="hipster block max-w-full rounded-3xl"></span>
+        <span class="hipster block max-w-full rounded-hpd-lg"></span>
       </div>
 
       <div class="space-y-4">
-        <h1 class="text-3xl font-semibold text-slate-900" hpdTranslate="error.title">Error page!</h1>
+        <h1 class="text-3xl font-semibold text-hpd-primary-dark" hpdTranslate="error.title">Error page!</h1>
 
         @if (errorMessage) {
-          <div class="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-900">{{ errorMessage }}</div>
+          <div class="rounded-hpd border border-hpd-danger/30 bg-hpd-danger-tint px-4 py-3 text-sm text-hpd-danger">{{ errorMessage }}</div>
         }
       </div>
     </div>

@@ -15,10 +15,12 @@ import { CatalogItem, CatalogType } from './system-catalog';
       <!-- Header -->
       <div class="flex items-center justify-between mb-6">
         <div>
-          <h2 class="text-lg font-bold text-slate-800">{{ data ? 'Edit Content' : 'Add Content' }}</h2>
-          <p class="text-xs text-slate-400 mt-0.5">{{ data ? 'Update the catalog entry.' : 'Create a new public-facing content item.' }}</p>
+          <h2 class="text-lg font-bold text-hpd-primary-dark">{{ data ? 'Edit Content' : 'Add Content' }}</h2>
+          <p class="text-xs text-hpd-subtle mt-0.5">
+            {{ data ? 'Update the catalog entry.' : 'Create a new public-facing content item.' }}
+          </p>
         </div>
-        <button mat-icon-button class="text-slate-400 hover:text-slate-700" (click)="close()">
+        <button mat-icon-button class="text-hpd-subtle hover:text-hpd-muted" (click)="close()">
           <mat-icon>close</mat-icon>
         </button>
       </div>
@@ -27,10 +29,10 @@ import { CatalogItem, CatalogType } from './system-catalog';
       <div class="space-y-4">
         <!-- Type -->
         <div>
-          <label for="sc-type" class="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">Content Type</label>
+          <label for="sc-type" class="text-xs font-semibold text-hpd-muted uppercase tracking-wider block mb-1.5">Content Type</label>
           <select
             id="sc-type"
-            class="w-full text-sm border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-300 text-slate-800 bg-white"
+            class="w-full text-sm border border-hpd-border rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-hpd-primary/40 text-hpd-primary-dark bg-white"
             [ngModel]="form().type"
             (ngModelChange)="patch('type', $event)"
           >
@@ -42,11 +44,11 @@ import { CatalogItem, CatalogType } from './system-catalog';
 
         <!-- Title -->
         <div>
-          <label for="sc-title" class="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">Title</label>
+          <label for="sc-title" class="text-xs font-semibold text-hpd-muted uppercase tracking-wider block mb-1.5">Title</label>
           <input
             id="sc-title"
             type="text"
-            class="w-full text-sm border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-300 text-slate-800"
+            class="w-full text-sm border border-hpd-border rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-hpd-primary/40 text-hpd-primary-dark"
             placeholder="Enter a descriptive title…"
             [ngModel]="form().title"
             (ngModelChange)="patch('title', $event)"
@@ -55,11 +57,11 @@ import { CatalogItem, CatalogType } from './system-catalog';
 
         <!-- Content -->
         <div>
-          <label for="sc-content" class="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">Content</label>
+          <label for="sc-content" class="text-xs font-semibold text-hpd-muted uppercase tracking-wider block mb-1.5">Content</label>
           <textarea
             id="sc-content"
             rows="6"
-            class="w-full text-sm border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-300 text-slate-800 resize-none"
+            class="w-full text-sm border border-hpd-border rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-hpd-primary/40 text-hpd-primary-dark resize-none"
             placeholder="Enter the full content body…"
             [ngModel]="form().content"
             (ngModelChange)="patch('content', $event)"
@@ -68,15 +70,15 @@ import { CatalogItem, CatalogType } from './system-catalog';
       </div>
 
       <!-- Footer -->
-      <div class="flex items-center justify-end gap-3 mt-6 pt-6 border-t border-slate-100">
+      <div class="flex items-center justify-end gap-3 mt-6 pt-6 border-t border-hpd-border">
         <button
-          class="px-4 py-2 text-sm font-semibold text-slate-600 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors"
+          class="px-4 py-2 text-sm font-semibold text-hpd-muted bg-white border border-hpd-border rounded-xl hover:bg-hpd-cream transition-colors"
           (click)="close()"
         >
           Cancel
         </button>
         <button
-          class="px-5 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-xl hover:bg-indigo-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+          class="px-5 py-2 text-sm font-semibold text-white bg-hpd-primary rounded-xl hover:bg-hpd-primary-hover transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
           [disabled]="!form().title.trim() || !form().content.trim()"
           (click)="save()"
         >

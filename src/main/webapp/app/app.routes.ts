@@ -5,7 +5,6 @@ import { UserRouteAccessService } from 'app/core/auth/user-route-access.service'
 import { errorRoute } from './layouts/error/error.route';
 
 import HomeComponent from './home/home.component';
-import NavbarComponent from './layouts/navbar/navbar.component';
 import LoginComponent from './login/login.component';
 
 const routes: Routes = [
@@ -14,11 +13,11 @@ const routes: Routes = [
     component: HomeComponent,
     title: 'home.title',
   },
-  {
-    path: '',
-    component: NavbarComponent,
-    outlet: 'navbar',
-  },
+  // The `navbar` outlet route that used to sit here is gone with the BridgeCare shell. It was
+  // inert: no template in the app ever rendered a `<router-outlet name="navbar">`, so
+  // NavbarComponent — and the entity menu it carried — never appeared on screen. That menu now
+  // lives in the shell topbar (layouts/main/main.component.html), built from the same
+  // EntityNavbarItems list.
   {
     path: 'admin',
     data: {

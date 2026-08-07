@@ -24,7 +24,7 @@ describe('RealTimeDataComponent', () => {
           message: 'Failed logins detected.',
           timestamp: 'just now',
           icon: 'security',
-          colorClass: 'bg-rose-100 text-rose-600',
+          colorClass: 'bg-hpd-danger-tint text-hpd-danger',
         },
         {
           id: 'evt-2',
@@ -32,7 +32,7 @@ describe('RealTimeDataComponent', () => {
           message: 'Configuration updated.',
           timestamp: '2 minutes ago',
           icon: 'receipt_long',
-          colorClass: 'bg-indigo-100 text-indigo-600',
+          colorClass: 'bg-hpd-primary/15 text-hpd-primary',
         },
       ]),
       // The component reads this rather than assuming a connection happened — see the field comment
@@ -42,13 +42,11 @@ describe('RealTimeDataComponent', () => {
       disconnectAuditTrail: jest.fn(() => connected.set(false)),
     };
 
-      // The component takes its dependencies through inject() now, so it can no longer be
-      // constructed with them. TestBed supplies the same doubles through the injector; the
-      // mocks and every assertion below are unchanged.
+    // The component takes its dependencies through inject() now, so it can no longer be
+    // constructed with them. TestBed supplies the same doubles through the injector; the
+    // mocks and every assertion below are unchanged.
     TestBed.configureTestingModule({
-      providers: [
-        { provide: DashboardStateService, useValue: dashboardState },
-      ],
+      providers: [{ provide: DashboardStateService, useValue: dashboardState }],
     });
     component = TestBed.runInInjectionContext(() => new RealTimeDataComponent());
   });

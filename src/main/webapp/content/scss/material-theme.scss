@@ -1,0 +1,36 @@
+@use '@angular/material' as mat;
+@use 'theme-colors' as bridgecare;
+
+// Angular Material 3 (M3) theme for the BridgeCare design system, shared with
+// hc-professional/web — the two apps run the same seeds so a component looks
+// identical in either.
+//
+// _theme-colors.scss was generated with
+//   ng generate @angular/material:theme-color \
+//     --primary-color="#0D3058" --tertiary-color="#C59437"
+// (BridgeCare navy primary, gold tertiary — see --hpd-color-primary /
+// --hpd-color-gold in global.scss).
+// Regenerate that file with the same command if the brand seeds change;
+// don't hand-edit the palette stops.
+//
+// This replaced `@angular/material/prebuilt-themes/indigo-pink.css`, which was
+// pulled in from vendor.scss and is an M2 theme — it emits component styles
+// directly rather than the M3 system variables the tokens below ride on.
+html {
+  color-scheme: light;
+
+  @include mat.theme(
+    (
+      color: (
+        theme-type: light,
+        primary: bridgecare.$primary-palette,
+        tertiary: bridgecare.$tertiary-palette,
+      ),
+      typography: (
+        brand-family: 'Inter',
+        plain-family: 'Inter',
+      ),
+      density: 0,
+    )
+  );
+}

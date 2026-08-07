@@ -42,7 +42,7 @@ export interface CatalogAuditEvent {
     `
       :host ::ng-deep .mat-mdc-tab-header {
         padding: 0 1.5rem;
-        border-bottom: 1px solid #f4f4f5;
+        border-bottom: 1px solid var(--hpd-color-border);
       }
       :host ::ng-deep .mat-mdc-tab-labels {
         gap: 1.5rem;
@@ -164,9 +164,9 @@ export class SystemCatalogComponent {
               DELETE: 'delete',
             };
             const colorMap: Record<CatalogAuditEvent['type'], string> = {
-              CREATE: 'bg-emerald-100 text-emerald-600',
-              UPDATE: 'bg-amber-100 text-amber-600',
-              DELETE: 'bg-rose-100 text-rose-600',
+              CREATE: 'bg-hpd-success-tint text-hpd-success',
+              UPDATE: 'bg-hpd-warning-tint text-hpd-warning',
+              DELETE: 'bg-hpd-danger-tint text-hpd-danger',
             };
             return {
               id: entry.id,

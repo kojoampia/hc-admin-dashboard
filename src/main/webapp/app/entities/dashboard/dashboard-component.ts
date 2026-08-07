@@ -35,6 +35,11 @@ type DashboardWidget = {
   readonly description: string;
   readonly icon: string;
   readonly sectionId: DashboardSectionId;
+  /**
+   * Gradient wash behind the widget head. The seven were seven different Tailwind hues; the
+   * BridgeCare palette has no such range, so they now cycle the six brand tones that exist —
+   * navy, chart blue, success, warning, gold, navy-hover — and no two adjacent widgets repeat.
+   */
   readonly accentClass: string;
   readonly visible: boolean;
 };
@@ -106,7 +111,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       description: 'Top operational KPIs for active shifts and profile inventory.',
       icon: 'dashboard_customize',
       sectionId: 'OPERATIONS',
-      accentClass: 'from-indigo-500/20 via-indigo-500/10 to-transparent',
+      accentClass: 'from-hpd-primary/20 via-hpd-primary/10 to-transparent',
       visible: true,
     },
     {
@@ -115,7 +120,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       description: 'Real-time operator and audit events from the dashboard activity stream.',
       icon: 'bolt',
       sectionId: 'OPERATIONS',
-      accentClass: 'from-cyan-500/20 via-cyan-500/10 to-transparent',
+      accentClass: 'from-hpd-chart-blue/20 via-hpd-chart-blue/10 to-transparent',
       visible: true,
     },
     {
@@ -124,7 +129,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       description: 'Request demand, assignment efficiency, and fill velocity trends.',
       icon: 'insights',
       sectionId: 'SHIFT',
-      accentClass: 'from-emerald-500/20 via-emerald-500/10 to-transparent',
+      accentClass: 'from-hpd-success-accent/20 via-hpd-success-accent/10 to-transparent',
       visible: true,
     },
     {
@@ -133,7 +138,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       description: 'Unassigned, overtime, cancellation, and no-show pressure points.',
       icon: 'warning',
       sectionId: 'SHIFT',
-      accentClass: 'from-amber-500/20 via-amber-500/10 to-transparent',
+      accentClass: 'from-hpd-warning-accent/20 via-hpd-warning-accent/10 to-transparent',
       visible: true,
     },
     {
@@ -142,7 +147,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       description: 'Operator adoption, satisfaction, retention, and support feedback.',
       icon: 'forum',
       sectionId: 'CUSTOMER',
-      accentClass: 'from-fuchsia-500/20 via-fuchsia-500/10 to-transparent',
+      accentClass: 'from-hpd-gold/20 via-hpd-gold/10 to-transparent',
       visible: true,
     },
     {
@@ -151,7 +156,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       description: 'Revenue, margins, acquisition spend, and monetization health.',
       icon: 'account_balance_wallet',
       sectionId: 'FINANCE',
-      accentClass: 'from-teal-500/20 via-teal-500/10 to-transparent',
+      accentClass: 'from-hpd-primary-hover/20 via-hpd-primary-hover/10 to-transparent',
       visible: true,
     },
     {
@@ -160,7 +165,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       description: 'Channel contribution and recurring growth trends across the platform.',
       icon: 'monitoring',
       sectionId: 'REVENUE',
-      accentClass: 'from-rose-500/20 via-rose-500/10 to-transparent',
+      accentClass: 'from-hpd-danger-accent/20 via-hpd-danger-accent/10 to-transparent',
       visible: true,
     },
   ]);
@@ -190,10 +195,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.state.disconnectAuditTrail();
-  }
-
-  toggleSidebar(): void {
-    this.state.toggleSidebar();
   }
 
   toggleTheme(): void {
@@ -252,23 +253,25 @@ export class DashboardComponent implements OnInit, OnDestroy {
   sectionButtonClasses(sectionId: DashboardSectionId): string {
     if (this.isLightMode()) {
       return this.currentSection() === sectionId
-        ? '!bg-slate-900 !text-white shadow-md shadow-slate-300/40'
-        : '!bg-slate-100 !text-slate-700 hover:!bg-slate-200';
+        ? '!bg-hpd-primary-deep !text-white shadow-hpd shadow-hpd-border/40'
+        : '!bg-hpd-surface !text-hpd-muted hover:!bg-hpd-border';
     }
 
     return this.currentSection() === sectionId
-      ? '!bg-white !text-slate-950 shadow-md shadow-slate-950/20'
-      : '!bg-white/5 !text-slate-100 hover:!bg-white/10';
+      ? '!bg-white !text-hpd-primary-dark shadow-hpd shadow-hpd-primary-deep/20'
+      : '!bg-white/5 !text-white hover:!bg-white/10';
   }
 
   widgetContainerClasses(widgetId: DashboardWidgetId): string {
     if (this.isWidgetMaximized(widgetId)) {
       return this.isLightMode()
-        ? 'xl:col-span-2 min-h-[calc(100vh-14rem)] border-slate-300 shadow-2xl shadow-slate-300/50'
-        : 'xl:col-span-2 min-h-[calc(100vh-14rem)] border-indigo-300 shadow-2xl shadow-indigo-950/20';
+        ? 'xl:col-span-2 min-h-[calc(100vh-14rem)] border-hpd-border shadow-2xl shadow-hpd-border/50'
+        : 'xl:col-span-2 min-h-[calc(100vh-14rem)] border-hpd-primary/40 shadow-2xl shadow-hpd-primary-deep/20';
     }
 
-    return this.isLightMode() ? 'border-slate-200 shadow-lg shadow-slate-300/40' : 'border-white/10 shadow-lg shadow-slate-950/20';
+    return this.isLightMode()
+      ? 'border-hpd-border shadow-hpd-lg shadow-hpd-border/40'
+      : 'border-white/10 shadow-hpd-lg shadow-hpd-primary-deep/20';
   }
 
   currentUserName(): string {

@@ -1,16 +1,16 @@
-<mat-card class="!rounded-[2rem] !border !border-slate-200 !bg-white/95 !p-6 !shadow-sm">
+<mat-card class="!rounded-hpd-xl !border !border-hpd-border !bg-white/95 !p-6 !shadow-hpd-sm">
   <div class="space-y-6">
     <div class="flex flex-wrap items-start justify-between gap-4">
       <div class="space-y-1">
         <h2
-          class="text-3xl font-semibold text-slate-900"
+          class="text-3xl font-semibold text-hpd-primary-dark"
           id="user-management-page-heading"
           hpdTranslate="userManagement.home.title"
           data-cy="userManagementPageHeading"
         >
           Users
         </h2>
-        <p class="text-sm text-slate-500">Manage administrators, access, and account status.</p>
+        <p class="text-sm text-hpd-muted">Manage administrators, access, and account status.</p>
       </div>
 
       <div class="flex flex-wrap items-center gap-3">
@@ -29,15 +29,15 @@
     <hpd-alert></hpd-alert>
 
     @if (users) {
-      <div class="overflow-x-auto rounded-2xl border border-slate-200">
-        <table class="min-w-full divide-y divide-slate-200 bg-white" aria-describedby="user-management-page-heading">
-          <thead class="bg-slate-50">
+      <div class="overflow-x-auto rounded-hpd border border-hpd-border">
+        <table class="min-w-full divide-y divide-hpd-border bg-white" aria-describedby="user-management-page-heading">
+          <thead class="bg-hpd-cream">
             <tr
               hpdSort
               [(predicate)]="predicate"
               [(ascending)]="ascending"
               (sortChange)="transition()"
-              class="text-left text-xs font-semibold uppercase tracking-wide text-slate-500"
+              class="text-left text-xs font-semibold uppercase tracking-wide text-hpd-muted"
             >
               <th scope="col" hpdSortBy="id" class="px-4 py-3">
                 <span hpdTranslate="global.field.id">ID</span> <mat-icon class="align-middle !text-base">unfold_more</mat-icon>
@@ -69,13 +69,15 @@
             </tr>
           </thead>
 
-          <tbody class="divide-y divide-slate-100 text-sm text-slate-700">
+          <tbody class="divide-y divide-hpd-border text-sm text-hpd-muted">
             @for (user of users; track trackIdentity($index, user)) {
               <tr class="align-top">
                 <td class="px-4 py-4">
-                  <a class="font-semibold text-cyan-700 hover:text-cyan-600" [routerLink]="['./', user.login, 'view']">{{ user.id }}</a>
+                  <a class="font-semibold text-hpd-primary hover:text-hpd-primary" [routerLink]="['./', user.login, 'view']">{{
+                    user.id
+                  }}</a>
                 </td>
-                <td class="px-4 py-4 font-medium text-slate-900">{{ user.login }}</td>
+                <td class="px-4 py-4 font-medium text-hpd-primary-dark">{{ user.login }}</td>
                 <td class="px-4 py-4">{{ user.email }}</td>
                 <td class="px-4 py-4">
                   @if (!user.activated) {
@@ -106,7 +108,9 @@
                 <td class="px-4 py-4">
                   <div class="flex flex-wrap gap-2">
                     @for (authority of user.authorities; track $index) {
-                      <span class="rounded-full bg-sky-50 px-3 py-1 text-xs font-semibold text-sky-700">{{ authority }}</span>
+                      <span class="rounded-full bg-hpd-chart-blue/15 px-3 py-1 text-xs font-semibold text-hpd-primary">{{
+                        authority
+                      }}</span>
                     }
                   </div>
                 </td>
@@ -147,7 +151,7 @@
 
     @if (users) {
       <div class="space-y-4">
-        <div class="flex justify-center text-sm text-slate-500">
+        <div class="flex justify-center text-sm text-hpd-muted">
           <hpd-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></hpd-item-count>
         </div>
 

@@ -30,7 +30,7 @@ export default class HealthComponent implements OnInit {
   }
 
   badgeClasses(statusState: HealthStatus): string {
-    return statusState === 'UP' ? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-700';
+    return statusState === 'UP' ? 'bg-hpd-success-tint text-hpd-success' : 'bg-hpd-danger-tint text-hpd-danger';
   }
 
   refresh(): void {

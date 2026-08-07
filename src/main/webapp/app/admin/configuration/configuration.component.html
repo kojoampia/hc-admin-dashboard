@@ -1,17 +1,17 @@
 @if (allBeans) {
   <div class="space-y-6">
-    <mat-card class="!rounded-[2rem] !border !border-slate-200 !bg-white/95 !p-6 !shadow-sm">
+    <mat-card class="!rounded-hpd-xl !border !border-hpd-border !bg-white/95 !p-6 !shadow-hpd-sm">
       <div class="space-y-6">
         <div class="space-y-1">
           <h2
             id="configuration-page-heading"
-            class="text-3xl font-semibold text-slate-900"
+            class="text-3xl font-semibold text-hpd-primary-dark"
             hpdTranslate="configuration.title"
             data-cy="configurationPageHeading"
           >
             Configuration
           </h2>
-          <h3 id="spring-configuration" class="text-sm font-medium uppercase tracking-wide text-slate-500">Spring configuration</h3>
+          <h3 id="spring-configuration" class="text-sm font-medium uppercase tracking-wide text-hpd-muted">Spring configuration</h3>
         </div>
 
         <mat-form-field appearance="outline" class="w-full">
@@ -19,15 +19,15 @@
           <input matInput type="text" [(ngModel)]="beansFilter" (ngModelChange)="filterAndSortBeans()" />
         </mat-form-field>
 
-        <div class="overflow-x-auto rounded-2xl border border-slate-200">
-          <table class="min-w-full divide-y divide-slate-200 bg-white" aria-describedby="spring-configuration">
-            <thead class="bg-slate-50">
+        <div class="overflow-x-auto rounded-hpd border border-hpd-border">
+          <table class="min-w-full divide-y divide-hpd-border bg-white" aria-describedby="spring-configuration">
+            <thead class="bg-hpd-cream">
               <tr
                 hpdSort
                 predicate="prefix"
                 [(ascending)]="beansAscending"
                 (sortChange)="filterAndSortBeans()"
-                class="text-left text-xs font-semibold uppercase tracking-wide text-slate-500"
+                class="text-left text-xs font-semibold uppercase tracking-wide text-hpd-muted"
               >
                 <th hpdSortBy="prefix" scope="col" class="px-4 py-3">
                   <span hpdTranslate="configuration.table.prefix">Prefix</span>
@@ -36,16 +36,16 @@
                 <th scope="col" class="px-4 py-3"><span hpdTranslate="configuration.table.properties">Properties</span></th>
               </tr>
             </thead>
-            <tbody class="divide-y divide-slate-100 text-sm text-slate-700">
+            <tbody class="divide-y divide-hpd-border text-sm text-hpd-muted">
               @for (bean of beans; track $index) {
                 <tr class="align-top">
-                  <td class="px-4 py-4 font-medium text-slate-900">{{ bean.prefix }}</td>
+                  <td class="px-4 py-4 font-medium text-hpd-primary-dark">{{ bean.prefix }}</td>
                   <td class="px-4 py-4">
                     <div class="space-y-2">
                       @for (property of bean.properties | keyvalue; track property.key) {
-                        <div class="grid gap-2 rounded-xl bg-slate-50 px-3 py-2 md:grid-cols-[14rem_minmax(0,1fr)]">
-                          <div class="font-medium text-slate-600">{{ property.key }}</div>
-                          <div class="break text-slate-800">{{ property.value | json }}</div>
+                        <div class="grid gap-2 rounded-xl bg-hpd-cream px-3 py-2 md:grid-cols-[14rem_minmax(0,1fr)]">
+                          <div class="font-medium text-hpd-muted">{{ property.key }}</div>
+                          <div class="break text-hpd-primary-dark">{{ property.value | json }}</div>
                         </div>
                       }
                     </div>
@@ -59,22 +59,22 @@
     </mat-card>
 
     @for (propertySource of propertySources; track i; let i = $index) {
-      <mat-card class="!rounded-[2rem] !border !border-slate-200 !bg-white/95 !p-6 !shadow-sm">
+      <mat-card class="!rounded-hpd-xl !border !border-hpd-border !bg-white/95 !p-6 !shadow-hpd-sm">
         <div class="space-y-4">
-          <h4 [id]="'property-source-' + i" class="text-lg font-semibold text-slate-900">{{ propertySource.name }}</h4>
+          <h4 [id]="'property-source-' + i" class="text-lg font-semibold text-hpd-primary-dark">{{ propertySource.name }}</h4>
 
-          <div class="overflow-x-auto rounded-2xl border border-slate-200">
-            <table class="min-w-full divide-y divide-slate-200 bg-white" [attr.aria-describedby]="'property-source-' + i">
-              <thead class="bg-slate-50 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+          <div class="overflow-x-auto rounded-hpd border border-hpd-border">
+            <table class="min-w-full divide-y divide-hpd-border bg-white" [attr.aria-describedby]="'property-source-' + i">
+              <thead class="bg-hpd-cream text-left text-xs font-semibold uppercase tracking-wide text-hpd-muted">
                 <tr>
                   <th scope="col" class="px-4 py-3">Property</th>
                   <th scope="col" class="px-4 py-3">Value</th>
                 </tr>
               </thead>
-              <tbody class="divide-y divide-slate-100 text-sm text-slate-700">
+              <tbody class="divide-y divide-hpd-border text-sm text-hpd-muted">
                 @for (property of propertySource.properties | keyvalue; track property.key) {
                   <tr class="align-top">
-                    <td class="break px-4 py-4 font-medium text-slate-900">{{ property.key }}</td>
+                    <td class="break px-4 py-4 font-medium text-hpd-primary-dark">{{ property.key }}</td>
                     <td class="break px-4 py-4">{{ property.value.value }}</td>
                   </tr>
                 }

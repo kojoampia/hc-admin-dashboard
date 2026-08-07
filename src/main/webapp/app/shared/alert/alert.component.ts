@@ -51,13 +51,13 @@ export class AlertComponent implements OnInit, OnDestroy {
   panelClasses(alert: Alert): string {
     switch (alert.type) {
       case 'success':
-        return 'border-emerald-200 bg-emerald-50 text-emerald-900';
+        return 'border-hpd-success-accent/30 bg-hpd-success-tint text-hpd-success';
       case 'warning':
-        return 'border-amber-200 bg-amber-50 text-amber-900';
+        return 'border-hpd-warning-accent/30 bg-hpd-warning-tint text-hpd-warning';
       case 'danger':
-        return 'border-rose-200 bg-rose-50 text-rose-900';
+        return 'border-hpd-danger/30 bg-hpd-danger-tint text-hpd-danger';
       default:
-        return 'border-sky-200 bg-sky-50 text-sky-900';
+        return 'border-hpd-primary/30 bg-hpd-chart-blue/15 text-hpd-primary-deep';
     }
   }
 }

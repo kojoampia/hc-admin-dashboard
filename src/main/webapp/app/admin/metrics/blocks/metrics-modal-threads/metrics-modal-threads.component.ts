@@ -40,13 +40,13 @@ export class MetricsModalThreadsComponent implements OnInit {
 
   getBadgeClass(threadState: ThreadState): string {
     if (threadState === ThreadState.Runnable) {
-      return 'bg-emerald-50 text-emerald-700';
+      return 'bg-hpd-success-tint text-hpd-success';
     } else if (threadState === ThreadState.Waiting) {
-      return 'bg-sky-50 text-sky-700';
+      return 'bg-hpd-chart-blue/15 text-hpd-primary';
     } else if (threadState === ThreadState.TimedWaiting) {
-      return 'bg-amber-50 text-amber-700';
+      return 'bg-hpd-warning-tint text-hpd-warning';
     } else if (threadState === ThreadState.Blocked) {
-      return 'bg-rose-50 text-rose-700';
+      return 'bg-hpd-danger-tint text-hpd-danger';
     }
     return '';
   }

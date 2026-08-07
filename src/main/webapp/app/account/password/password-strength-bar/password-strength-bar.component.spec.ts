@@ -22,7 +22,12 @@ describe('PasswordStrengthBarComponent', () => {
   describe('PasswordStrengthBarComponents', () => {
     it('should initialize with default values', () => {
       expect(comp.measureStrength('')).toBe(0);
-      expect(comp.colors).toEqual(['#F00', '#F90', '#FF0', '#9F0', '#0F0']);
+      // Five steps, weakest first, and getColor() clamps into that range — see the assertions
+      // below. The literal palette used to be repeated here; it is the BridgeCare status ramp now,
+      // and pinning the hexes in two places only meant the test had to be edited alongside a
+      // purely visual change it could not otherwise detect.
+      expect(comp.colors).toHaveLength(5);
+      expect(comp.colors.every(color => /^#[0-9a-f]{6}$/i.test(color))).toBe(true);
       expect(comp.getColor(0).idx).toBe(1);
       expect(comp.getColor(0).color).toBe(comp.colors[0]);
     });

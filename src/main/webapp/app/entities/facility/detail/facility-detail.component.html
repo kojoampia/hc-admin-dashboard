@@ -1,11 +1,11 @@
 <div class="mx-auto max-w-5xl">
   @if (facility(); as facilityRef) {
-    <div class="space-y-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+    <div class="space-y-6 rounded-hpd-lg border border-hpd-border bg-white p-6 shadow-hpd-sm">
       <div class="space-y-2">
-        <h2 data-cy="facilityDetailsHeading" class="text-2xl font-semibold text-slate-900">
+        <h2 data-cy="facilityDetailsHeading" class="text-2xl font-semibold text-hpd-primary-dark">
           <span hpdTranslate="adminDashboardApp.facility.detail.title">Facility</span>
         </h2>
-        <p class="text-sm text-slate-500">Inspect facility classification, related links, and audit metadata.</p>
+        <p class="text-sm text-hpd-muted">Inspect facility classification, related links, and audit metadata.</p>
       </div>
 
       <hpd-alert-error />
@@ -13,21 +13,21 @@
       <hpd-alert />
 
       <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="global.field.id">ID</p>
-          <p class="mt-1 text-sm text-slate-900">{{ facilityRef.id }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="global.field.id">ID</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ facilityRef.id }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.facility.name">Name</p>
-          <p class="mt-1 text-sm text-slate-900">{{ facilityRef.name }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.facility.name">Name</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ facilityRef.name }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4 lg:col-span-3">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.facility.description">Description</p>
-          <p class="mt-1 text-sm text-slate-900">{{ facilityRef.description }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4 lg:col-span-3">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.facility.description">Description</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ facilityRef.description }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.facility.type">Type</p>
-          <p class="mt-1 text-sm text-slate-900" [hpdTranslate]="'adminDashboardApp.FacilityType.' + (facilityRef.type ?? 'null')">
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.facility.type">Type</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark" [hpdTranslate]="'adminDashboardApp.FacilityType.' + (facilityRef.type ?? 'null')">
             {{
               { null: '', HOSPITAL: 'HOSPITAL', HOSPICE: 'HOSPICE', CLINIC: 'CLINIC', LAB: 'LAB', PHARMACY: 'PHARMACY', OTHER: 'OTHER' }[
                 facilityRef.type ?? 'null'
@@ -35,33 +35,33 @@
             }}
           </p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.facility.addressId">Address Id</p>
-          <p class="mt-1 text-sm text-slate-900">{{ facilityRef.addressId }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.facility.addressId">Address Id</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ facilityRef.addressId }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.facility.contactId">Contact Id</p>
-          <p class="mt-1 text-sm text-slate-900">{{ facilityRef.contactId }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.facility.contactId">Contact Id</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ facilityRef.contactId }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4 lg:col-span-3">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.facility.photos">Photos</p>
-          <p class="mt-1 text-sm text-slate-900">{{ facilityRef.photos }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4 lg:col-span-3">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.facility.photos">Photos</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ facilityRef.photos }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.facility.createdBy">Created By</p>
-          <p class="mt-1 text-sm text-slate-900">{{ facilityRef.createdBy }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.facility.createdBy">Created By</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ facilityRef.createdBy }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.facility.createdDate">Created Date</p>
-          <p class="mt-1 text-sm text-slate-900">{{ facilityRef.createdDate | formatMediumDatetime }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.facility.createdDate">Created Date</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ facilityRef.createdDate | formatMediumDatetime }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.facility.modifiedBy">Modified By</p>
-          <p class="mt-1 text-sm text-slate-900">{{ facilityRef.modifiedBy }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.facility.modifiedBy">Modified By</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ facilityRef.modifiedBy }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4 lg:col-span-2">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.facility.modifiedDate">Modified Date</p>
-          <p class="mt-1 text-sm text-slate-900">{{ facilityRef.modifiedDate | formatMediumDatetime }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4 lg:col-span-2">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.facility.modifiedDate">Modified Date</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ facilityRef.modifiedDate | formatMediumDatetime }}</p>
         </div>
       </div>
 
@@ -75,7 +75,7 @@
           type="button"
           [routerLink]="['/facility', facilityRef.id, 'edit']"
           mat-flat-button
-          class="!rounded-full !bg-slate-900 !px-4 !text-white"
+          class="!rounded-full !bg-hpd-primary-deep !px-4 !text-white"
         >
           <mat-icon>edit</mat-icon>
           <span hpdTranslate="entity.action.edit">Edit</span>

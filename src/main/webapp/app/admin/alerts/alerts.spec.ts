@@ -41,7 +41,7 @@ describe('AlertsComponent', () => {
           message: 'Security alert triggered by failed login attempts.',
           timestamp: 'just now',
           icon: 'security',
-          colorClass: 'bg-rose-100 text-rose-600',
+          colorClass: 'bg-hpd-danger-tint text-hpd-danger',
         },
       ]),
     };
@@ -64,9 +64,9 @@ describe('AlertsComponent', () => {
       },
     } as DestroyRef;
 
-      // The component takes its dependencies through inject() now, so it can no longer be
-      // constructed with them. TestBed supplies the same doubles through the injector; the
-      // mocks and every assertion below are unchanged.
+    // The component takes its dependencies through inject() now, so it can no longer be
+    // constructed with them. TestBed supplies the same doubles through the injector; the
+    // mocks and every assertion below are unchanged.
     TestBed.configureTestingModule({
       providers: [
         { provide: DashboardStateService, useValue: dashboardState },

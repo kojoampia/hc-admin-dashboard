@@ -1,11 +1,11 @@
 <div class="mx-auto max-w-5xl">
   @if (auditLog(); as auditLogRef) {
-    <div class="space-y-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+    <div class="space-y-6 rounded-hpd-lg border border-hpd-border bg-white p-6 shadow-hpd-sm">
       <div class="space-y-2">
-        <h2 data-cy="auditLogDetailsHeading" class="text-2xl font-semibold text-slate-900">
+        <h2 data-cy="auditLogDetailsHeading" class="text-2xl font-semibold text-hpd-primary-dark">
           <span hpdTranslate="adminDashboardApp.auditLog.detail.title">Audit Log</span>
         </h2>
-        <p class="text-sm text-slate-500">Inspect actions, actors, metadata, and audit timestamps.</p>
+        <p class="text-sm text-hpd-muted">Inspect actions, actors, metadata, and audit timestamps.</p>
       </div>
 
       <hpd-alert-error />
@@ -13,37 +13,37 @@
       <hpd-alert />
 
       <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="global.field.id">ID</p>
-          <p class="mt-1 text-sm text-slate-900">{{ auditLogRef.id }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="global.field.id">ID</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ auditLogRef.id }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.auditLog.actionType">Action Type</p>
-          <p class="mt-1 text-sm text-slate-900">{{ auditLogRef.actionType }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.auditLog.actionType">Action Type</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ auditLogRef.actionType }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.auditLog.userId">User Id</p>
-          <p class="mt-1 text-sm text-slate-900">{{ auditLogRef.userId }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.auditLog.userId">User Id</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ auditLogRef.userId }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4 lg:col-span-3">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.auditLog.metadata">Metadata</p>
-          <p class="mt-1 text-sm text-slate-900">{{ auditLogRef.metadata }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4 lg:col-span-3">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.auditLog.metadata">Metadata</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ auditLogRef.metadata }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.auditLog.createdBy">Created By</p>
-          <p class="mt-1 text-sm text-slate-900">{{ auditLogRef.createdBy }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.auditLog.createdBy">Created By</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ auditLogRef.createdBy }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.auditLog.createdDate">Created Date</p>
-          <p class="mt-1 text-sm text-slate-900">{{ auditLogRef.createdDate | formatMediumDatetime }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.auditLog.createdDate">Created Date</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ auditLogRef.createdDate | formatMediumDatetime }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.auditLog.modifiedBy">Modified By</p>
-          <p class="mt-1 text-sm text-slate-900">{{ auditLogRef.modifiedBy }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.auditLog.modifiedBy">Modified By</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ auditLogRef.modifiedBy }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4 lg:col-span-2">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.auditLog.modifiedDate">Modified Date</p>
-          <p class="mt-1 text-sm text-slate-900">{{ auditLogRef.modifiedDate | formatMediumDatetime }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4 lg:col-span-2">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.auditLog.modifiedDate">Modified Date</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ auditLogRef.modifiedDate | formatMediumDatetime }}</p>
         </div>
       </div>
 
@@ -57,7 +57,7 @@
           type="button"
           [routerLink]="['/audit-log', auditLogRef.id, 'edit']"
           mat-flat-button
-          class="!rounded-full !bg-slate-900 !px-4 !text-white"
+          class="!rounded-full !bg-hpd-primary-deep !px-4 !text-white"
         >
           <mat-icon>edit</mat-icon>
           <span hpdTranslate="entity.action.edit">Edit</span>

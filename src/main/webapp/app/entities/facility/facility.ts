@@ -26,7 +26,7 @@ import { FormatMediumDatetimePipe } from 'app/shared/date';
     `
       :host ::ng-deep .mat-mdc-tab-header {
         padding: 0 1.5rem;
-        border-bottom: 1px solid #f4f4f5;
+        border-bottom: 1px solid var(--hpd-color-border);
       }
       :host ::ng-deep .mat-mdc-tab-labels {
         gap: 1.5rem;
@@ -167,14 +167,14 @@ export class FacilityComponent implements OnInit {
   getAuditColor(log: IAuditLog): string {
     const type = log.actionType;
     if (type === 'CREATE') {
-      return 'bg-emerald-100 text-emerald-600';
+      return 'bg-hpd-success-tint text-hpd-success';
     }
     if (type === 'UPDATE') {
-      return 'bg-amber-100 text-amber-600';
+      return 'bg-hpd-warning-tint text-hpd-warning';
     }
     if (type === 'DELETE') {
-      return 'bg-rose-100 text-rose-600';
+      return 'bg-hpd-danger-tint text-hpd-danger';
     }
-    return 'bg-indigo-100 text-indigo-600';
+    return 'bg-hpd-primary/15 text-hpd-primary';
   }
 }
