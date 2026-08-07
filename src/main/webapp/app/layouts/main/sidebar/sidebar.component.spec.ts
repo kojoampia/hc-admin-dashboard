@@ -9,29 +9,35 @@ import { DestroyRef, signal } from '@angular/core';
 import { of } from 'rxjs';
 
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 import { AccountService } from 'app/core/auth/account.service';
+import { StateStorageService } from 'app/core/auth/state-storage.service';
 import { LoginService } from 'app/login/login.service';
 import { Authority } from 'app/config/authority.constants';
 import { DashboardStateService } from 'app/entities/dashboard/dashboard-state';
+import { SHELL_NAV_GROUPS, ShellNavGroup } from '../shell-navigation';
 import { SidebarComponent } from './sidebar.component';
 
 describe('SidebarComponent', () => {
   let component: SidebarComponent;
-  let dashboardState: Pick<DashboardStateService, 'sidebarExpanded' | 'currentUser' | 'canAccess' | 'setMenu' | 'toggleSidebar'>;
+  let dashboardState: Pick<DashboardStateService, 'currentUser' | 'canAccess'>;
   let accountService: jest.Mocked<Pick<AccountService, 'getAuthenticationState' | 'hasAnyAuthority'>>;
   let destroyCallbacks: Array<() => void>;
   let destroyRef: DestroyRef;
   let loginService: jest.Mocked<Pick<LoginService, 'logout'>>;
   let router: jest.Mocked<Pick<Router, 'navigate'>>;
+  let stateStorageService: jest.Mocked<Pick<StateStorageService, 'storeLocale'>>;
+  let translateService: jest.Mocked<Pick<TranslateService, 'use'>>;
+
+  const groupNamed = (labelKey: string): ShellNavGroup => SHELL_NAV_GROUPS.find(group => group.labelKey === labelKey)!;
+  const adminGroup = (): ShellNavGroup => groupNamed('global.menu.admin.main');
+  const operationsGroup = (): ShellNavGroup => groupNamed('global.menu.navigation.operations');
 
   beforeEach(() => {
     dashboardState = {
-      sidebarExpanded: signal(true),
       currentUser: signal({ name: 'Admin User', role: 'ADMIN' }),
       canAccess: jest.fn(() => true),
-      setMenu: jest.fn(),
-      toggleSidebar: jest.fn(),
     };
     accountService = {
       getAuthenticationState: jest.fn(() => of(null)),
@@ -40,6 +46,8 @@ describe('SidebarComponent', () => {
     loginService = { logout: jest.fn() };
     // readonly, matching Router.navigate from Angular 20 onwards.
     router = { navigate: jest.fn((_commands: readonly any[]) => Promise.resolve(true)) };
+    stateStorageService = { storeLocale: jest.fn() };
+    translateService = { use: jest.fn() } as unknown as jest.Mocked<Pick<TranslateService, 'use'>>;
     destroyCallbacks = [];
     destroyRef = {
       onDestroy(callback: () => void) {
@@ -55,9 +63,7 @@ describe('SidebarComponent', () => {
     destroyCallbacks.forEach(callback => callback());
   });
 
-
-  // The component takes its dependencies through inject() now, so it can no longer be constructed
-  // with them. The doubles and every assertion below are unchanged.
+  // The component takes its dependencies through inject(), so it can't be constructed with them.
   const build = (): SidebarComponent => {
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({
@@ -67,29 +73,88 @@ describe('SidebarComponent', () => {
         { provide: DestroyRef, useValue: destroyRef },
         { provide: LoginService, useValue: loginService },
         { provide: Router, useValue: router },
+        { provide: StateStorageService, useValue: stateStorageService },
+        { provide: TranslateService, useValue: translateService },
       ],
     });
     return TestBed.runInInjectionContext(() => new SidebarComponent());
   };
 
-  it('shows the System Admin link for administrators', () => {
+  const signedIn = (): SidebarComponent => {
     accountService.getAuthenticationState.mockReturnValue(of({} as never));
+    const built = build();
+    built.ngOnInit();
+    return built;
+  };
+
+  it('shows the administration group for administrators', () => {
     accountService.hasAnyAuthority.mockReturnValue(true);
 
-    component = build();
-    component.ngOnInit();
+    component = signedIn();
 
-    expect(accountService.hasAnyAuthority).toHaveBeenCalledWith(Authority.ADMIN);
-    expect(component.showSystemAdminLink).toBe(true);
+    expect(component.groupVisible(adminGroup())).toBe(true);
+    expect(accountService.hasAnyAuthority).toHaveBeenCalledWith([Authority.ADMIN]);
   });
 
-  it('hides the System Admin link for non-admin users', () => {
-    accountService.getAuthenticationState.mockReturnValue(of({} as never));
+  it('hides the administration group from non-admin users', () => {
     accountService.hasAnyAuthority.mockReturnValue(false);
+
+    component = signedIn();
+
+    expect(component.groupVisible(adminGroup())).toBe(false);
+  });
+
+  it('hides every authenticated group while signed out', () => {
+    accountService.getAuthenticationState.mockReturnValue(of(null));
 
     component = build();
     component.ngOnInit();
 
-    expect(component.showSystemAdminLink).toBe(false);
+    expect(component.groupVisible(operationsGroup())).toBe(false);
+  });
+
+  // The client-side mirror of the api's read/write split. A group whose items are all filtered out
+  // must not leave its heading behind on its own.
+  it('drops a group whose items the account cannot read', () => {
+    (dashboardState.canAccess as jest.Mock).mockReturnValue(false);
+
+    component = signedIn();
+
+    expect(component.visibleItems(operationsGroup())).toEqual([]);
+    expect(component.groupVisible(operationsGroup())).toBe(false);
+  });
+
+  it('keeps only the readable items of a partially readable group', () => {
+    (dashboardState.canAccess as jest.Mock).mockImplementation((resource: string) => resource === 'MESSAGES');
+
+    component = signedIn();
+
+    expect(component.visibleItems(operationsGroup()).map(item => item.path)).toEqual(['/messages']);
+  });
+
+  it('derives two initials from a display name', () => {
+    component = signedIn();
+    expect(component.userInitials()).toBe('AU');
+
+    (dashboardState.currentUser as ReturnType<typeof signal>).set({ name: 'admin', role: 'ADMIN' });
+    expect(component.userInitials()).toBe('AD');
+  });
+
+  it('persists the chosen language so it survives a reload', () => {
+    component = signedIn();
+
+    component.changeLanguage('fr');
+
+    expect(stateStorageService.storeLocale).toHaveBeenCalledWith('fr');
+    expect(translateService.use).toHaveBeenCalledWith('fr');
+  });
+
+  it('signs out and returns to the root route', () => {
+    component = signedIn();
+
+    component.logout();
+
+    expect(loginService.logout).toHaveBeenCalled();
+    expect(router.navigate).toHaveBeenCalledWith(['']);
   });
 });

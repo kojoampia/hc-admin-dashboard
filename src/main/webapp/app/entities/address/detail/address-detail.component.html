@@ -1,56 +1,56 @@
 <div class="mx-auto max-w-4xl">
   @if (address(); as addressRef) {
-    <div class="space-y-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+    <div class="space-y-6 rounded-hpd-lg border border-hpd-border bg-white p-6 shadow-hpd-sm">
       <div class="space-y-2">
-        <h2 data-cy="addressDetailsHeading" class="text-2xl font-semibold text-slate-900">
+        <h2 data-cy="addressDetailsHeading" class="text-2xl font-semibold text-hpd-primary-dark">
           <span hpdTranslate="adminDashboardApp.address.detail.title">Address</span>
         </h2>
-        <p class="text-sm text-slate-500">Review location and audit details for this address record.</p>
+        <p class="text-sm text-hpd-muted">Review location and audit details for this address record.</p>
       </div>
 
       <hpd-alert-error />
       <hpd-alert />
 
       <div class="grid gap-4 sm:grid-cols-2">
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="global.field.id">ID</p>
-          <p class="mt-1 text-sm text-slate-900">{{ addressRef.id }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="global.field.id">ID</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ addressRef.id }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.address.street">Street</p>
-          <p class="mt-1 text-sm text-slate-900">{{ addressRef.street }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.address.street">Street</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ addressRef.street }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.address.district">District</p>
-          <p class="mt-1 text-sm text-slate-900">{{ addressRef.district }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.address.district">District</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ addressRef.district }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.address.town">Town</p>
-          <p class="mt-1 text-sm text-slate-900">{{ addressRef.town }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.address.town">Town</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ addressRef.town }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.address.city">City</p>
-          <p class="mt-1 text-sm text-slate-900">{{ addressRef.city }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.address.city">City</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ addressRef.city }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.address.region">Region</p>
-          <p class="mt-1 text-sm text-slate-900">{{ addressRef.region }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.address.region">Region</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ addressRef.region }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.address.code">Code</p>
-          <p class="mt-1 text-sm text-slate-900">{{ addressRef.code }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.address.code">Code</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ addressRef.code }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.address.country">Country</p>
-          <p class="mt-1 text-sm text-slate-900">{{ addressRef.country }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.address.country">Country</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ addressRef.country }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.address.createdDate">Created Date</p>
-          <p class="mt-1 text-sm text-slate-900">{{ addressRef.createdDate | formatMediumDatetime }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.address.createdDate">Created Date</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ addressRef.createdDate | formatMediumDatetime }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.address.modifiedDate">Modified Date</p>
-          <p class="mt-1 text-sm text-slate-900">{{ addressRef.modifiedDate | formatMediumDatetime }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.address.modifiedDate">Modified Date</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ addressRef.modifiedDate | formatMediumDatetime }}</p>
         </div>
       </div>
 
@@ -63,7 +63,7 @@
           type="button"
           [routerLink]="['/address', addressRef.id, 'edit']"
           mat-flat-button
-          class="!rounded-full !bg-slate-900 !px-4 !text-white"
+          class="!rounded-full !bg-hpd-primary-deep !px-4 !text-white"
         >
           <mat-icon>edit</mat-icon>
           <span hpdTranslate="entity.action.edit">Edit</span>

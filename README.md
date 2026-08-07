@@ -5,12 +5,15 @@ Frontend-only Angular application generated from JHipster and customized for the
 ## What Is Actually Implemented
 
 - Project type: JHipster 8.11.0 Angular app with server skipped (`skipServer: true`)
-- Framework: Angular 19.2.21, standalone components + lazy-loaded routes
-- UI: Bootstrap 5.3.2 + ng-bootstrap 18 (used in ~39 files), Angular Material 19 + CDK, `@swimlane/ngx-charts` 20 + D3 7, TailwindCSS 3.4
-- Font Awesome packages are installed but **unused** — zero references to `@fortawesome` or `fa-icon` remain in `src/main/webapp/app`. They are removal candidates.
+- Framework: Angular 21, standalone components + lazy-loaded routes
+- UI: the **BridgeCare design system**, shared with `hc-professional/web` — Angular Material 21 (M3)
+  themed on navy `#0D3058` / gold `#C59437`, TailwindCSS 3.4 carrying the same tokens as `hpd-*`
+  utilities, Inter self-hosted via `@fontsource/inter`, `@swimlane/ngx-charts` for widgets.
+  `content/scss/global.scss` owns the palette; `tailwind.config.js` reads it and hardcodes nothing.
+- Bootstrap, ng-bootstrap and Font Awesome have been removed. Use Material icons and `hpd-*`.
 - I18n: `@ngx-translate` — English, French, German
 - State/storage: ngx-webstorage
-- Realtime/chat widgets: SockJS + webstomp-client
+- Realtime: SSE (`AuditStreamService`). There is no WebSocket client.
 - Linting: ESLint + angular-eslint
 - Formatting: Prettier (husky + lint-staged pre-commit)
 - Unit tests: Jest 30 via `@angular-builders/jest`
@@ -154,7 +157,8 @@ E2E: `src/test/javascript/cypress/` exists from JHipster generation, but Cypress
   - `core` — auth, interceptors, `ApplicationConfigService`, low-level utilities
   - `shared` — reusable pipes, directives, alert/filter/sort/pagination helpers, legacy `shared.module.ts`
   - `entities` — one folder per domain entity (model, service, list/detail/update/delete, routes)
-  - `layouts` — navbar, footer, error pages
+  - `layouts` — the app shell: `main/` (cream topbar + navy `sidebar/`, driven by
+    `shell-navigation.ts`), `footer/`, `error/`, `profiles/`
   - `admin` — dashboard shell and admin widgets, user management, health, metrics, logs, configuration
   - `widgets` — reusable display/chart widgets
   - `account`, `config`, `home`, `login`

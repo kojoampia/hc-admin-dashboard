@@ -1,100 +1,104 @@
-/* eslint-disable @typescript-eslint/member-ordering */
-import { Component, computed, DestroyRef, OnInit, inject } from '@angular/core';
+import { Component, DestroyRef, OnInit, computed, inject, input, output, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatDividerModule } from '@angular/material/divider';
-import { Authority } from 'app/config/authority.constants';
+import SharedModule from 'app/shared/shared.module';
+import ActiveMenuDirective from 'app/shared/language/active-menu.directive';
+import { LANGUAGES } from 'app/config/language.constants';
+import { VERSION } from 'app/app.constants';
+import { Account } from 'app/core/auth/account.model';
 import { AccountService } from 'app/core/auth/account.service';
-import { DashboardStateService, AppResource } from '../../../entities/dashboard/dashboard-state';
-import { ChatMenuComponent } from '../chat-menu/chat-menu.component';
-import { LanguageMenuComponent } from '../language-menu/language-menu.component';
-import { SettingMenuComponent } from '../setting-menu/setting-menu.component';
+import { StateStorageService } from 'app/core/auth/state-storage.service';
 import { LoginService } from 'app/login/login.service';
+import { DashboardStateService } from 'app/entities/dashboard/dashboard-state';
+import { SHELL_NAV_GROUPS, ShellNavGroup, ShellNavItem } from '../shell-navigation';
 
-interface MenuItem {
-  label: string;
-  icon: string;
-  path: string;
-  resource: AppResource;
-}
-
+/**
+ * BridgeCare shell sidebar: navy rail, grouped navigation, account tile at the foot.
+ *
+ * Below `lg` it slides in over a scrim and the shell's topbar toggle drives it; from `lg` up it is
+ * a sticky full-height column. The previous version was a `mat-sidenav` that collapsed to an
+ * 80px icon rail — that collapse is gone deliberately. It hid every label behind an icon on the
+ * one viewport wide enough to show them, while on a phone the rail still ate 80px of a 375px
+ * screen, so the narrow case (where space is actually scarce) was the case it helped least.
+ */
 @Component({
   selector: 'hpd-sidebar',
   standalone: true,
-  imports: [
-    RouterLink,
-    RouterLinkActive,
-    MatIconModule,
-    MatButtonModule,
-    MatMenuModule,
-    MatDividerModule,
-    ChatMenuComponent,
-    LanguageMenuComponent,
-    SettingMenuComponent,
-  ],
+  imports: [RouterLink, RouterLinkActive, MatIconModule, SharedModule, ActiveMenuDirective],
   templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.scss',
+  host: { class: 'contents' },
 })
 export class SidebarComponent implements OnInit {
-  private accountService = inject(AccountService);
-  private destroyRef = inject(DestroyRef);
-  private loginService = inject(LoginService);
-  private router = inject(Router);
+  /** Mobile drawer state, owned by the shell. */
+  readonly open = input(false);
+  readonly closeRequest = output<void>();
 
-  readonly state: DashboardStateService;
-  readonly isExpanded;
-  readonly filteredMenuItems;
-  showSystemAdminLink = false;
+  readonly state = inject(DashboardStateService);
+  readonly navGroups = SHELL_NAV_GROUPS;
+  readonly languages = LANGUAGES;
+  readonly version = VERSION ? (VERSION.toLowerCase().startsWith('v') ? VERSION : `v${VERSION}`) : '';
 
-  private readonly menuItems: MenuItem[] = [
-    { label: 'DASHBOARD', icon: 'dashboard', path: '/dashboards', resource: 'DASHBOARD' },
-    { label: 'MESSAGES', icon: 'chat', path: '/messages', resource: 'MESSAGES' },
-    { label: 'DUTY ROSTER', icon: 'calendar_month', path: '/duty-rosters', resource: 'DUTY_ROSTER' },
-    { label: 'PRICE PLANS', icon: 'subscriptions', path: '/pricing-plans', resource: 'PRICE_PLANS' },
-    { label: 'CATALOG', icon: 'auto_stories', path: '/catalog', resource: 'CATALOG' },
-    { label: 'FACILITIES', icon: 'local_hospital', path: '/facilities', resource: 'FACILITIES' },
-    { label: 'TEAMS', icon: 'groups', path: '/teams', resource: 'TEAMS' },
-    { label: 'PROFILES', icon: 'people', path: '/profiles', resource: 'PROFILES' },
-  ];
+  readonly account = signal<Account | null>(null);
 
-  readonly systemAdminItem = {
-    label: 'SYSTEM ADMIN',
-    icon: 'admin_panel_settings',
-    path: '/admin/dashboard',
-  };
+  readonly userInitials = computed(() => {
+    const name = this.state.currentUser().name.trim();
+    // Two initials from "Ada Lovelace", two leading characters from "admin".
+    const [first, second] = name.split(/\s+/).filter(Boolean);
+    const initials = first && second ? `${first.charAt(0)}${second.charAt(0)}` : name.slice(0, 2);
+    return initials.toUpperCase();
+  });
 
-  constructor() {
-    const state = inject(DashboardStateService);
-
-    this.state = state;
-    this.isExpanded = this.state.sidebarExpanded;
-    this.filteredMenuItems = computed(() => this.menuItems.filter(item => this.state.canAccess(item.resource, 'READ')));
-  }
+  private readonly accountService = inject(AccountService);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly loginService = inject(LoginService);
+  private readonly router = inject(Router);
+  private readonly stateStorageService = inject(StateStorageService);
+  private readonly translateService = inject(TranslateService);
 
   ngOnInit(): void {
     this.accountService
       .getAuthenticationState()
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(() => {
-        this.showSystemAdminLink = this.accountService.hasAnyAuthority(Authority.ADMIN);
-      });
+      .subscribe(account => this.account.set(account));
   }
 
-  toggleExpanded(): void {
-    this.state.toggleSidebar();
+  groupVisible(group: ShellNavGroup): boolean {
+    if (group.requiresAuth && this.account() === null) {
+      return false;
+    }
+    if (group.authorities && !this.accountService.hasAnyAuthority(group.authorities)) {
+      return false;
+    }
+    return this.visibleItems(group).length > 0;
   }
 
-  userInitials(): string {
-    const name = this.state.currentUser().name;
-    return name.slice(0, 2).toUpperCase();
+  visibleItems(group: ShellNavGroup): ShellNavItem[] {
+    return group.items.filter(item => {
+      if (item.resource && !this.state.canAccess(item.resource, 'READ')) {
+        return false;
+      }
+      return !item.authorities || this.accountService.hasAnyAuthority(item.authorities);
+    });
+  }
+
+  requestClose(): void {
+    this.closeRequest.emit();
+  }
+
+  changeLanguage(languageKey: string): void {
+    this.stateStorageService.storeLocale(languageKey);
+    this.translateService.use(languageKey);
+  }
+
+  login(): void {
+    void this.router.navigate(['/login']);
   }
 
   logout(): void {
     this.loginService.logout();
-    this.router.navigate(['']);
+    void this.router.navigate(['']);
   }
 }

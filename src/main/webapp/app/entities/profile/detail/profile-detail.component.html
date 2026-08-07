@@ -1,11 +1,11 @@
 <div class="mx-auto max-w-5xl">
   @if (profile(); as profileRef) {
-    <div class="space-y-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+    <div class="space-y-6 rounded-hpd-lg border border-hpd-border bg-white p-6 shadow-hpd-sm">
       <div class="space-y-2">
-        <h2 data-cy="profileDetailsHeading" class="text-2xl font-semibold text-slate-900">
+        <h2 data-cy="profileDetailsHeading" class="text-2xl font-semibold text-hpd-primary-dark">
           <span hpdTranslate="adminDashboardApp.profile.detail.title">Profile</span>
         </h2>
-        <p class="text-sm text-slate-500">Inspect profile links, document references, and audit metadata.</p>
+        <p class="text-sm text-hpd-muted">Inspect profile links, document references, and audit metadata.</p>
       </div>
 
       <hpd-alert-error />
@@ -13,65 +13,65 @@
       <hpd-alert />
 
       <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="global.field.id">ID</p>
-          <p class="mt-1 text-sm text-slate-900">{{ profileRef.id }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="global.field.id">ID</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ profileRef.id }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.profile.personId">Person Id</p>
-          <p class="mt-1 text-sm text-slate-900">{{ profileRef.personId }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.profile.personId">Person Id</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ profileRef.personId }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.profile.photoId">Photo Id</p>
-          <p class="mt-1 text-sm text-slate-900">{{ profileRef.photoId }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.profile.photoId">Photo Id</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ profileRef.photoId }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.profile.contactId">Contact Id</p>
-          <p class="mt-1 text-sm text-slate-900">{{ profileRef.contactId }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.profile.contactId">Contact Id</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ profileRef.contactId }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4 lg:col-span-2">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.profile.addressList">Address List</p>
-          <p class="mt-1 text-sm text-slate-900">{{ profileRef.addressList }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4 lg:col-span-2">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.profile.addressList">Address List</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ profileRef.addressList }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.profile.roles">Roles</p>
-          <p class="mt-1 text-sm text-slate-900">{{ profileRef.roles }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.profile.roles">Roles</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ profileRef.roles }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.profile.status">Status</p>
-          <p class="mt-1 text-sm text-slate-900">{{ profileRef.status }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.profile.status">Status</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ profileRef.status }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.profile.organisationId">
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.profile.organisationId">
             Organisation Id
           </p>
-          <p class="mt-1 text-sm text-slate-900">{{ profileRef.organisationId }}</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ profileRef.organisationId }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.profile.teamId">Team Id</p>
-          <p class="mt-1 text-sm text-slate-900">{{ profileRef.teamId }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.profile.teamId">Team Id</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ profileRef.teamId }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4 lg:col-span-2">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.profile.documentItems">
+        <div class="rounded-hpd bg-hpd-cream p-4 lg:col-span-2">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.profile.documentItems">
             Document Items
           </p>
-          <p class="mt-1 text-sm text-slate-900">{{ profileRef.documentItems }}</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ profileRef.documentItems }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.profile.createdBy">Created By</p>
-          <p class="mt-1 text-sm text-slate-900">{{ profileRef.createdBy }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.profile.createdBy">Created By</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ profileRef.createdBy }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.profile.createdDate">Created Date</p>
-          <p class="mt-1 text-sm text-slate-900">{{ profileRef.createdDate | formatMediumDatetime }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.profile.createdDate">Created Date</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ profileRef.createdDate | formatMediumDatetime }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.profile.modifiedBy">Modified By</p>
-          <p class="mt-1 text-sm text-slate-900">{{ profileRef.modifiedBy }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.profile.modifiedBy">Modified By</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ profileRef.modifiedBy }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4 lg:col-span-2">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.profile.modifiedDate">Modified Date</p>
-          <p class="mt-1 text-sm text-slate-900">{{ profileRef.modifiedDate | formatMediumDatetime }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4 lg:col-span-2">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.profile.modifiedDate">Modified Date</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ profileRef.modifiedDate | formatMediumDatetime }}</p>
         </div>
       </div>
 
@@ -85,7 +85,7 @@
           type="button"
           [routerLink]="['/profile', profileRef.id, 'edit']"
           mat-flat-button
-          class="!rounded-full !bg-slate-900 !px-4 !text-white"
+          class="!rounded-full !bg-hpd-primary-deep !px-4 !text-white"
         >
           <mat-icon>edit</mat-icon>
           <span hpdTranslate="entity.action.edit">Edit</span>

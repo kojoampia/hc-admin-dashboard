@@ -1,20 +1,68 @@
-<div class="h-full w-full">
-  <mat-sidenav-container class="sidebar-container" [autosize]="!isHandset()">
-    <mat-sidenav
-      class="sidenav light-bg"
-      [style.width]="state.sidebarExpanded() ? '256px' : '80px'"
-      [attr.role]="isHandset() ? 'dialog' : 'navigation'"
-      [mode]="isHandset() ? 'over' : 'side'"
-      [opened]="!isHandset()"
-      [position]="'start'"
+<div class="flex min-h-screen bg-hpd-surface">
+  <hpd-sidebar [open]="sidebarOpen" (closeRequest)="closeSidebar()"></hpd-sidebar>
+
+  <div class="flex min-w-0 flex-1 flex-col">
+    <header
+      class="hpd-no-print sticky top-0 z-20 flex items-center gap-3.5 border-b border-hpd-border bg-hpd-cream px-4 py-3 sm:px-6"
+      data-cy="topbar"
     >
-      <hpd-sidebar></hpd-sidebar>
-    </mat-sidenav>
-    <mat-sidenav-content class="sidenav-content primary-light-bg">
-      <div class="p-3 mr-auto ml-auto">
-        <router-outlet></router-outlet>
+      <button
+        class="hpd-focusable grid h-9 w-9 flex-none cursor-pointer place-items-center rounded-[10px] border-0 bg-transparent text-hpd-primary hover:bg-black/5 lg:hidden"
+        type="button"
+        data-cy="navbarToggle"
+        [attr.aria-expanded]="sidebarOpen"
+        [attr.aria-label]="'global.menu.navigation.menu' | translate"
+        (click)="toggleSidebar()"
+      >
+        <mat-icon aria-hidden="true">menu</mat-icon>
+      </button>
+      <div class="min-w-0">
+        @if (crumbKey) {
+          <div class="text-[11.5px] font-bold uppercase tracking-wider text-hpd-muted" data-cy="pageCrumb" [hpdTranslate]="crumbKey"></div>
+        }
+        <h1
+          class="truncate text-[19px] font-extrabold tracking-tight text-hpd-primary-dark"
+          data-cy="pageTitle"
+          [hpdTranslate]="titleKey"
+        ></h1>
       </div>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
-  <hpd-footer></hpd-footer>
+
+      <div class="ml-auto flex flex-none items-center gap-2">
+        @if (canBrowseEntities) {
+          <button
+            class="hpd-focusable grid h-9 w-9 place-items-center rounded-[10px] border-0 bg-transparent text-hpd-primary hover:bg-black/5"
+            type="button"
+            data-cy="entity"
+            [matMenuTriggerFor]="entityMenu"
+            [attr.aria-label]="'global.menu.entities.main' | translate"
+          >
+            <mat-icon aria-hidden="true">dataset</mat-icon>
+          </button>
+          <mat-menu #entityMenu="matMenu" class="hpd-entity-menu">
+            @for (entity of entityNavbarItems; track entity.route) {
+              <a mat-menu-item [routerLink]="entity.route" [attr.data-cy]="entity.name">
+                <span [hpdTranslate]="entity.translationKey">{{ entity.name }}</span>
+              </a>
+            }
+          </mat-menu>
+        }
+        @if (authenticated) {
+          <a
+            class="hpd-focusable relative grid h-9 w-9 place-items-center rounded-[10px] text-hpd-primary no-underline hover:bg-black/5"
+            routerLink="/messages"
+            data-cy="topbarMessages"
+            [attr.aria-label]="'global.menu.navigation.messages' | translate"
+          >
+            <mat-icon aria-hidden="true">chat_bubble_outline</mat-icon>
+          </a>
+        }
+      </div>
+    </header>
+
+    <main class="flex-1 px-4 py-6 sm:px-6">
+      <router-outlet></router-outlet>
+    </main>
+
+    <hpd-footer></hpd-footer>
+  </div>
 </div>

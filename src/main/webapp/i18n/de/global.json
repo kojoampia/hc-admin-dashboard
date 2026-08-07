@@ -51,7 +51,23 @@
         "database": "Datenbank",
         "jhipster-needle-menu-add-admin-element": "HealthConnect will add additional menu entries here (do not translate!)"
       },
-      "language": "Sprache"
+      "language": "Sprache",
+      "navigation": {
+        "menu": "Hauptnavigation",
+        "product": "Verwaltung",
+        "session": "Sitzung",
+        "operations": "Betrieb",
+        "catalogue": "Katalog",
+        "organisation": "Organisation",
+        "dashboard": "Übersicht",
+        "messages": "Nachrichten",
+        "dutyRosters": "Dienstpläne",
+        "pricingPlans": "Preispläne",
+        "catalog": "Systemkatalog",
+        "facilities": "Einrichtungen",
+        "teams": "Teams",
+        "profiles": "Profile"
+      }
     },
     "form": {
       "username.label": "Benutzername",

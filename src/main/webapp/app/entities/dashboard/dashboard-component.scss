@@ -2,71 +2,79 @@
   display: block;
 }
 
+/*
+ * The dashboard runs a navy shell by default (BridgeCare's primary tone) with an opt-in light
+ * mode. Its own template switches most of its chrome inline through [ngClass]; this sheet exists
+ * for the metric widgets underneath it, which render their own markup and never see that binding —
+ * hence ::ng-deep on the small set of utility classes they use for on-navy chrome.
+ *
+ * Every value here is a --hpd-* token. It used to be raw slate/indigo hexes (#0f172a, #4338ca,
+ * #cbd5e1 …), which is why light mode drifted off-brand the moment the rest of the app moved to
+ * the BridgeCare palette. Two rules also targeted the same selector twice with different colours,
+ * so one of the pair had never applied.
+ */
 .dashboard-shell.dashboard-light {
-  background: radial-gradient(circle at top right, rgba(191, 219, 254, 0.55), transparent 24%),
-    linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);
-  color: #0f172a;
+  background: linear-gradient(180deg, var(--hpd-color-cream) 0%, var(--hpd-color-surface) 100%);
+  color: var(--hpd-color-text-primary);
 }
 
 .dashboard-shell.dashboard-light .widget-header {
-  background-image: linear-gradient(90deg, rgba(248, 250, 252, 0.98), rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.96));
+  background-image: linear-gradient(90deg, rgb(255 255 255 / 96%), rgb(255 255 255 / 92%), rgb(255 255 255 / 92%));
 }
 
-.dashboard-shell.dashboard-light ::ng-deep .text-white {
-  color: #0f172a !important;
-}
+.dashboard-shell.dashboard-light ::ng-deep {
+  .text-white {
+    color: var(--hpd-color-text-primary) !important;
+  }
 
-.dashboard-shell.dashboard-light ::ng-deep .text-slate-300 {
-  color: #475569 !important;
-}
+  .text-hpd-on-navy-muted {
+    color: var(--hpd-color-text-muted) !important;
+  }
 
-.dashboard-shell.dashboard-light ::ng-deep .text-slate-400 {
-  color: #64748b !important;
-}
+  .text-hpd-subtle {
+    color: var(--hpd-color-text-subtle) !important;
+  }
 
-.dashboard-shell.dashboard-light ::ng-deep .bg-white\/5 {
-  background-color: rgba(255, 255, 255, 0.88) !important;
-}
+  .bg-white\/5 {
+    background-color: rgb(255 255 255 / 88%) !important;
+  }
 
-.dashboard-shell.dashboard-light ::ng-deep .bg-white\/10 {
-  background-color: rgba(226, 232, 240, 0.9) !important;
-}
+  .bg-white\/10 {
+    background-color: var(--hpd-color-cream) !important;
+  }
 
-.dashboard-shell.dashboard-light ::ng-deep .border-white\/10 {
-  border-color: #cbd5e1 !important;
-}
+  .border-white\/10 {
+    border-color: var(--hpd-color-border) !important;
+  }
 
-.dashboard-shell.dashboard-light ::ng-deep .bg-slate-900,
-.dashboard-shell.dashboard-light ::ng-deep .bg-slate-900\/80,
-.dashboard-shell.dashboard-light ::ng-deep .bg-slate-950\/60 {
-  background-color: #f8fafc !important;
-}
+  .bg-hpd-primary-deep,
+  .bg-hpd-primary-deep\/80,
+  .bg-hpd-primary-deep\/60 {
+    background-color: #fff !important;
+  }
 
-.dashboard-shell.dashboard-light ::ng-deep .bg-slate-800 {
-  background-color: #e2e8f0 !important;
-}
+  .bg-hpd-primary {
+    background-color: var(--hpd-color-surface) !important;
+  }
 
-.dashboard-shell.dashboard-light ::ng-deep .shadow-slate-950\/20,
-.dashboard-shell.dashboard-light ::ng-deep .shadow-indigo-950\/20 {
-  --tw-shadow-color: rgba(148, 163, 184, 0.25) !important;
-}
+  .shadow-hpd-primary-deep\/20 {
+    --tw-shadow-color: rgb(13 48 88 / 12%) !important;
+  }
 
-.dashboard-shell.dashboard-light ::ng-deep .bg-indigo-400\/10 {
-  background-color: rgba(224, 231, 255, 0.95) !important;
-}
+  .bg-hpd-primary\/10,
+  .bg-hpd-primary\/12,
+  .bg-hpd-primary\/15 {
+    background-color: var(--hpd-color-gold-tint) !important;
+  }
 
-.dashboard-shell.dashboard-light ::ng-deep .text-indigo-200 {
-  color: #4338ca !important;
-}
-
-.dashboard-shell.dashboard-light ::ng-deep .bg-emerald-500\/15,
-.dashboard-shell.dashboard-light ::ng-deep .bg-cyan-500\/15,
-.dashboard-shell.dashboard-light ::ng-deep .bg-amber-500\/15,
-.dashboard-shell.dashboard-light ::ng-deep .bg-fuchsia-500\/15,
-.dashboard-shell.dashboard-light ::ng-deep .bg-teal-500\/15,
-.dashboard-shell.dashboard-light ::ng-deep .bg-rose-500\/15,
-.dashboard-shell.dashboard-light ::ng-deep .bg-indigo-500\/15 {
-  filter: saturate(0.8);
+  /* Status washes read as too loud against cream; the navy shell can carry them at full strength. */
+  .bg-hpd-success-accent\/15,
+  .bg-hpd-chart-blue\/15,
+  .bg-hpd-warning-accent\/15,
+  .bg-hpd-gold\/15,
+  .bg-hpd-danger-accent\/15 {
+    filter: saturate(0.8);
+  }
 }
 
 :host ::-webkit-scrollbar {
@@ -75,7 +83,7 @@
 }
 
 :host ::-webkit-scrollbar-thumb {
-  background: rgba(148, 163, 184, 0.45);
+  background: rgb(13 48 88 / 25%);
   border-radius: 9999px;
 }
 

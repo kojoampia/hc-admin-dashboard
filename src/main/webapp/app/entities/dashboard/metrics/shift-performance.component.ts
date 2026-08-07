@@ -14,30 +14,30 @@ type ShiftMetric = {
   template: `
     <div class="space-y-4">
       <div class="grid gap-3 sm:grid-cols-2">
-        <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
-          <p class="text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">Shift requests</p>
+        <div class="rounded-hpd border border-white/10 bg-white/5 p-4">
+          <p class="text-xs font-semibold uppercase tracking-[0.24em] text-hpd-subtle">Shift requests</p>
           <p class="mt-3 text-3xl font-semibold text-white">436</p>
-          <p class="mt-2 text-sm text-slate-300">Requests created by operators this week.</p>
+          <p class="mt-2 text-sm text-hpd-on-navy-muted">Requests created by operators this week.</p>
         </div>
-        <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
-          <p class="text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">Avg. time to fill</p>
+        <div class="rounded-hpd border border-white/10 bg-white/5 p-4">
+          <p class="text-xs font-semibold uppercase tracking-[0.24em] text-hpd-subtle">Avg. time to fill</p>
           <p class="mt-3 text-3xl font-semibold text-white">42m</p>
-          <p class="mt-2 text-sm text-slate-300">Median time from posting to confirmed assignment.</p>
+          <p class="mt-2 text-sm text-hpd-on-navy-muted">Median time from posting to confirmed assignment.</p>
         </div>
       </div>
 
-      <div class="space-y-4 rounded-2xl border border-white/10 bg-white/5 p-4">
+      <div class="space-y-4 rounded-hpd border border-white/10 bg-white/5 p-4">
         @for (metric of metrics; track metric.label) {
           <div class="space-y-2">
             <div class="flex items-center justify-between gap-3">
               <div>
                 <p class="text-sm font-medium text-white">{{ metric.label }}</p>
-                <p class="text-xs text-slate-400">{{ metric.helper }}</p>
+                <p class="text-xs text-hpd-subtle">{{ metric.helper }}</p>
               </div>
               <span class="text-sm font-semibold text-white">{{ metric.value }}</span>
             </div>
-            <div class="h-2 overflow-hidden rounded-full bg-slate-800">
-              <div class="h-full rounded-full bg-emerald-400 transition-all" [style.width.%]="metric.progress"></div>
+            <div class="h-2 overflow-hidden rounded-full bg-hpd-primary">
+              <div class="h-full rounded-full bg-hpd-success-accent transition-all" [style.width.%]="metric.progress"></div>
             </div>
           </div>
         }

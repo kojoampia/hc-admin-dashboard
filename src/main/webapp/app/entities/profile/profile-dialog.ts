@@ -33,10 +33,10 @@ const ALL_ROLES: ProfileType[] = ['USER', 'ADMIN', 'PATIENT', 'PROFESSIONAL', 'V
       <!-- Header -->
       <div class="flex items-center justify-between mb-6">
         <div>
-          <h2 class="text-lg font-bold text-slate-800">{{ data ? 'Edit Profile' : 'Add Profile' }}</h2>
-          <p class="text-xs text-slate-400 mt-0.5">{{ data ? 'Update the profile details.' : 'Register a new user profile.' }}</p>
+          <h2 class="text-lg font-bold text-hpd-primary-dark">{{ data ? 'Edit Profile' : 'Add Profile' }}</h2>
+          <p class="text-xs text-hpd-subtle mt-0.5">{{ data ? 'Update the profile details.' : 'Register a new user profile.' }}</p>
         </div>
-        <button mat-icon-button class="text-slate-400 hover:text-slate-700" (click)="close()">
+        <button mat-icon-button class="text-hpd-subtle hover:text-hpd-muted" (click)="close()">
           <mat-icon>close</mat-icon>
         </button>
       </div>
@@ -45,11 +45,11 @@ const ALL_ROLES: ProfileType[] = ['USER', 'ADMIN', 'PATIENT', 'PROFESSIONAL', 'V
       <div class="space-y-4">
         <!-- Name -->
         <div>
-          <label for="pf-name" class="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">Full Name</label>
+          <label for="pf-name" class="text-xs font-semibold text-hpd-muted uppercase tracking-wider block mb-1.5">Full Name</label>
           <input
             id="pf-name"
             type="text"
-            class="w-full text-sm border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-300 text-slate-800"
+            class="w-full text-sm border border-hpd-border rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-hpd-primary/40 text-hpd-primary-dark"
             placeholder="e.g. Alice Johnson"
             [ngModel]="form().name"
             (ngModelChange)="patch('name', $event)"
@@ -58,7 +58,7 @@ const ALL_ROLES: ProfileType[] = ['USER', 'ADMIN', 'PATIENT', 'PROFESSIONAL', 'V
 
         <!-- Roles -->
         <div>
-          <label class="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">Roles</label>
+          <label class="text-xs font-semibold text-hpd-muted uppercase tracking-wider block mb-1.5">Roles</label>
           <div class="flex flex-wrap gap-2">
             @for (role of allRoles; track role) {
               <button
@@ -66,8 +66,8 @@ const ALL_ROLES: ProfileType[] = ['USER', 'ADMIN', 'PATIENT', 'PROFESSIONAL', 'V
                 class="px-3 py-1 rounded-full text-xs font-bold border transition-all uppercase tracking-wider"
                 [ngClass]="
                   form().roles.includes(role)
-                    ? 'bg-indigo-600 text-white border-indigo-600'
-                    : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
+                    ? 'bg-hpd-primary text-white border-hpd-primary'
+                    : 'bg-white text-hpd-muted border-hpd-border hover:bg-hpd-cream'
                 "
                 (click)="toggleRole(role)"
               >
@@ -79,10 +79,10 @@ const ALL_ROLES: ProfileType[] = ['USER', 'ADMIN', 'PATIENT', 'PROFESSIONAL', 'V
 
         <!-- Status -->
         <div>
-          <label for="pf-status" class="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">Status</label>
+          <label for="pf-status" class="text-xs font-semibold text-hpd-muted uppercase tracking-wider block mb-1.5">Status</label>
           <select
             id="pf-status"
-            class="w-full text-sm border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-300 text-slate-800 bg-white"
+            class="w-full text-sm border border-hpd-border rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-hpd-primary/40 text-hpd-primary-dark bg-white"
             [ngModel]="form().status"
             (ngModelChange)="patch('status', $event)"
           >
@@ -94,15 +94,15 @@ const ALL_ROLES: ProfileType[] = ['USER', 'ADMIN', 'PATIENT', 'PROFESSIONAL', 'V
       </div>
 
       <!-- Footer -->
-      <div class="flex items-center justify-end gap-3 mt-6 pt-6 border-t border-slate-100">
+      <div class="flex items-center justify-end gap-3 mt-6 pt-6 border-t border-hpd-border">
         <button
-          class="px-4 py-2 text-sm font-semibold text-slate-600 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors"
+          class="px-4 py-2 text-sm font-semibold text-hpd-muted bg-white border border-hpd-border rounded-xl hover:bg-hpd-cream transition-colors"
           (click)="close()"
         >
           Cancel
         </button>
         <button
-          class="px-5 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-xl hover:bg-indigo-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+          class="px-5 py-2 text-sm font-semibold text-white bg-hpd-primary rounded-xl hover:bg-hpd-primary-hover transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
           [disabled]="!form().name.trim() || form().roles.length === 0"
           (click)="save()"
         >

@@ -1,74 +1,74 @@
 <div class="mx-auto max-w-4xl">
   @if (professional(); as professionalRef) {
-    <div class="space-y-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+    <div class="space-y-6 rounded-hpd-lg border border-hpd-border bg-white p-6 shadow-hpd-sm">
       <div class="space-y-2">
-        <h2 data-cy="professionalDetailsHeading" class="text-2xl font-semibold text-slate-900">
+        <h2 data-cy="professionalDetailsHeading" class="text-2xl font-semibold text-hpd-primary-dark">
           <span hpdTranslate="adminDashboardApp.hcAdminServiceProfessional.detail.title">Professional</span>
         </h2>
-        <p class="text-sm text-slate-500">Inspect professional identity, linked organisation, and audit history.</p>
+        <p class="text-sm text-hpd-muted">Inspect professional identity, linked organisation, and audit history.</p>
       </div>
 
       <hpd-alert-error />
       <hpd-alert />
 
       <div class="grid gap-4 sm:grid-cols-2">
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="global.field.id">ID</p>
-          <p class="mt-1 text-sm text-slate-900">{{ professionalRef.id }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="global.field.id">ID</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ professionalRef.id }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceProfessional.name">
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.hcAdminServiceProfessional.name">
             Name
           </p>
-          <p class="mt-1 text-sm text-slate-900">{{ professionalRef.name }}</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ professionalRef.name }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
+        <div class="rounded-hpd bg-hpd-cream p-4">
           <p
-            class="text-xs font-semibold uppercase text-slate-500"
+            class="text-xs font-semibold uppercase text-hpd-muted"
             hpdTranslate="adminDashboardApp.hcAdminServiceProfessional.organisation"
           >
             Organisation
           </p>
-          <p class="mt-1 text-sm text-slate-900">{{ professionalRef.organisation }}</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ professionalRef.organisation }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceProfessional.roster">
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.hcAdminServiceProfessional.roster">
             Roster
           </p>
-          <p class="mt-1 text-sm text-slate-900">{{ professionalRef.roster }}</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ professionalRef.roster }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceProfessional.profile">
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.hcAdminServiceProfessional.profile">
             Profile
           </p>
-          <p class="mt-1 text-sm text-slate-900">{{ professionalRef.profile }}</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ professionalRef.profile }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceProfessional.createdDate">
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.hcAdminServiceProfessional.createdDate">
             Created Date
           </p>
-          <p class="mt-1 text-sm text-slate-900">{{ professionalRef.createdDate | formatMediumDate }}</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ professionalRef.createdDate | formatMediumDate }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceProfessional.createdBy">
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.hcAdminServiceProfessional.createdBy">
             Created By
           </p>
-          <p class="mt-1 text-sm text-slate-900">{{ professionalRef.createdBy }}</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ professionalRef.createdBy }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
+        <div class="rounded-hpd bg-hpd-cream p-4">
           <p
-            class="text-xs font-semibold uppercase text-slate-500"
+            class="text-xs font-semibold uppercase text-hpd-muted"
             hpdTranslate="adminDashboardApp.hcAdminServiceProfessional.modifiedDate"
           >
             Modified Date
           </p>
-          <p class="mt-1 text-sm text-slate-900">{{ professionalRef.modifiedDate | formatMediumDate }}</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ professionalRef.modifiedDate | formatMediumDate }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceProfessional.modifiedBy">
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.hcAdminServiceProfessional.modifiedBy">
             Modified By
           </p>
-          <p class="mt-1 text-sm text-slate-900">{{ professionalRef.modifiedBy }}</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ professionalRef.modifiedBy }}</p>
         </div>
       </div>
 
@@ -81,7 +81,7 @@
           type="button"
           [routerLink]="['/professional', professionalRef.id, 'edit']"
           mat-flat-button
-          class="!rounded-full !bg-slate-900 !px-4 !text-white"
+          class="!rounded-full !bg-hpd-primary-deep !px-4 !text-white"
         >
           <mat-icon>edit</mat-icon>
           <span hpdTranslate="entity.action.edit">Edit</span>

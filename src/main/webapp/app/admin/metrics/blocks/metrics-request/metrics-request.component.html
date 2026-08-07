@@ -1,13 +1,13 @@
-<div class="rounded-[2rem] border border-slate-200 bg-white/95 p-6 shadow-sm">
+<div class="rounded-hpd-xl border border-hpd-border bg-white/95 p-6 shadow-hpd-sm">
   <div class="space-y-4">
-    <h3 id="requestMetrics" class="text-xl font-semibold text-slate-900" hpdTranslate="metrics.jvm.http.title">
+    <h3 id="requestMetrics" class="text-xl font-semibold text-hpd-primary-dark" hpdTranslate="metrics.jvm.http.title">
       HTTP requests (time in millisecond)
     </h3>
 
     @if (!updating && requestMetrics) {
-      <div class="overflow-x-auto rounded-2xl border border-slate-200">
-        <table class="min-w-full divide-y divide-slate-200 bg-white" aria-describedby="requestMetrics">
-          <thead class="bg-slate-50 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+      <div class="overflow-x-auto rounded-hpd border border-hpd-border">
+        <table class="min-w-full divide-y divide-hpd-border bg-white" aria-describedby="requestMetrics">
+          <thead class="bg-hpd-cream text-left text-xs font-semibold uppercase tracking-wide text-hpd-muted">
             <tr>
               <th scope="col" class="px-4 py-3" hpdTranslate="metrics.jvm.http.table.code">Code</th>
               <th scope="col" class="px-4 py-3" hpdTranslate="metrics.jvm.http.table.count">Count</th>
@@ -15,19 +15,19 @@
               <th scope="col" class="px-4 py-3 text-right" hpdTranslate="metrics.jvm.http.table.max">Max</th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-slate-100 text-sm text-slate-700">
+          <tbody class="divide-y divide-hpd-border text-sm text-hpd-muted">
             @for (entry of requestMetrics['percode'] | keyvalue; track entry.key) {
               <tr>
-                <td class="px-4 py-4 font-medium text-slate-900">{{ entry.key }}</td>
+                <td class="px-4 py-4 font-medium text-hpd-primary-dark">{{ entry.key }}</td>
                 <td class="px-4 py-4">
                   <div class="space-y-1">
-                    <div class="h-3 overflow-hidden rounded-full bg-slate-200">
+                    <div class="h-3 overflow-hidden rounded-full bg-hpd-border">
                       <div
-                        class="h-full rounded-full bg-emerald-500"
+                        class="h-full rounded-full bg-hpd-success-accent"
                         [style.width.%]="(100 * entry.value.count) / requestMetrics['all'].count"
                       ></div>
                     </div>
-                    <div class="text-xs font-semibold text-slate-500">{{ entry.value.count }}</div>
+                    <div class="text-xs font-semibold text-hpd-muted">{{ entry.value.count }}</div>
                   </div>
                 </td>
                 <td class="px-4 py-4 text-right">{{ filterNaN(entry.value.mean) | number: '1.0-2' }}</td>

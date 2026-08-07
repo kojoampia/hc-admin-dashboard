@@ -45,7 +45,7 @@ describe('AccessControlComponent', () => {
 
   it('builds access coverage from the current account and admin APIs', () => {
     accountService.identity.mockReturnValue(
-      of(new Account(true, [{ name: Authority.ADMIN }, { name: Authority.USER }], 'admin@example.com', 'Admin', 'en', 'User', 'admin', null)),
+      of(new Account(true, [Authority.ADMIN, Authority.USER], 'admin@example.com', 'Admin', 'en', 'User', 'admin', null)),
     );
     userManagementService.query.mockReturnValue(
       of(

@@ -14,11 +14,27 @@ eg $input-color: red;
 // Bootstrap-only — d-flex, justify-content-end, w-100, h-100, in two files — and those were
 // translated to their Tailwind equivalents.
 //
-// _bootstrap-variables.scss stays: it is a Sass variable partial that global.scss still `@use`s
-// for colour values, and it pulls in no Bootstrap CSS of its own.
+// `_bootstrap-variables.scss` went with the BridgeCare redesign — the last Bootstrap artifact in
+// the app. global.scss `@use`d it, but nothing referenced a single variable out of it: its
+// $primary/$success/$danger were the old teal palette, superseded by the --hpd-color-* tokens.
 
-// Angular Material theme
-@import '@angular/material/prebuilt-themes/indigo-pink.css';
+// The Angular Material theme is `material-theme.scss`, listed next in angular.json — an M3
+// `mat.theme()` on the BridgeCare navy/gold seeds. The `indigo-pink` prebuilt that used to be
+// imported here is M2: it ships finished component styles rather than the M3 system variables,
+// so it could not be re-tinted and fought the brand tokens wherever both applied.
+
+// Inter — the BridgeCare body/heading face, matching hc-professional. Self-hosted via
+// @fontsource rather than the Google Fonts <link> that app uses, because the production CSP
+// (deploy/prod-server/hc-admin.conf) is `style-src 'self' 'unsafe-inline'; font-src 'self' data:`
+// with no allowance for fonts.googleapis.com — a <link> there is blocked, silently, in prod only.
+// Weights limited to the five the design actually uses (body 400, headings up to 800); each
+// weight is another seven @font-face subsets in the bundle.
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
+@import '@fontsource/inter/600.css';
+@import '@fontsource/inter/700.css';
+@import '@fontsource/inter/800.css';
+
 // Material Icons font (includes @font-face referencing local woff2/woff files)
 @import 'material-icons/iconfont/filled.css';
 

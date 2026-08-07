@@ -58,7 +58,17 @@ export interface MessageRow {
 @Component({
   selector: 'hpd-messages',
   standalone: true,
-  imports: [NgClass, FormsModule, FormatMediumDatePipe, FormatMediumDatetimePipe, MatIconModule, MatButtonModule, MatTooltipModule, MatMenuModule, MatDividerModule],
+  imports: [
+    NgClass,
+    FormsModule,
+    FormatMediumDatePipe,
+    FormatMediumDatetimePipe,
+    MatIconModule,
+    MatButtonModule,
+    MatTooltipModule,
+    MatMenuModule,
+    MatDividerModule,
+  ],
   templateUrl: './message.html',
 })
 export class MessageComponent {
@@ -79,8 +89,7 @@ export class MessageComponent {
     const query = this.searchQuery().toLowerCase().trim();
     return this.messages().filter(message => {
       const matchesCategory = category === 'All' || message.type === category;
-      const matchesQuery =
-        !query || message.senderId.toLowerCase().includes(query) || message.content.toLowerCase().includes(query);
+      const matchesQuery = !query || message.senderId.toLowerCase().includes(query) || message.content.toLowerCase().includes(query);
       return matchesCategory && matchesQuery;
     });
   });
@@ -153,13 +162,13 @@ export class MessageComponent {
   getCategoryClasses(type: string): string {
     switch (type) {
       case 'ALERT':
-        return 'bg-rose-100 text-rose-700';
+        return 'bg-hpd-danger-tint text-hpd-danger';
       case 'REMINDER':
-        return 'bg-amber-100 text-amber-700';
+        return 'bg-hpd-warning-tint text-hpd-warning';
       case 'NOTIFICATION':
-        return 'bg-indigo-100 text-indigo-700';
+        return 'bg-hpd-primary/15 text-hpd-primary';
       default:
-        return 'bg-slate-100 text-slate-600';
+        return 'bg-hpd-surface text-hpd-muted';
     }
   }
 

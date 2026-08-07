@@ -5,11 +5,6 @@ jest.mock('./home/home.component', () => ({
   default: class HomeComponent {},
 }));
 
-jest.mock('./layouts/navbar/navbar.component', () => ({
-  __esModule: true,
-  default: class NavbarComponent {},
-}));
-
 jest.mock('./login/login.component', () => ({
   __esModule: true,
   default: class LoginComponent {},

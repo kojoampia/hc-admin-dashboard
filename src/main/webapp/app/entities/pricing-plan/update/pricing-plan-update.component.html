@@ -4,18 +4,18 @@
     novalidate
     (ngSubmit)="save()"
     [formGroup]="editForm"
-    class="space-y-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"
+    class="space-y-6 rounded-hpd-lg border border-hpd-border bg-white p-6 shadow-hpd-sm"
   >
     <div class="space-y-2">
       <h2
         id="hpd-pricing-plan-heading"
         data-cy="PricingPlanCreateUpdateHeading"
-        class="text-2xl font-semibold text-slate-900"
+        class="text-2xl font-semibold text-hpd-primary-dark"
         hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.home.createOrEditLabel"
       >
         Create or edit a Pricing Plan
       </h2>
-      <p class="text-sm text-slate-500">Update pricing details, feature summaries, billing cadence, and activation status.</p>
+      <p class="text-sm text-hpd-muted">Update pricing details, feature summaries, billing cadence, and activation status.</p>
     </div>
 
     <hpd-alert-error />
@@ -83,13 +83,13 @@
         }
       </mat-form-field>
 
-      <div class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3">
+      <div class="rounded-hpd border border-hpd-border bg-hpd-cream px-4 py-3">
         <label for="field_active" class="flex items-center justify-between gap-4">
           <div class="space-y-1">
-            <span class="block text-sm font-medium text-slate-900" hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.active"
+            <span class="block text-sm font-medium text-hpd-primary-dark" hpdTranslate="adminDashboardApp.hcAdminServicePricingPlan.active"
               >Active</span
             >
-            <span class="block text-xs text-slate-500">Toggle whether this pricing plan can be assigned.</span>
+            <span class="block text-xs text-hpd-muted">Toggle whether this pricing plan can be assigned.</span>
           </div>
           <input
             id="field_active"
@@ -97,7 +97,7 @@
             type="checkbox"
             name="active"
             formControlName="active"
-            class="h-4 w-4 rounded border-slate-300 text-slate-900 focus:ring-slate-500"
+            class="h-4 w-4 rounded border-hpd-border text-hpd-primary-dark focus:ring-hpd-muted"
           />
         </label>
       </div>
@@ -122,7 +122,7 @@
         data-cy="entityCreateSaveButton"
         [disabled]="editForm.invalid || isSaving"
         mat-flat-button
-        class="!rounded-full !bg-slate-900 !px-4 !text-white"
+        class="!rounded-full !bg-hpd-primary-deep !px-4 !text-white"
       >
         <mat-icon>save</mat-icon>
         <span hpdTranslate="entity.action.save">Save</span>

@@ -1,11 +1,11 @@
 <div class="mx-auto max-w-5xl">
   @if (systemCatalog(); as systemCatalogRef) {
-    <div class="space-y-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+    <div class="space-y-6 rounded-hpd-lg border border-hpd-border bg-white p-6 shadow-hpd-sm">
       <div class="space-y-2">
-        <h2 data-cy="systemCatalogDetailsHeading" class="text-2xl font-semibold text-slate-900">
+        <h2 data-cy="systemCatalogDetailsHeading" class="text-2xl font-semibold text-hpd-primary-dark">
           <span hpdTranslate="adminDashboardApp.hcAdminServiceSystemCatalog.detail.title">System Catalog</span>
         </h2>
-        <p class="text-sm text-slate-500">Inspect catalog content, classification, and audit history.</p>
+        <p class="text-sm text-hpd-muted">Inspect catalog content, classification, and audit history.</p>
       </div>
 
       <hpd-alert-error />
@@ -13,30 +13,33 @@
       <hpd-alert />
 
       <div class="grid gap-4 sm:grid-cols-2">
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="global.field.id">ID</p>
-          <p class="mt-1 text-sm text-slate-900">{{ systemCatalogRef.id }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="global.field.id">ID</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ systemCatalogRef.id }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceSystemCatalog.name">
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.hcAdminServiceSystemCatalog.name">
             Name
           </p>
-          <p class="mt-1 text-sm text-slate-900">{{ systemCatalogRef.name }}</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ systemCatalogRef.name }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4 sm:col-span-2">
+        <div class="rounded-hpd bg-hpd-cream p-4 sm:col-span-2">
           <p
-            class="text-xs font-semibold uppercase text-slate-500"
+            class="text-xs font-semibold uppercase text-hpd-muted"
             hpdTranslate="adminDashboardApp.hcAdminServiceSystemCatalog.description"
           >
             Description
           </p>
-          <p class="mt-1 text-sm text-slate-900">{{ systemCatalogRef.description }}</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ systemCatalogRef.description }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceSystemCatalog.type">
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.hcAdminServiceSystemCatalog.type">
             Type
           </p>
-          <p class="mt-1 text-sm text-slate-900" [hpdTranslate]="'adminDashboardApp.CatalogType.' + (systemCatalogRef.type ?? 'null')">
+          <p
+            class="mt-1 text-sm text-hpd-primary-dark"
+            [hpdTranslate]="'adminDashboardApp.CatalogType.' + (systemCatalogRef.type ?? 'null')"
+          >
             {{
               {
                 null: '',
@@ -50,41 +53,41 @@
             }}
           </p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceSystemCatalog.createdBy">
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.hcAdminServiceSystemCatalog.createdBy">
             Created By
           </p>
-          <p class="mt-1 text-sm text-slate-900">{{ systemCatalogRef.createdBy }}</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ systemCatalogRef.createdBy }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4 sm:col-span-2">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceSystemCatalog.content">
+        <div class="rounded-hpd bg-hpd-cream p-4 sm:col-span-2">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.hcAdminServiceSystemCatalog.content">
             Content
           </p>
-          <p class="mt-1 whitespace-pre-wrap text-sm text-slate-900">{{ systemCatalogRef.content }}</p>
+          <p class="mt-1 whitespace-pre-wrap text-sm text-hpd-primary-dark">{{ systemCatalogRef.content }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
+        <div class="rounded-hpd bg-hpd-cream p-4">
           <p
-            class="text-xs font-semibold uppercase text-slate-500"
+            class="text-xs font-semibold uppercase text-hpd-muted"
             hpdTranslate="adminDashboardApp.hcAdminServiceSystemCatalog.createdDate"
           >
             Created Date
           </p>
-          <p class="mt-1 text-sm text-slate-900">{{ systemCatalogRef.createdDate | formatMediumDatetime }}</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ systemCatalogRef.createdDate | formatMediumDatetime }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
+        <div class="rounded-hpd bg-hpd-cream p-4">
           <p
-            class="text-xs font-semibold uppercase text-slate-500"
+            class="text-xs font-semibold uppercase text-hpd-muted"
             hpdTranslate="adminDashboardApp.hcAdminServiceSystemCatalog.modifiedDate"
           >
             Modified Date
           </p>
-          <p class="mt-1 text-sm text-slate-900">{{ systemCatalogRef.modifiedDate | formatMediumDatetime }}</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ systemCatalogRef.modifiedDate | formatMediumDatetime }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServiceSystemCatalog.modifiedBy">
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.hcAdminServiceSystemCatalog.modifiedBy">
             Modified By
           </p>
-          <p class="mt-1 text-sm text-slate-900">{{ systemCatalogRef.modifiedBy }}</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ systemCatalogRef.modifiedBy }}</p>
         </div>
       </div>
 
@@ -98,7 +101,7 @@
           type="button"
           [routerLink]="['/system-catalog', systemCatalogRef.id, 'edit']"
           mat-flat-button
-          class="!rounded-full !bg-slate-900 !px-4 !text-white"
+          class="!rounded-full !bg-hpd-primary-deep !px-4 !text-white"
         >
           <mat-icon>edit</mat-icon>
           <span hpdTranslate="entity.action.edit">Edit</span>

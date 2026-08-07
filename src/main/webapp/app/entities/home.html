@@ -5,22 +5,22 @@
 } @else {
 <div class="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[minmax(0,18rem)_1fr]">
   <div class="hidden justify-center lg:flex">
-    <span class="healthconnect rounded-3xl"></span>
+    <span class="healthconnect rounded-hpd-lg"></span>
   </div>
 
-  <div class="space-y-6 rounded-3xl border border-slate-200 bg-white p-6 text-slate-700 shadow-sm md:p-8">
+  <div class="space-y-6 rounded-hpd-lg border border-hpd-border bg-white p-6 text-hpd-muted shadow-hpd-sm md:p-8">
     <div class="space-y-2">
-      <h1 class="text-4xl font-semibold tracking-tight text-slate-900">
+      <h1 class="text-4xl font-semibold tracking-tight text-hpd-primary-dark">
         <span hpdTranslate="home.title">Welcome!</span>
       </h1>
-      <p class="text-lg text-slate-500" hpdTranslate="home.subtitle">This is your homepage</p>
+      <p class="text-lg text-hpd-muted" hpdTranslate="home.subtitle">This is your homepage</p>
     </div>
 
-    <div class="rounded-2xl border border-cyan-200 bg-cyan-50 px-4 py-3 text-sm text-cyan-900">
+    <div class="rounded-hpd border border-hpd-primary/30 bg-hpd-chart-blue/15 px-4 py-3 text-sm text-hpd-primary-deep">
       <span hpdTranslate="global.messages.info.authenticated.prefix">If you want to </span>
       <button
         type="button"
-        class="font-semibold text-cyan-700 underline decoration-cyan-300 underline-offset-4 transition hover:text-cyan-900"
+        class="font-semibold text-hpd-primary underline decoration-hpd-chart-blue underline-offset-4 transition hover:text-hpd-primary-deep"
         (click)="login()"
         hpdTranslate="global.messages.info.authenticated.link"
       >
@@ -30,7 +30,7 @@
     </div>
 
     <div class="space-y-4">
-      <p class="text-sm font-medium uppercase tracking-wide text-slate-500" hpdTranslate="home.question">
+      <p class="text-sm font-medium uppercase tracking-wide text-hpd-muted" hpdTranslate="home.question">
         If you have any question on JHipster:
       </p>
 
@@ -39,7 +39,7 @@
           href="https://healthconnect.jojoaddison.net/"
           target="_blank"
           rel="noopener noreferrer"
-          class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 no-underline transition hover:border-slate-300 hover:bg-slate-100"
+          class="rounded-hpd border border-hpd-border bg-hpd-cream px-4 py-3 text-sm font-medium text-hpd-muted no-underline transition hover:border-hpd-border hover:bg-hpd-surface"
           hpdTranslate="home.link.homepage"
         >
           Health Connect homepage
@@ -48,7 +48,7 @@
           href="https://stackoverflow.com/tags/jojoaddison/healthconnect"
           target="_blank"
           rel="noopener noreferrer"
-          class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 no-underline transition hover:border-slate-300 hover:bg-slate-100"
+          class="rounded-hpd border border-hpd-border bg-hpd-cream px-4 py-3 text-sm font-medium text-hpd-muted no-underline transition hover:border-hpd-border hover:bg-hpd-surface"
           hpdTranslate="home.link.stackoverflow"
         >
           Health Connect on Stack Overflow
@@ -57,7 +57,7 @@
           href="https://github.com/jojoaddison/health-connect/issues?state=open"
           target="_blank"
           rel="noopener noreferrer"
-          class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 no-underline transition hover:border-slate-300 hover:bg-slate-100"
+          class="rounded-hpd border border-hpd-border bg-hpd-cream px-4 py-3 text-sm font-medium text-hpd-muted no-underline transition hover:border-hpd-border hover:bg-hpd-surface"
           hpdTranslate="home.link.bugtracker"
         >
           Health Connect bug tracker
@@ -66,7 +66,7 @@
           href="https://gitter.im/jojoaddison/health-connect"
           target="_blank"
           rel="noopener noreferrer"
-          class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 no-underline transition hover:border-slate-300 hover:bg-slate-100"
+          class="rounded-hpd border border-hpd-border bg-hpd-cream px-4 py-3 text-sm font-medium text-hpd-muted no-underline transition hover:border-hpd-border hover:bg-hpd-surface"
           hpdTranslate="home.link.chat"
         >
           Health Connect public chat room
@@ -75,7 +75,7 @@
           href="https://x.com/jojoaddison-health-connect"
           target="_blank"
           rel="noopener noreferrer"
-          class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 no-underline transition hover:border-slate-300 hover:bg-slate-100 sm:col-span-2"
+          class="rounded-hpd border border-hpd-border bg-hpd-cream px-4 py-3 text-sm font-medium text-hpd-muted no-underline transition hover:border-hpd-border hover:bg-hpd-surface sm:col-span-2"
           hpdTranslate="home.link.follow"
         >
           follow &#64;health connect on Twitter
@@ -83,13 +83,13 @@
       </div>
     </div>
 
-    <p class="text-sm text-slate-600">
+    <p class="text-sm text-hpd-muted">
       <span hpdTranslate="home.like">If you like Health Connect, don&apos;t forget to give us a like on</span>
       <a
         href="https://facebook.com/jojoaddison"
         target="_blank"
         rel="noopener noreferrer"
-        class="font-semibold text-slate-900 underline decoration-slate-300 underline-offset-4"
+        class="font-semibold text-hpd-primary-dark underline decoration-hpd-on-navy-muted underline-offset-4"
         hpdTranslate="home.facebook"
       >
         GitHub

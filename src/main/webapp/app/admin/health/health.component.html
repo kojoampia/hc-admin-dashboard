@@ -1,10 +1,15 @@
 <div class="space-y-6">
   <div class="flex flex-wrap items-start justify-between gap-4">
     <div class="space-y-1">
-      <h2 id="health-page-heading" class="text-3xl font-semibold text-slate-900" hpdTranslate="health.title" data-cy="healthPageHeading">
+      <h2
+        id="health-page-heading"
+        class="text-3xl font-semibold text-hpd-primary-dark"
+        hpdTranslate="health.title"
+        data-cy="healthPageHeading"
+      >
         Health Checks
       </h2>
-      <p class="text-sm text-slate-500">Review service availability and inspect component-level diagnostics.</p>
+      <p class="text-sm text-hpd-muted">Review service availability and inspect component-level diagnostics.</p>
     </div>
 
     <button mat-flat-button color="primary" type="button" (click)="refresh()">
@@ -13,9 +18,9 @@
     </button>
   </div>
 
-  <div class="overflow-x-auto rounded-2xl border border-slate-200">
-    <table id="healthCheck" class="min-w-full divide-y divide-slate-200 bg-white" aria-describedby="health-page-heading">
-      <thead class="bg-slate-50 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+  <div class="overflow-x-auto rounded-hpd border border-hpd-border">
+    <table id="healthCheck" class="min-w-full divide-y divide-hpd-border bg-white" aria-describedby="health-page-heading">
+      <thead class="bg-hpd-cream text-left text-xs font-semibold uppercase tracking-wide text-hpd-muted">
         <tr>
           <th scope="col" class="px-4 py-3" hpdTranslate="health.table.service">Service name</th>
           <th scope="col" class="px-4 py-3 text-center" hpdTranslate="health.table.status">Status</th>
@@ -23,7 +28,7 @@
         </tr>
       </thead>
       @if (health) {
-        <tbody class="divide-y divide-slate-100 text-sm text-slate-700">
+        <tbody class="divide-y divide-hpd-border text-sm text-hpd-muted">
           @for (componentHealth of health.components | keyvalue; track componentHealth.key) {
             <tr>
               <td class="px-4 py-4">{{ 'health.indicator.' + componentHealth.key | translate }}</td>

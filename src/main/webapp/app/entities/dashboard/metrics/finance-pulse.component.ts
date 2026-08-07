@@ -16,17 +16,17 @@ type FinanceMetric = {
   template: `
     <div class="grid gap-4 sm:grid-cols-2">
       @for (metric of metrics; track metric.label) {
-        <article class="rounded-2xl border border-white/10 bg-white/5 p-4">
+        <article class="rounded-hpd border border-white/10 bg-white/5 p-4">
           <div class="flex items-start justify-between gap-3">
             <div>
-              <p class="text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">{{ metric.label }}</p>
+              <p class="text-xs font-semibold uppercase tracking-[0.24em] text-hpd-subtle">{{ metric.label }}</p>
               <p class="mt-3 text-3xl font-semibold text-white">{{ metric.value }}</p>
             </div>
-            <span class="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-teal-500/15 text-teal-200">
+            <span class="inline-flex h-11 w-11 items-center justify-center rounded-hpd bg-hpd-success-accent/15 text-hpd-success-accent">
               <mat-icon>{{ metric.icon }}</mat-icon>
             </span>
           </div>
-          <p class="mt-3 text-sm text-slate-300">{{ metric.helper }}</p>
+          <p class="mt-3 text-sm text-hpd-on-navy-muted">{{ metric.helper }}</p>
         </article>
       }
     </div>

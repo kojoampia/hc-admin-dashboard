@@ -2,15 +2,15 @@
   <!-- ── Header ──────────────────────────────────────────────────────────── -->
   <div class="flex items-center justify-between flex-wrap gap-3">
     <div>
-      <h2 class="text-xl font-semibold text-slate-800">Facilities</h2>
-      <p class="text-slate-500 text-xs mt-1">Manage healthcare facilities and personnel.</p>
+      <h2 class="text-xl font-semibold text-hpd-primary-dark">Facilities</h2>
+      <p class="text-hpd-muted text-xs mt-1">Manage healthcare facilities and personnel.</p>
     </div>
     <div class="flex items-center gap-2">
-      <button mat-icon-button class="text-slate-500 hover:text-indigo-600" (click)="toggleAuditTrail()" title="Audit Trail">
+      <button mat-icon-button class="text-hpd-muted hover:text-hpd-primary" (click)="toggleAuditTrail()" title="Audit Trail">
         <mat-icon>history</mat-icon>
       </button>
       @if (state.canAccess('FACILITIES', 'CREATE')) {
-      <button (click)="openAddModal()" mat-flat-button class="!bg-indigo-600 !text-white !rounded-xl !px-5 !py-5">
+      <button (click)="openAddModal()" mat-flat-button class="!bg-hpd-primary !text-white !rounded-xl !px-5 !py-5">
         <mat-icon iconPositionEnd>add</mat-icon>
         Add Facility
       </button>
@@ -23,10 +23,10 @@
     <!-- ── Left Pane: Facilities (lg:col-span-2) ─────────────────────────── -->
     <div class="lg:col-span-2 space-y-6">
       <!-- Facilities Card -->
-      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
+      <div class="bg-white rounded-hpd border border-hpd-border shadow-hpd-sm overflow-hidden flex flex-col">
         <!-- Top Bar -->
-        <div class="px-6 py-3 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
-          <span class="text-xs font-bold uppercase tracking-widest text-slate-500">Facilities</span>
+        <div class="px-6 py-3 border-b border-hpd-border flex items-center justify-between bg-hpd-cream/50">
+          <span class="text-xs font-bold uppercase tracking-widest text-hpd-muted">Facilities</span>
         </div>
 
         <!-- Type Filter Tabs -->
@@ -39,47 +39,47 @@
                 <table mat-table [dataSource]="filteredFacilities()" class="w-full min-w-[600px]">
                   <!-- Name -->
                   <ng-container matColumnDef="name">
-                    <th mat-header-cell *matHeaderCellDef class="text-xs font-semibold text-slate-500 uppercase tracking-wider !pl-0">
+                    <th mat-header-cell *matHeaderCellDef class="text-xs font-semibold text-hpd-muted uppercase tracking-wider !pl-0">
                       Name
                     </th>
                     <td mat-cell *matCellDef="let f" class="!pl-0">
-                      <p class="text-sm font-semibold text-slate-800">{{ f.name }}</p>
-                      <p class="text-xs text-slate-400">{{ f.addressId }}</p>
+                      <p class="text-sm font-semibold text-hpd-primary-dark">{{ f.name }}</p>
+                      <p class="text-xs text-hpd-subtle">{{ f.addressId }}</p>
                     </td>
                   </ng-container>
 
                   <!-- Type -->
                   <ng-container matColumnDef="type">
-                    <th mat-header-cell *matHeaderCellDef class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Type</th>
+                    <th mat-header-cell *matHeaderCellDef class="text-xs font-semibold text-hpd-muted uppercase tracking-wider">Type</th>
                     <td mat-cell *matCellDef="let f">
-                      <span class="text-xs font-bold px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-600">{{ f.type }}</span>
+                      <span class="text-xs font-bold px-2 py-0.5 rounded-full bg-hpd-primary/10 text-hpd-primary">{{ f.type }}</span>
                     </td>
                   </ng-container>
 
                   <!-- Contact -->
                   <ng-container matColumnDef="contact">
-                    <th mat-header-cell *matHeaderCellDef class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Contact</th>
-                    <td mat-cell *matCellDef="let f" class="text-sm text-slate-600">{{ f.contactId }}</td>
+                    <th mat-header-cell *matHeaderCellDef class="text-xs font-semibold text-hpd-muted uppercase tracking-wider">Contact</th>
+                    <td mat-cell *matCellDef="let f" class="text-sm text-hpd-muted">{{ f.contactId }}</td>
                   </ng-container>
 
                   <!-- Updated -->
                   <ng-container matColumnDef="updatedAt">
-                    <th mat-header-cell *matHeaderCellDef class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Updated</th>
-                    <td mat-cell *matCellDef="let f" class="text-xs text-slate-400">{{ f.modifiedDate | formatMediumDatetime }}</td>
+                    <th mat-header-cell *matHeaderCellDef class="text-xs font-semibold text-hpd-muted uppercase tracking-wider">Updated</th>
+                    <td mat-cell *matCellDef="let f" class="text-xs text-hpd-subtle">{{ f.modifiedDate | formatMediumDatetime }}</td>
                   </ng-container>
 
                   <!-- Actions -->
                   <ng-container matColumnDef="actions">
-                    <th mat-header-cell *matHeaderCellDef class="text-xs font-semibold text-slate-500 uppercase tracking-wider text-right">
+                    <th mat-header-cell *matHeaderCellDef class="text-xs font-semibold text-hpd-muted uppercase tracking-wider text-right">
                       Actions
                     </th>
                     <td mat-cell *matCellDef="let f" class="text-right">
                       @if (state.canAccess('FACILITIES', 'UPDATE')) {
-                      <button mat-icon-button class="text-slate-400 hover:text-indigo-600" (click)="openEditModal(f)" title="Edit">
+                      <button mat-icon-button class="text-hpd-subtle hover:text-hpd-primary" (click)="openEditModal(f)" title="Edit">
                         <mat-icon class="text-base">edit</mat-icon>
                       </button>
                       } @if (state.canAccess('FACILITIES', 'DELETE')) {
-                      <button mat-icon-button class="text-slate-400 hover:text-rose-600" (click)="deleteFacility(f)" title="Delete">
+                      <button mat-icon-button class="text-hpd-subtle hover:text-hpd-danger" (click)="deleteFacility(f)" title="Delete">
                         <mat-icon class="text-base">delete_outline</mat-icon>
                       </button>
                       }
@@ -90,12 +90,12 @@
                   <tr
                     mat-row
                     *matRowDef="let row; columns: ['name','type','contact','updatedAt','actions'];"
-                    class="hover:bg-slate-50/60 transition-colors"
+                    class="hover:bg-hpd-cream/60 transition-colors"
                   ></tr>
                 </table>
               </div>
               } @else {
-              <div class="flex flex-col items-center justify-center py-16 text-slate-400">
+              <div class="flex flex-col items-center justify-center py-16 text-hpd-subtle">
                 <mat-icon class="!text-5xl mb-3 opacity-30">location_city</mat-icon>
                 <p class="text-sm font-medium">No {{ tab }} facilities</p>
                 <p class="text-xs mt-1 opacity-70">Add a new facility using the button above.</p>
@@ -104,24 +104,26 @@
 
               <!-- Personnel sub-section for this tab's facilities -->
               @for (facility of filteredFacilities(); track facility.id) { @if (personnelByFacility(facility.id).length > 0) {
-              <div class="mt-4 border-t border-slate-100 pt-4">
-                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">
-                  <mat-icon class="text-sm align-middle text-indigo-400 mr-1">people</mat-icon>
+              <div class="mt-4 border-t border-hpd-border pt-4">
+                <p class="text-xs font-bold text-hpd-subtle uppercase tracking-widest mb-2">
+                  <mat-icon class="text-sm align-middle text-hpd-on-navy-muted mr-1">people</mat-icon>
                   {{ facility.name }} — Staff
                 </p>
                 <div class="space-y-2">
                   @for (person of personnelByFacility(facility.id); track person.id) {
-                  <div class="flex items-center justify-between rounded-xl bg-slate-50 px-4 py-2.5">
+                  <div class="flex items-center justify-between rounded-xl bg-hpd-cream px-4 py-2.5">
                     <div class="flex items-center gap-3">
-                      <span class="flex items-center justify-center w-7 h-7 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold">
+                      <span
+                        class="flex items-center justify-center w-7 h-7 rounded-full bg-hpd-primary/15 text-hpd-primary text-xs font-bold"
+                      >
                         {{ (person.name || 'P').charAt(0) }}
                       </span>
                       <div>
-                        <p class="text-xs font-semibold text-slate-700">{{ person.name }}</p>
-                        <p class="text-[10px] text-slate-400">{{ person.profile }} · {{ person.organisation }}</p>
+                        <p class="text-xs font-semibold text-hpd-muted">{{ person.name }}</p>
+                        <p class="text-[10px] text-hpd-subtle">{{ person.profile }} · {{ person.organisation }}</p>
                       </div>
                     </div>
-                    <p class="text-[10px] text-slate-400">{{ person.modifiedDate | formatMediumDatetime }}</p>
+                    <p class="text-[10px] text-hpd-subtle">{{ person.modifiedDate | formatMediumDatetime }}</p>
                   </div>
                   }
                 </div>
@@ -135,41 +137,41 @@
     </div>
 
     <!-- ── Right Pane: Personnel by Facility (lg:col-span-1) ──────────────── -->
-    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col h-fit">
+    <div class="bg-white rounded-hpd border border-hpd-border shadow-hpd-sm overflow-hidden flex flex-col h-fit">
       <!-- Header -->
-      <div class="px-5 py-3 border-b border-slate-100 flex items-center gap-3 bg-slate-50/50">
-        <span class="flex items-center justify-center w-7 h-7 rounded-full bg-indigo-50 text-indigo-600">
+      <div class="px-5 py-3 border-b border-hpd-border flex items-center gap-3 bg-hpd-cream/50">
+        <span class="flex items-center justify-center w-7 h-7 rounded-full bg-hpd-primary/10 text-hpd-primary">
           <mat-icon class="text-sm">people</mat-icon>
         </span>
         <div>
-          <p class="text-xs font-bold text-slate-700 leading-none">All Personnel</p>
-          <p class="text-[10px] text-slate-400 mt-0.5">Grouped by facility</p>
+          <p class="text-xs font-bold text-hpd-muted leading-none">All Personnel</p>
+          <p class="text-[10px] text-hpd-subtle mt-0.5">Grouped by facility</p>
         </div>
       </div>
 
       <!-- Grouped list -->
-      <div class="flex-1 overflow-y-auto divide-y divide-slate-50 max-h-[600px]">
+      <div class="flex-1 overflow-y-auto divide-y divide-hpd-border max-h-[600px]">
         @for (facility of facilities(); track facility.id) { @if (personnelByFacility(facility.id).length > 0) {
         <div class="p-4">
           <!-- Facility label -->
           <div class="flex items-center gap-2 mb-2">
-            <mat-icon class="text-sm text-indigo-400">location_city</mat-icon>
-            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500">{{ facility.name }}</span>
-            <span class="text-[10px] text-slate-300">{{ facility.type }}</span>
+            <mat-icon class="text-sm text-hpd-on-navy-muted">location_city</mat-icon>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-hpd-muted">{{ facility.name }}</span>
+            <span class="text-[10px] text-hpd-on-navy-muted">{{ facility.type }}</span>
           </div>
           <div class="space-y-2 pl-1">
             @for (person of personnelByFacility(facility.id); track person.id) {
-            <div class="group flex items-center justify-between rounded-lg hover:bg-slate-50 px-2 py-1.5 transition-colors">
+            <div class="group flex items-center justify-between rounded-lg hover:bg-hpd-cream px-2 py-1.5 transition-colors">
               <div class="flex items-center gap-2.5">
                 <span
-                  class="flex items-center justify-center w-7 h-7 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold shrink-0"
+                  class="flex items-center justify-center w-7 h-7 rounded-full bg-hpd-primary/15 text-hpd-primary text-xs font-bold shrink-0"
                 >
                   {{ (person.name || 'P').charAt(0) }}
                 </span>
                 <div>
-                  <p class="text-xs font-semibold text-slate-700">{{ person.name }}</p>
-                  <p class="text-[10px] text-slate-400">{{ person.profile }} · {{ person.organisation }}</p>
-                  <p class="text-[10px] text-slate-300">{{ person.modifiedDate | formatMediumDatetime }}</p>
+                  <p class="text-xs font-semibold text-hpd-muted">{{ person.name }}</p>
+                  <p class="text-[10px] text-hpd-subtle">{{ person.profile }} · {{ person.organisation }}</p>
+                  <p class="text-[10px] text-hpd-on-navy-muted">{{ person.modifiedDate | formatMediumDatetime }}</p>
                 </div>
               </div>
             </div>
@@ -177,7 +179,7 @@
           </div>
         </div>
         } } @if (personnel().length === 0) {
-        <div class="flex flex-col items-center justify-center py-12 text-slate-400">
+        <div class="flex flex-col items-center justify-center py-12 text-hpd-subtle">
           <mat-icon class="!text-4xl opacity-30 mb-2">person_off</mat-icon>
           <p class="text-xs">No personnel assigned.</p>
         </div>
@@ -189,47 +191,47 @@
 
 <!-- ── Audit Trail Sliding Panel ──────────────────────────────────────────── -->
 <div
-  class="fixed inset-y-0 right-0 w-80 z-40 bg-white shadow-2xl border-l border-slate-200 flex flex-col transition-transform duration-300"
+  class="fixed inset-y-0 right-0 w-80 z-40 bg-white shadow-2xl border-l border-hpd-border flex flex-col transition-transform duration-300"
   [class.translate-x-0]="isAuditTrailOpen()"
   [class.translate-x-full]="!isAuditTrailOpen()"
 >
   <!-- Panel Header -->
-  <div class="p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/70">
+  <div class="p-4 border-b border-hpd-border flex items-center justify-between bg-hpd-cream/70">
     <div class="flex items-center gap-3">
-      <span class="flex items-center justify-center w-8 h-8 rounded-full bg-indigo-50 text-indigo-600">
+      <span class="flex items-center justify-center w-8 h-8 rounded-full bg-hpd-primary/10 text-hpd-primary">
         <mat-icon class="text-base">history</mat-icon>
       </span>
       <div>
-        <p class="text-sm font-bold text-slate-700 leading-none">Audit Trail</p>
-        <p class="text-xs text-slate-400 mt-0.5">Facility changes</p>
+        <p class="text-sm font-bold text-hpd-muted leading-none">Audit Trail</p>
+        <p class="text-xs text-hpd-subtle mt-0.5">Facility changes</p>
       </div>
     </div>
     <div class="flex items-center gap-1">
-      <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-600">20 Latest</span>
-      <button mat-icon-button class="text-slate-400 hover:text-slate-700 !w-7 !h-7" (click)="toggleAuditTrail()">
+      <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-hpd-primary/10 text-hpd-primary">20 Latest</span>
+      <button mat-icon-button class="text-hpd-subtle hover:text-hpd-muted !w-7 !h-7" (click)="toggleAuditTrail()">
         <mat-icon class="text-sm">close</mat-icon>
       </button>
     </div>
   </div>
 
   <!-- Events -->
-  <div class="flex-1 overflow-y-auto divide-y divide-slate-50">
+  <div class="flex-1 overflow-y-auto divide-y divide-hpd-border">
     @if (auditEvents().length === 0) {
-    <div class="flex flex-col items-center justify-center py-12 text-slate-400">
+    <div class="flex flex-col items-center justify-center py-12 text-hpd-subtle">
       <mat-icon class="!text-4xl opacity-30 mb-2">checklist</mat-icon>
       <p class="text-xs">No audit events yet.</p>
     </div>
     } @for (event of auditEvents(); track event.id) {
-    <div class="group flex items-start gap-3 p-4 hover:bg-slate-50/80 transition-colors">
+    <div class="group flex items-start gap-3 p-4 hover:bg-hpd-cream/80 transition-colors">
       <span class="flex items-center justify-center w-8 h-8 rounded-full shrink-0 mt-0.5" [ngClass]="getAuditColor(event)">
         <mat-icon class="text-base">{{ getAuditIcon(event) }}</mat-icon>
       </span>
       <div class="min-w-0 flex-1">
-        <p class="text-xs font-medium text-slate-700 leading-snug">{{ event.actionType }}</p>
+        <p class="text-xs font-medium text-hpd-muted leading-snug">{{ event.actionType }}</p>
         <div class="flex items-center gap-2 mt-1">
-          <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">{{ event.actionType }}</span>
-          <span class="text-[10px] text-slate-300">·</span>
-          <span class="text-[10px] text-slate-400">{{ event.createdDate | formatMediumDatetime }}</span>
+          <span class="text-[10px] font-bold uppercase tracking-wider text-hpd-subtle">{{ event.actionType }}</span>
+          <span class="text-[10px] text-hpd-on-navy-muted">·</span>
+          <span class="text-[10px] text-hpd-subtle">{{ event.createdDate | formatMediumDatetime }}</span>
         </div>
       </div>
     </div>
@@ -239,5 +241,5 @@
 
 <!-- Backdrop -->
 @if (isAuditTrailOpen()) {
-<div class="fixed inset-0 z-30 bg-slate-900/20 backdrop-blur-sm transition-opacity duration-300" (click)="toggleAuditTrail()"></div>
+<div class="fixed inset-0 z-30 bg-hpd-primary-deep/20 backdrop-blur-sm transition-opacity duration-300" (click)="toggleAuditTrail()"></div>
 }

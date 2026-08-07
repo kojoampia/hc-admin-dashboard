@@ -1,27 +1,27 @@
 <section
   class="dashboard-shell min-h-screen transition-colors duration-300"
   [class.dashboard-light]="isLightMode()"
-  [class.bg-slate-950]="!isLightMode()"
-  [class.text-slate-100]="!isLightMode()"
+  [class.bg-hpd-primary-deep]="!isLightMode()"
+  [class.text-white]="!isLightMode()"
 >
   <header
     class="dashboard-header sticky top-0 z-30 border-b backdrop-blur transition-colors duration-300"
-    [ngClass]="isLightMode() ? ['border-slate-200', 'bg-white/90'] : ['border-white/10', 'bg-slate-950/90']"
+    [ngClass]="isLightMode() ? ['border-hpd-border', 'bg-white/90'] : ['border-white/10', 'bg-hpd-primary-deep/90']"
   >
     <div class="mx-auto flex max-w-screen-2xl flex-col gap-4 px-4 py-4 lg:px-6">
       <div class="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
         <div class="flex items-center gap-4">
           <span
-            class="inline-flex h-12 w-12 items-center justify-center rounded-2xl ring-1 ring-inset transition-colors duration-300"
-            [ngClass]="isLightMode() ? ['bg-indigo-100', 'text-indigo-600', 'ring-indigo-200'] : ['bg-indigo-500/15', 'text-indigo-300', 'ring-indigo-400/30']"
+            class="inline-flex h-12 w-12 items-center justify-center rounded-hpd ring-1 ring-inset transition-colors duration-300"
+            [ngClass]="isLightMode() ? ['bg-hpd-primary/15', 'text-hpd-primary', 'ring-hpd-primary/30'] : ['bg-hpd-primary/15', 'text-hpd-on-navy-muted', 'ring-hpd-primary/30']"
           >
             <mat-icon>space_dashboard</mat-icon>
           </span>
           <div>
             <p
               class="text-xs font-semibold uppercase tracking-[0.32em]"
-              [class.text-indigo-200]="!isLightMode()"
-              [class.text-indigo-600]="isLightMode()"
+              [class.text-hpd-on-navy-muted]="!isLightMode()"
+              [class.text-hpd-primary]="isLightMode()"
             >
               Health Connect
             </p>
@@ -29,11 +29,11 @@
               id="page-heading"
               class="text-2xl font-semibold tracking-tight"
               [class.text-white]="!isLightMode()"
-              [class.text-slate-900]="isLightMode()"
+              [class.text-hpd-primary-dark]="isLightMode()"
             >
               Operator command center
             </h1>
-            <p class="text-sm" [class.text-slate-400]="!isLightMode()" [class.text-slate-600]="isLightMode()">
+            <p class="text-sm" [class.text-hpd-subtle]="!isLightMode()" [class.text-hpd-muted]="isLightMode()">
               Operational metrics, live activity, and quick-action widgets for day-to-day monitoring.
             </p>
           </div>
@@ -44,7 +44,7 @@
             mat-stroked-button
             type="button"
             class="!rounded-full !px-4"
-            [ngClass]="isLightMode() ? ['!border-slate-300', '!bg-white', '!text-slate-700'] : ['!border-white/15', '!bg-white/5', '!text-slate-100']"
+            [ngClass]="isLightMode() ? ['!border-hpd-border', '!bg-white', '!text-hpd-muted'] : ['!border-white/15', '!bg-white/5', '!text-white']"
             (click)="toggleTheme()"
           >
             <mat-icon>{{ isLightMode() ? 'dark_mode' : 'light_mode' }}</mat-icon>
@@ -52,20 +52,24 @@
           </button>
 
           <div
-            class="flex items-center gap-3 rounded-2xl border px-3 py-2 transition-colors duration-300"
-            [ngClass]="isLightMode() ? ['border-slate-200', 'bg-white'] : ['border-white/10', 'bg-white/5']"
+            class="flex items-center gap-3 rounded-hpd border px-3 py-2 transition-colors duration-300"
+            [ngClass]="isLightMode() ? ['border-hpd-border', 'bg-white'] : ['border-white/10', 'bg-white/5']"
           >
             <span
-              class="inline-flex h-11 w-11 items-center justify-center rounded-2xl text-sm font-semibold transition-colors duration-300"
-              [ngClass]="isLightMode() ? ['bg-slate-100', 'text-slate-800'] : ['bg-white/10', 'text-white']"
+              class="inline-flex h-11 w-11 items-center justify-center rounded-hpd text-sm font-semibold transition-colors duration-300"
+              [ngClass]="isLightMode() ? ['bg-hpd-surface', 'text-hpd-primary-dark'] : ['bg-white/10', 'text-white']"
             >
               {{ currentUserInitials() }}
             </span>
             <div>
-              <p class="text-sm font-semibold" [class.text-white]="!isLightMode()" [class.text-slate-900]="isLightMode()">
+              <p class="text-sm font-semibold" [class.text-white]="!isLightMode()" [class.text-hpd-primary-dark]="isLightMode()">
                 {{ currentUserName() }}
               </p>
-              <p class="text-xs uppercase tracking-[0.28em]" [class.text-slate-400]="!isLightMode()" [class.text-slate-500]="isLightMode()">
+              <p
+                class="text-xs uppercase tracking-[0.28em]"
+                [class.text-hpd-subtle]="!isLightMode()"
+                [class.text-hpd-muted]="isLightMode()"
+              >
                 {{ currentUserRole() }}
               </p>
             </div>
@@ -79,7 +83,7 @@
           mat-stroked-button
           type="button"
           class="quick-access-button !min-w-max !rounded-full"
-          [ngClass]="isLightMode() ? ['!border-slate-300', '!bg-white', '!text-slate-700'] : ['!border-white/15', '!bg-white/5', '!text-slate-100']"
+          [ngClass]="isLightMode() ? ['!border-hpd-border', '!bg-white', '!text-hpd-muted'] : ['!border-white/15', '!bg-white/5', '!text-white']"
           [class.opacity-70]="!widget.visible"
           (click)="openWidget(widget.id)"
         >
@@ -96,20 +100,20 @@
       @if (!maximizedWidgetId()) {
       <aside class="space-y-5 xl:sticky xl:top-28 xl:self-start">
         <div
-          class="dashboard-panel rounded-3xl border p-2 shadow-lg transition-colors duration-300"
-          [ngClass]="isLightMode() ? ['border-slate-200', 'bg-white', 'shadow-slate-300/40'] : ['border-white/10', 'bg-white/5', 'shadow-slate-950/20']"
+          class="dashboard-panel rounded-hpd-lg border p-2 shadow-hpd-lg transition-colors duration-300"
+          [ngClass]="isLightMode() ? ['border-hpd-border', 'bg-white', 'shadow-hpd-border/40'] : ['border-white/10', 'bg-white/5', 'shadow-hpd-primary-deep/20']"
         >
           <div class="flex items-center justify-between gap-3">
             <p
               class="text-xs font-semibold uppercase tracking-[0.28em]"
-              [class.text-slate-400]="!isLightMode()"
-              [class.text-slate-500]="isLightMode()"
+              [class.text-hpd-subtle]="!isLightMode()"
+              [class.text-hpd-muted]="isLightMode()"
             >
               Navigation
             </p>
             <span
               class="rounded-full px-3 py-1 text-xs font-medium"
-              [ngClass]="isLightMode() ? ['bg-slate-100', 'text-slate-600'] : ['bg-white/10', 'text-slate-300']"
+              [ngClass]="isLightMode() ? ['bg-hpd-surface', 'text-hpd-muted'] : ['bg-white/10', 'text-hpd-on-navy-muted']"
             >
               {{ visibleWidgetCount() }} widgets live
             </span>
@@ -119,7 +123,7 @@
             <button
               mat-button
               type="button"
-              class="!flex !w-full !justify-start !rounded-2xl !px-4 !py-3 !text-left"
+              class="!flex !w-full !justify-start !rounded-hpd !px-4 !py-3 !text-left"
               [class]="sectionButtonClasses(section.id)"
               (click)="navigateToSection(section.id)"
             >
@@ -131,38 +135,38 @@
         </div>
 
         <div
-          class="dashboard-panel rounded-3xl border p-5 shadow-lg transition-colors duration-300"
-          [ngClass]="isLightMode() ? ['border-slate-200', 'bg-white', 'shadow-slate-300/40'] : ['border-white/10', 'bg-white/5', 'shadow-slate-950/20']"
+          class="dashboard-panel rounded-hpd-lg border p-5 shadow-hpd-lg transition-colors duration-300"
+          [ngClass]="isLightMode() ? ['border-hpd-border', 'bg-white', 'shadow-hpd-border/40'] : ['border-white/10', 'bg-white/5', 'shadow-hpd-primary-deep/20']"
         >
           <p
             class="text-xs font-semibold uppercase tracking-[0.28em]"
-            [class.text-slate-400]="!isLightMode()"
-            [class.text-slate-500]="isLightMode()"
+            [class.text-hpd-subtle]="!isLightMode()"
+            [class.text-hpd-muted]="isLightMode()"
           >
             Dashboard status
           </p>
           <div class="mt-4 grid gap-3">
-            <div class="rounded-2xl p-4 transition-colors duration-300" [ngClass]="isLightMode() ? ['bg-slate-50'] : ['bg-white/5']">
+            <div class="rounded-hpd p-4 transition-colors duration-300" [ngClass]="isLightMode() ? ['bg-hpd-cream'] : ['bg-white/5']">
               <p
                 class="text-xs font-medium uppercase tracking-wide"
-                [class.text-slate-400]="!isLightMode()"
-                [class.text-slate-500]="isLightMode()"
+                [class.text-hpd-subtle]="!isLightMode()"
+                [class.text-hpd-muted]="isLightMode()"
               >
                 Visible widgets
               </p>
-              <p class="mt-2 text-3xl font-semibold" [class.text-white]="!isLightMode()" [class.text-slate-900]="isLightMode()">
+              <p class="mt-2 text-3xl font-semibold" [class.text-white]="!isLightMode()" [class.text-hpd-primary-dark]="isLightMode()">
                 {{ visibleWidgetCount() }}
               </p>
             </div>
-            <div class="rounded-2xl p-4 transition-colors duration-300" [ngClass]="isLightMode() ? ['bg-slate-50'] : ['bg-white/5']">
+            <div class="rounded-hpd p-4 transition-colors duration-300" [ngClass]="isLightMode() ? ['bg-hpd-cream'] : ['bg-white/5']">
               <p
                 class="text-xs font-medium uppercase tracking-wide"
-                [class.text-slate-400]="!isLightMode()"
-                [class.text-slate-500]="isLightMode()"
+                [class.text-hpd-subtle]="!isLightMode()"
+                [class.text-hpd-muted]="isLightMode()"
               >
                 Closed widgets
               </p>
-              <p class="mt-2 text-3xl font-semibold" [class.text-white]="!isLightMode()" [class.text-slate-900]="isLightMode()">
+              <p class="mt-2 text-3xl font-semibold" [class.text-white]="!isLightMode()" [class.text-hpd-primary-dark]="isLightMode()">
                 {{ hiddenWidgetCount() }}
               </p>
             </div>
@@ -175,21 +179,21 @@
         @for (section of visibleSections(); track section.id) {
         <section [id]="sectionElementId(section.id)" class="space-y-5 scroll-mt-28">
           <div
-            class="dashboard-panel rounded-3xl border p-5 shadow-lg transition-colors duration-300"
-            [ngClass]="isLightMode() ? ['border-slate-200', 'bg-white', 'shadow-slate-300/40'] : ['border-white/10', 'bg-white/5', 'shadow-slate-950/20']"
+            class="dashboard-panel rounded-hpd-lg border p-5 shadow-hpd-lg transition-colors duration-300"
+            [ngClass]="isLightMode() ? ['border-hpd-border', 'bg-white', 'shadow-hpd-border/40'] : ['border-white/10', 'bg-white/5', 'shadow-hpd-primary-deep/20']"
           >
             <div class="flex items-center gap-3">
               <span
-                class="inline-flex h-11 w-11 items-center justify-center rounded-2xl transition-colors duration-300"
-                [ngClass]="isLightMode() ? ['bg-indigo-100', 'text-indigo-600'] : ['bg-indigo-400/10', 'text-indigo-200']"
+                class="inline-flex h-11 w-11 items-center justify-center rounded-hpd transition-colors duration-300"
+                [ngClass]="isLightMode() ? ['bg-hpd-primary/15', 'text-hpd-primary'] : ['bg-hpd-primary/10', 'text-hpd-on-navy-muted']"
               >
                 <mat-icon>{{ section.icon }}</mat-icon>
               </span>
               <div>
-                <h2 class="text-xl font-semibold" [class.text-white]="!isLightMode()" [class.text-slate-900]="isLightMode()">
+                <h2 class="text-xl font-semibold" [class.text-white]="!isLightMode()" [class.text-hpd-primary-dark]="isLightMode()">
                   {{ section.title }}
                 </h2>
-                <p class="text-sm" [class.text-slate-300]="!isLightMode()" [class.text-slate-600]="isLightMode()">
+                <p class="text-sm" [class.text-hpd-on-navy-muted]="!isLightMode()" [class.text-hpd-muted]="isLightMode()">
                   {{ section.description }}
                 </p>
               </div>
@@ -200,15 +204,15 @@
             @for (widget of section.widgets; track widget.id) {
             <article
               [id]="widgetElementId(widget.id)"
-              class="widget-card scroll-mt-28 overflow-hidden rounded-3xl border transition-colors duration-300"
-              [class.bg-slate-900]="!isLightMode()"
+              class="widget-card scroll-mt-28 overflow-hidden rounded-hpd-lg border transition-colors duration-300"
+              [class.bg-hpd-primary-deep]="!isLightMode()"
               [class.bg-white]="isLightMode()"
               [ngClass]="widgetContainerClasses(widget.id)"
             >
               <div
                 class="widget-header bg-gradient-to-r px-5 py-5 transition-colors duration-300"
                 [class]="widget.accentClass"
-                [class.from-slate-100]="isLightMode()"
+                [class.from-hpd-surface]="isLightMode()"
                 [class.via-white]="isLightMode()"
                 [class.to-white]="isLightMode()"
               >
@@ -216,42 +220,42 @@
                   <div class="space-y-2">
                     <div class="flex items-center gap-3">
                       <span
-                        class="inline-flex h-10 w-10 items-center justify-center rounded-2xl transition-colors duration-300"
-                        [ngClass]="isLightMode() ? ['bg-indigo-100', 'text-indigo-600'] : ['bg-white/10', 'text-indigo-200']"
+                        class="inline-flex h-10 w-10 items-center justify-center rounded-hpd transition-colors duration-300"
+                        [ngClass]="isLightMode() ? ['bg-hpd-primary/15', 'text-hpd-primary'] : ['bg-white/10', 'text-hpd-on-navy-muted']"
                       >
                         <mat-icon>{{ widget.icon }}</mat-icon>
                       </span>
                       <div>
-                        <h3 class="text-lg font-semibold" [class.text-white]="!isLightMode()" [class.text-slate-900]="isLightMode()">
+                        <h3 class="text-lg font-semibold" [class.text-white]="!isLightMode()" [class.text-hpd-primary-dark]="isLightMode()">
                           {{ widget.title }}
                         </h3>
-                        <p class="text-sm" [class.text-slate-300]="!isLightMode()" [class.text-slate-600]="isLightMode()">
+                        <p class="text-sm" [class.text-hpd-on-navy-muted]="!isLightMode()" [class.text-hpd-muted]="isLightMode()">
                           {{ widget.description }}
                         </p>
                       </div>
                     </div>
                     <div
                       class="flex flex-wrap gap-2 text-xs font-medium uppercase tracking-wide"
-                      [class.text-slate-300]="!isLightMode()"
-                      [class.text-slate-600]="isLightMode()"
+                      [class.text-hpd-on-navy-muted]="!isLightMode()"
+                      [class.text-hpd-muted]="isLightMode()"
                     >
                       <span
                         class="rounded-full px-3 py-1 transition-colors duration-300"
-                        [ngClass]="isLightMode() ? ['bg-slate-100'] : ['bg-white/10']"
+                        [ngClass]="isLightMode() ? ['bg-hpd-surface'] : ['bg-white/10']"
                       >
                         {{ section.title }}
                       </span>
                       @if (isWidgetMaximized(widget.id)) {
                       <span
                         class="rounded-full px-3 py-1 transition-colors duration-300"
-                        [ngClass]="isLightMode() ? ['bg-indigo-100', 'text-indigo-700'] : ['bg-indigo-400/20', 'text-indigo-100']"
+                        [ngClass]="isLightMode() ? ['bg-hpd-primary/15', 'text-hpd-primary'] : ['bg-hpd-primary/20', 'text-hpd-on-navy-muted']"
                       >
                         Focused view
                       </span>
                       } @if (isWidgetMinimized(widget.id)) {
                       <span
                         class="rounded-full px-3 py-1 transition-colors duration-300"
-                        [ngClass]="isLightMode() ? ['bg-amber-100', 'text-amber-700'] : ['bg-amber-400/20', 'text-amber-100']"
+                        [ngClass]="isLightMode() ? ['bg-hpd-warning-tint', 'text-hpd-warning'] : ['bg-hpd-warning-accent/20', 'text-hpd-warning-accent']"
                       >
                         Collapsed
                       </span>
@@ -263,7 +267,7 @@
                     <button
                       mat-icon-button
                       type="button"
-                      [ngClass]="isLightMode() ? ['!text-slate-600'] : ['!text-slate-200']"
+                      [ngClass]="isLightMode() ? ['!text-hpd-muted'] : ['!text-hpd-on-navy-muted']"
                       [attr.aria-label]="isWidgetMinimized(widget.id) ? 'Expand widget' : 'Minimize widget'"
                       (click)="toggleMinimizeWidget(widget.id)"
                     >
@@ -272,7 +276,7 @@
                     <button
                       mat-icon-button
                       type="button"
-                      [ngClass]="isLightMode() ? ['!text-slate-600'] : ['!text-slate-200']"
+                      [ngClass]="isLightMode() ? ['!text-hpd-muted'] : ['!text-hpd-on-navy-muted']"
                       [attr.aria-label]="isWidgetMaximized(widget.id) ? 'Restore widget' : 'Maximize widget'"
                       (click)="toggleMaximizeWidget(widget.id)"
                     >
@@ -281,7 +285,7 @@
                     <button
                       mat-icon-button
                       type="button"
-                      [ngClass]="isLightMode() ? ['!text-rose-500'] : ['!text-rose-200']"
+                      [ngClass]="isLightMode() ? ['!text-hpd-danger'] : ['!text-hpd-danger']"
                       aria-label="Close widget"
                       (click)="closeWidget(widget.id)"
                     >
@@ -294,14 +298,14 @@
               @if (isWidgetMinimized(widget.id) && !isWidgetMaximized(widget.id)) {
               <div
                 class="border-t px-5 py-4 text-sm transition-colors duration-300"
-                [ngClass]="isLightMode() ? ['border-slate-200', 'bg-slate-50', 'text-slate-600'] : ['border-white/10', 'bg-slate-900/80', 'text-slate-400']"
+                [ngClass]="isLightMode() ? ['border-hpd-border', 'bg-hpd-cream', 'text-hpd-muted'] : ['border-white/10', 'bg-hpd-primary-deep/80', 'text-hpd-subtle']"
               >
                 Widget minimized. Use the header controls or quick-access bar to reopen the full view.
               </div>
               } @else {
               <div
                 class="widget-body p-4 transition-colors duration-300"
-                [ngClass]="[isLightMode() ? 'bg-slate-50' : 'bg-slate-950/60', isWidgetMaximized(widget.id) ? 'min-h-[calc(100vh-20rem)]' : '']"
+                [ngClass]="[isLightMode() ? 'bg-hpd-cream' : 'bg-hpd-primary-deep/60', isWidgetMaximized(widget.id) ? 'min-h-[calc(100vh-20rem)]' : '']"
               >
                 @switch (widget.id) { @case ('operationsOverview') {
                 <hpd-operations-overview />

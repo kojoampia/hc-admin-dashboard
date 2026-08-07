@@ -1,11 +1,11 @@
 <div class="mx-auto max-w-5xl">
   @if (notification(); as notificationRef) {
-    <div class="space-y-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+    <div class="space-y-6 rounded-hpd-lg border border-hpd-border bg-white p-6 shadow-hpd-sm">
       <div class="space-y-2">
-        <h2 data-cy="notificationDetailsHeading" class="text-2xl font-semibold text-slate-900">
+        <h2 data-cy="notificationDetailsHeading" class="text-2xl font-semibold text-hpd-primary-dark">
           <span hpdTranslate="adminDashboardApp.notification.detail.title">Notification</span>
         </h2>
-        <p class="text-sm text-slate-500">Inspect notification routing, content, and audit metadata.</p>
+        <p class="text-sm text-hpd-muted">Inspect notification routing, content, and audit metadata.</p>
       </div>
 
       <hpd-alert-error />
@@ -13,41 +13,41 @@
       <hpd-alert />
 
       <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="global.field.id">ID</p>
-          <p class="mt-1 text-sm text-slate-900">{{ notificationRef.id }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="global.field.id">ID</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ notificationRef.id }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4 lg:col-span-2">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.notification.content">Content</p>
-          <p class="mt-1 text-sm text-slate-900">{{ notificationRef.content }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4 lg:col-span-2">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.notification.content">Content</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ notificationRef.content }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.notification.recipientId">
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.notification.recipientId">
             Recipient Id
           </p>
-          <p class="mt-1 text-sm text-slate-900">{{ notificationRef.recipientId }}</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ notificationRef.recipientId }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.notification.senderId">Sender Id</p>
-          <p class="mt-1 text-sm text-slate-900">{{ notificationRef.senderId }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.notification.senderId">Sender Id</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ notificationRef.senderId }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.notification.messageType">
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.notification.messageType">
             Message Type
           </p>
-          <p class="mt-1 text-sm text-slate-900">{{ notificationRef.messageType }}</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ notificationRef.messageType }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.notification.createdDate">
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.notification.createdDate">
             Created Date
           </p>
-          <p class="mt-1 text-sm text-slate-900">{{ notificationRef.createdDate | formatMediumDatetime }}</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ notificationRef.createdDate | formatMediumDatetime }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.notification.modifiedDate">
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.notification.modifiedDate">
             Modified Date
           </p>
-          <p class="mt-1 text-sm text-slate-900">{{ notificationRef.modifiedDate | formatMediumDatetime }}</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ notificationRef.modifiedDate | formatMediumDatetime }}</p>
         </div>
       </div>
 
@@ -61,7 +61,7 @@
           type="button"
           [routerLink]="['/notification', notificationRef.id, 'edit']"
           mat-flat-button
-          class="!rounded-full !bg-slate-900 !px-4 !text-white"
+          class="!rounded-full !bg-hpd-primary-deep !px-4 !text-white"
         >
           <mat-icon>edit</mat-icon>
           <span hpdTranslate="entity.action.edit">Edit</span>

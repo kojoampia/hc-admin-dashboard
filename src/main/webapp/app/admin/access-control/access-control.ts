@@ -48,7 +48,7 @@ export default class AccessControlComponent implements OnInit {
   errorMessage = '';
   currentLogin = '';
   currentStatus = 'Unknown';
-  currentAuthorities: IAuthority[] = [];
+  currentAuthorities: string[] = [];
   availableAuthorities: IAuthority[] = [];
   currentHasAdminAccess = false;
   adminUserCount = 0;
@@ -69,7 +69,9 @@ export default class AccessControlComponent implements OnInit {
   }
 
   statusBadgeClasses(accessGranted: boolean): string {
-    return accessGranted ? 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200' : 'bg-rose-50 text-rose-700 ring-1 ring-rose-200';
+    return accessGranted
+      ? 'bg-hpd-success-tint text-hpd-success ring-1 ring-hpd-success-accent/30'
+      : 'bg-hpd-danger-tint text-hpd-danger ring-1 ring-hpd-danger/30';
   }
 
   private loadAccessOverview(): void {
@@ -111,10 +113,7 @@ export default class AccessControlComponent implements OnInit {
     this.currentLogin = account?.login ?? account?.email ?? 'Unknown';
     this.currentStatus = account?.activated ? 'Active' : 'Inactive';
     this.currentAuthorities = account?.authorities ?? [];
-    // `.some` on the name, not `.includes` of a literal: authorities are IAuthority objects, and
-    // includes() compares by reference, so a fresh literal never matches.
-    // The cast is needed because IAuthority.name is a plain string, not the Authority enum.
-    this.currentHasAdminAccess = this.currentAuthorities.some(authority => authority.name === (Authority.ADMIN as string));
+    this.currentHasAdminAccess = this.currentAuthorities.includes(Authority.ADMIN);
   }
 
   private updateUserCoverage(response: HttpResponse<IUser[]>): void {

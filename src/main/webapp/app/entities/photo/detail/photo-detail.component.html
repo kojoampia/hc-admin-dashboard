@@ -1,11 +1,11 @@
 <div class="mx-auto max-w-5xl">
   @if (photo(); as photoRef) {
-    <div class="space-y-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+    <div class="space-y-6 rounded-hpd-lg border border-hpd-border bg-white p-6 shadow-hpd-sm">
       <div class="space-y-2">
-        <h2 data-cy="photoDetailsHeading" class="text-2xl font-semibold text-slate-900">
+        <h2 data-cy="photoDetailsHeading" class="text-2xl font-semibold text-hpd-primary-dark">
           <span hpdTranslate="adminDashboardApp.photo.detail.title">Photo</span>
         </h2>
-        <p class="text-sm text-slate-500">Review photo content, type metadata, and audit history.</p>
+        <p class="text-sm text-hpd-muted">Review photo content, type metadata, and audit history.</p>
       </div>
 
       <hpd-alert-error />
@@ -13,29 +13,29 @@
       <hpd-alert />
 
       <div class="grid gap-4 sm:grid-cols-2">
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="global.field.id">ID</p>
-          <p class="mt-1 text-sm text-slate-900">{{ photoRef.id }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="global.field.id">ID</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ photoRef.id }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.photo.profileId">Profile Id</p>
-          <p class="mt-1 text-sm text-slate-900">{{ photoRef.profileId }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.photo.profileId">Profile Id</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ photoRef.profileId }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.photo.description">Description</p>
-          <p class="mt-1 text-sm text-slate-900">{{ photoRef.description }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.photo.description">Description</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ photoRef.description }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.photo.altText">Alt Text</p>
-          <p class="mt-1 text-sm text-slate-900">{{ photoRef.altText }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.photo.altText">Alt Text</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ photoRef.altText }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4 sm:col-span-2">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.photo.url">Url</p>
-          <p class="mt-1 break-all text-sm text-slate-900">{{ photoRef.url }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4 sm:col-span-2">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.photo.url">Url</p>
+          <p class="mt-1 break-all text-sm text-hpd-primary-dark">{{ photoRef.url }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.photo.photoType">Photo Type</p>
-          <p class="mt-1 text-sm text-slate-900" [hpdTranslate]="'adminDashboardApp.PhotoType.' + (photoRef.photoType ?? 'null')">
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.photo.photoType">Photo Type</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark" [hpdTranslate]="'adminDashboardApp.PhotoType.' + (photoRef.photoType ?? 'null')">
             {{
               {
                 null: '',
@@ -49,42 +49,42 @@
             }}
           </p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.photo.photoMetadata">Photo Metadata</p>
-          <p class="mt-1 text-sm text-slate-900">{{ photoRef.photoMetadata }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.photo.photoMetadata">Photo Metadata</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ photoRef.photoMetadata }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4 sm:col-span-2">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.photo.data">Data</p>
+        <div class="rounded-hpd bg-hpd-cream p-4 sm:col-span-2">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.photo.data">Data</p>
           @if (photoRef.data) {
             <button
               type="button"
-              class="mt-2 w-full rounded-2xl border border-slate-200 bg-white p-3 text-left transition hover:border-slate-300"
+              class="mt-2 w-full rounded-hpd border border-hpd-border bg-white p-3 text-left transition hover:border-hpd-border"
               (click)="openFile(photoRef.data, photoRef.dataContentType)"
             >
               <img
                 [src]="'data:' + photoRef.dataContentType + ';base64,' + photoRef.data"
-                class="max-h-64 w-full rounded-2xl object-contain bg-slate-100"
+                class="max-h-64 w-full rounded-hpd object-contain bg-hpd-surface"
                 alt="photo"
               />
-              <p class="mt-3 text-xs text-slate-500">{{ photoRef.dataContentType }}, {{ byteSize(photoRef.data) }}</p>
+              <p class="mt-3 text-xs text-hpd-muted">{{ photoRef.dataContentType }}, {{ byteSize(photoRef.data) }}</p>
             </button>
           }
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.photo.createdBy">Created By</p>
-          <p class="mt-1 text-sm text-slate-900">{{ photoRef.createdBy }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.photo.createdBy">Created By</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ photoRef.createdBy }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.photo.createdDate">Created Date</p>
-          <p class="mt-1 text-sm text-slate-900">{{ photoRef.createdDate | formatMediumDatetime }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.photo.createdDate">Created Date</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ photoRef.createdDate | formatMediumDatetime }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.photo.modifiedBy">Modified By</p>
-          <p class="mt-1 text-sm text-slate-900">{{ photoRef.modifiedBy }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.photo.modifiedBy">Modified By</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ photoRef.modifiedBy }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.photo.modifiedDate">Modified Date</p>
-          <p class="mt-1 text-sm text-slate-900">{{ photoRef.modifiedDate | formatMediumDatetime }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.photo.modifiedDate">Modified Date</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ photoRef.modifiedDate | formatMediumDatetime }}</p>
         </div>
       </div>
 
@@ -98,7 +98,7 @@
           type="button"
           [routerLink]="['/photo', photoRef.id, 'edit']"
           mat-flat-button
-          class="!rounded-full !bg-slate-900 !px-4 !text-white"
+          class="!rounded-full !bg-hpd-primary-deep !px-4 !text-white"
         >
           <mat-icon>edit</mat-icon>
           <span hpdTranslate="entity.action.edit">Edit</span>

@@ -44,24 +44,23 @@ const TYPE_ICON_MAP: Record<string, string> = {
 };
 
 const TYPE_COLOR_MAP: Record<string, string> = {
-  'Audit Log': 'bg-indigo-100 text-indigo-600',
-  Security: 'bg-rose-100 text-rose-600',
-  'Role Change': 'bg-amber-100 text-amber-600',
-  'Vendor Mgt': 'bg-emerald-100 text-emerald-600',
-  'Patient Mgt': 'bg-blue-100 text-blue-600',
-  Professional: 'bg-purple-100 text-purple-600',
-  Message: 'bg-slate-100 text-slate-600',
-  Permission: 'bg-rose-100 text-rose-600',
-  'System Configuration': 'bg-indigo-100 text-indigo-600',
+  'Audit Log': 'bg-hpd-primary/15 text-hpd-primary',
+  Security: 'bg-hpd-danger-tint text-hpd-danger',
+  'Role Change': 'bg-hpd-warning-tint text-hpd-warning',
+  'Vendor Mgt': 'bg-hpd-success-tint text-hpd-success',
+  'Patient Mgt': 'bg-hpd-chart-blue/25 text-hpd-primary',
+  Professional: 'bg-hpd-gold-tint text-hpd-gold',
+  Message: 'bg-hpd-surface text-hpd-muted',
+  Permission: 'bg-hpd-danger-tint text-hpd-danger',
+  'System Configuration': 'bg-hpd-primary/15 text-hpd-primary',
 };
 
 @Injectable({ providedIn: 'root' })
 export class DashboardStateService {
   readonly currentUser = signal<AppUser>({ name: 'Loading...', role: 'USER' });
 
+  /** The dashboard's active section — one of DashboardComponent's DashboardSectionIds. */
   readonly menu = computed(() => this.activeMenu());
-
-  readonly sidebarExpanded = signal(true);
 
   readonly operationLogs = signal<ActivityEvent[]>([]);
 
@@ -86,9 +85,9 @@ export class DashboardStateService {
     this.activeMenu.set(label);
   }
 
-  toggleSidebar(): void {
-    this.sidebarExpanded.update(v => !v);
-  }
+  // `sidebarExpanded` / `toggleSidebar()` went with the BridgeCare shell: the sidebar no longer
+  // collapses to an icon rail, so nothing owned that flag any more. The one caller outside this
+  // service was DashboardComponent.toggleSidebar(), which no template ever bound to.
 
   setUser(user: AppUser): void {
     this.currentUser.set(user);
@@ -144,9 +143,8 @@ export class DashboardStateService {
       .subscribe(account => {
         if (account) {
           const name = [account.firstName, account.lastName].filter(Boolean).join(' ') || account.login;
-          // `.some` on the name, not `.includes` of a literal: authorities are IAuthority objects,
-          // and includes() compares by reference, so a fresh literal never matches.
-          const has = (authority: string): boolean => account.authorities.some(held => held.name === authority);
+          // Authorities are plain strings on the wire — see the note on Account.authorities.
+          const has = (authority: string): boolean => account.authorities.includes(authority);
           // Checked most-privileged first: the operator account also holds ROLE_USER as a baseline,
           // so the order is what stops it reading as a plain user.
           const role: UserRole = has('ROLE_ADMIN') ? 'ADMIN' : has('ROLE_OPERATOR') ? 'OPERATOR' : 'USER';
@@ -172,7 +170,7 @@ export class DashboardStateService {
       message: log.metadata ?? 'System event recorded.',
       timestamp: log.createdDate ? log.createdDate.fromNow() : 'unknown',
       icon: TYPE_ICON_MAP[type] ?? 'receipt_long',
-      colorClass: TYPE_COLOR_MAP[type] ?? 'bg-indigo-100 text-indigo-600',
+      colorClass: TYPE_COLOR_MAP[type] ?? 'bg-hpd-primary/15 text-hpd-primary',
     };
   }
 
@@ -185,7 +183,7 @@ export class DashboardStateService {
       message: raw.message ?? raw.description ?? 'System event received.',
       timestamp: 'just now',
       icon: TYPE_ICON_MAP[type] ?? 'receipt_long',
-      colorClass: TYPE_COLOR_MAP[type] ?? 'bg-indigo-100 text-indigo-600',
+      colorClass: TYPE_COLOR_MAP[type] ?? 'bg-hpd-primary/15 text-hpd-primary',
     };
   }
 }

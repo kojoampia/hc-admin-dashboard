@@ -1,11 +1,11 @@
 <div class="mx-auto max-w-5xl">
   @if (documentItem(); as documentItemRef) {
-    <div class="space-y-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+    <div class="space-y-6 rounded-hpd-lg border border-hpd-border bg-white p-6 shadow-hpd-sm">
       <div class="space-y-2">
-        <h2 data-cy="documentItemDetailsHeading" class="text-2xl font-semibold text-slate-900">
+        <h2 data-cy="documentItemDetailsHeading" class="text-2xl font-semibold text-hpd-primary-dark">
           <span hpdTranslate="adminDashboardApp.documentItem.detail.title">Document Item</span>
         </h2>
-        <p class="text-sm text-slate-500">Review document metadata, type, URL, and audit history.</p>
+        <p class="text-sm text-hpd-muted">Review document metadata, type, URL, and audit history.</p>
       </div>
 
       <hpd-alert-error />
@@ -13,26 +13,26 @@
       <hpd-alert />
 
       <div class="grid gap-4 sm:grid-cols-2">
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="global.field.id">ID</p>
-          <p class="mt-1 text-sm text-slate-900">{{ documentItemRef.id }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="global.field.id">ID</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ documentItemRef.id }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.documentItem.name">Name</p>
-          <p class="mt-1 text-sm text-slate-900">{{ documentItemRef.name }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.documentItem.name">Name</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ documentItemRef.name }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4 sm:col-span-2">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.documentItem.description">
+        <div class="rounded-hpd bg-hpd-cream p-4 sm:col-span-2">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.documentItem.description">
             Description
           </p>
-          <p class="mt-1 text-sm text-slate-900">{{ documentItemRef.description }}</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ documentItemRef.description }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.documentItem.documentType">
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.documentItem.documentType">
             Document Type
           </p>
           <p
-            class="mt-1 text-sm text-slate-900"
+            class="mt-1 text-sm text-hpd-primary-dark"
             [hpdTranslate]="'adminDashboardApp.DocumentType.' + (documentItemRef.documentType ?? 'null')"
           >
             {{
@@ -49,29 +49,29 @@
             }}
           </p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.documentItem.url">Url</p>
-          <p class="mt-1 break-all text-sm text-slate-900">{{ documentItemRef.url }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.documentItem.url">Url</p>
+          <p class="mt-1 break-all text-sm text-hpd-primary-dark">{{ documentItemRef.url }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.documentItem.createdDate">
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.documentItem.createdDate">
             Created Date
           </p>
-          <p class="mt-1 text-sm text-slate-900">{{ documentItemRef.createdDate | formatMediumDatetime }}</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ documentItemRef.createdDate | formatMediumDatetime }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.documentItem.createdBy">Created By</p>
-          <p class="mt-1 text-sm text-slate-900">{{ documentItemRef.createdBy }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.documentItem.createdBy">Created By</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ documentItemRef.createdBy }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.documentItem.modifiedDate">
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.documentItem.modifiedDate">
             Modified Date
           </p>
-          <p class="mt-1 text-sm text-slate-900">{{ documentItemRef.modifiedDate | formatMediumDatetime }}</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ documentItemRef.modifiedDate | formatMediumDatetime }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.documentItem.modifiedBy">Modified By</p>
-          <p class="mt-1 text-sm text-slate-900">{{ documentItemRef.modifiedBy }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.documentItem.modifiedBy">Modified By</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ documentItemRef.modifiedBy }}</p>
         </div>
       </div>
 
@@ -85,7 +85,7 @@
           type="button"
           [routerLink]="['/document-item', documentItemRef.id, 'edit']"
           mat-flat-button
-          class="!rounded-full !bg-slate-900 !px-4 !text-white"
+          class="!rounded-full !bg-hpd-primary-deep !px-4 !text-white"
         >
           <mat-icon>edit</mat-icon>
           <span hpdTranslate="entity.action.edit">Edit</span>

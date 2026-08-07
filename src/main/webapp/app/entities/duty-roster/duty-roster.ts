@@ -101,8 +101,8 @@ const PRIORITY_WEIGHT: Record<PriorityId, number> = {
 };
 
 const STATUS_STYLES: Record<AssignmentStatus, string> = {
-  ASSIGNED: 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200',
-  UNASSIGNED: 'bg-amber-50 text-amber-700 ring-1 ring-amber-200',
+  ASSIGNED: 'bg-hpd-success-tint text-hpd-success ring-1 ring-hpd-success-accent/30',
+  UNASSIGNED: 'bg-hpd-warning-tint text-hpd-warning ring-1 ring-hpd-warning-accent/30',
 };
 
 // A tuple, not a mapped array: the fixed length is what makes `availableDates[0]` a definite string

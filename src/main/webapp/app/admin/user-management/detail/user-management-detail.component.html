@@ -1,23 +1,23 @@
 @if (user) {
   <div class="flex justify-center">
-    <mat-card class="w-full max-w-4xl !rounded-[2rem] !border !border-slate-200 !bg-white/95 !p-8 !shadow-sm">
+    <mat-card class="w-full max-w-4xl !rounded-hpd-xl !border !border-hpd-border !bg-white/95 !p-8 !shadow-hpd-sm">
       <div class="space-y-6">
         <div class="space-y-2">
-          <h2 class="text-3xl font-semibold text-slate-900">
+          <h2 class="text-3xl font-semibold text-hpd-primary-dark">
             <span hpdTranslate="userManagement.detail.title">User</span> [<strong>{{ user.login }}</strong
             >]
           </h2>
           <div>
             @if (user.activated) {
               <span
-                class="inline-flex rounded-full bg-emerald-50 px-3 py-1 text-sm font-semibold text-emerald-700"
+                class="inline-flex rounded-full bg-hpd-success-tint px-3 py-1 text-sm font-semibold text-hpd-success"
                 hpdTranslate="userManagement.activated"
               >
                 Activated
               </span>
             } @else {
               <span
-                class="inline-flex rounded-full bg-rose-50 px-3 py-1 text-sm font-semibold text-rose-700"
+                class="inline-flex rounded-full bg-hpd-danger-tint px-3 py-1 text-sm font-semibold text-hpd-danger"
                 hpdTranslate="userManagement.deactivated"
               >
                 Deactivated
@@ -27,38 +27,38 @@
         </div>
 
         <dl class="grid gap-4 md:grid-cols-[12rem_minmax(0,1fr)]">
-          <dt class="font-semibold text-slate-500" hpdTranslate="userManagement.login">Login</dt>
-          <dd class="text-slate-900">{{ user.login }}</dd>
+          <dt class="font-semibold text-hpd-muted" hpdTranslate="userManagement.login">Login</dt>
+          <dd class="text-hpd-primary-dark">{{ user.login }}</dd>
 
-          <dt class="font-semibold text-slate-500" hpdTranslate="userManagement.firstName">First name</dt>
+          <dt class="font-semibold text-hpd-muted" hpdTranslate="userManagement.firstName">First name</dt>
           <dd>{{ user.firstName }}</dd>
 
-          <dt class="font-semibold text-slate-500" hpdTranslate="userManagement.lastName">Last name</dt>
+          <dt class="font-semibold text-hpd-muted" hpdTranslate="userManagement.lastName">Last name</dt>
           <dd>{{ user.lastName }}</dd>
 
-          <dt class="font-semibold text-slate-500" hpdTranslate="userManagement.email">Email</dt>
+          <dt class="font-semibold text-hpd-muted" hpdTranslate="userManagement.email">Email</dt>
           <dd>{{ user.email }}</dd>
 
-          <dt class="font-semibold text-slate-500" hpdTranslate="userManagement.langKey">Language</dt>
+          <dt class="font-semibold text-hpd-muted" hpdTranslate="userManagement.langKey">Language</dt>
           <dd>{{ user.langKey }}</dd>
 
-          <dt class="font-semibold text-slate-500" hpdTranslate="userManagement.createdBy">Created by</dt>
+          <dt class="font-semibold text-hpd-muted" hpdTranslate="userManagement.createdBy">Created by</dt>
           <dd>{{ user.createdBy }}</dd>
 
-          <dt class="font-semibold text-slate-500" hpdTranslate="userManagement.createdDate">Created date</dt>
+          <dt class="font-semibold text-hpd-muted" hpdTranslate="userManagement.createdDate">Created date</dt>
           <dd>{{ user.createdDate | date: 'dd/MM/yy HH:mm' }}</dd>
 
-          <dt class="font-semibold text-slate-500" hpdTranslate="userManagement.lastModifiedBy">Modified by</dt>
+          <dt class="font-semibold text-hpd-muted" hpdTranslate="userManagement.lastModifiedBy">Modified by</dt>
           <dd>{{ user.lastModifiedBy }}</dd>
 
-          <dt class="font-semibold text-slate-500" hpdTranslate="userManagement.lastModifiedDate">Modified date</dt>
+          <dt class="font-semibold text-hpd-muted" hpdTranslate="userManagement.lastModifiedDate">Modified date</dt>
           <dd>{{ user.lastModifiedDate | date: 'dd/MM/yy HH:mm' }}</dd>
 
-          <dt class="font-semibold text-slate-500" hpdTranslate="userManagement.profiles">Profiles</dt>
+          <dt class="font-semibold text-hpd-muted" hpdTranslate="userManagement.profiles">Profiles</dt>
           <dd>
             <div class="flex flex-wrap gap-2">
               @for (authority of user.authorities; track $index) {
-                <span class="rounded-full bg-sky-50 px-3 py-1 text-xs font-semibold text-sky-700">{{ authority }}</span>
+                <span class="rounded-full bg-hpd-chart-blue/15 px-3 py-1 text-xs font-semibold text-hpd-primary">{{ authority }}</span>
               }
             </div>
           </dd>

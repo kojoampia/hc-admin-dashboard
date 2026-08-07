@@ -1,11 +1,11 @@
 <div class="mx-auto max-w-5xl">
   @if (patientPlan(); as patientPlanRef) {
-    <div class="space-y-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+    <div class="space-y-6 rounded-hpd-lg border border-hpd-border bg-white p-6 shadow-hpd-sm">
       <div class="space-y-2">
-        <h2 data-cy="patientPlanDetailsHeading" class="text-2xl font-semibold text-slate-900">
+        <h2 data-cy="patientPlanDetailsHeading" class="text-2xl font-semibold text-hpd-primary-dark">
           <span hpdTranslate="adminDashboardApp.hcAdminServicePatientPlan.detail.title">Patient Plan</span>
         </h2>
-        <p class="text-sm text-slate-500">Inspect assigned plans, effective dates, and audit information.</p>
+        <p class="text-sm text-hpd-muted">Inspect assigned plans, effective dates, and audit information.</p>
       </div>
 
       <hpd-alert-error />
@@ -13,45 +13,45 @@
       <hpd-alert />
 
       <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="global.field.id">ID</p>
-          <p class="mt-1 text-sm text-slate-900">{{ patientPlanRef.id }}</p>
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="global.field.id">ID</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ patientPlanRef.id }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServicePatientPlan.planId">
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.hcAdminServicePatientPlan.planId">
             Plan Id
           </p>
-          <p class="mt-1 text-sm text-slate-900">{{ patientPlanRef.planId }}</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ patientPlanRef.planId }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServicePatientPlan.patientId">
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.hcAdminServicePatientPlan.patientId">
             Patient Id
           </p>
-          <p class="mt-1 text-sm text-slate-900">{{ patientPlanRef.patientId }}</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ patientPlanRef.patientId }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServicePatientPlan.startDate">
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.hcAdminServicePatientPlan.startDate">
             Start Date
           </p>
-          <p class="mt-1 text-sm text-slate-900">{{ patientPlanRef.startDate | formatMediumDate }}</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ patientPlanRef.startDate | formatMediumDate }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServicePatientPlan.endDate">
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.hcAdminServicePatientPlan.endDate">
             End Date
           </p>
-          <p class="mt-1 text-sm text-slate-900">{{ patientPlanRef.endDate | formatMediumDate }}</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ patientPlanRef.endDate | formatMediumDate }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServicePatientPlan.createdDate">
+        <div class="rounded-hpd bg-hpd-cream p-4">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.hcAdminServicePatientPlan.createdDate">
             Created Date
           </p>
-          <p class="mt-1 text-sm text-slate-900">{{ patientPlanRef.createdDate | formatMediumDatetime }}</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ patientPlanRef.createdDate | formatMediumDatetime }}</p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4 lg:col-span-2">
-          <p class="text-xs font-semibold uppercase text-slate-500" hpdTranslate="adminDashboardApp.hcAdminServicePatientPlan.createdBy">
+        <div class="rounded-hpd bg-hpd-cream p-4 lg:col-span-2">
+          <p class="text-xs font-semibold uppercase text-hpd-muted" hpdTranslate="adminDashboardApp.hcAdminServicePatientPlan.createdBy">
             Created By
           </p>
-          <p class="mt-1 text-sm text-slate-900">{{ patientPlanRef.createdBy }}</p>
+          <p class="mt-1 text-sm text-hpd-primary-dark">{{ patientPlanRef.createdBy }}</p>
         </div>
       </div>
 
@@ -65,7 +65,7 @@
           type="button"
           [routerLink]="['/patient-plan', patientPlanRef.id, 'edit']"
           mat-flat-button
-          class="!rounded-full !bg-slate-900 !px-4 !text-white"
+          class="!rounded-full !bg-hpd-primary-deep !px-4 !text-white"
         >
           <mat-icon>edit</mat-icon>
           <span hpdTranslate="entity.action.edit">Edit</span>

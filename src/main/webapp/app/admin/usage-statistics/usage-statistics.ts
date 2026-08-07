@@ -40,36 +40,34 @@ export default class UsageStatisticsComponent implements OnInit {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private destroyRef = inject(DestroyRef);
 
-  // Carried over verbatim from the deleted linechart wrapper, which was the only thing that ever
-  // supplied a scheme to this chart. ngx-charts falls back to its own palette without it.
+  /**
+   * BridgeCare chart domain — one series colour per tracked service.
+   *
+   * It replaced a 23-entry teal/blue/orange grab-bag carried over from a deleted chart wrapper,
+   * which had two entries repeated and no relationship to any palette in the app. These are the
+   * brand tones (navy, gold, chart blue, and the three status accents) plus tints of each, ordered
+   * so that adjacent series stay distinguishable. Literal hexes rather than `var(--hpd-color-*)`
+   * because ngx-charts hands the domain to d3 as a value, not to CSS — a custom property arrives
+   * as an unresolvable string and the series renders black. Keep them in step with
+   * content/scss/global.scss.
+   */
   readonly serviceTrafficScheme = {
     name: 'serviceTraffic',
     selectable: true,
     group: ScaleType.Linear,
     domain: [
-      '#A9E8DC',
-      '#5ABEA9',
-      '#0284A8',
-      '#050C44',
-      '#5ADF99',
-      '#E1F7E7',
-      '#A9E8DC',
-      '#66C4FF',
-      '#5CB1E6',
-      '#4D93BF',
-      '#356685',
-      '#224154',
-      '#CC673D',
-      '#3D4ACC',
-      '#7A7D99',
-      '#E1F7E7',
-      '#2497E8',
-      '#FFCDA6',
-      '#B3B13E',
-      '#02BEC4',
-      '#FF8080',
-      '#286EFF',
-      '#CCCA3D',
+      '#0d3058', // primary (navy)
+      '#c59437', // gold
+      '#8ba9c4', // chart blue
+      '#2e7d5b', // success accent
+      '#b4741a', // warning accent
+      '#b3402f', // danger
+      '#12406f', // primary hover
+      '#ddb868', // gold bright
+      '#5b6470', // text muted
+      '#2a7554', // success
+      '#96600f', // warning
+      '#092239', // primary deep
     ],
   };
 

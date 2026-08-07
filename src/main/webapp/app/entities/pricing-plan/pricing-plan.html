@@ -2,11 +2,11 @@
   <!-- ── Header ──────────────────────────────────────────────────────────── -->
   <div class="flex items-center justify-between">
     <div>
-      <h2 class="text-xl font-semibold text-slate-800">Subscription Plans</h2>
-      <p class="text-slate-500 text-xs mt-1">Configure service tiers and feature accessibility.</p>
+      <h2 class="text-xl font-semibold text-hpd-primary-dark">Subscription Plans</h2>
+      <p class="text-hpd-muted text-xs mt-1">Configure service tiers and feature accessibility.</p>
     </div>
     @if (state.canAccess('PRICE_PLANS', 'CREATE')) {
-    <button mat-flat-button class="!bg-indigo-600 !text-white !rounded-xl !px-6" (click)="openAddEditModal()">
+    <button mat-flat-button class="!bg-hpd-primary !text-white !rounded-xl !px-6" (click)="openAddEditModal()">
       <mat-icon iconPositionEnd>add</mat-icon>
       Add New Plan
     </button>
@@ -17,10 +17,10 @@
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     @for (plan of plans(); track plan.id) {
     <div
-      class="border rounded-2xl p-6 shadow-sm flex flex-col relative overflow-hidden transition-all hover:scale-[1.01]"
+      class="border rounded-hpd p-6 shadow-hpd-sm flex flex-col relative overflow-hidden transition-all hover:scale-[1.01]"
       [ngClass]="{
-          'bg-slate-900 text-white border-slate-800': plan.name === 'MELON',
-          'bg-white text-slate-900 border-slate-200': plan.name !== 'MELON'
+          'bg-hpd-primary-deep text-white border-hpd-primary-deep': plan.name === 'MELON',
+          'bg-white text-hpd-primary-dark border-hpd-border': plan.name !== 'MELON'
         }"
     >
       <!-- Top: Badge + Price -->
@@ -29,9 +29,9 @@
         <span
           class="text-xs font-bold px-2 py-0.5 rounded uppercase tracking-wider"
           [ngClass]="{
-              'text-emerald-600 bg-emerald-50': plan.name === 'PEAR',
-              'text-indigo-400 bg-indigo-900/50': plan.name === 'MELON',
-              'text-amber-600 bg-amber-50': plan.name !== 'PEAR' && plan.name !== 'MELON'
+              'text-hpd-success bg-hpd-success-tint': plan.name === 'PEAR',
+              'text-hpd-on-navy-muted bg-hpd-primary-deep/50': plan.name === 'MELON',
+              'text-hpd-warning bg-hpd-warning-tint': plan.name !== 'PEAR' && plan.name !== 'MELON'
             }"
         >
           @if (plan.name === 'MELON') { Popular } @else if (plan.name === 'PEAR') { Basic } @else { Premium }
@@ -50,21 +50,21 @@
         @for (feature of plan.features; track feature) {
         <p
           class="flex items-center gap-2 text-sm leading-6 md:text-base"
-          [class.text-slate-400]="plan.name === 'MELON'"
-          [class.text-slate-500]="plan.name !== 'MELON'"
+          [class.text-hpd-subtle]="plan.name === 'MELON'"
+          [class.text-hpd-muted]="plan.name !== 'MELON'"
         >
-          <span class="text-indigo-500">✓</span> {{ feature }}
+          <span class="text-hpd-primary">✓</span> {{ feature }}
         </p>
         }
       </div>
 
       <!-- Edit Button Footer -->
       @if (state.canAccess('PRICE_PLANS', 'UPDATE')) {
-      <div class="mt-6 pt-6 border-t border-slate-100/10 flex gap-2">
+      <div class="mt-6 pt-6 border-t border-hpd-border/10 flex gap-2">
         <button
-          class="flex-1 py-2 rounded-lg border border-slate-200 text-xs font-bold hover:bg-slate-50 transition-colors"
-          [class.border-slate-800]="plan.name === 'MELON'"
-          [class.hover:bg-slate-800]="plan.name === 'MELON'"
+          class="flex-1 py-2 rounded-lg border border-hpd-border text-xs font-bold hover:bg-hpd-cream transition-colors"
+          [class.border-hpd-primary-deep]="plan.name === 'MELON'"
+          [class.hover:bg-hpd-primary-hover]="plan.name === 'MELON'"
           (click)="openAddEditModal(plan)"
         >
           Edit Plan

@@ -6,6 +6,7 @@
   "license": "Apache-2.0",
   "scripts": {
     "build": "npm run webapp:prod --",
+    "check:csp": "node scripts/check-index-csp.mjs",
     "ci:frontend:build": "npm run webapp:build:prod",
     "ci:frontend:test": "npm run ci:frontend:build && npm test",
     "clean-www": "rimraf target/classes/static/",
@@ -30,8 +31,7 @@
     "webapp:dev-ssl": "ng serve --ssl",
     "webapp:dev-verbose": "ng serve --verbose",
     "webapp:prod": "npm run clean-www && npm run webapp:build:prod && npm run check:csp",
-    "webapp:test": "npm run test --",
-    "check:csp": "node scripts/check-index-csp.mjs"
+    "webapp:test": "npm run test --"
   },
   "dependencies": {
     "@angular/animations": "21.2.19",
@@ -45,6 +45,7 @@
     "@angular/platform-browser": "21.2.19",
     "@angular/platform-browser-dynamic": "21.2.19",
     "@angular/router": "21.2.19",
+    "@fontsource/inter": "^5.3.0",
     "@ngx-translate/core": "^16.0.4",
     "@ngx-translate/http-loader": "^16.0.1",
     "@swimlane/ngx-charts": "^25.0.0",

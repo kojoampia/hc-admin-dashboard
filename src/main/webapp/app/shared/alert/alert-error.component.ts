@@ -126,11 +126,11 @@ export class AlertErrorComponent implements OnDestroy {
   panelClasses(alert: Alert): string {
     switch (alert.type) {
       case 'warning':
-        return 'border-amber-200 bg-amber-50 text-amber-900';
+        return 'border-hpd-warning-accent/30 bg-hpd-warning-tint text-hpd-warning';
       case 'success':
-        return 'border-emerald-200 bg-emerald-50 text-emerald-900';
+        return 'border-hpd-success-accent/30 bg-hpd-success-tint text-hpd-success';
       default:
-        return 'border-rose-200 bg-rose-50 text-rose-900';
+        return 'border-hpd-danger/30 bg-hpd-danger-tint text-hpd-danger';
     }
   }
 

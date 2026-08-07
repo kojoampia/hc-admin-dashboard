@@ -4,18 +4,18 @@
     novalidate
     (ngSubmit)="save()"
     [formGroup]="editForm"
-    class="space-y-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"
+    class="space-y-6 rounded-hpd-lg border border-hpd-border bg-white p-6 shadow-hpd-sm"
   >
     <div class="space-y-2">
       <h2
         id="hpd-contact-heading"
         data-cy="ContactCreateUpdateHeading"
-        class="text-2xl font-semibold text-slate-900"
+        class="text-2xl font-semibold text-hpd-primary-dark"
         hpdTranslate="adminDashboardApp.contact.home.createOrEditLabel"
       >
         Create or edit a Contact
       </h2>
-      <p class="text-sm text-slate-500">Manage the person reference and primary communication channels for this contact.</p>
+      <p class="text-sm text-hpd-muted">Manage the person reference and primary communication channels for this contact.</p>
     </div>
 
     <hpd-alert-error />
@@ -88,7 +88,7 @@
         data-cy="entityCreateSaveButton"
         [disabled]="editForm.invalid || isSaving"
         mat-flat-button
-        class="!rounded-full !bg-slate-900 !px-4 !text-white"
+        class="!rounded-full !bg-hpd-primary-deep !px-4 !text-white"
       >
         <mat-icon>save</mat-icon>
         <span hpdTranslate="entity.action.save">Save</span>

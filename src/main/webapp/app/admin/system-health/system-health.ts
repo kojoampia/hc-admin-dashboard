@@ -55,7 +55,9 @@ export default class SystemHealthComponent implements OnInit {
   }
 
   healthBadgeClasses(status: string): string {
-    return status === 'UP' ? 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200' : 'bg-rose-50 text-rose-700 ring-1 ring-rose-200';
+    return status === 'UP'
+      ? 'bg-hpd-success-tint text-hpd-success ring-1 ring-hpd-success-accent/30'
+      : 'bg-hpd-danger-tint text-hpd-danger ring-1 ring-hpd-danger/30';
   }
 
   private loadHealthData(): void {
