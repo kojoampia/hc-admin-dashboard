@@ -28,6 +28,19 @@ describe('Profile Service', () => {
   });
 
   describe('Service methods', () => {
+    // The generated tests below match on HTTP method alone, so every one of them passes against any
+    // URL at all — which is how this service went on calling `api/profiles` after the admin service
+    // gave that path to a different entity. That path still answers 200, with the console model's
+    // own Profile, so the screen showed an empty table rather than failing.
+    it('should call the hc-profiles endpoint, not profiles', () => {
+      service.query().subscribe();
+
+      const req = httpMock.expectOne(r => r.method === 'GET');
+      expect(req.request.url).toContain('/api/hc-profiles');
+      expect(req.request.url).not.toMatch(/\/api\/profiles(\/|$|\?)/);
+      req.flush([]);
+    });
+
     it('should find an element', () => {
       const returnedFromService = { ...requireRestSample };
       const expected = { ...sampleWithRequiredData };
