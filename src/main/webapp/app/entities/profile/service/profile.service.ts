@@ -30,7 +30,13 @@ export class ProfileService {
   protected readonly http = inject(HttpClient);
   protected readonly applicationConfigService = inject(ApplicationConfigService);
 
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/profiles', 'hcadminservice');
+  // `api/hc-profiles`, not `api/profiles`. The admin service's console domain model introduced its
+  // own Profile — the shared person record behind patients and professionals — and that took over
+  // `/api/profiles`. This screen's IProfile is the older HCProfile (personId, photoId, contactId,
+  // roles), which moved to `/api/hc-profiles`. The two are different entities with different
+  // shapes, and the old path now answers 200 with the wrong one, so a wrong value here reads as an
+  // empty table rather than an error.
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/hc-profiles', 'hcadminservice');
 
   create(profile: NewProfile): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(profile);
