@@ -1,5 +1,31 @@
 # Health Connect Admin Dashboard
 
+<!-- prettier-ignore-start -->
+
+> [!WARNING]
+> **Deprecated.** This dashboard has been superseded by
+> [hc-admin-app](https://github.com/kojoampia/hc-admin-app) — the Abofonsa BridgeCare console,
+> generated from the same JDL as hc-admin-service's console domain model. New admin work belongs
+> there.
+>
+> **It is still what serves <https://admin.abofonsa.com>.** Deprecated means "do not start new work
+> here", not "unused": `deploy/prod-server/compose.yml` runs this image, and the console has no
+> Dockerfile, no compose entry and no release pipeline of its own yet. Security and operational
+> fixes still land here until it does.
+>
+> Two things have to be true before this repository can be retired, and neither is today:
+>
+> 1. **The console is deployable.** It needs a `web.Dockerfile` equivalent, a compose service and a
+>    `release.yml`, none of which exist.
+> 2. **The console can reach the backend.** Its 23 entity services call `api/<entity>` with no
+>    microservice segment, so every one of them 404s through the gateway, which routes
+>    `/services/hcadminservice/**`. This repository's services pass `'hcadminservice'` as the second
+>    argument to `getEndpointFor`; the console's do not.
+>
+> Until both land, treat this as maintained-but-closed: fixes yes, features no.
+
+<!-- prettier-ignore-end -->
+
 Frontend-only Angular application generated from JHipster and customized for the Health Connect admin domain.
 
 ## What Is Actually Implemented
