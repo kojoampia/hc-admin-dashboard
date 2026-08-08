@@ -9,7 +9,7 @@
 > there.
 >
 > **It is still what serves <https://admin.abofonsa.com>.** Deprecated means "do not start new work
-> here", not "unused": `deploy/prod-server/compose.yml` runs this image, and the console has no
+> here", not "unused": the production deployment's compose file still runs this image, and the console has no
 > Dockerfile, no compose entry and no release pipeline of its own yet. Security and operational
 > fixes still land here until it does.
 >
